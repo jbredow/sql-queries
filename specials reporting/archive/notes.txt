@@ -1,0 +1,4 @@
+C:\Users\aaa6863\Documents\SQL Querys\specials reporting\dw_sp_summary_13mo orig.sql
+
+- Used for George Connolly's <$1500 specials report
+- Monthly after DW updates

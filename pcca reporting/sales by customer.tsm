@@ -1,0 +1,2140 @@
+<!--Query Builder Save File: 12/21/2015 12:27:20 PM-->
+<SqlModelerElement DiagramId="86b1607e-f572-4c98-a9e0-ea5bbe742c51">
+  <DataSetElement>
+    <tsm:CriteriaDataSet xmlns:tsm="http://www.quest.com/2005/07/05/ToadSqlModeler/">
+      <xs:schema id="CriteriaDataSet" targetNamespace="http://www.quest.com/2005/07/05/ToadSqlModeler/" xmlns:mstns="http://www.quest.com/2005/07/05/ToadSqlModeler/" xmlns="http://www.quest.com/2005/07/05/ToadSqlModeler/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified" xmlns:app1="http://www.quest.com/2007/07/12/ToadSqlModeler/" msdata:schemafragmentcount="2">
+        <xs:import namespace="http://www.quest.com/2007/07/12/ToadSqlModeler/" />
+        <xs:element name="CriteriaDataSet" msdata:IsDataSet="true" msdata:Locale="en-US" msdata:EnforceConstraints="False" msdata:Prefix="tsm">
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="tableCriteria" msdata:Prefix="tsm">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="columnff696b15-7b67-4420-955d-1cd30b8cabe6" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="ACCOUNT_NUMBER_NK" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="1" />
+                    <xs:element name="columna5a1cac6-486a-44a2-a887-ad7236ad3da7" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="OLD_ACCOUNT_NUMBER_NK" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="2" />
+                    <xs:element name="column5b97616a-0eb1-4e98-810e-40d16740630d" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="IC_FLAG" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="3" />
+                    <xs:element name="column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="MAIN_CUSTOMER_NK" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="4" />
+                    <xs:element name="columnb92335dc-4be5-4464-aab1-b835984f4f35" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="EXT_SALES_AMOUNT" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="5" />
+                    <xs:element name="column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="EXT_AVG_COGS_AMOUNT" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="6" />
+                    <xs:element name="column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="YEARMONTH" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="7" />
+                    <xs:element name="column439b2049-0bde-443d-b2d7-73a623e6ac25" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="PRICE_CATEGORY" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="8" />
+                    <xs:element name="column6ff6023f-87e5-481e-8fe0-9437570377cb" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="SELL_WAREHOUSE_NUMBER_NK" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="9" />
+                  </xs:sequence>
+                  <xs:attribute name="columnCriteria" msdata:ReadOnly="true" msdata:Caption="Field" msdata:Prefix="tsm" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="tableTrl" msdata:Prefix="tsm">
+                <xs:complexType>
+                  <xs:attribute name="ID" msdata:Prefix="tsm" type="xs:string" use="required" />
+                  <xs:attribute name="Trl" msdata:Prefix="tsm" type="xs:string" />
+                  <xs:attribute name="Subquery" msdata:Prefix="tsm" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="tableVisibleIndex" msdata:Prefix="tsm">
+                <xs:complexType>
+                  <xs:attribute name="columnName" msdata:Prefix="tsm" type="xs:string" use="required" />
+                  <xs:attribute name="visibleIndex" msdata:Prefix="tsm" type="xs:short" />
+                  <xs:attribute name="width" msdata:Prefix="tsm" type="xs:short" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="tableNotes" msdata:Prefix="tsm">
+                <xs:complexType>
+                  <xs:attribute name="Id" msdata:Prefix="tsm" type="xs:string" />
+                  <xs:attribute name="Notes" msdata:Prefix="tsm" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="tableConnections" msdata:Prefix="tsm">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="app1:Connection" minOccurs="0" />
+                    <xs:element ref="app1:Xml" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+          <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tableTrl" />
+            <xs:field xpath="@mstns:ID" />
+          </xs:unique>
+        </xs:element>
+      </xs:schema>
+      <xs:schema targetNamespace="http://www.quest.com/2007/07/12/ToadSqlModeler/" xmlns:mstns="http://www.quest.com/2005/07/05/ToadSqlModeler/" xmlns="http://www.quest.com/2007/07/12/ToadSqlModeler/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified" xmlns:app1="http://www.quest.com/2007/07/12/ToadSqlModeler/">
+        <xs:import namespace="http://www.quest.com/2005/07/05/ToadSqlModeler/" />
+        <xs:element name="Connection" msdata:Prefix="tsm" type="xs:string" />
+        <xs:element name="Xml" msdata:Prefix="tsm" type="xs:string" />
+      </xs:schema>
+      <tsm:tableCriteria tsm:columnCriteria="Table">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PRICE_MGMT_DATA_DET</tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6>
+        <tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PRICE_MGMT_DATA_DET</tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7>
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PRICE_MGMT_DATA_DET</tsm:column5b97616a-0eb1-4e98-810e-40d16740630d>
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PRICE_MGMT_DATA_DET</tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67>
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PRICE_MGMT_DATA_DET</tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35>
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PRICE_MGMT_DATA_DET</tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3>
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PRICE_MGMT_DATA_DET</tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3>
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PRICE_MGMT_DATA_DET</tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25>
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PRICE_MGMT_DATA_DET</tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb>
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Database">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SALES_MART</tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6>
+        <tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SALES_MART</tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7>
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SALES_MART</tsm:column5b97616a-0eb1-4e98-810e-40d16740630d>
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SALES_MART</tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67>
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SALES_MART</tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35>
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SALES_MART</tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3>
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SALES_MART</tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3>
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SALES_MART</tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25>
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SALES_MART</tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb>
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Aggregate Function">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Sum</tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35>
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Sum</tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3>
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Where Condition">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 msdata:InstanceType="Quest.Toad.QueryBuilder.WhereClauseClass, ToadCore, Version=4.1.0.227, Culture=neutral, PublicKeyToken=c862883b2ae69822" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"> = '1480'</tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6>
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d msdata:InstanceType="Quest.Toad.QueryBuilder.WhereClauseClass, ToadCore, Version=4.1.0.227, Culture=neutral, PublicKeyToken=c862883b2ae69822" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"> = 'REGULAR'</tsm:column5b97616a-0eb1-4e98-810e-40d16740630d>
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 msdata:InstanceType="Quest.Toad.QueryBuilder.WhereClauseClass, ToadCore, Version=4.1.0.227, Culture=neutral, PublicKeyToken=c862883b2ae69822" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"> IN (201408, 201409, 201410, 201411, 201508, 201509, 201510, 201511)</tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3>
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb msdata:InstanceType="Quest.Toad.QueryBuilder.WhereClauseClass, ToadCore, Version=4.1.0.227, Culture=neutral, PublicKeyToken=c862883b2ae69822" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"> IN ('142', '144', '916')</tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb>
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Or">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Group By">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Group(1)</tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6>
+        <tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Group(2)</tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7>
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Group(3)</tsm:column5b97616a-0eb1-4e98-810e-40d16740630d>
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Group(4)</tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67>
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Group(5)</tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3>
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Group(6)</tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25>
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Group(7)</tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb>
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Having Condition">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Sort">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Visible">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6>
+        <tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7>
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">False</tsm:column5b97616a-0eb1-4e98-810e-40d16740630d>
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67>
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35>
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3>
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3>
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25>
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb>
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Field Alias">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SALES</tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35>
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">AC</tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3>
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Table Alias">
+        <tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PM_DET</tsm:columnff696b15-7b67-4420-955d-1cd30b8cabe6>
+        <tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PM_DET</tsm:columna5a1cac6-486a-44a2-a887-ad7236ad3da7>
+        <tsm:column5b97616a-0eb1-4e98-810e-40d16740630d xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PM_DET</tsm:column5b97616a-0eb1-4e98-810e-40d16740630d>
+        <tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PM_DET</tsm:column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67>
+        <tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PM_DET</tsm:columnb92335dc-4be5-4464-aab1-b835984f4f35>
+        <tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PM_DET</tsm:column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3>
+        <tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PM_DET</tsm:column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3>
+        <tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PM_DET</tsm:column439b2049-0bde-443d-b2d7-73a623e6ac25>
+        <tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PM_DET</tsm:column6ff6023f-87e5-481e-8fe0-9437570377cb>
+      </tsm:tableCriteria>
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{1d1ca66a-66b2-45c8-b8eb-595a3f4cba43}" tsm:Trl="~All" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{7d355b78-a7b9-45be-89e8-1158ea7c8cc7}" tsm:Trl="~*" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/YEARMONTH/NUMBER(6)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{ff696b15-7b67-4420-955d-1cd30b8cabe6}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/ACCOUNT_NUMBER_NK/VARCHAR2(25)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{a5a1cac6-486a-44a2-a887-ad7236ad3da7}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/OLD_ACCOUNT_NUMBER_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{ef44977d-6eda-42d1-8d86-09e89f4484f2}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/DISCOUNT_GROUP_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{52aa338e-311e-404c-ae18-849191ed8123}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/DISCOUNT_GROUP_NK_NAME/VARCHAR2(63)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{f0c4c3d9-7d66-4151-b1f4-c7ee75d0c123}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/ALT1_CODE_AND_PRODUCT_NAME/VARCHAR2(58)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{2a8583ba-18e8-4277-b345-d22b2ce65095}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_WAREHOUSE_NUMBER_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{6ff6023f-87e5-481e-8fe0-9437570377cb}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_WAREHOUSE_NUMBER_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{e5cc06d1-7503-4202-a111-b423079eeb62}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRICE_DIM_GROUP_KEY/VARCHAR2(21)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{4bfd68c1-cd1d-4c56-9661-e9cda56ce4e1}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRICE_DIM_PRODUCT_KEY/VARCHAR2(32)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{a80c7a00-a038-42c5-96b0-1353e9e25122}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PROD_CONTR_OVERRIDE_KEY/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{9302e977-97cc-4d16-b013-a2f275c76799}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/DISC_GROUP_CONTR_OVERRIDE_KEY/VARCHAR2(39)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{946449ce-641a-48ae-995a-da9347880657}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PROD_BASE_OVERRIDE_KEY/VARCHAR2(40)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{d365846f-3bb4-4420-b4b5-607c4ccb9221}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/DISC_GROUP_BASE_OVERRIDE_KEY/VARCHAR2(29)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{4aeeb52b-e7fc-4f82-b140-2d073cf46cc2}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/BRANCH_DISC_GROUP_KEY/VARCHAR2(15)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{e1ebe2b3-432a-4c7a-bdd7-8af20a5800cf}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRICE_COLUMN/VARCHAR2(5)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{ba8c932a-977e-4944-91ef-cff501de0bc5}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SALES_TYPE/VARCHAR2(20)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{4058a284-d6d4-424e-bade-39f8e8706329}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/CHANNEL_TYPE/VARCHAR2(14)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{5b97616a-0eb1-4e98-810e-40d16740630d}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/IC_FLAG/VARCHAR2(12)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{aad377e4-40df-4765-8f89-43d32e697b25}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/BACKORDER_FLAG/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{910e636e-e702-4d0e-95cc-89e06088a2dd}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SOURCE_SYSTEM/VARCHAR2(30)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{0739e290-9421-415f-80c4-46f55385379e}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_VIA/VARCHAR2(4)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{e751339f-0c3f-4e3d-9668-60e3409269a3}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/ORDER_CODE/VARCHAR2(2)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{9710d860-aa85-489f-9f72-e2b204896775}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/WRITER/VARCHAR2(30)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{57242422-87e0-4428-a6ce-3b5ad0e61a0a}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_TO_ZIPCODE/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{cdb0e1e6-7182-424b-a3ef-514b7aab5444}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/CUSTOMER_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{6a81ce25-aae9-4083-8ed5-0d1cb990fb43}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/CUSTOMER_GK/FLOAT(126)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{48e79d40-bde3-4d40-a5be-168f30e1df6a}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/OLD_CUSTOMER_GK/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{e1ad388d-f807-475c-a09f-03676ef993e2}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/CUSTOMER_HIST_GK/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/MAIN_CUSTOMER_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{94d19591-2f46-4b7b-94c7-2d519006b2ed}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/MAIN_CUSTOMER_GK/FLOAT(126)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{0f18a194-39d2-4905-bbf7-2f97bbf2ca68}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/OLD_MAIN_CUSTOMER_GK/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{1aacaae2-53cc-4e28-b651-e6c619a8220e}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/ACTIVE_ACCOUNT_NUMBER_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{1d98f070-197d-40a4-9ba0-b52b6007dbb5}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/ACTIVE_CUSTOMER_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{53318f3c-8d45-48c9-bdd8-f742dafbe964}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/ACTIVE_CUSTOMER_GK/FLOAT(126)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{43fd29d9-ea39-4f12-8dc8-2d11cc3f1173}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/OVR_CUSTOMER_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{abcfe382-b166-4cd5-82e7-7b7875f5b6d4}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/OVR_CUSTOMER_GK/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{47f4fdb8-69c8-4057-a2b8-d0aac4504a7b}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/CONTRACT_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{50f4736e-a149-48d8-9a58-c50154fd0d5d}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRODUCT_TYPE/VARCHAR2(8)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{62f91795-7db6-4ed2-afb9-e9d38ce2dfa3}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRODUCT_GK/VARCHAR2(42)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{6d69893b-7339-41ec-b893-9bc76b2e989e}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRODUCT_NK/VARCHAR2(15)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{840f02d3-6228-4d27-a805-4e68c3d81f46}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRODUCT_HIST_GK/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{3a75515c-fe13-4335-b23b-697165118442}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRICE_SUB_CATEGORY/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{439b2049-0bde-443d-b2d7-73a623e6ac25}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRICE_CATEGORY/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{52289465-8ba7-464a-a572-654d0e9dc88c}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/LINES_FILLED/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{f795c9e0-5fb3-434a-a577-d9a2235b1730}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/TOTAL_LINES/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{aeaeb49e-04b1-4fd1-bf55-8734c7b7a412}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/ORDERED_QTY/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{08b1537f-ee69-446c-a670-ae3a4f6bafcd}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIPPED_QTY/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{b92335dc-4be5-4464-aab1-b835984f4f35}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/EXT_SALES_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{86cd422f-4ce9-4bd0-84d7-f34a4343b6a3}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/EXT_AVG_COGS_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{508ac8fe-acea-4ee9-a99e-d0e2f959717d}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/EXT_ACTUAL_COGS_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{3f104130-8114-4378-9f59-b4c830f1af21}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/EXT_WEIGHT_LB/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{358cd28e-ad97-430d-954d-c7e86545c9bc}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/EXT_VOLUME_CF/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{8259b562-4cb7-44b4-88b7-dc05d7f88492}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/AVG_UNIT_NET_PRICE_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{ef90f227-bddf-43ef-8fe3-9c17fdf8b926}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/FREIGHT_SALES_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{5297e575-f4b7-46d9-a54c-692e9ad04752}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/FREIGHT_COST_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{461d24a3-7af5-42d8-be27-a1ed83257d12}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/HANDLING_SALES_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{630902ad-0eab-4fb5-a07e-df92d8f858cf}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/MISC_SALES_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{b15dee36-8bc3-4480-a643-3123f882847e}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/MISC_COST_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{691de9da-33d8-44b5-89e3-522c2cf99144}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/RESTOCKING_SALES_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{4b3361bb-bf73-4f15-903f-c627d4e4c051}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SALES_TAX_AMOUNT/NUMBER" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{c2c67c9d-d5b7-45b9-b18a-65208a0df312}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/TYPE_CATEGORY/VARCHAR2(45)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{6d5da0ba-24d4-4ed0-b33e-44066e0941c9}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/CUSTOMER_TYPE/VARCHAR2(15)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{bde11b9f-f8c1-4075-bef9-22308fa8af80}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/CUST_CUSTOMER_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{70a7faa9-091e-43a2-b02b-818d90f90e69}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/CUSTOMER_NAME/VARCHAR2(30)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{3db86c69-caf8-4f47-9599-68f4791e9f47}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/CUSTOMER_NK_NAME/VARCHAR2(43)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{06055e94-cc93-4a60-ad97-6e22a34c213e}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/MAIN_CUSTOMER_NAME/VARCHAR2(30)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{14e74e97-0d1f-4553-bcd9-4e4e797dd261}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/MAIN_CUSTOMER_NK_NAME/VARCHAR2(43)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{5ea05cfa-07ab-41d5-b46b-2f7d787cbd71}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/OVR_CUSTOMER_NK_NAME/VARCHAR2(43)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{d892c48a-2918-4927-a696-9832a36bc103}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/OVR_CUSTOMER_NAME/VARCHAR2(30)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{45aec2a5-f61b-4427-a768-34f07f8bbb5e}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SALESMAN_CODE/VARCHAR2(5)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{d8776c04-abda-4983-943d-7f5a07960148}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SALESREP_NAME/VARCHAR2(30)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{bbf2c6aa-fcdd-4995-b228-f244598f4018}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_ALIAS_NAME/VARCHAR2(4000)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{04e2598f-f131-4c13-ba3c-ceb07ff0b879}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_ACCOUNT_NAME/VARCHAR2(100)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{3eb62528-8063-408c-9212-5caebfef56bd}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_WAREHOUSE_NAME/VARCHAR2(100)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{8f35b4b8-4583-438f-9866-a14753e4f7fb}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_WHSE_STATUS/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{5871cc91-aaf9-4069-a08a-f30fcdbc1687}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_KIND_OF_BUSINESS/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{d586c245-abf0-4378-9cf0-3c22e6c55306}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_DISTRICT/VARCHAR2(100)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{55367c6f-c6df-4335-a870-e33d5513ea71}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_REGION_NAME/VARCHAR2(100)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{d1125362-fd8b-4403-a63b-161d0c9394c4}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_BUSINESS_UNIT/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{db8a6e16-194e-4012-b2b1-30518cbe4e6b}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_BU_NAME/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{820a1b32-1282-435c-a38c-b3bb43461663}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_BU2_NAME/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{1091c142-ed78-4478-b562-2c4afc2a947c}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_LEVEL8/VARCHAR2(20)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{1dfab4d7-4c57-421c-8556-b1d93a598d9a}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_LEVEL9/VARCHAR2(20)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{d320013a-891a-4c79-89e7-3aceca412c88}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_LEVEL10/VARCHAR2(20)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{80d12abd-6051-4e24-adbd-efc7bbbe0cb5}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SELL_RPC/VARCHAR2(25)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{3874312c-ab1b-4ba5-b371-a7f58e88ad74}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_ALIAS_NAME/VARCHAR2(4000)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{e0c91058-f3d5-4347-ae41-32493c6f6b50}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_ACCOUNT_NAME/VARCHAR2(100)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{0c8a72aa-9638-4f4f-aae5-141c1c343f2d}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_WAREHOUSE_NAME/VARCHAR2(100)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{6ae828ee-a2ff-4f8c-9d53-061c2c510b05}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_WHSE_STATUS/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{30540ab8-2f50-477d-9a84-1e19f19b1ddb}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_KIND_OF_BUSINESS/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{02c914e3-31f3-42fb-89bf-fa008f01e0bf}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_DISTRICT/VARCHAR2(100)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{a2d783f0-5a47-4272-a66d-a76657be4367}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_REGION_NAME/VARCHAR2(100)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{8f52ccd1-9913-4429-a683-63b16d9acb3b}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_BUSINESS_UNIT/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{52e0a8cf-2c71-4871-aca3-75e7a78083a7}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_BU_NAME/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{a641cc88-0208-4d25-8a23-828fc1654b33}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_BU2_NAME/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{ddf52eb4-9bea-46e2-91d3-34b9a65256ce}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_LEVEL8/VARCHAR2(20)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{e5f22c4b-5695-406c-818c-21258189f353}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_LEVEL9/VARCHAR2(20)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{7cc0b1e9-5693-46f4-ac9b-f30d64254108}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_LEVEL10/VARCHAR2(20)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{62c94190-799d-41fa-adff-2c69448fef5d}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/SHIP_RPC/VARCHAR2(25)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{3a0bff3c-abc1-4c2c-9512-2426345b7b4f}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRIMARY_VENDOR_NK/VARCHAR2(10)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{9f149146-e493-431a-bbc5-5317e1e28fd0}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/PRIMARY_VENDOR_NAME/VARCHAR2(35)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{5934002e-9f11-4352-99a6-e6d7ab2dd855}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/RESCOM_CATEGORY1/VARCHAR2(40)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{d88dbea5-3673-4348-bae1-d50654590f7c}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/RESCOM_CATEGORY2/VARCHAR2(40)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{7678cf33-7c90-4e42-8c99-532fb3292528}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/RESCOM_CATEGORY3/VARCHAR2(40)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{6a86a6fd-ffbe-4b38-a351-8e1829e9636e}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/RESCOM_CATEGORY4/VARCHAR2(40)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{b0397932-ba98-414b-acfd-7b4baee31fa9}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/HVAC_LEVEL_1/VARCHAR2(40)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{e32cc13f-7f7f-4455-9e69-71649bbabc28}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/HVAC_LEVEL_2/VARCHAR2(40)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{eb197fab-b38f-48a9-9ca0-9b044f81fcf3}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/HVAC_LEVEL_3/VARCHAR2(40)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{431440a7-ffcd-41e4-9e2d-d59fda7a0ec4}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/WW_LEVEL_1/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{cb3b64e1-f2a0-4a57-944d-78f4a2606c48}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/WW_LEVEL_2/VARCHAR2(50)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{319139df-5b9c-44b3-97e4-d9bddfbae974}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/IND_LEVEL_1/VARCHAR2(40)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{150d24cd-5d41-472a-ae43-e73efe1a006f}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/IND_LEVEL_2/VARCHAR2(40)" />
+      <tsm:tableTrl tsm:ID="{b1a417e5-1d2f-4a4f-a357-586d991e2f34}{d7aed6b2-afd4-4b50-bb91-4320ef44bfd2}" tsm:Trl="oracle://AAA6863@DWFEI.HQ.FERG.COM/TABLE/SALES_MART/PRICE_MGMT_DATA_DET/COLUMNS/IND_LEVEL_3/VARCHAR2(40)" />
+      <tsm:tableVisibleIndex tsm:columnName="columnff696b15-7b67-4420-955d-1cd30b8cabe6" tsm:visibleIndex="2" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="columna5a1cac6-486a-44a2-a887-ad7236ad3da7" tsm:visibleIndex="3" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="column5b97616a-0eb1-4e98-810e-40d16740630d" tsm:visibleIndex="5" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67" tsm:visibleIndex="6" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="columnb92335dc-4be5-4464-aab1-b835984f4f35" tsm:visibleIndex="8" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3" tsm:visibleIndex="9" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3" tsm:visibleIndex="1" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="column439b2049-0bde-443d-b2d7-73a623e6ac25" tsm:visibleIndex="7" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="column6ff6023f-87e5-481e-8fe0-9437570377cb" tsm:visibleIndex="4" tsm:width="90" />
+      <tsm:tableConnections>
+        <tsm:Connection xmlns:tsm="http://www.quest.com/2007/07/12/ToadSqlModeler/">DWFEI.HQ.FERG.COM (AAA6863), AAA6863</tsm:Connection>
+        <tsm:Xml xmlns:tsm="http://www.quest.com/2007/07/12/ToadSqlModeler/">&amp;lt;Connection type=&amp;quot;Oracle&amp;quot; autoCommit=&amp;quot;False&amp;quot;&amp;gt;&amp;lt;Path&amp;gt;Oracle&amp;lt;/Path&amp;gt;&amp;lt;AutoConnect&amp;gt;True&amp;lt;/AutoConnect&amp;gt;&amp;lt;Database&amp;gt;AAA6863&amp;lt;/Database&amp;gt;&amp;lt;Host&amp;gt;DWFEI.HQ.FERG.COM&amp;lt;/Host&amp;gt;&amp;lt;User&amp;gt;AAA6863&amp;lt;/User&amp;gt;&amp;lt;Password&amp;gt;B417D408FB19B500D14800077A2B040B&amp;lt;/Password&amp;gt;&amp;lt;WinAuth&amp;gt;False&amp;lt;/WinAuth&amp;gt;&amp;lt;LastConnectionDate&amp;gt;2015-12-21T11:32:04.4535811&amp;lt;/LastConnectionDate&amp;gt;&amp;lt;ConnectionMode&amp;gt;Default&amp;lt;/ConnectionMode&amp;gt;&amp;lt;Port&amp;gt;1521&amp;lt;/Port&amp;gt;&amp;lt;Sid&amp;gt;&amp;lt;/Sid&amp;gt;&amp;lt;ConnectionType&amp;gt;Client&amp;lt;/ConnectionType&amp;gt;&amp;lt;Home&amp;gt;OraClient11g_home1&amp;lt;/Home&amp;gt;&amp;lt;ExplainPlanTable&amp;gt;&amp;lt;/ExplainPlanTable&amp;gt;&amp;lt;/Connection&amp;gt;</tsm:Xml>
+      </tsm:tableConnections>
+    </tsm:CriteriaDataSet>
+  </DataSetElement>
+  <DiagramElement>
+    <Information>
+      <Version>4.1.0.227</Version>
+    </Information>
+    <Control>
+      <DragBorderOnly>True</DragBorderOnly>
+      <ShowToolTips>True</ShowToolTips>
+      <DrawHighQuality>True</DrawHighQuality>
+      <AutoScroll>True</AutoScroll>
+      <Zoom>100</Zoom>
+      <BackColor>Window</BackColor>
+      <MinimizeToIcon>False</MinimizeToIcon>
+    </Control>
+    <Tables>
+      <Table Type="Quest.Toad.ModelerDrawing.DrawingControls.TableObject" ID="b1a417e5-1d2f-4a4f-a357-586d991e2f34">
+        <Properties>
+          <Name>PRICE_MGMT_DATA_DET</Name>
+          <Alias>PM_DET</Alias>
+        </Properties>
+        <Control Type="Quest.Toad.ModelerDrawing.Controls.DefaultTableControl" Width="16" Height="16">
+          <ShowColumnDetails>False</ShowColumnDetails>
+          <ShowTableItems>False</ShowTableItems>
+          <ShowTableItemsTitle>False</ShowTableItemsTitle>
+          <ShowTableItemsCloseButton>False</ShowTableItemsCloseButton>
+          <TableItemsTitle>
+          </TableItemsTitle>
+          <TableItemsToolTip>
+          </TableItemsToolTip>
+          <Bounds>29, 35, 250, 793</Bounds>
+          <Minimized>False</Minimized>
+          <Visible>True</Visible>
+          <BorderStyle>Fixed3D</BorderStyle>
+          <ToolTip><![CDATA[SALES_MART.PRICE_MGMT_DATA_DET
+Connection: DWFEI.HQ.FERG.COM (AAA6863), AAA6863]]></ToolTip>
+          <ShowMinimizeButton>True</ShowMinimizeButton>
+          <Icon>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF81A4F4FF81A4F4FF81A4F4FF81A4F4FF8195C7FF8195C7FF8195C7FF8195C7FF8195C7FF8195C7FF8195C7FF8195C7FF8195C7FF8195C70000000000000000FF81A4F4FFF5FAFDFFD7EBF7FF81A4F4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5767810000000000000000FF81A0F2FFD3E8F7FFBBDBF3FF81A0F1FFFFFFFFFFB6BCF0FFFBFCFFFFB5BBF0FFF9F9FEFFB0B6EBFFF6F8FDFFA5ACE5FFFFFFFFFF5767810000000000000000FF819BEFFFCEE4F8FFB2D4F5FF819BEFFFFFFFFFFFB6BCF0FFF9FBFEFFB2B9EEFFF5F7FDFFAAB1E8FFF3F4FDFFA0A7E1FFFFFFFFFF5767810000000000000000FF8194EBFFC9DEF9FFA9CCF6FF8194ECFFFFFFFFFFF9F9FEFFF6F7FEFFF5F6FDFFF2F3FCFFEFF1FCFFEFF1FCFFEDEEFBFFFFFFFFFF5767810000000000000000FF818EE7FFC2D9FBFF9EC2F7FF818EE8FFFFFFFFFFF6F7FDFFF3F5FDFFF1F2FCFFEEF0FBFFEBEDFBFFEBEDFBFFE8EBFAFFFFFFFFFF5767810000000000000000FF8187E3FFBBD3FCFF93BAFAFF8186E3FFFFFFFFFFAFB5EBFFEFF1FCFFA6ACE5FFEAECFBFF9BA2DDFFE7E9FBFF9198D6FFFFFFFFFF5767810000000000000000FF8081DFFFB4CDFCFF88B0FBFF8181DFFFFFFFFFFFABB1E8FFECEDFBFFA1A7E1FFE6E8FAFF959DD9FFE3E5FAFF8D95D3FFFFFFFFFF5767810000000000000000FF7981DBFFAEC8FEFF81A8FDFF7881DBFFFFFFFFFFEAECFBFFE7E9FBFFE5E7FAFFE2E4FAFFDFE2F8FFDFE2F8FFDDDFF8FFFFFFFFFF5767810000000000000000FF7981DBFFAEC8FEFF81A8FDFF7881DBFFFFFFFFFFE6E8FAFFE3E6FAFFE0E3F9FFDEE1F8FFDCDFF8FFDCDFF8FFD9DCF8FFFFFFFFFF5767810000000000000000FF7281D6FFA9C4FEFF81A1FEFF7281D6FFFFFFFFFF9BA1DDFFDFE2F9FF9199D6FFDADDF8FF8A92D1FFD9DBF7FF8A92D1FFFFFFFFFF5767810000000000000000FF7281D6FFA9C4FEFF81A1FEFF7281D6FFFFFFFFFF959DD9FFDFE2F9FF8D94D3FFDADDF8FF8A92D1FFD9DBF7FF8B92D1FFFFFFFFFF5767810000000000000000FF6C81D3FFA5C0FFFF819CFFFF6C81D3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5767810000000000000000FF6781D1FF6781D0FF6781D0FF6681D1FF576781FF576781FF576781FF576781FF576781FF576781FF576781FF576781FF576781FF5767810000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Icon>
+        </Control>
+        <Columns>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="1d1ca66a-66b2-45c8-b8eb-595a3f4cba43">
+            <Name>All</Name>
+            <Alias><![CDATA[(Add All Columns)]]></Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="7d355b78-a7b9-45be-89e8-1158ea7c8cc7">
+            <Name>*</Name>
+            <Alias><![CDATA[* (Wildcard)]]></Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3">
+            <Name>YEARMONTH</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>True</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="ff696b15-7b67-4420-955d-1cd30b8cabe6">
+            <Name>ACCOUNT_NUMBER_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>True</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="a5a1cac6-486a-44a2-a887-ad7236ad3da7">
+            <Name>OLD_ACCOUNT_NUMBER_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>True</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="ef44977d-6eda-42d1-8d86-09e89f4484f2">
+            <Name>DISCOUNT_GROUP_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="52aa338e-311e-404c-ae18-849191ed8123">
+            <Name>DISCOUNT_GROUP_NK_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="f0c4c3d9-7d66-4151-b1f4-c7ee75d0c123">
+            <Name>ALT1_CODE_AND_PRODUCT_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="2a8583ba-18e8-4277-b345-d22b2ce65095">
+            <Name>SHIP_WAREHOUSE_NUMBER_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="6ff6023f-87e5-481e-8fe0-9437570377cb">
+            <Name>SELL_WAREHOUSE_NUMBER_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>True</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="e5cc06d1-7503-4202-a111-b423079eeb62">
+            <Name>PRICE_DIM_GROUP_KEY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="4bfd68c1-cd1d-4c56-9661-e9cda56ce4e1">
+            <Name>PRICE_DIM_PRODUCT_KEY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="a80c7a00-a038-42c5-96b0-1353e9e25122">
+            <Name>PROD_CONTR_OVERRIDE_KEY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="9302e977-97cc-4d16-b013-a2f275c76799">
+            <Name>DISC_GROUP_CONTR_OVERRIDE_KEY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="946449ce-641a-48ae-995a-da9347880657">
+            <Name>PROD_BASE_OVERRIDE_KEY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d365846f-3bb4-4420-b4b5-607c4ccb9221">
+            <Name>DISC_GROUP_BASE_OVERRIDE_KEY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="4aeeb52b-e7fc-4f82-b140-2d073cf46cc2">
+            <Name>BRANCH_DISC_GROUP_KEY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="e1ebe2b3-432a-4c7a-bdd7-8af20a5800cf">
+            <Name>PRICE_COLUMN</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="ba8c932a-977e-4944-91ef-cff501de0bc5">
+            <Name>SALES_TYPE</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="4058a284-d6d4-424e-bade-39f8e8706329">
+            <Name>CHANNEL_TYPE</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="5b97616a-0eb1-4e98-810e-40d16740630d">
+            <Name>IC_FLAG</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>True</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="aad377e4-40df-4765-8f89-43d32e697b25">
+            <Name>BACKORDER_FLAG</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="910e636e-e702-4d0e-95cc-89e06088a2dd">
+            <Name>SOURCE_SYSTEM</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="0739e290-9421-415f-80c4-46f55385379e">
+            <Name>SHIP_VIA</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="e751339f-0c3f-4e3d-9668-60e3409269a3">
+            <Name>ORDER_CODE</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="9710d860-aa85-489f-9f72-e2b204896775">
+            <Name>WRITER</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="57242422-87e0-4428-a6ce-3b5ad0e61a0a">
+            <Name>SHIP_TO_ZIPCODE</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="cdb0e1e6-7182-424b-a3ef-514b7aab5444">
+            <Name>CUSTOMER_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="6a81ce25-aae9-4083-8ed5-0d1cb990fb43">
+            <Name>CUSTOMER_GK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="48e79d40-bde3-4d40-a5be-168f30e1df6a">
+            <Name>OLD_CUSTOMER_GK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="e1ad388d-f807-475c-a09f-03676ef993e2">
+            <Name>CUSTOMER_HIST_GK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67">
+            <Name>MAIN_CUSTOMER_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>True</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="94d19591-2f46-4b7b-94c7-2d519006b2ed">
+            <Name>MAIN_CUSTOMER_GK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="0f18a194-39d2-4905-bbf7-2f97bbf2ca68">
+            <Name>OLD_MAIN_CUSTOMER_GK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="1aacaae2-53cc-4e28-b651-e6c619a8220e">
+            <Name>ACTIVE_ACCOUNT_NUMBER_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="1d98f070-197d-40a4-9ba0-b52b6007dbb5">
+            <Name>ACTIVE_CUSTOMER_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="53318f3c-8d45-48c9-bdd8-f742dafbe964">
+            <Name>ACTIVE_CUSTOMER_GK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="43fd29d9-ea39-4f12-8dc8-2d11cc3f1173">
+            <Name>OVR_CUSTOMER_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="abcfe382-b166-4cd5-82e7-7b7875f5b6d4">
+            <Name>OVR_CUSTOMER_GK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="47f4fdb8-69c8-4057-a2b8-d0aac4504a7b">
+            <Name>CONTRACT_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="50f4736e-a149-48d8-9a58-c50154fd0d5d">
+            <Name>PRODUCT_TYPE</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="62f91795-7db6-4ed2-afb9-e9d38ce2dfa3">
+            <Name>PRODUCT_GK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="6d69893b-7339-41ec-b893-9bc76b2e989e">
+            <Name>PRODUCT_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="840f02d3-6228-4d27-a805-4e68c3d81f46">
+            <Name>PRODUCT_HIST_GK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="3a75515c-fe13-4335-b23b-697165118442">
+            <Name>PRICE_SUB_CATEGORY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="439b2049-0bde-443d-b2d7-73a623e6ac25">
+            <Name>PRICE_CATEGORY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>True</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="52289465-8ba7-464a-a572-654d0e9dc88c">
+            <Name>LINES_FILLED</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="f795c9e0-5fb3-434a-a577-d9a2235b1730">
+            <Name>TOTAL_LINES</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="aeaeb49e-04b1-4fd1-bf55-8734c7b7a412">
+            <Name>ORDERED_QTY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="08b1537f-ee69-446c-a670-ae3a4f6bafcd">
+            <Name>SHIPPED_QTY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="b92335dc-4be5-4464-aab1-b835984f4f35">
+            <Name>EXT_SALES_AMOUNT</Name>
+            <Alias>SALES</Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="86cd422f-4ce9-4bd0-84d7-f34a4343b6a3">
+            <Name>EXT_AVG_COGS_AMOUNT</Name>
+            <Alias>AC</Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="508ac8fe-acea-4ee9-a99e-d0e2f959717d">
+            <Name>EXT_ACTUAL_COGS_AMOUNT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="3f104130-8114-4378-9f59-b4c830f1af21">
+            <Name>EXT_WEIGHT_LB</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="358cd28e-ad97-430d-954d-c7e86545c9bc">
+            <Name>EXT_VOLUME_CF</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="8259b562-4cb7-44b4-88b7-dc05d7f88492">
+            <Name>AVG_UNIT_NET_PRICE_AMOUNT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="ef90f227-bddf-43ef-8fe3-9c17fdf8b926">
+            <Name>FREIGHT_SALES_AMOUNT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="5297e575-f4b7-46d9-a54c-692e9ad04752">
+            <Name>FREIGHT_COST_AMOUNT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="461d24a3-7af5-42d8-be27-a1ed83257d12">
+            <Name>HANDLING_SALES_AMOUNT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="630902ad-0eab-4fb5-a07e-df92d8f858cf">
+            <Name>MISC_SALES_AMOUNT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="b15dee36-8bc3-4480-a643-3123f882847e">
+            <Name>MISC_COST_AMOUNT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="691de9da-33d8-44b5-89e3-522c2cf99144">
+            <Name>RESTOCKING_SALES_AMOUNT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="4b3361bb-bf73-4f15-903f-c627d4e4c051">
+            <Name>SALES_TAX_AMOUNT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="c2c67c9d-d5b7-45b9-b18a-65208a0df312">
+            <Name>TYPE_CATEGORY</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="6d5da0ba-24d4-4ed0-b33e-44066e0941c9">
+            <Name>CUSTOMER_TYPE</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="bde11b9f-f8c1-4075-bef9-22308fa8af80">
+            <Name>CUST_CUSTOMER_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="70a7faa9-091e-43a2-b02b-818d90f90e69">
+            <Name>CUSTOMER_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="3db86c69-caf8-4f47-9599-68f4791e9f47">
+            <Name>CUSTOMER_NK_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="06055e94-cc93-4a60-ad97-6e22a34c213e">
+            <Name>MAIN_CUSTOMER_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="14e74e97-0d1f-4553-bcd9-4e4e797dd261">
+            <Name>MAIN_CUSTOMER_NK_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="5ea05cfa-07ab-41d5-b46b-2f7d787cbd71">
+            <Name>OVR_CUSTOMER_NK_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d892c48a-2918-4927-a696-9832a36bc103">
+            <Name>OVR_CUSTOMER_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="45aec2a5-f61b-4427-a768-34f07f8bbb5e">
+            <Name>SALESMAN_CODE</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d8776c04-abda-4983-943d-7f5a07960148">
+            <Name>SALESREP_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="bbf2c6aa-fcdd-4995-b228-f244598f4018">
+            <Name>SELL_ALIAS_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="04e2598f-f131-4c13-ba3c-ceb07ff0b879">
+            <Name>SELL_ACCOUNT_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="3eb62528-8063-408c-9212-5caebfef56bd">
+            <Name>SELL_WAREHOUSE_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="8f35b4b8-4583-438f-9866-a14753e4f7fb">
+            <Name>SELL_WHSE_STATUS</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="5871cc91-aaf9-4069-a08a-f30fcdbc1687">
+            <Name>SELL_KIND_OF_BUSINESS</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d586c245-abf0-4378-9cf0-3c22e6c55306">
+            <Name>SELL_DISTRICT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="55367c6f-c6df-4335-a870-e33d5513ea71">
+            <Name>SELL_REGION_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d1125362-fd8b-4403-a63b-161d0c9394c4">
+            <Name>SELL_BUSINESS_UNIT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="db8a6e16-194e-4012-b2b1-30518cbe4e6b">
+            <Name>SELL_BU_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="820a1b32-1282-435c-a38c-b3bb43461663">
+            <Name>SELL_BU2_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="1091c142-ed78-4478-b562-2c4afc2a947c">
+            <Name>SELL_LEVEL8</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="1dfab4d7-4c57-421c-8556-b1d93a598d9a">
+            <Name>SELL_LEVEL9</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d320013a-891a-4c79-89e7-3aceca412c88">
+            <Name>SELL_LEVEL10</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="80d12abd-6051-4e24-adbd-efc7bbbe0cb5">
+            <Name>SELL_RPC</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="3874312c-ab1b-4ba5-b371-a7f58e88ad74">
+            <Name>SHIP_ALIAS_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="e0c91058-f3d5-4347-ae41-32493c6f6b50">
+            <Name>SHIP_ACCOUNT_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="0c8a72aa-9638-4f4f-aae5-141c1c343f2d">
+            <Name>SHIP_WAREHOUSE_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="6ae828ee-a2ff-4f8c-9d53-061c2c510b05">
+            <Name>SHIP_WHSE_STATUS</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="30540ab8-2f50-477d-9a84-1e19f19b1ddb">
+            <Name>SHIP_KIND_OF_BUSINESS</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="02c914e3-31f3-42fb-89bf-fa008f01e0bf">
+            <Name>SHIP_DISTRICT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="a2d783f0-5a47-4272-a66d-a76657be4367">
+            <Name>SHIP_REGION_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="8f52ccd1-9913-4429-a683-63b16d9acb3b">
+            <Name>SHIP_BUSINESS_UNIT</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="52e0a8cf-2c71-4871-aca3-75e7a78083a7">
+            <Name>SHIP_BU_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="a641cc88-0208-4d25-8a23-828fc1654b33">
+            <Name>SHIP_BU2_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="ddf52eb4-9bea-46e2-91d3-34b9a65256ce">
+            <Name>SHIP_LEVEL8</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="e5f22c4b-5695-406c-818c-21258189f353">
+            <Name>SHIP_LEVEL9</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="7cc0b1e9-5693-46f4-ac9b-f30d64254108">
+            <Name>SHIP_LEVEL10</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="62c94190-799d-41fa-adff-2c69448fef5d">
+            <Name>SHIP_RPC</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="3a0bff3c-abc1-4c2c-9512-2426345b7b4f">
+            <Name>PRIMARY_VENDOR_NK</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="9f149146-e493-431a-bbc5-5317e1e28fd0">
+            <Name>PRIMARY_VENDOR_NAME</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="5934002e-9f11-4352-99a6-e6d7ab2dd855">
+            <Name>RESCOM_CATEGORY1</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d88dbea5-3673-4348-bae1-d50654590f7c">
+            <Name>RESCOM_CATEGORY2</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="7678cf33-7c90-4e42-8c99-532fb3292528">
+            <Name>RESCOM_CATEGORY3</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="6a86a6fd-ffbe-4b38-a351-8e1829e9636e">
+            <Name>RESCOM_CATEGORY4</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="b0397932-ba98-414b-acfd-7b4baee31fa9">
+            <Name>HVAC_LEVEL_1</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="e32cc13f-7f7f-4455-9e69-71649bbabc28">
+            <Name>HVAC_LEVEL_2</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="eb197fab-b38f-48a9-9ca0-9b044f81fcf3">
+            <Name>HVAC_LEVEL_3</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="431440a7-ffcd-41e4-9e2d-d59fda7a0ec4">
+            <Name>WW_LEVEL_1</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="cb3b64e1-f2a0-4a57-944d-78f4a2606c48">
+            <Name>WW_LEVEL_2</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="319139df-5b9c-44b3-97e4-d9bddfbae974">
+            <Name>IND_LEVEL_1</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="150d24cd-5d41-472a-ae43-e73efe1a006f">
+            <Name>IND_LEVEL_2</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d7aed6b2-afd4-4b50-bb91-4320ef44bfd2">
+            <Name>IND_LEVEL_3</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+        </Columns>
+        <Items />
+        <Attributes />
+      </Table>
+    </Tables>
+    <Relations />
+    <Objects />
+  </DiagramElement>
+  <WhereClauseElement>
+    <columnff696b15-7b67-4420-955d-1cd30b8cabe6 WhereCondition="&lt;SOAP-ENV:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:clr=&quot;http://schemas.microsoft.com/soap/encoding/clr/1.0&quot; SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&#xD;&#xA;&lt;SOAP-ENV:Body&gt;&#xD;&#xA;&lt;a1:WhereClauseClass id=&quot;ref-1&quot; xmlns:a1=&quot;http://schemas.microsoft.com/clr/nsassem/Quest.Toad.QueryBuilder/ToadCore&quot;&gt;&#xD;&#xA;&lt;caseInsensitive&gt;false&lt;/caseInsensitive&gt;&#xD;&#xA;&lt;operandType1&gt;Constant&lt;/operandType1&gt;&#xD;&#xA;&lt;operandType2&gt;Constant&lt;/operandType2&gt;&#xD;&#xA;&lt;condition id=&quot;ref-4&quot;&gt;=&lt;/condition&gt;&#xD;&#xA;&lt;constant1 id=&quot;ref-5&quot;&gt;1480&lt;/constant1&gt;&#xD;&#xA;&lt;constant2 id=&quot;ref-6&quot;&gt;&lt;/constant2&gt;&#xD;&#xA;&lt;quoteString&gt;true&lt;/quoteString&gt;&#xD;&#xA;&lt;likeType&gt;-1&lt;/likeType&gt;&#xD;&#xA;&lt;aggregateLeft xsi:null=&quot;1&quot;/&gt;&#xD;&#xA;&lt;aggregateRight xsi:null=&quot;1&quot;/&gt;&#xD;&#xA;&lt;havingClause&gt;false&lt;/havingClause&gt;&#xD;&#xA;&lt;sqlEngine href=&quot;#ref-7&quot;/&gt;&#xD;&#xA;&lt;column1ColumnName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column2ColumnName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column1TableName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column2TableName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;freeformWhereClause href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;dateRangeWhereClause href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;columnIsDate&gt;false&lt;/columnIsDate&gt;&#xD;&#xA;&lt;columnIsNumeric&gt;false&lt;/columnIsNumeric&gt;&#xD;&#xA;&lt;/a1:WhereClauseClass&gt;&#xD;&#xA;&lt;a3:SqlEngineOracle id=&quot;ref-7&quot; xmlns:a3=&quot;http://schemas.microsoft.com/clr/nsassem/Quest.Toad.Oracle/ToadOracle&quot;&gt;&#xD;&#xA;&lt;SqlEngine_x002B_groupByOrAggregateComplete&gt;false&lt;/SqlEngine_x002B_groupByOrAggregateComplete&gt;&#xD;&#xA;&lt;/a3:SqlEngineOracle&gt;&#xD;&#xA;&lt;/SOAP-ENV:Body&gt;&#xD;&#xA;&lt;/SOAP-ENV:Envelope&gt;&#xD;&#xA;" OrWhereCondition="None" HavingCondition="None" />
+    <columna5a1cac6-486a-44a2-a887-ad7236ad3da7 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <column5b97616a-0eb1-4e98-810e-40d16740630d WhereCondition="&lt;SOAP-ENV:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:clr=&quot;http://schemas.microsoft.com/soap/encoding/clr/1.0&quot; SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&#xD;&#xA;&lt;SOAP-ENV:Body&gt;&#xD;&#xA;&lt;a1:WhereClauseClass id=&quot;ref-1&quot; xmlns:a1=&quot;http://schemas.microsoft.com/clr/nsassem/Quest.Toad.QueryBuilder/ToadCore&quot;&gt;&#xD;&#xA;&lt;caseInsensitive&gt;false&lt;/caseInsensitive&gt;&#xD;&#xA;&lt;operandType1&gt;Constant&lt;/operandType1&gt;&#xD;&#xA;&lt;operandType2&gt;Constant&lt;/operandType2&gt;&#xD;&#xA;&lt;condition id=&quot;ref-4&quot;&gt;=&lt;/condition&gt;&#xD;&#xA;&lt;constant1 id=&quot;ref-5&quot;&gt;REGULAR&lt;/constant1&gt;&#xD;&#xA;&lt;constant2 id=&quot;ref-6&quot;&gt;&lt;/constant2&gt;&#xD;&#xA;&lt;quoteString&gt;true&lt;/quoteString&gt;&#xD;&#xA;&lt;likeType&gt;-1&lt;/likeType&gt;&#xD;&#xA;&lt;aggregateLeft xsi:null=&quot;1&quot;/&gt;&#xD;&#xA;&lt;aggregateRight xsi:null=&quot;1&quot;/&gt;&#xD;&#xA;&lt;havingClause&gt;false&lt;/havingClause&gt;&#xD;&#xA;&lt;sqlEngine href=&quot;#ref-7&quot;/&gt;&#xD;&#xA;&lt;column1ColumnName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column2ColumnName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column1TableName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column2TableName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;freeformWhereClause href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;dateRangeWhereClause href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;columnIsDate&gt;false&lt;/columnIsDate&gt;&#xD;&#xA;&lt;columnIsNumeric&gt;false&lt;/columnIsNumeric&gt;&#xD;&#xA;&lt;/a1:WhereClauseClass&gt;&#xD;&#xA;&lt;a3:SqlEngineOracle id=&quot;ref-7&quot; xmlns:a3=&quot;http://schemas.microsoft.com/clr/nsassem/Quest.Toad.Oracle/ToadOracle&quot;&gt;&#xD;&#xA;&lt;SqlEngine_x002B_groupByOrAggregateComplete&gt;false&lt;/SqlEngine_x002B_groupByOrAggregateComplete&gt;&#xD;&#xA;&lt;/a3:SqlEngineOracle&gt;&#xD;&#xA;&lt;/SOAP-ENV:Body&gt;&#xD;&#xA;&lt;/SOAP-ENV:Envelope&gt;&#xD;&#xA;" OrWhereCondition="None" HavingCondition="None" />
+    <column4fa39fb0-52ea-4016-bdd4-7bbe2f5d3c67 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <columnb92335dc-4be5-4464-aab1-b835984f4f35 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <column86cd422f-4ce9-4bd0-84d7-f34a4343b6a3 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <column2bf7f4b6-1c3f-4004-81cc-0dc6d9cd19d3 WhereCondition="&lt;SOAP-ENV:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:clr=&quot;http://schemas.microsoft.com/soap/encoding/clr/1.0&quot; SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&#xD;&#xA;&lt;SOAP-ENV:Body&gt;&#xD;&#xA;&lt;a1:WhereClauseClass id=&quot;ref-1&quot; xmlns:a1=&quot;http://schemas.microsoft.com/clr/nsassem/Quest.Toad.QueryBuilder/ToadCore&quot;&gt;&#xD;&#xA;&lt;caseInsensitive&gt;false&lt;/caseInsensitive&gt;&#xD;&#xA;&lt;operandType1&gt;Constant&lt;/operandType1&gt;&#xD;&#xA;&lt;operandType2&gt;Constant&lt;/operandType2&gt;&#xD;&#xA;&lt;condition id=&quot;ref-4&quot;&gt;IN&lt;/condition&gt;&#xD;&#xA;&lt;constant1 id=&quot;ref-5&quot;&gt;201408, 201409, 201410, 201411, 201508, 201509, 201510, 201511&lt;/constant1&gt;&#xD;&#xA;&lt;constant2 id=&quot;ref-6&quot;&gt;&lt;/constant2&gt;&#xD;&#xA;&lt;quoteString&gt;false&lt;/quoteString&gt;&#xD;&#xA;&lt;likeType&gt;-1&lt;/likeType&gt;&#xD;&#xA;&lt;aggregateLeft xsi:null=&quot;1&quot;/&gt;&#xD;&#xA;&lt;aggregateRight xsi:null=&quot;1&quot;/&gt;&#xD;&#xA;&lt;havingClause&gt;false&lt;/havingClause&gt;&#xD;&#xA;&lt;sqlEngine href=&quot;#ref-7&quot;/&gt;&#xD;&#xA;&lt;column1ColumnName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column2ColumnName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column1TableName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column2TableName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;freeformWhereClause href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;dateRangeWhereClause href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;columnIsDate&gt;false&lt;/columnIsDate&gt;&#xD;&#xA;&lt;columnIsNumeric&gt;true&lt;/columnIsNumeric&gt;&#xD;&#xA;&lt;/a1:WhereClauseClass&gt;&#xD;&#xA;&lt;a3:SqlEngineOracle id=&quot;ref-7&quot; xmlns:a3=&quot;http://schemas.microsoft.com/clr/nsassem/Quest.Toad.Oracle/ToadOracle&quot;&gt;&#xD;&#xA;&lt;SqlEngine_x002B_groupByOrAggregateComplete&gt;false&lt;/SqlEngine_x002B_groupByOrAggregateComplete&gt;&#xD;&#xA;&lt;/a3:SqlEngineOracle&gt;&#xD;&#xA;&lt;/SOAP-ENV:Body&gt;&#xD;&#xA;&lt;/SOAP-ENV:Envelope&gt;&#xD;&#xA;" OrWhereCondition="None" HavingCondition="None" />
+    <column439b2049-0bde-443d-b2d7-73a623e6ac25 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <column6ff6023f-87e5-481e-8fe0-9437570377cb WhereCondition="&lt;SOAP-ENV:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:clr=&quot;http://schemas.microsoft.com/soap/encoding/clr/1.0&quot; SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&#xD;&#xA;&lt;SOAP-ENV:Body&gt;&#xD;&#xA;&lt;a1:WhereClauseClass id=&quot;ref-1&quot; xmlns:a1=&quot;http://schemas.microsoft.com/clr/nsassem/Quest.Toad.QueryBuilder/ToadCore&quot;&gt;&#xD;&#xA;&lt;caseInsensitive&gt;false&lt;/caseInsensitive&gt;&#xD;&#xA;&lt;operandType1&gt;Constant&lt;/operandType1&gt;&#xD;&#xA;&lt;operandType2&gt;Constant&lt;/operandType2&gt;&#xD;&#xA;&lt;condition id=&quot;ref-4&quot;&gt;IN&lt;/condition&gt;&#xD;&#xA;&lt;constant1 id=&quot;ref-5&quot;&gt;142, 144, 916&lt;/constant1&gt;&#xD;&#xA;&lt;constant2 id=&quot;ref-6&quot;&gt;&lt;/constant2&gt;&#xD;&#xA;&lt;quoteString&gt;true&lt;/quoteString&gt;&#xD;&#xA;&lt;likeType&gt;-1&lt;/likeType&gt;&#xD;&#xA;&lt;aggregateLeft xsi:null=&quot;1&quot;/&gt;&#xD;&#xA;&lt;aggregateRight xsi:null=&quot;1&quot;/&gt;&#xD;&#xA;&lt;havingClause&gt;false&lt;/havingClause&gt;&#xD;&#xA;&lt;sqlEngine href=&quot;#ref-7&quot;/&gt;&#xD;&#xA;&lt;column1ColumnName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column2ColumnName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column1TableName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column2TableName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;freeformWhereClause href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;dateRangeWhereClause href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;columnIsDate&gt;false&lt;/columnIsDate&gt;&#xD;&#xA;&lt;columnIsNumeric&gt;false&lt;/columnIsNumeric&gt;&#xD;&#xA;&lt;/a1:WhereClauseClass&gt;&#xD;&#xA;&lt;a3:SqlEngineOracle id=&quot;ref-7&quot; xmlns:a3=&quot;http://schemas.microsoft.com/clr/nsassem/Quest.Toad.Oracle/ToadOracle&quot;&gt;&#xD;&#xA;&lt;SqlEngine_x002B_groupByOrAggregateComplete&gt;false&lt;/SqlEngine_x002B_groupByOrAggregateComplete&gt;&#xD;&#xA;&lt;/a3:SqlEngineOracle&gt;&#xD;&#xA;&lt;/SOAP-ENV:Body&gt;&#xD;&#xA;&lt;/SOAP-ENV:Envelope&gt;&#xD;&#xA;" OrWhereCondition="None" HavingCondition="None" />
+  </WhereClauseElement>
+  <DistinctElement Distinct="False" />
+  <ParentColumnElement ParentColumnName="" ParentTableName="" />
+  <SubQueryCondition SubQueryCondition="" />
+  <TOPRowCountElement TOPRowCount="0" />
+  <TOPPercentElement TOPPercent="False" />
+  <QueryTextElement><![CDATA[SELECT PM_DET.YEARMONTH,
+       PM_DET.ACCOUNT_NUMBER_NK,
+       PM_DET.OLD_ACCOUNT_NUMBER_NK,
+       PM_DET.SELL_WAREHOUSE_NUMBER_NK,
+       PM_DET.MAIN_CUSTOMER_NK,
+       PM_DET.PRICE_CATEGORY,
+       SUM ( PM_DET.EXT_SALES_AMOUNT ) AS SALES,
+       SUM ( PM_DET.EXT_AVG_COGS_AMOUNT ) AS AC
+  FROM SALES_MART.PRICE_MGMT_DATA_DET PM_DET
+ WHERE ( PM_DET.YEARMONTH IN
+            (201408, 201409, 201410, 201411, 201508, 201509, 201510, 201511) )
+       AND ( PM_DET.ACCOUNT_NUMBER_NK = '1480' )
+       AND ( PM_DET.SELL_WAREHOUSE_NUMBER_NK IN ('142', '144', '916') )
+       AND ( PM_DET.IC_FLAG = 'REGULAR' )
+GROUP BY PM_DET.ACCOUNT_NUMBER_NK,
+         PM_DET.OLD_ACCOUNT_NUMBER_NK,
+         PM_DET.IC_FLAG,
+         PM_DET.MAIN_CUSTOMER_NK,
+         PM_DET.YEARMONTH,
+         PM_DET.PRICE_CATEGORY,
+         PM_DET.SELL_WAREHOUSE_NUMBER_NK]]></QueryTextElement>
+  <HeterogeneousQueryElement HeterogeneousQuery="False" />
+  <AnsiJoinsElement AnsiJoins="True" />
+</SqlModelerElement>

@@ -1,0 +1,22 @@
+SELECT DISTINCT 
+        CUST.ACCOUNT_NAME,
+		cust.account_number_nk,
+		CUST.MAIN_CUSTOMER_NK,
+		CUST.CUSTOMER_NK,
+		CUST.CUSTOMER_NAME,
+		CUST.JOB_YN
+
+	FROM 	DW_FEI.CUSTOMER_DIMENSION CUST
+	
+    LEFT OUTER JOIN aaa6863.branch_contacts bc
+        on cust.account_number_nk = bc.account_nk
+
+	WHERE (CUST.DELETE_DATE IS NULL)
+	   AND CUST.CUSTOMER_TYPE NOT IN
+			  ('O_INTRBRNCH', 'O_BRCHACCT', 'O_CASH')
+	   AND CUST.ACCOUNT_NAME NOT IN 'DIST'
+	   AND CUST.ACCOUNT_NAME NOT LIKE 'INT%'
+	   AND bc.rpc = 'Midwest'
+	   AND cust.job_yn = 'Y'
+
+    ORDER BY CUST.ACCOUNT_NAME ASC;

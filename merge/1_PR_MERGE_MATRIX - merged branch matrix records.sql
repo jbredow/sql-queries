@@ -1,0 +1,85 @@
+DROP TABLE AAA6863.PR_MERGE_MATRIX_2;
+
+CREATE TABLE AAA6863.PR_MERGE_MATRIX_2
+AS
+
+SELECT ACCOUNT_NAME,
+       PRICE_COLUMN,
+       DISC_GRP,
+       DISCOUNT_GROUP_NAME,
+       MAX (PROD_OVR_COUNT) PROD_OVR_COUNT,
+       MAX (BASIS) BASIS,
+       MAX (OPER)  OPER,
+       MAX (DISCOUNT) DISCOUNT,
+       MAX (MULTIPLIER) MULTIPLIER
+  FROM (SELECT SD.ACCOUNT_NAME,
+               PR_DIM.PRICE_COLUMN,
+               PR_DIM.DISC_GROUP DISC_GRP,
+               DG.DISCOUNT_GROUP_NAME,
+               NULL PROD_OVR_COUNT,
+               PR_DIM.BASIS,
+               PR_DIM.OPERATOR_USED AS OPER,
+               CASE
+                  WHEN PR_DIM.OPERATOR_USED = '-' THEN PR_DIM.MULTIPLIER
+                  ELSE 1 - PR_DIM.MULTIPLIER
+               END
+                  AS DISCOUNT,
+               CASE
+                  WHEN PR_DIM.OPERATOR_USED = '-' THEN 1 - PR_DIM.MULTIPLIER
+                  ELSE PR_DIM.MULTIPLIER
+               END
+                  AS MULTIPLIER
+          FROM DW_FEI.PRICE_DIMENSION PR_DIM,
+               --DW_FEI.PRODUCT_DIMENSION PROD,
+               EBUSINESS.SALES_DIVISIONS SD,
+               DW_FEI.DISCOUNT_GROUP_DIMENSION DG
+         WHERE     PR_DIM.DISC_GROUP = DG.DISCOUNT_GROUP_NK
+               AND PR_DIM.BRANCH_NUMBER_NK = SD.ACCOUNT_NUMBER_NK
+               AND PR_DIM.PRICE_TYPE = 'G'
+               AND PR_DIM.DELETE_DATE IS NULL
+               AND PR_DIM.BASIS || PR_DIM.OPERATOR_USED IN ('L-', 'LX')
+               AND NVL (PR_DIM.MULTIPLIER, 0) <> 0
+               -- *** LIST BRANCHES HERE
+               AND SD.ACCOUNT_NAME IN ('JACKSON', 'NASH')
+        GROUP BY PR_DIM.PRICE_COLUMN,
+                 PR_DIM.DISC_GROUP,
+                 DG.DISCOUNT_GROUP_NAME,
+                 PR_DIM.BASIS,
+                 SD.ACCOUNT_NAME,
+                 PR_DIM.OPERATOR_USED,
+                 PR_DIM.MULTIPLIER
+        UNION
+        SELECT SD.ACCOUNT_NAME,
+               PR_DIM.PRICE_COLUMN,
+               NVL (PR_DIM.DISC_GROUP, PROD.DISCOUNT_GROUP_NK) DISC_GRP,
+               DG.DISCOUNT_GROUP_NAME,
+               COUNT (PR_DIM.MASTER_PRODUCT_NK) PROD_OVR_COUNT,
+               NULL AS BASIS,
+               NULL AS OPER,
+               NULL AS DISCOUNT,
+               NULL AS MULTIPLIER
+          FROM DW_FEI.PRICE_DIMENSION PR_DIM,
+               DW_FEI.PRODUCT_DIMENSION PROD,
+               EBUSINESS.SALES_DIVISIONS SD,
+               DW_FEI.DISCOUNT_GROUP_DIMENSION DG
+         WHERE     PR_DIM.MASTER_PRODUCT_NK = PROD.PRODUCT_NK(+)
+               AND NVL (PR_DIM.DISC_GROUP, PROD.DISCOUNT_GROUP_NK) =
+                      DG.DISCOUNT_GROUP_NK
+               AND PR_DIM.BRANCH_NUMBER_NK = SD.ACCOUNT_NUMBER_NK
+               AND PR_DIM.PRICE_TYPE = 'P'
+               AND PR_DIM.DELETE_DATE IS NULL
+               --AND PR_DIM.BASIS || PR_DIM.OPERATOR_USED IN ('L-', 'LX')
+               AND NVL (PR_DIM.MULTIPLIER, 0) <> 0
+               -- *** LIST BRANCHES HERE
+               AND SD.ACCOUNT_NAME IN ('JACKSON', 'NASH')
+        GROUP BY PR_DIM.PRICE_COLUMN,
+                 NVL (PR_DIM.DISC_GROUP, PROD.DISCOUNT_GROUP_NK),
+                 DG.DISCOUNT_GROUP_NAME,
+                 SD.ACCOUNT_NAME)
+GROUP BY ACCOUNT_NAME,
+         PRICE_COLUMN,
+         DISC_GRP,
+         DISCOUNT_GROUP_NAME;
+				 
+	GRANT SELECT ON AAA6863.PR_MERGE_MATRIX_2 TO PUBLIC;
+	

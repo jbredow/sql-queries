@@ -1,0 +1,184 @@
+/*     change the tablename to current month     */
+
+--full customer contract override download(12 Month)
+--DROP TABLE AAB9896.CCOR_SOUTHERN;CREATE TABLE AAB9896.CCOR_SOUTHERN
+--AS
+
+SELECT CCORG.RPC,
+       CCORG.DISTRICT,
+       CCORG.BRANCH_NUMBER_NK,
+       CCORG.ALIAS,
+       CCORG.CUSTOMER_NK,
+       CCORG.CONTRACT_ID,
+       CCORG.OVERRIDE_ID_NK,
+       CCORG.OVERRIDE_TYPE,
+       CCORG.DISC_GROUP,
+       DG.DISCOUNT_GROUP_NAME,
+       CCORG.ALT1_CODE,
+       CCORG.PRODUCT_NAME,
+       CCORG.EXPIRE_DATE,
+       CCORG.BASIS,
+       CCORG.OPERATOR_USED,
+       CCORG.MULTIPLIER,
+       CCORG.INSERT_TIMESTAMP,
+       CCORG.UPDATE_TIMESTAMP,
+       CCORG.LAST_UPDATE,
+       CCORG.COST_REBATE,
+       CCORG.SALESMAN_CODE,
+       CCORG.COST_CCOR,
+       CCORG.DELETE_DATE
+  FROM (SELECT DISTINCT CONTACTS.RPC,
+                        CONTACTS.DISTRICT,
+                        CCORG.BRANCH_NUMBER_NK,
+                        CONTACTS.ALIAS,
+                        CCORG.CUSTOMER_NK,
+                        CCORG.CONTRACT_ID,
+                        CCORG.OVERRIDE_ID_NK,
+                        CCORG.OVERRIDE_TYPE,
+                        CCORG.DISC_GROUP,
+                        --DG.DISCOUNT_GROUP_NAME,
+                        NULL AS ALT1_CODE,
+                        NULL AS PRODUCT_NAME,
+                        CCORG.EXPIRE_DATE,
+                        CCORG.BASIS,
+                        CCORG.OPERATOR_USED,
+                        CCORG.MULTIPLIER,
+                        CCORG.INSERT_TIMESTAMP,
+                        CCORG.UPDATE_TIMESTAMP,
+                        CCORG.LAST_UPDATE,
+                        CCORG.COST_REBATE,
+                        CUSTDG.SALESMAN_CODE,
+                        CCORG.EFFECTIVE_PROD COST_CCOR,
+                        CCORG.DELETE_DATE
+          FROM DW_FEI.CUSTOMER_OVERRIDE_DIMENSION CCORG,
+               DW_FEI.CUSTOMER_DIMENSION CUSTDG,
+               DW_FEI.DISCOUNT_GROUP_DIMENSION DG,
+               AAF1046.BRANCH_CONTACTS CONTACTS
+         WHERE     CCORG.DISC_GROUP = DG.DISCOUNT_GROUP_NK
+               AND CONTACTS.ACCOUNT_NK = CCORG.BRANCH_NUMBER_NK
+               AND CCORG.CUSTOMER_GK = CUSTDG.CUSTOMER_GK
+               AND CCORG.OVERRIDE_TYPE = 'G'
+               --AND (SYSDATE - CCORG.EXPIRE_DATE > 365)
+               AND CCORG.DELETE_DATE IS NULL
+               --AND CCORG.OPERATOR_USED = 'X'
+               AND CONTACTS.RPC = 'Midwest'
+               --AND CONTACTS.ACCOUNT_NK = 52
+               --AND CCORG.EXPIRE_DATE = '5-FEB-15'
+               AND NVL (ccorg.expire_date, SYSDATE) > SYSDATE - 1
+        UNION
+        --Old Product CCORs (12 Month)
+        SELECT DISTINCT
+               CONTACTS.RPC,
+               CONTACTS.DISTRICT,
+               CCORP.BRANCH_NUMBER_NK,
+               CONTACTS.ALIAS,
+               CCORP.CUSTOMER_NK,
+               CCORP.CONTRACT_ID,
+               CCORP.OVERRIDE_ID_NK,
+               CCORP.OVERRIDE_TYPE,
+               NVL (PROD.DISCOUNT_GROUP_NK, SP_PROD.SPECIAL_DISC_GROUP)
+                  DISCOUNT_GROUP_NK,
+               --DG.DISCOUNT_GROUP_NAME,
+               NVL (PROD.ALT1_CODE, SP_PROD.ALT_CODE) ALT1_CODE,
+               NVL (PROD.PRODUCT_NAME, SP_PROD.SPECIAL_PRODUCT_NAME)
+                  PRODUCT_NAME,
+               CCORP.EXPIRE_DATE,
+               CCORP.BASIS,
+               CCORP.OPERATOR_USED,
+               CCORP.MULTIPLIER,
+               CCORP.INSERT_TIMESTAMP,
+               CCORP.UPDATE_TIMESTAMP,
+               CCORP.LAST_UPDATE,
+               CCORP.COST_REBATE,
+               CUSTDP.SALESMAN_CODE,
+               CCORP.EFFECTIVE_PROD COST_CCOR,
+               CCORP.DELETE_DATE
+          FROM DW_FEI.CUSTOMER_OVERRIDE_DIMENSION CCORP,
+               DW_FEI.CUSTOMER_DIMENSION CUSTDP,
+               DW_FEI.PRODUCT_DIMENSION PROD,
+               DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD,
+               DW_FEI.DISCOUNT_GROUP_DIMENSION DG,
+               AAF1046.BRANCH_CONTACTS CONTACTS
+         WHERE     CONTACTS.ACCOUNT_NK = CCORP.BRANCH_NUMBER_NK
+               AND CCORP.CUSTOMER_GK = CUSTDP.CUSTOMER_GK
+               AND CCORP.OVERRIDE_TYPE = 'P'
+               AND CCORP.MASTER_PRODUCT = PROD.PRODUCT_NK(+)
+               AND CCORP.MASTER_PRODUCT = SP_PROD.SPECIAL_PRODUCT_NK(+)
+               --AND (SYSDATE - CCORP.INSERT_TIMESTAMP > 365)
+               AND CCORP.DELETE_DATE IS NULL
+               --AND CCORP.OPERATOR_USED = 'X'
+               AND CONTACTS.RPC = 'Midwest'
+               --AND CONTACTS.ACCOUNT_NK = 52
+               --AND CCORP.EXPIRE_DATE = '5-FEB-15'
+               AND NVL (ccorp.expire_date, SYSDATE) > SYSDATE - 1
+        UNION
+        --Old Product CCORs (12 Month)
+        SELECT DISTINCT
+               CONTACTS.RPC,
+               CONTACTS.DISTRICT,
+               CCORC.BRANCH_NUMBER_NK,
+               CONTACTS.ALIAS,
+               CCORC.CUSTOMER_NK,
+               CCORC.CONTRACT_ID,
+               CCORC.OVERRIDE_ID_NK,
+               CCORC.OVERRIDE_TYPE,
+               NVL (PROD.DISCOUNT_GROUP_NK, SP_PROD.SPECIAL_DISC_GROUP)
+                  DISCOUNT_GROUP_NK,
+               --DG.DISCOUNT_GROUP_NAME,
+               NVL (PROD.ALT1_CODE, SP_PROD.ALT_CODE) ALT1_CODE,
+               NVL (PROD.PRODUCT_NAME, SP_PROD.SPECIAL_PRODUCT_NAME)
+                  PRODUCT_NAME,
+               CCORC.EXPIRE_DATE,
+               CCORC.BASIS,
+               CCORC.OPERATOR_USED,
+               CCORC.MULTIPLIER,
+               CCORC.INSERT_TIMESTAMP,
+               CCORC.UPDATE_TIMESTAMP,
+               CCORC.LAST_UPDATE,
+               CCORC.COST_REBATE,
+               CUSTDC.SALESMAN_CODE,
+               CCORC.EFFECTIVE_PROD COST_CCOR,
+               CCORC.DELETE_DATE
+          FROM DW_FEI.CUSTOMER_OVERRIDE_DIMENSION CCORC,
+               DW_FEI.CUSTOMER_DIMENSION CUSTDC,
+               DW_FEI.PRODUCT_DIMENSION PROD,
+               DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD,
+               DW_FEI.DISCOUNT_GROUP_DIMENSION DG,
+               AAF1046.BRANCH_CONTACTS CONTACTS
+         WHERE     CONTACTS.ACCOUNT_NK = CCORC.BRANCH_NUMBER_NK
+               AND CCORC.CUSTOMER_GK = CUSTDC.CUSTOMER_GK
+               AND CCORC.OVERRIDE_TYPE = 'C'
+               AND CCORC.MASTER_PRODUCT = PROD.PRODUCT_NK(+)
+               AND CCORC.MASTER_PRODUCT = SP_PROD.SPECIAL_PRODUCT_NK(+)
+               --AND (SYSDATE - CCORC.INSERT_TIMESTAMP > 365)
+               AND CCORC.DELETE_DATE IS NULL
+               --AND CCORC.EXPIRE_DATE = '5-FEB-15'
+               AND NVL (ccorc.expire_date, SYSDATE) > SYSDATE - 1
+               AND CONTACTS.RPC = 'Midwest') CCORG,
+       DW_FEI.DISCOUNT_GROUP_DIMENSION DG
+ WHERE CCORG.DISC_GROUP = DG.DISCOUNT_GROUP_NK
+		AND CCORG.BRANCH_NUMBER_NK IN ( '61', '190' );
+
+
+--AND CONTACTS.ACCOUNT_NK = 52;
+
+
+/*SELECT *
+  FROM AAB9896.CCOR_SOUTHERN_0314 CCOR
+ WHERE CCOR.DISTRICT IN 'W%'
+
+SELECT *
+  FROM AAB9896.CCOR_SOUTHERN_0314 CCOR
+ WHERE CCOR.DISTRICT = 'H40'
+
+SELECT *
+  FROM AAB9896.CCOR_SOUTHERN_0314 CCOR
+ WHERE CCOR.DISTRICT IN ('H40', 'H42');
+
+SELECT *
+  FROM AAB9896.CCOR_SOUTHERN_0314 CCOR
+ WHERE ccor.branch_number_nk = '1271';
+
+SELECT *
+  FROM AAB9896.CCOR_SOUTHERN_HVAC CCOR
+ WHERE ccor.branch_number_nk IN '305';*/

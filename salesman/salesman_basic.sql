@@ -1,0 +1,30 @@
+SELECT sf.SALESREP_GK,
+	sf.SALESREP_NK,
+	sf.ACCOUNT_NUMBER_NK,
+	sf.YEARMONTH,
+	sf.MONTH_SALES,
+	sf.MONTH_GP,
+	sf.MONTH_SALES_ADJ,
+	sf.MONTH_GP_ADJ,
+	sf.MONTH_PAID_SALES,
+	sf.MONTH_PAID_GP,
+	sf.PROCESSED,
+	BRANCH_CONTACTS.ACCOUNT_NK,
+	BRANCH_CONTACTS.RPC
+FROM dw_fei.salesrep_sales_fact sf
+	INNER JOIN BRANCH_CONTACTS
+		ON sf.ACCOUNT_NUMBER_NK        = BRANCH_CONTACTS.ACCOUNT_NK
+WHERE sf.YEARMONTH            IN ('201211',
+									'201212', 
+									'201301', 
+									'201302', 
+									'201303', 
+									'201304', 
+									'201305', 
+									'201306', 
+									'201307', 
+									'201308', 
+									'201309', 
+									'201310')
+	AND BRANCH_CONTACTS.ACCOUNT_NK = 1480
+	AND BRANCH_CONTACTS.RPC        = 'Midwest';

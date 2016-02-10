@@ -1,0 +1,16 @@
+Drop monthly:
+
+-------------------------------------------------------------------------------------
+
+Drop Purchase Order Listing monthly -  
+   C:\Users\aaa6863\Documents\SQL Querys\other misc\other_misc_po_listing_final.sql
+
+Drop DPRO of affected DG's monthly  -  
+   C:\Users\aaa6863\Documents\SQL Querys\other misc\other_misc_dpro_final.sql
+
+-------------------------------------------------------------------------------------
+
+DG list AAA6863.OTHER_MISC_DG maintained -
+   C:\Users\aaa6863\Documents\SQL Querys\other misc\dg_lb_insert.sql
+
+-------------------------------------------------------------------------------------

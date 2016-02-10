@@ -1,0 +1,80 @@
+/* 
+	Run this query for the WW Core DG Report quarterly for Houston WW 
+	pulls 12 months of history from DW_FEI tables at the warehouse level of detail
+*/
+
+SELECT IHF.ACCOUNT_NUMBER BR_NO,
+	IHF.WAREHOUSE_NUMBER WHSE,
+	SWD.ACCOUNT_NAME BRANCH,
+	ILF.YEARMONTH,
+	PROD.DISCOUNT_GROUP_NK DG,
+	CASE
+		WHEN  IHF.CHANNEL_TYPE IN('H3', 'H7', 'O3', 'O7') 
+		THEN 'Direct'
+		ELSE 'Stock'
+	END
+		AS CHANNEL,
+	SUM(ILF.EXT_SALES_AMOUNT) SALES_AMT,
+	SUM(ILF.EXT_AVG_COGS_AMOUNT) AVG_COGS
+
+FROM DW_FEI.INVOICE_LINE_FACT ILF
+	
+  INNER JOIN DW_FEI.INVOICE_HEADER_FACT IHF
+		ON IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
+	
+  INNER JOIN DW_FEI.CUSTOMER_DIMENSION CUST
+		ON IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
+	
+  INNER JOIN SALES_MART.SALES_WAREHOUSE_DIM SWD
+		ON SWD.ACCOUNT_NUMBER_NK = IHF.ACCOUNT_NUMBER
+	
+  INNER JOIN DW_FEI.PRODUCT_DIMENSION PROD
+		ON ILF.PRODUCT_NUMBER_NK   = PROD.PRODUCT_NK
+
+WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 )) IN ( 
+																							'D50',
+																							'D51',
+																							'D52',
+																							'D53',
+																							'D54',
+																							'D59'
+																							)
+	AND IHF.ACCOUNT_NUMBER   = '1105'
+	AND ILF.YEARMONTH BETWEEN TO_CHAR (
+									TRUNC (
+										SYSDATE
+										- NUMTOYMINTERVAL (
+												12,
+										'MONTH'),
+									'MONTH'),
+								'YYYYMM')
+			AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
+	AND IHF.YEARMONTH BETWEEN TO_CHAR (
+									TRUNC (
+										SYSDATE
+										- NUMTOYMINTERVAL (
+											12,
+										'MONTH'),
+									'MONTH'),
+								'YYYYMM')
+			AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM') 
+	--AND BC.DISTRICT IN ('W50', 'W51', 'W52', 'W53', 'W54')
+	AND PROD.DISCOUNT_GROUP_NK IN ( '5799', '5835', '5838', '5863', '5871', '5890',
+									'5895', '5929', '5935', '5943', '5944', '5955',
+									'6037', '6044', '6055', '6062', '6069', '6073',
+									'6105', '6115', '6140', '6146', '6198', '6251',
+									'6264', '6279', '6466', '6467', '6474', '6476',
+									'6480', '6481')
+	
+GROUP BY IHF.ACCOUNT_NUMBER,
+	IHF.WAREHOUSE_NUMBER,
+	SWD.ACCOUNT_NAME,
+	ILF.YEARMONTH,
+	PROD.DISCOUNT_GROUP_NK,
+	IHF.CHANNEL_TYPE,
+	CASE
+		WHEN  IHF.CHANNEL_TYPE IN('H3', 'H7', 'O3', 'O7') 
+		THEN 'Direct'
+		ELSE 'Stock'
+	END
+;
