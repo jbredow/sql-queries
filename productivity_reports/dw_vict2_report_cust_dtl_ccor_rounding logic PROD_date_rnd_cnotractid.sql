@@ -1,11 +1,11 @@
 -- VICT2 sql with updated rounding logic aligned with pricing cube
 -- 10/7/2013, Leigh North
 -- Old
-/*
+/*  */
 DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
 
 CREATE TABLE AAA6863.PR_VICT2_CUST_12MO
-AS */
+AS 
  
 SELECT DISTINCT
        sp_dtl.YEARMONTH,
@@ -585,4 +585,4 @@ SELECT DISTINCT
               ) sp_dtl
 ;
 
--- GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;
