@@ -232,7 +232,7 @@ SELECT DISTINCT *
                                CONT.RPC,
                                CONT.RPC_MGR
                           FROM DW_FEI.SALESREP_DIMENSION REPS,
-                               AAE0376.BRANCH_CONTACTS CONT
+                               AAF1046.BRANCH_CONTACTS CONT
                          WHERE REPS.ACCOUNT_NUMBER_NK = CONT.ACCOUNT_NK(+)
                         GROUP BY REPS.ACCOUNT_NAME,
                                  REPS.ACCOUNT_NUMBER_NK,

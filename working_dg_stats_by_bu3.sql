@@ -1,3 +1,6 @@
+/*
+	final
+*/
 SELECT STATS.DIST,
       STATS .ACCOUNT_NUMBER_NK BR_NO,
       STATS.DISC_GROUP DG,
@@ -8,8 +11,8 @@ SELECT STATS.DIST,
       CCOR.COST_CCOR,
       DPRO.OHB,
       DPRO.DEMAND,
-      SALES.EX_SALES,
-      SALES.EX_AC
+      sum(SALES.EX_SALES) ex_sales,
+      sum(SALES.EX_AC) ex_ac
 
 FROM (  SELECT DISTINCT
               SUBSTR (SWD.REGION_NAME, 1, 3) DIST,
@@ -52,8 +55,8 @@ FROM (  SELECT DISTINCT
                           INNER JOIN
                               DW_FEI.PRODUCT_DIMENSION PROD
                           ON (CCOR.MASTER_PRODUCT = PROD.PRODUCT_NK)
-                    WHERE     (CCOR.BRANCH_NUMBER_NK = '520')
-                          AND (CCOR.OVERRIDE_TYPE = 'P')
+                    WHERE  (CCOR.OVERRIDE_TYPE = 'P')
+													--AND (CCOR.BRANCH_NUMBER_NK = '520')
                           AND (CCOR.DELETE_DATE IS NULL)
                     UNION
                     SELECT CCOR.BRANCH_NUMBER_NK BR_NO,
@@ -62,8 +65,8 @@ FROM (  SELECT DISTINCT
                           TO_NUMBER (CCOR.DISC_GROUP) DG_NK,
                           CCOR.OVERRIDE_TYPE
                       FROM DW_FEI.CUSTOMER_OVERRIDE_DIMENSION CCOR
-                    WHERE     (CCOR.BRANCH_NUMBER_NK = '520')
-                          AND (CCOR.OVERRIDE_TYPE = 'G')
+                     WHERE  (CCOR.OVERRIDE_TYPE = 'G')
+													--AND (CCOR.BRANCH_NUMBER_NK = '520')
                           AND (CCOR.DELETE_DATE IS NULL)
                     UNION
                     SELECT CCOR.BRANCH_NUMBER_NK BR_NO,
@@ -76,7 +79,7 @@ FROM (  SELECT DISTINCT
                               DW_FEI.PRODUCT_DIMENSION PROD
                             ON (CCOR.MASTER_PRODUCT = PROD.PRODUCT_NK))
                     WHERE     (CCOR.OVERRIDE_TYPE = 'C')
-													AND (CCOR.BRANCH_NUMBER_NK = '520')
+													--AND (CCOR.BRANCH_NUMBER_NK = '520')
                           AND (CCOR.DELETE_DATE IS NULL)) X
             GROUP BY X.BR_NO, X.DG_NK
         ) CCOR
@@ -130,9 +133,19 @@ FROM (  SELECT DISTINCT
       ON  STATS.ACCOUNT_NUMBER_NK = SALES.ACCOUNT_NUMBER_NK
         AND  STATS.DISC_GROUP =  SALES.DISCOUNT_GROUP_NK
 
+GROUP BY
+			STATS.DIST,
+			STATS .ACCOUNT_NUMBER_NK,
+      STATS.DISC_GROUP,
+      STATS.NAT_PC,
+      STATS.PC_COUNT,
+      CCOR.GROUP_CCOR,
+      CCOR.PROD_CCOR,
+      CCOR.COST_CCOR,
+      DPRO.OHB,
+      DPRO.DEMAND
 ORDER BY 
       STATS.DIST,
       STATS.ACCOUNT_NUMBER_NK,
       STATS.DISC_GROUP ASC
-
 ;

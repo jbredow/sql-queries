@@ -1,6 +1,7 @@
 -- by dg report using vict2 data
 
 SELECT
+	V2.YEARMONTH,
 	V2.ACCOUNT_NAME,
   V2.MAIN_CUSTOMER_NK,
 	V2.CUSTOMER_NK,
@@ -475,8 +476,9 @@ SELECT
 							  DW_FEI.CUSTOMER_DIMENSION CUST,
 							  DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
 								
-						WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK --AND ILF.PRODUCT_STATUS = 'SP'
-							  AND IHF.ACCOUNT_NUMBER in ( '448', '1020', '331', '276', '754', '1550' )
+						WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
+								--AND ILF.PRODUCT_STATUS = 'SP'
+							  --AND IHF.ACCOUNT_NUMBER in ( '448', '1020', '331', '276', '754', '1550' )
 							  --AND IHF.ACCOUNT_NUMBER = '1550'
 								--AND NVL (ILF.PRICE_CODE, 'N/A') IN
 							  --      ('Q', 'N/A', 'R')
@@ -509,11 +511,15 @@ SELECT
 							  --AND IHF.ORDER_CODE NOT IN 'IC'
 							  --Excludes shipments to other FEI locations.
 							  AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-							  AND ILF.YEARMONTH BETWEEN TO_CHAR (
+								
+								AND ILF.YEARMONTH BETWEEN '201408' AND '201601'
+								AND IHF.YEARMONTH BETWEEN '201408' AND '201601'
+								
+							  /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
 														   TRUNC (
 															  SYSDATE
 															  - NUMTOYMINTERVAL (
-																   12,
+																   18,
 																   'MONTH'),
 															  'MONTH'),
 														   'YYYYMM')
@@ -524,13 +530,14 @@ SELECT
 														   TRUNC (
 															  SYSDATE
 															  - NUMTOYMINTERVAL (
-																   12,
+																   18,
 																   'MONTH'),
 															  'MONTH'),
 														   'YYYYMM')
 													AND
 									 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-											  'YYYYMM')) SP_HIST
+											  'YYYYMM')*/
+				) SP_HIST
 					  LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
 						 ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
 					  LEFT OUTER JOIN DW_FEI.LINE_BUY_DIMENSION LB
@@ -601,10 +608,26 @@ SELECT
 		) v2
 
 	
-	-- WHERE V2.ACCOUNT_NUMBER IN ( '1550', '448' )
-	WHERE V2.CUSTOMER_NK IN ( '108964', '31732' )
+	WHERE V2.ACCOUNT_NUMBER IN ('276',
+																									'448', 
+																									'1020',
+																									'1550', 
+																									'754',
+																									'1868',
+																									'2079',
+																									'2469',
+																									'2778'
+																									)
+			AND V2.CUSTOMER_NK IN (  '108462', 
+																							'108799', 
+																							'31606', 
+																							'31371', 
+																							'17113', 
+																							'16855'
+																						)
 GROUP BY 
-  V2.ACCOUNT_NAME,
+  V2.YEARMONTH,
+	V2.ACCOUNT_NAME,
   V2.MAIN_CUSTOMER_NK,
 	V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
@@ -618,6 +641,7 @@ GROUP BY
 	END
 	
 ORDER BY
+	V2.YEARMONTH,
 	V2.CUSTOMER_NAME,
 	V2.MAIN_CUSTOMER_NK,
 	V2.CUSTOMER_NK
