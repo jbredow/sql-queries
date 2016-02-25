@@ -1,23 +1,18 @@
+--VICT2 sql with updated rounding logic aligned with pricing cube
+--10/7/2013, Leigh North
+-- Old
 /*
-
-	BY CUSTOMER BY DG
-
-AS */
+DROP TABLE AAA6863.PR_VICT2_SKU_DETAIL;
+*/
+CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL_UPONOR
+AS 
  
 SELECT DISTINCT
-			sp_dtl.yearmonth,
-      /* CASE
-			 	WHEN sp_dtl.YEARMONTH BETWEEN '201412' AND '201501'
-				THEN
-					'PREVIOUS'
-				ELSE
-					'CURRENT'
-			END
-				TPD,*/
+       sp_dtl.YEARMONTH,
        sp_dtl.ACCOUNT_NUMBER,
-       -- sp_dtl.ACCOUNT_NAME,
+       sp_dtl.ACCOUNT_NAME,
        sp_dtl.WAREHOUSE_NUMBER,
-       /*sp_dtl.INVOICE_NUMBER_NK,
+       sp_dtl.INVOICE_NUMBER_NK,
        sp_dtl.TYPE_OF_SALE,
 	     sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
@@ -25,38 +20,26 @@ SELECT DISTINCT
        sp_dtl.OML_ASSOC_NAME,
        sp_dtl.WRITER,
        sp_dtl.WR_FL_INI,
-       sp_dtl.ASSOC_NAME,*/
+       sp_dtl.ASSOC_NAME,
        sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
-      /* sp_Dtl.CHANNEL_TYPE,
+       sp_Dtl.CHANNEL_TYPE,
        sp_dtl.INVOICE_LINE_NUMBER,
-       sp_dtl.MANUFACTURER,*/
-      -- sp_dtl.PRODUCT_NK,
-      -- sp_dtl.ALT1_CODE,
-      -- sp_dtl.PRODUCT_NAME,
-       /*sp_dtl.STATUS,
-       sp_dtl.SHIPPED_QTY,*/
-       sum ( sp_dtl.EXT_SALES_AMOUNT ) ex_sales,
-       sum ( sp_dtl.EXT_AVG_COGS_AMOUNT ) ex_ac,
-	     /*sp_dtl.REPLACEMENT_COST,
+       sp_dtl.MANUFACTURER,
+       sp_dtl.PRODUCT_NK,
+       sp_dtl.ALT1_CODE,
+       sp_dtl.PRODUCT_NAME,
+       sp_dtl.STATUS,
+       sp_dtl.SHIPPED_QTY,
+       sp_dtl.EXT_SALES_AMOUNT,
+       sp_dtl.EXT_AVG_COGS_AMOUNT,
+	     sp_dtl.REPLACEMENT_COST,
 	     sp_dtl.UNIT_INV_COST,
-       sp_dtl.PRICE_CODE,*/
-			 case
-			 	when sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE'
-				then 'OVERRIDE'
-				else 
-					case
-						when sp_dtl.PRICE_CATEGORY = 'MATRIX_BID'
-						then 'MATRIX'
-						when sp_dtl.PRICE_CATEGORY in ( 'OTH/ERROR', 'QUOTE', 'TOOLS' )
-						then 'MANUAL'
-						else sp_dtl.PRICE_CATEGORY
-					end
-			end
-				price_ca
-       --sp_dtl.PRICE_CATEGORY_OVR,
-       --sp_dtl.PRICE_FORMULA,
-      /* sp_dtl.UNIT_NET_PRICE_AMOUNT,
+       sp_dtl.PRICE_CODE,
+       sp_dtl.PRICE_CATEGORY,
+       sp_dtl.PRICE_CATEGORY_OVR,
+       sp_dtl.PRICE_FORMULA,
+       sp_dtl.UNIT_NET_PRICE_AMOUNT,
        sp_dtl.UM,
        sp_dtl.SELL_MULT,
        sp_dtl.PACK_QTY,
@@ -74,17 +57,17 @@ SELECT DISTINCT
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
        sp_dtl.CONSIGN_TYPE,
-       sp_dtl.MAIN_CUSTOMER_NK,
+       --sp_dtl.MAIN_CUSTOMER_NK,
        sp_dtl.CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NAME*/
-        /*sp_dtl.PRICE_COLUMN,
+       sp_dtl.CUSTOMER_NAME,
+       sp_dtl.PRICE_COLUMN,
        sp_dtl.CUSTOMER_TYPE,
        sp_dtl.REF_BID_NUMBER,
        sp_dtl.SOURCE_ORDER,
 	     sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER*/
+       sp_dtl.CONTRACT_NUMBER
   FROM    (SELECT SP_HIST.*,
                   CASE
                      WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -156,10 +139,9 @@ SELECT DISTINCT
                   NVL (PR_OVR.EXPIRE_DATE, GR_OVR.EXPIRE_DATE) CCOR_EXPIRE,
                   LB.LINEBUY_NAME,
                   DG.DISCOUNT_GROUP_NAME,
-                  MV.MASTER_VENDOR_NAME 
-									
+                  MV.MASTER_VENDOR_NAME
              FROM (SELECT IHF.ACCOUNT_NUMBER,
-             							IHF.YEARMONTH,
+             IHF.YEARMONTH,
                           CUST.ACCOUNT_NAME,
                           IHF.WAREHOUSE_NUMBER,
                           IHF.INVOICE_NUMBER_NK,
@@ -477,12 +459,8 @@ SELECT DISTINCT
                           DW_FEI.PRODUCT_DIMENSION PROD,
                           DW_FEI.CUSTOMER_DIMENSION CUST,
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
-                    WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
-													--AND ILF.PRODUCT_STATUS = 'SP'
-                          AND IHF.ACCOUNT_NUMBER IN ( '1020', '1550', '448' )
-													--AND IHF.WAREHOUSE_NUMBER IN ( '0754', '1868', '2079', '2469', '2778' )
-													AND cust.PRICE_COLUMN BETWEEN '1' and '8'
-													
+                    WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK --AND ILF.PRODUCT_STATUS = 'SP'
+                          AND IHF.ACCOUNT_NUMBER IN ( '1550', '1020', '448', '2778', '1869', '2079' )
                           --AND NVL (ILF.PRICE_CODE, 'N/A') IN
                           --      ('Q', 'N/A', 'R')
                           --AND IHF.WRITER = 'CMC'
@@ -491,31 +469,7 @@ SELECT DISTINCT
                           --AND ILF.PRICE_CODE in ('R','N/A','Q')
 
                           --AND IHF.REF_BID_NUMBER='B225888'
-                          /*AND CUST.CUSTOMER_NK IN (  '2517',
-																																			'3622',
-																																			'2552',
-																																			'5957',
-																																			'2521',
-																																			'10311',
-																																			'4400',
-																																			'4359',
-																																			'5366',
-																																			'2530',
-																																			'7118',
-																																			'6525',
-																																			'104857',
-																																			'112179',
-																																			'105043',
-																																			'125234',
-																																			'104881',
-																																			'103151',
-																																			'118830',
-																																			'118461',
-																																			'125030',
-																																			'104931',
-																																			'125766',
-																																			'125481'
-																																			)*/
+                          --AND CUST.CUSTOMER_NK = '127896'
                           --AND PROD.LINEBUY_NK='200'
                           AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
                           AND DECODE (NVL (cust.ar_gl_number, '9999'),
@@ -528,7 +482,7 @@ SELECT DISTINCT
                                    '4000', 0,
                                    '7100', 0,
                                    '9999', 0,
-                                   1) <>  0
+                                   1) <> 0
                           AND NVL (IHF.CONSIGN_TYPE, 'N/A') <> 'R'
                           AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
                           AND ILF.SPECIAL_PRODUCT_GK =
@@ -538,13 +492,7 @@ SELECT DISTINCT
                           --AND IHF.ORDER_CODE NOT IN 'IC'
                           --Excludes shipments to other FEI locations.
                           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-													
-													AND ILF.YEARMONTH BETWEEN  '201408' AND '201601'
-													AND IHF.YEARMONTH BETWEEN '201408' AND '201601'
-													  /*AND ILF.YEARMONTH NOT BETWEEN  '201502' AND '201511'  
-													AND IHF.YEARMONTH NOT BETWEEN  '201502' AND '201511'
-													
-                        AND ILF.YEARMONTH BETWEEN TO_CHAR (
+                          AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
@@ -565,7 +513,7 @@ SELECT DISTINCT
                                                        'YYYYMM')
                                                 AND
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 2,
-                                          'YYYYMM')*/
+                                          'YYYYMM')
             ) SP_HIST
                   LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                      ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
@@ -635,62 +583,24 @@ SELECT DISTINCT
                          AND SP_HIST.CUSTOMER_ACCOUNT_GK = PR_OVR.CUSTOMER_GK
                          AND NVL(SP_HIST.CONTRACT_NUMBER,'DEFAULT_MATCH')=NVL(PR_OVR.CONTRACT_ID,'DEFAULT_MATCH'))
               ) sp_dtl
-							
-		GROUP BY 
-			 sp_dtl.yearmonth,
-      /* CASE
-			 	WHEN sp_dtl.YEARMONTH BETWEEN '201412' AND '201501'
-				THEN
-					'PREVIOUS'
-				ELSE
-					'CURRENT'
-			END
-				TPD,*/
-			 sp_dtl.ACCOUNT_NUMBER,
-       -- sp_dtl.ACCOUNT_NAME,
-       sp_dtl.WAREHOUSE_NUMBER,
-			 sp_dtl.DISCOUNT_GROUP_NK,
-       sp_Dtl.DISCOUNT_GROUP_NAME,
-      /* sp_Dtl.CHANNEL_TYPE,
-       sp_dtl.INVOICE_LINE_NUMBER,
-       sp_dtl.MANUFACTURER,
-       sp_dtl.PRODUCT_NK,
-       sp_dtl.ALT1_CODE,
-       sp_dtl.PRODUCT_NAME,*/
-			 case
-			 	when sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE'
-				then 'OVERRIDE'
-				else 
-					case
-						when sp_dtl.PRICE_CATEGORY = 'MATRIX_BID'
-						then 'MATRIX'
-						when sp_dtl.PRICE_CATEGORY in ( 'OTH/ERROR', 'QUOTE', 'TOOLS' )
-						then 'MANUAL'
-						else sp_dtl.PRICE_CATEGORY
-					end
-			end
-			
-			;
-/*       sp_dtl.MAIN_CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NAME
-		
-		
 LEFT OUTER JOIN 
 		EBUSINESS.SALES_DIVISIONS SWD
 			ON sp_dtl.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK
 			
-			WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
+			/*WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
 																					'D10', 'D11', 'D12', 'D13', 
 																					'D14', 'D30', 'D31', 'D32'
-																					))
-				AND sp_dtl.DISCOUNT_GROUP_NK IN ( '1072',
-																					'1076',
-																					'0540',
-																					'0545'
-																					)
-        LEFT OUTER JOIN DW_FEI.EMPLOYEE_DIMENSION emp
+																					))*/
+				AND sp_dtl.DISCOUNT_GROUP_NK IN ( 
+																														'2683',
+																														'1141',
+																														'1152',
+																														'1169',
+																														'2683',
+																														'2684'
+																														)
+       /* LEFT OUTER JOIN DW_FEI.EMPLOYEE_DIMENSION emp
 			ON sp_dtl.ACCOUNT_NAME = emp.ACCOUNT_NAME
-			AND sp_dtl.WRITER = emp.INITIALS */
+			AND sp_dtl.WRITER = emp.INITIALS */;
 
--- GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;
