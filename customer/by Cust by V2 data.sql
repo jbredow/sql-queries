@@ -7,8 +7,8 @@ SELECT
 	V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
 	--V2.TYPE_OF_SALE,
-	V2.DISCOUNT_GROUP_NK,
-	V2.DISCOUNT_GROUP_NAME,
+	--V2.DISCOUNT_GROUP_NK,
+	--V2.DISCOUNT_GROUP_NAME,
 	CASE
 		WHEN V2.price_category_ovr IS NOT NULL
 		THEN V2.price_category_ovr
@@ -478,7 +478,7 @@ SELECT
 								
 						WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 								--AND ILF.PRODUCT_STATUS = 'SP'
-							  --AND IHF.ACCOUNT_NUMBER in ( '448', '1020', '331', '276', '754', '1550' )
+							  AND IHF.ACCOUNT_NUMBER in ( '448', '1020', '331', '276', '754', '1550' )
 							  --AND IHF.ACCOUNT_NUMBER = '1550'
 								--AND NVL (ILF.PRICE_CODE, 'N/A') IN
 							  --      ('Q', 'N/A', 'R')
@@ -512,8 +512,8 @@ SELECT
 							  --Excludes shipments to other FEI locations.
 							  AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 								
-								AND ILF.YEARMONTH BETWEEN '201408' AND '201601'
-								AND IHF.YEARMONTH BETWEEN '201408' AND '201601'
+								AND ILF.YEARMONTH BETWEEN '201403' AND '201502'
+								AND IHF.YEARMONTH BETWEEN '201403' AND '201502'
 								
 							  /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
 														   TRUNC (
@@ -618,22 +618,22 @@ SELECT
 																									'2469',
 																									'2778'
 																									)
-			AND V2.CUSTOMER_NK IN (  '108462', 
+			/*AND V2.CUSTOMER_NK IN (  '108462', 
 																							'108799', 
 																							'31606', 
 																							'31371', 
 																							'17113', 
 																							'16855'
-																						)
+																						)*/
 GROUP BY 
   V2.YEARMONTH,
 	V2.ACCOUNT_NAME,
   V2.MAIN_CUSTOMER_NK,
 	V2.CUSTOMER_NK,
-	V2.CUSTOMER_NAME,
+	V2.CUSTOMER_NAME
 	--V2.TYPE_OF_SALE,
-	V2.DISCOUNT_GROUP_NK,
-	V2.DISCOUNT_GROUP_NAME,
+	--V2.DISCOUNT_GROUP_NK,
+	--V2.DISCOUNT_GROUP_NAME,
 	CASE
 		WHEN V2.price_category_ovr IS NOT NULL
 		THEN V2.price_category_ovr

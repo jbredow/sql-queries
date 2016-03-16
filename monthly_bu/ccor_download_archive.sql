@@ -44,7 +44,7 @@ SELECT *
                  DW_FEI.DISCOUNT_GROUP_DIMENSION DG,
                  DW_FEI.CUSTOMER_DIMENSION CUST,
                  EBUSINESS.SALES_DIVISIONS SWD
-           WHERE     CCORG.DISC_GROUP = DG.DISCOUNT_GROUP_NK
+           WHERE   CCORG.DISC_GROUP = DG.DISCOUNT_GROUP_NK
                  AND CCORG.OVERRIDE_TYPE = 'G'
                  --AND CCORG.EXPIRE_DATE      > SYSDATE
                  AND (CCORG.BRANCH_NUMBER_NK = SWD.ACCOUNT_NUMBER_NK)
@@ -62,7 +62,6 @@ SELECT *
                              'D50',
                              'D51',
                              'D53'))
-                 --AND CCORG.DISC_GROUP IN ('999','1003','1005','1007','1011')
                  --AND TO_CHAR (CCORG.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201508')
                  --                                              AND  TO_CHAR('201511')
           --AND SWD.ACCOUNT_NUMBER_NK IN ( '480', '190', '61', '1869', '116', '454' )
@@ -158,7 +157,6 @@ SELECT *
                             'D51',
                             'D53',
 														'D59'))
-                --AND CCORP.DISC_GROUP IN ('999','1003','1005','1007','1011')
                 --AND TO_CHAR (CCORP.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201508')
                 --                                              AND  TO_CHAR('201511')
          				--AND SWD.ACCOUNT_NUMBER_NK IN ( '480', '190', '61', '1869', '116', '454' )
@@ -195,12 +193,13 @@ SELECT *
                   CCORP.UPDATE_TIMESTAMP,
                   CCORP.LAST_UPDATE,
                   CCORP.EFFECTIVE_PROD)) XX
-WHERE XX.DG IN ( '1234', '1235', '1236', '1237', '1238', '2080'	)
-		AND XX.BRANCH_NO <> '3325'
-	/*WHERE TO_CHAR (EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201510')
+WHERE   XX.DG IN ( '0504', '0505', '0508', '0511', '0513', '0517', '0525', '0528', '0529', '0533', '0534'	)
+-- WHERE   XX.DG = '0504'
+	/*WHERE TO_CHAR (XX.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201510')
                                                  AND  TO_CHAR('201601')*/
 
-ORDER BY XX.REGION, XX.DIST, XX.BRANCH_NO, XX.MAIN_NO, XX.CUST_NO;
+ORDER BY XX.REGION, XX.DIST, XX.BRANCH_NO, XX.MAIN_NO, XX.CUST_NO
+;
 
 GRANT SELECT ON AAA6863.A_CCOR_CENT_201512 TO PUBLIC;
 

@@ -1,11 +1,11 @@
 --VICT2 sql with updated rounding logic aligned with pricing cube
 --10/7/2013, Leigh North
 -- Old
-/*
-DROP TABLE AAA6863.PR_VICT2_SKU_DETAIL;
+/**/
+DROP TABLE AAA6863.PR_VICT2_SKU_DETAIL_UPONOR;
 
-CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL
-AS */
+CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL_UPONOR
+AS 
  
 SELECT DISTINCT
        sp_dtl.YEARMONTH,
@@ -57,7 +57,7 @@ SELECT DISTINCT
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
        sp_dtl.CONSIGN_TYPE,
-       --sp_dtl.MAIN_CUSTOMER_NK,
+       sp_dtl.MAIN_CUSTOMER_NK,
        sp_dtl.CUSTOMER_NK,
        sp_dtl.CUSTOMER_NAME,
        sp_dtl.PRICE_COLUMN,
@@ -460,14 +460,14 @@ SELECT DISTINCT
                           DW_FEI.CUSTOMER_DIMENSION CUST,
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                     WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK --AND ILF.PRODUCT_STATUS = 'SP'
-                          --AND IHF.ACCOUNT_NUMBER = '13'
+                          AND IHF.ACCOUNT_NUMBER IN ( '1550', '1020', '448', '2778', '1869', '2079' )
                           --AND NVL (ILF.PRICE_CODE, 'N/A') IN
                           --      ('Q', 'N/A', 'R')
                           --AND IHF.WRITER = 'CMC'
                           --AND CUST.ACCOUNT_NAME IN ('MIDATLWW','MYERSUG')
                           --AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
                           --AND ILF.PRICE_CODE in ('R','N/A','Q')
-
+													
                           --AND IHF.REF_BID_NUMBER='B225888'
                           --AND CUST.CUSTOMER_NK = '127896'
                           --AND PROD.LINEBUY_NK='200'
@@ -496,23 +496,23 @@ SELECT DISTINCT
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               6,
+                                                               13,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
                                                 AND
-                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 2,
                                           'YYYYMM')
                           AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               6,
+                                                               13,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
                                                 AND
-                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 2,
                                           'YYYYMM')
             ) SP_HIST
                   LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
@@ -583,21 +583,17 @@ SELECT DISTINCT
                          AND SP_HIST.CUSTOMER_ACCOUNT_GK = PR_OVR.CUSTOMER_GK
                          AND NVL(SP_HIST.CONTRACT_NUMBER,'DEFAULT_MATCH')=NVL(PR_OVR.CONTRACT_ID,'DEFAULT_MATCH'))
               ) sp_dtl
-LEFT OUTER JOIN 
-		EBUSINESS.SALES_DIVISIONS SWD
-			ON sp_dtl.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK
-			
-			WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
-																					'D10', 'D11', 'D12', 'D13', 
-																					'D14', 'D30', 'D31', 'D32'
-																					))
-				AND sp_dtl.DISCOUNT_GROUP_NK IN ( '1072',
-																					'1076',
-																					'0540',
-																					'0545'
-																					)
+
+				WHERE sp_dtl.DISCOUNT_GROUP_NK IN ( 
+																														'2683',
+																														'1141',
+																														'1152',
+																														'1169',
+																														'2683',
+																														'2684'
+																														)
        /* LEFT OUTER JOIN DW_FEI.EMPLOYEE_DIMENSION emp
 			ON sp_dtl.ACCOUNT_NAME = emp.ACCOUNT_NAME
 			AND sp_dtl.WRITER = emp.INITIALS */;
 
-GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL_UPONOR TO PUBLIC;

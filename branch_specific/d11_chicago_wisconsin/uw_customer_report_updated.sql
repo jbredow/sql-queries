@@ -1,6 +1,7 @@
 /*
 		NOTE!
 		must be run after the SALES_MART.TIME_DIM has been updated
+		two reports, one with and one without the GP%
 */
 
 SELECT DISTINCT
@@ -20,6 +21,7 @@ SELECT DISTINCT
        ILF.ORDERED_QTY AS "Ord Quan",
        ILF.SHIPPED_QTY AS "Ship Quan",
        ILF.EXT_SALES_AMOUNT AS "Ext Sales",
+			 ILF.EXT_AVG_COGS_AMOUNT AS "AC",
        ILF.UNIT_NET_PRICE_AMOUNT AS "Discounted Price Each",
        NVL ( ILF.LIST_PRICE, NULL ) AS "List Price",
        CASE
