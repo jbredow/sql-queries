@@ -465,14 +465,14 @@ from (
                           DW_FEI.CUSTOMER_DIMENSION CUST,
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                     WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK --AND ILF.PRODUCT_STATUS = 'SP'
-                          AND IHF.ACCOUNT_NUMBER IN ( '26')
+                          --AND IHF.ACCOUNT_NUMBER IN ( '26')
                           --AND NVL (ILF.PRICE_CODE, 'N/A') IN
                           --      ('Q', 'N/A', 'R')
                           --AND IHF.WRITER = 'CMC'
                           --AND CUST.ACCOUNT_NAME = 'KC'
                           --AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
                           --AND ILF.PRICE_CODE in ('R','N/A','Q')
-													--AND IHF.WAREHOUSE_NUMBER IN ('93','213','479','566','291')
+													AND IHF.WAREHOUSE_NUMBER = '1717' --IN ('93','213','479','566','291')
                           --AND IHF.REF_BID_NUMBER='B225888'
                           --AND CUST.CUSTOMER_NK = '127896'
                           --AND PROD.LINEBUY_NK='200'
