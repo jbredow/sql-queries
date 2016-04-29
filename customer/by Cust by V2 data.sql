@@ -1,12 +1,18 @@
 -- by dg report using vict2 data
 
 SELECT
-	V2.YEARMONTH,
+	CASE
+		WHEN V2.YEARMONTH BETWEEN '201404' AND '201503' THEN 'PREV_12MO'
+		ELSE 'CURRENT_12M0'
+	END
+		TPD,
 	V2.ACCOUNT_NAME,
+	V2.ACCOUNT_NUMBER,
+	V2.WAREHOUSE_NUMBER,
   V2.MAIN_CUSTOMER_NK,
 	V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
-	--V2.TYPE_OF_SALE,
+	V2.TYPE_OF_SALE,
 	--V2.DISCOUNT_GROUP_NK,
 	--V2.DISCOUNT_GROUP_NAME,
 	CASE
@@ -478,8 +484,8 @@ SELECT
 								
 						WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 								--AND ILF.PRODUCT_STATUS = 'SP'
-							  AND IHF.ACCOUNT_NUMBER in ( '448', '1020', '331', '276', '754', '1550' )
-							  --AND IHF.ACCOUNT_NUMBER = '1550'
+							  AND IHF.ACCOUNT_NUMBER in ( '61', '116', '190', '454', '480', '1869' )
+							  --AND IHF.ACCOUNT_NUMBER = '61'
 								--AND NVL (ILF.PRICE_CODE, 'N/A') IN
 							  --      ('Q', 'N/A', 'R')
 							  --AND IHF.WRITER = 'CMC'
@@ -512,31 +518,31 @@ SELECT
 							  --Excludes shipments to other FEI locations.
 							  AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 								
-								AND ILF.YEARMONTH BETWEEN '201403' AND '201502'
-								AND IHF.YEARMONTH BETWEEN '201403' AND '201502'
+								/*AND ILF.YEARMONTH BETWEEN '201403' AND '201502'
+								AND IHF.YEARMONTH BETWEEN '201403' AND '201502'*/
 								
-							  /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
+							  AND ILF.YEARMONTH  BETWEEN TO_CHAR (
 														   TRUNC (
 															  SYSDATE
 															  - NUMTOYMINTERVAL (
-																   18,
+																   24,
 																   'MONTH'),
 															  'MONTH'),
 														   'YYYYMM')
-													AND
+													AND 
 									 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
 											  'YYYYMM')
 							  AND IHF.YEARMONTH BETWEEN TO_CHAR (
 														   TRUNC (
 															  SYSDATE
 															  - NUMTOYMINTERVAL (
-																   18,
+																   24,
 																   'MONTH'),
 															  'MONTH'),
 														   'YYYYMM')
-													AND
+													AND 
 									 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-											  'YYYYMM')*/
+											  'YYYYMM')
 				) SP_HIST
 					  LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
 						 ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
@@ -608,7 +614,7 @@ SELECT
 		) v2
 
 	
-	WHERE V2.ACCOUNT_NUMBER IN ('276',
+	/*WHERE V2.ACCOUNT_NUMBER IN ('276',
 																									'448', 
 																									'1020',
 																									'1550', 
@@ -618,20 +624,25 @@ SELECT
 																									'2469',
 																									'2778'
 																									)
-			/*AND V2.CUSTOMER_NK IN (  '108462', 
-																							'108799', 
-																							'31606', 
-																							'31371', 
-																							'17113', 
-																							'16855'
-																						)*/
+			AND V2.CUSTOMER_NK IN (   '108462', 
+																									'108799', 
+																									'31606', 
+																									'31371', 
+																									'17113', 
+																									'16855'
+																							) */
 GROUP BY 
-  V2.YEARMONTH,
+ CASE
+		WHEN V2.YEARMONTH BETWEEN '201404' AND '201503' THEN 'PREV_12MO'
+		ELSE 'CURRENT_12M0'
+	END,
 	V2.ACCOUNT_NAME,
+	V2.ACCOUNT_NUMBER,
+	V2.WAREHOUSE_NUMBER,
   V2.MAIN_CUSTOMER_NK,
 	V2.CUSTOMER_NK,
-	V2.CUSTOMER_NAME
-	--V2.TYPE_OF_SALE,
+	V2.CUSTOMER_NAME,
+	V2.TYPE_OF_SALE,
 	--V2.DISCOUNT_GROUP_NK,
 	--V2.DISCOUNT_GROUP_NAME,
 	CASE
@@ -641,9 +652,12 @@ GROUP BY
 	END
 	
 ORDER BY
-	V2.YEARMONTH,
+	CASE
+		WHEN V2.YEARMONTH BETWEEN '201404' AND '201503' THEN 'PREV_12MO'
+		ELSE 'CURRENT_12M0'
+	END,
 	V2.CUSTOMER_NAME,
 	V2.MAIN_CUSTOMER_NK,
-	V2.CUSTOMER_NK
-	--V2.TYPE_OF_SALE
+	V2.CUSTOMER_NK,
+	V2.TYPE_OF_SALE
 ;

@@ -506,7 +506,7 @@ SELECT DISTINCT
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               1,
+                                                               12,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
@@ -517,7 +517,7 @@ SELECT DISTINCT
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               1,
+                                                               12,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')

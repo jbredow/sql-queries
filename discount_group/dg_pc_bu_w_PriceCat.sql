@@ -1,12 +1,14 @@
 /* by BU by DG by PC */
 SELECT 
+  xx.YEARMONTH,
 	xx.ACCOUNT_NUMBER,
 	xx.WAREHOUSE_NUMBER,
 	xx.DISCOUNT_GROUP_NK,
-	xx.ALT1_CODE,
-	xx.PRODUCT_NAME,
-	xx.PRICE_COLUMN,
-	xx.INVOICE_DATE,
+	-- xx.ALT1_CODE,
+	-- xx.PRODUCT_NAME,
+	-- xx.PRICE_COLUMN,
+	-- xx.INVOICE_DATE,
+	xx.TYPE_OF_SALE,
 	CASE
 		WHEN xx.PRICE_CATEGORY_OVR = 'OVERRIDE'
 		THEN 'OVERRIDE'
@@ -469,10 +471,8 @@ FROM (
                     WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 												--AND ILF.PRODUCT_STATUS = 'SP'
 												AND IHF.ACCOUNT_NUMBER IN (	
-																	'226', '448', '520', '1020', '1550', '1657', '1674', 
-																	'3093', '13', '20', '56', '100', '150', '215', '564',
-																	'1480', '2000', '61', '88', '116', '190', '216'
-																										)
+																					'1550', '448', '276', '331', '1020', '2778'
+																																		)
                        	--AND NVL (ILF.PRICE_CODE, 'N/A') IN
                        	--      ('Q', 'N/A', 'R')
                        	--AND IHF.WRITER = 'CMC'
@@ -504,30 +504,30 @@ FROM (
                        	--AND IHF.ORDER_CODE NOT IN 'IC'
                        	--Excludes shipments to other FEI locations.
                        	AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-												AND ILF.YEARMONTH = '201411'
-												AND ILF.YEARMONTH = '201411'
-                          /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
+												/* AND ILF.YEARMONTH = '201411'
+												AND IHF.YEARMONTH = '201411' */
+                          AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               12,
+                                                               17,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
                                                 AND 
-                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 13,
                                           'YYYYMM')
                           AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               12,
+                                                               17,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
                                                 AND 
-                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                          'YYYYMM')*/
+                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 13,
+                                          'YYYYMM')
 						) SP_HIST
                   LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                      ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
@@ -597,22 +597,24 @@ FROM (
                          --where sp_dtl.TYPE_OF_SALE = 'Counter'
 )xx
 
-WHERE 
+/*WHERE 
 	xx.DISCOUNT_GROUP_NK IN ( 
 														'0143', '0504', '0505', '0511', '0513', '0525', '0529',
 														'0540','0545', '0549', '0551', '0556',
 														'0023', '1141', '1285', '1518', '1637', '4074', '4086', 
 														'4239', '5459'
-														)
+														)*/
 
 GROUP BY
+  xx.YEARMONTH,
 	xx.ACCOUNT_NUMBER,
 	xx.WAREHOUSE_NUMBER,
 	xx.DISCOUNT_GROUP_NK,
-	xx.ALT1_CODE,
-	xx.PRODUCT_NAME,
-	xx.PRICE_COLUMN,
-	xx.INVOICE_DATE,
+	-- xx.ALT1_CODE,
+	-- xx.PRODUCT_NAME,
+	-- xx.PRICE_COLUMN,
+	-- xx.INVOICE_DATE,
+	xx.TYPE_OF_SALE,
 	CASE
 		WHEN xx.PRICE_CATEGORY_OVR = 'OVERRIDE'
 		THEN 'OVERRIDE'

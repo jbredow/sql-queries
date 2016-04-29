@@ -22,9 +22,45 @@ WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN (
 
 SUBSTR ( string, start_position [ , length ] ) [ optional ]
 
+
+-- roll up months into quarters
+SELECT YEARMONTH,
+
+  -- DECODE THE YYYYMM INTO ROLLING QUARTERS BASED ON INTERVAL FROM SYSDATE
+       DECODE (
+          TPD.YEARMONTH,
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q1',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (11, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q1',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (10, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q1',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (9, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q2',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (8, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q2',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (7, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q2',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (6, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q3',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (5, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q3',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (4, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q3',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (3, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q4',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (2, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q4',
+          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'), 'MONTH'),
+                   'YYYYMM'), 'ROLL_Q4')
+          ROLLING_QTR
+  
+  FROM SALES_MART.TIME_PERIOD_DIMENSION TPD
+WHERE TPD.ROLL12MONTHS = 'LAST TWELVE MONTHS'
+
+
+
 -- BRANCH SELECT
-
-
 SELECT t.chargeId,
        t.chargeType,
        t.serviceMonth
@@ -41,7 +77,7 @@ SELECT t.chargeId,
 
 --salesrep_sales_fact
 SELECT DISTINCT 
-  	SLS.SALESREP_GK,
+  SLS.SALESREP_GK,
 	SLS.SALESREP_NK,
 	SLS.ACCOUNT_NUMBER_NK,
 	SLS.YEARMONTH,

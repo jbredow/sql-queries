@@ -5,30 +5,30 @@
 AS */
  
 SELECT DISTINCT
-			sp_dtl.yearmonth,
-      /* CASE
-			 	WHEN sp_dtl.YEARMONTH BETWEEN '201412' AND '201501'
+			-- sp_dtl.yearmonth,
+     CASE
+			 	WHEN sp_dtl.YEARMONTH BETWEEN '201404' AND '201503'
 				THEN
 					'PREVIOUS'
 				ELSE
 					'CURRENT'
 			END
-				TPD,*/
+				TPD,
        sp_dtl.ACCOUNT_NUMBER,
        -- sp_dtl.ACCOUNT_NAME,
-       sp_dtl.WAREHOUSE_NUMBER,
-       /*sp_dtl.INVOICE_NUMBER_NK,
+       -- sp_dtl.WAREHOUSE_NUMBER,
+       -- sp_dtl.INVOICE_NUMBER_NK,
        sp_dtl.TYPE_OF_SALE,
-	     sp_dtl.SHIP_VIA_NAME,
+	      /*sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
        sp_dtl.OML_FL_INI,
        sp_dtl.OML_ASSOC_NAME,
        sp_dtl.WRITER,
        sp_dtl.WR_FL_INI,
-       sp_dtl.ASSOC_NAME,*/
+       sp_dtl.ASSOC_NAME,
        sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
-      /* sp_Dtl.CHANNEL_TYPE,
+       sp_Dtl.CHANNEL_TYPE,
        sp_dtl.INVOICE_LINE_NUMBER,
        sp_dtl.MANUFACTURER,*/
       -- sp_dtl.PRODUCT_NK,
@@ -53,7 +53,7 @@ SELECT DISTINCT
 						else sp_dtl.PRICE_CATEGORY
 					end
 			end
-				price_ca
+				price_cat,
        --sp_dtl.PRICE_CATEGORY_OVR,
        --sp_dtl.PRICE_FORMULA,
       /* sp_dtl.UNIT_NET_PRICE_AMOUNT,
@@ -73,10 +73,10 @@ SELECT DISTINCT
        sp_dtl.TRIM_FORM,
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
-       sp_dtl.CONSIGN_TYPE,
+       sp_dtl.CONSIGN_TYPE,*/
        sp_dtl.MAIN_CUSTOMER_NK,
        sp_dtl.CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NAME*/
+       sp_dtl.CUSTOMER_NAME
         /*sp_dtl.PRICE_COLUMN,
        sp_dtl.CUSTOMER_TYPE,
        sp_dtl.REF_BID_NUMBER,
@@ -479,9 +479,9 @@ SELECT DISTINCT
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                     WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 													--AND ILF.PRODUCT_STATUS = 'SP'
-                          AND IHF.ACCOUNT_NUMBER IN ( '1020', '1550', '448' )
+                          AND IHF.ACCOUNT_NUMBER IN ( '61', '116', '190', '454', '480', '1869' )
 													--AND IHF.WAREHOUSE_NUMBER IN ( '0754', '1868', '2079', '2469', '2778' )
-													AND cust.PRICE_COLUMN BETWEEN '1' and '8'
+													--AND cust.PRICE_COLUMN BETWEEN '1' and '8'
 													
                           --AND NVL (ILF.PRICE_CODE, 'N/A') IN
                           --      ('Q', 'N/A', 'R')
@@ -539,33 +539,33 @@ SELECT DISTINCT
                           --Excludes shipments to other FEI locations.
                           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 													
-													AND ILF.YEARMONTH BETWEEN  '201408' AND '201601'
+													 /*AND ILF.YEARMONTH BETWEEN  '201408' AND '201601'
 													AND IHF.YEARMONTH BETWEEN '201408' AND '201601'
-													  /*AND ILF.YEARMONTH NOT BETWEEN  '201502' AND '201511'  
-													AND IHF.YEARMONTH NOT BETWEEN  '201502' AND '201511'
+													 AND ILF.YEARMONTH NOT BETWEEN  '201502' AND '201511'  
+													AND IHF.YEARMONTH NOT BETWEEN  '201502' AND '201511'*/
 													
                         AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               13,
+                                                               24,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
                                                 AND
-                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 2,
+                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
                                           'YYYYMM')
                           AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               13,
+                                                               24,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
                                                 AND
-                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 2,
-                                          'YYYYMM')*/
+                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                          'YYYYMM')
             ) SP_HIST
                   LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                      ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
@@ -637,26 +637,41 @@ SELECT DISTINCT
               ) sp_dtl
 							
 		GROUP BY 
-			 sp_dtl.yearmonth,
-      /* CASE
-			 	WHEN sp_dtl.YEARMONTH BETWEEN '201412' AND '201501'
+			 CASE
+			 	WHEN sp_dtl.YEARMONTH BETWEEN '201404' AND '201503'
 				THEN
 					'PREVIOUS'
 				ELSE
 					'CURRENT'
 			END
-				TPD,*/
-			 sp_dtl.ACCOUNT_NUMBER,
+				,
+       sp_dtl.ACCOUNT_NUMBER,
        -- sp_dtl.ACCOUNT_NAME,
-       sp_dtl.WAREHOUSE_NUMBER,
-			 sp_dtl.DISCOUNT_GROUP_NK,
+       -- sp_dtl.WAREHOUSE_NUMBER,
+       -- sp_dtl.INVOICE_NUMBER_NK,
+       sp_dtl.TYPE_OF_SALE,
+	     /* sp_dtl.SHIP_VIA_NAME,
+       sp_dtl.OML_ASSOC_INI,
+       sp_dtl.OML_FL_INI,
+       sp_dtl.OML_ASSOC_NAME,
+       sp_dtl.WRITER,
+       sp_dtl.WR_FL_INI,
+       sp_dtl.ASSOC_NAME,
+       sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
-      /* sp_Dtl.CHANNEL_TYPE,
+       sp_Dtl.CHANNEL_TYPE,
        sp_dtl.INVOICE_LINE_NUMBER,
-       sp_dtl.MANUFACTURER,
-       sp_dtl.PRODUCT_NK,
-       sp_dtl.ALT1_CODE,
-       sp_dtl.PRODUCT_NAME,*/
+       sp_dtl.MANUFACTURER,*/
+      -- sp_dtl.PRODUCT_NK,
+      -- sp_dtl.ALT1_CODE,
+      -- sp_dtl.PRODUCT_NAME,
+       /*sp_dtl.STATUS,
+       sp_dtl.SHIPPED_QTY,*/
+       --sum ( sp_dtl.EXT_SALES_AMOUNT ) ex_sales,
+       --sum ( sp_dtl.EXT_AVG_COGS_AMOUNT ) ex_ac,
+	     /*sp_dtl.REPLACEMENT_COST,
+	     sp_dtl.UNIT_INV_COST,
+       sp_dtl.PRICE_CODE,*/
 			 case
 			 	when sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE'
 				then 'OVERRIDE'
@@ -668,7 +683,10 @@ SELECT DISTINCT
 						then 'MANUAL'
 						else sp_dtl.PRICE_CATEGORY
 					end
-			end
+			end,
+			sp_dtl.MAIN_CUSTOMER_NK,
+       sp_dtl.CUSTOMER_NK,
+       sp_dtl.CUSTOMER_NAME
 			
 			;
 /*       sp_dtl.MAIN_CUSTOMER_NK,

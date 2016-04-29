@@ -539,17 +539,17 @@ SELECT DISTINCT
                                      DW_FEI.CUSTOMER_DIMENSION CUST,
                                      DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                                WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
-																			--AND ILF.PRODUCT_STATUS = 'SP'
-																			--AND IHF.ACCOUNT_NUMBER = '13'
-																			--AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
-																			--AND IHF.WRITER = 'CMC'
-																			--AND CUST.ACCOUNT_NAME IN ('MIDATLWW','MYERSUG')
-																			--AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
-																			--AND ILF.PRICE_CODE in ('R','N/A','Q')
-																		  --AND MAIN_CUSTOMER_NK = '123'
-																			--AND IHF.REF_BID_NUMBER='B225888'
-																			--AND CUST.CUSTOMER_NK = '127896'
-																			--AND PROD.LINEBUY_NK='200'
+																			-- AND ILF.PRODUCT_STATUS = 'SP'
+																			AND IHF.ACCOUNT_NUMBER IN ( '1550', '448', '276', '331', '1020', '1599' )
+																			-- AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
+																			-- AND IHF.WRITER = 'CMC'
+																			-- AND CUST.ACCOUNT_NAME = 'CHICAGO' --IN ('MIDATLWW','MYERSUG')
+																			-- AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
+																			-- AND ILF.PRICE_CODE in ('R','N/A','Q')
+																		  -- AND MAIN_CUSTOMER_NK = '44459'
+																			-- AND IHF.REF_BID_NUMBER='B225888'
+																			-- AND CUST.CUSTOMER_NK = '127896'
+																			-- AND PROD.LINEBUY_NK='200'
 																			AND IHF.CUSTOMER_ACCOUNT_GK =	CUST.CUSTOMER_GK
 																			AND DECODE ( NVL ( cust.ar_gl_number, '9999' ),
 																						'1320', 0,
@@ -571,7 +571,7 @@ SELECT DISTINCT
 																			--AND IHF.ORDER_CODE NOT IN 'IC'
 																			--Excludes shipments to other FEI locations.
 																			AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-																			AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																			AND ILF.YEARMONTH = /*BETWEEN TO_CHAR ( TRUNC ( SYSDATE
 																																									- NUMTOYMINTERVAL ( 12,
 																																																		'MONTH'
 																																										),
@@ -579,13 +579,13 @@ SELECT DISTINCT
 																																					),
 																																					'YYYYMM'
 																																)
-																														AND  TO_CHAR ( TRUNC ( SYSDATE,
+																														AND */ TO_CHAR ( TRUNC ( SYSDATE,
 																																									'MM'
 																																					)
 																																					- 1,
 																																					'YYYYMM'
 																																	)
-																				AND IHF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																				AND IHF.YEARMONTH = /* BETWEEN TO_CHAR ( TRUNC ( SYSDATE
 																																										- NUMTOYMINTERVAL ( 12,
 																																																			'MONTH'
 																																											),
@@ -593,7 +593,7 @@ SELECT DISTINCT
 																																						),
 																																						'YYYYMM'
 																																	)
-																															AND  TO_CHAR ( TRUNC ( SYSDATE,
+																															AND  */ TO_CHAR ( TRUNC ( SYSDATE,
 																																										'MM'
 																																						)
 																																						- 1,
@@ -677,14 +677,15 @@ SELECT DISTINCT
                       AND NVL ( SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH' ) =
                            NVL ( PR_OVR.CONTRACT_ID, 'DEFAULT_MATCH' ) ) )
          sp_dtl
-       LEFT OUTER JOIN
+       /*LEFT OUTER JOIN
          EBUSINESS.SALES_DIVISIONS SWD
        ON sp_dtl.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK
  WHERE ( SUBSTR ( SWD.REGION_NAME,
                  1,
                  3
         ) IN ('D10', 'D11', 'D12', 'D13', 'D14', 'D30', 'D31', 'D32') )
-       -- AND sp_dtl.DISCOUNT_GROUP_NK IN ('1072', '1076', '0540', '0545')
+       -- AND sp_dtl.DISCOUNT_GROUP_NK IN ('1072', '1076', '0540', '0545')*/
+	WHERE DISCOUNT_GROUP_NK = '2119'
 	;
 
 GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;

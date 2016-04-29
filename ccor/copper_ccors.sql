@@ -6,7 +6,7 @@ CREATE TABLE AAA6863.A_CCOR_CENT_201512
 
 SELECT * 
   FROM ( (SELECT SWD.DIVISION_NAME REGION,
-                 SWD.REGION_NAME DIST,
+                SUBSTR (SWD.REGION_NAME, 1, 3) DIST,
                  SWD.ACCOUNT_NUMBER_NK BRANCH_NO,
                  SWD.ALIAS_NAME BRANCH_NAME,
                  TO_NUMBER (CCORG.CUSTOMER_NK) CUST_NO,
@@ -67,7 +67,7 @@ SELECT *
                  --                                              AND  TO_CHAR('201511')
           --AND SWD.ACCOUNT_NUMBER_NK IN ( '480', '190', '61', '1869', '116', '454' )
           GROUP BY SWD.DIVISION_NAME,
-                   SWD.REGION_NAME,
+                   SUBSTR (SWD.REGION_NAME, 1, 3),
                    SWD.ACCOUNT_NUMBER_NK,
                    SWD.ALIAS_NAME,
                    TO_NUMBER (CCORG.CUSTOMER_NK),
@@ -99,7 +99,7 @@ SELECT *
                    CCORG.EFFECTIVE_PROD)
         UNION
         (SELECT SWD.DIVISION_NAME REGION,
-                SWD.REGION_NAME DIST,
+                SUBSTR (SWD.REGION_NAME, 1, 3) DIST,
                 SWD.ACCOUNT_NUMBER_NK BRANCH_NO,
                 SWD.ALIAS_NAME BRANCH_NAME,
                 TO_NUMBER (CCORP.CUSTOMER_NK) CUST_NO,
@@ -163,7 +163,7 @@ SELECT *
                 --                                              AND  TO_CHAR('201511')
          				--AND SWD.ACCOUNT_NUMBER_NK IN ( '480', '190', '61', '1869', '116', '454' )
          GROUP BY SWD.DIVISION_NAME,
-                  SWD.REGION_NAME,
+                  SUBSTR (SWD.REGION_NAME, 1, 3),
                   SWD.ACCOUNT_NUMBER_NK,
                   SWD.ALIAS_NAME,
                   TO_NUMBER (CCORP.CUSTOMER_NK),
@@ -195,7 +195,7 @@ SELECT *
                   CCORP.UPDATE_TIMESTAMP,
                   CCORP.LAST_UPDATE,
                   CCORP.EFFECTIVE_PROD)) XX
-/* nov - feb  dec current */
+/* nov - feb  dec current 
    WHERE TO_CHAR (xx.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR (
 														   TRUNC (
 															  SYSDATE
@@ -212,47 +212,18 @@ SELECT *
 																   3,
 																   'MONTH'),
 															  'MONTH'),
-														   'YYYYMM')
+														   'YYYYMM')*/
 															 
-     -- AND  XX.DG IN ( '0504', '0505'	)
-		 -- AND XX.BRANCH_NO = '1480'
-		 
-	/*WHERE TO_CHAR (EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201510')
-                                                 AND  TO_CHAR('201601')
-
-ORDER BY XX.REGION, XX.DIST, XX.BRANCH_NO, XX.MAIN_NO, XX.CUST_NO;
-
-GRANT SELECT ON AAA6863.A_CCOR_CENT_201512 TO PUBLIC;
-
-SELECT *
-  FROM AAA6863.A_CCOR_CENT_201512 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D10';
-
-SELECT *
-  FROM AAA6863.A_CCOR_CENT_201512 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D11';
- 
-SELECT *
-  FROM AAA6863.A_CCOR_CENT_201512 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D12';
- 
-SELECT *
-  FROM AAA6863.A_CCOR_CENT_201512 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D14';
-
-SELECT *
-  FROM AAA6863.A_CCOR_CENT_20152 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D30';
- 
- SELECT *
-  FROM AAA6863.A_CCOR_CENT_201512 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D31';
- 
- SELECT *
-  FROM AAA6863.A_CCOR_CENT_201512 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D32';
-
-SELECT *
-  FROM AAA6863.A_CCOR_CENT_201512 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) IN ('D50', 'D51', 'D53');*/
- 
+    WHERE  XX.DG IN ( '0504',
+															'0505',
+															'0508',
+															'0511',
+															'0513',
+															'0517',
+															'0525',
+															'0528',
+															'0529',
+															'0533',
+															'0534'
+																)
+;

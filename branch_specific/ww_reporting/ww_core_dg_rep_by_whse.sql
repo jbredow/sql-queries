@@ -59,7 +59,8 @@ WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 )) IN (
 								'YYYYMM')
 			AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM') 
 	--AND BC.DISTRICT IN ('W50', 'W51', 'W52', 'W53', 'W54')
-	AND PROD.DISCOUNT_GROUP_NK IN ( '5799', '5835', '5838', '5863', '5871', '5890',
+	AND PROD.DISCOUNT_GROUP_NK IN ( 
+									'5799', '5835', '5838', '5863', '5871', '5890',
 									'5895', '5929', '5935', '5943', '5944', '5955',
 									'6037', '6044', '6055', '6062', '6069', '6073',
 									'6105', '6115', '6140', '6146', '6198', '6251',
