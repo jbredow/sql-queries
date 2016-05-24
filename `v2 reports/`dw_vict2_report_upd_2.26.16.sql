@@ -540,11 +540,11 @@ SELECT DISTINCT
                                      DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                                WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 																			-- AND ILF.PRODUCT_STATUS = 'SP'
-																			AND IHF.ACCOUNT_NUMBER IN ( '1550', '448', '276', '331', '1020', '1599' )
+																			AND IHF.ACCOUNT_NUMBER IN ( '61', '448', '276', '331', '1020', '1599' )
 																			-- AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
 																			-- AND IHF.WRITER = 'CMC'
 																			-- AND CUST.ACCOUNT_NAME = 'CHICAGO' --IN ('MIDATLWW','MYERSUG')
-																			-- AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
+																			-- AND IHF.INVOICE_NUMBER_NK = '4735080' --in ('2658674','2683795')
 																			-- AND ILF.PRICE_CODE in ('R','N/A','Q')
 																		  -- AND MAIN_CUSTOMER_NK = '44459'
 																			-- AND IHF.REF_BID_NUMBER='B225888'
@@ -571,34 +571,34 @@ SELECT DISTINCT
 																			--AND IHF.ORDER_CODE NOT IN 'IC'
 																			--Excludes shipments to other FEI locations.
 																			AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-																			AND ILF.YEARMONTH = /*BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																									- NUMTOYMINTERVAL ( 12,
+																			/*AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																																									- NUMTOYMINTERVAL ( 5,
 																																																		'MONTH'
 																																										),
 																																									'MONTH'
 																																					),
 																																					'YYYYMM'
 																																)
-																														AND */ TO_CHAR ( TRUNC ( SYSDATE,
+																														AND TO_CHAR ( TRUNC ( SYSDATE,
 																																									'MM'
 																																					)
 																																					- 1,
 																																					'YYYYMM'
 																																	)
-																				AND IHF.YEARMONTH = /* BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																										- NUMTOYMINTERVAL ( 12,
+																				AND IHF.YEARMONTH  BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																																										- NUMTOYMINTERVAL ( 5,
 																																																			'MONTH'
 																																											),
 																																										'MONTH'
 																																						),
 																																						'YYYYMM'
 																																	)
-																															AND  */ TO_CHAR ( TRUNC ( SYSDATE,
+																															AND  TO_CHAR ( TRUNC ( SYSDATE,
 																																										'MM'
 																																						)
 																																						- 1,
 																																						'YYYYMM'
-																																		)
+																																		)*/
 																						) SP_HIST
                           LEFT OUTER JOIN
                             DW_FEI.DISCOUNT_GROUP_DIMENSION DG
@@ -685,7 +685,7 @@ SELECT DISTINCT
                  3
         ) IN ('D10', 'D11', 'D12', 'D13', 'D14', 'D30', 'D31', 'D32') )
        -- AND sp_dtl.DISCOUNT_GROUP_NK IN ('1072', '1076', '0540', '0545')*/
-	WHERE DISCOUNT_GROUP_NK = '2119'
+	--WHERE DISCOUNT_GROUP_NK = '5730'
 	;
 
 GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;

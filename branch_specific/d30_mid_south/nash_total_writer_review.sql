@@ -20,6 +20,9 @@
 		
 	FROM	(SELECT SP_HIST.*,
 						CASE
+							WHEN SP_HIST.MAIN_CUSTOMER_NK = '12388'
+							THEN
+								'OVERRIDE'
 							WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
 							THEN
 							CASE
@@ -221,6 +224,9 @@
 						ILF.EXT_SALES_AMOUNT,
 						--ILF.MATRIX_PRICE,
 						CASE
+							WHEN CUST.MAIN_CUSTOMER_NK = '12388'
+							THEN
+								'OVERRIDE'
 							WHEN ihf.order_code = 'IC'
 							THEN
 								'CREDITS'
@@ -230,44 +236,34 @@
 							WHEN ilf.price_code = 'Q'
 							THEN
 							CASE
-								WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-									ilf.MATRIX_PRICE
+								WHEN ilf.UNIT_NET_PRICE_AMOUNT = ilf.MATRIX_PRICE
 								THEN
 									'MATRIX'
-								WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-									ilf.MATRIX
+								WHEN ilf.UNIT_NET_PRICE_AMOUNT = ilf.MATRIX
 								THEN
 									'MATRIX'
-								WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-									(TRUNC (ilf.MATRIX_PRICE, 2) + .01)
+								WHEN ilf.UNIT_NET_PRICE_AMOUNT = (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
 								THEN
 									'MATRIX'
-								WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-									(TRUNC (ilf.MATRIX, 2) + .01)
+								WHEN ilf.UNIT_NET_PRICE_AMOUNT = (TRUNC (ilf.MATRIX, 2) + .01)
 								THEN
 									'MATRIX'
-								WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-									(ROUND (ilf.MATRIX_PRICE, 2))
+								WHEN ilf.UNIT_NET_PRICE_AMOUNT = (ROUND (ilf.MATRIX_PRICE, 2))
 								THEN
 									'MATRIX' 
-								WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-									(ROUND (ilf.MATRIX, 2))
+								WHEN ilf.UNIT_NET_PRICE_AMOUNT = (ROUND (ilf.MATRIX, 2))
 								THEN
 									'MATRIX'  
-								WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-									(TRUNC (ilf.MATRIX_PRICE, 1) + .1)
+								WHEN ilf.UNIT_NET_PRICE_AMOUNT = (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
 								THEN
 									'MATRIX'
-								WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-									(TRUNC (ilf.MATRIX, 1) + .1)
+								WHEN ilf.UNIT_NET_PRICE_AMOUNT = (TRUNC (ilf.MATRIX, 1) + .1)
 								THEN
 									'MATRIX'
-								WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-									FLOOR (ilf.MATRIX_PRICE) + 1
+								WHEN ilf.UNIT_NET_PRICE_AMOUNT = FLOOR (ilf.MATRIX_PRICE) + 1
 								THEN
 									'MATRIX'
-								WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-									FLOOR (ilf.MATRIX) + 1
+								WHEN ilf.UNIT_NET_PRICE_AMOUNT = FLOOR (ilf.MATRIX) + 1
 								THEN
 									'MATRIX'
 								ELSE

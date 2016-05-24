@@ -1,17 +1,12 @@
 -- VICT2 sql with updated rounding logic aligned with pricing cube
--- Leigh North
-
-/*
-DROP TABLE AAA6863.PR_VICT2_SKU_DETAIL;
-CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL
-AS */
 
 SELECT DISTINCT
+			TPD.FISCAL_YEAR_TO_DATE,
        sp_dtl.YEARMONTH,
        sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
        sp_dtl.WAREHOUSE_NUMBER,
-       sp_dtl.INVOICE_NUMBER_NK,
+       /*sp_dtl.INVOICE_NUMBER_NK,
        sp_dtl.TYPE_OF_SALE,
        sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
@@ -20,6 +15,11 @@ SELECT DISTINCT
        sp_dtl.WRITER,
        sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
+       sp_dtl.MAIN_CUSTOMER_NK,
+       sp_dtl.CUSTOMER_NK,
+       sp_dtl.CUSTOMER_NAME,
+       sp_dtl.PRICE_COLUMN,
+       sp_dtl.CUSTOMER_TYPE,
        sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
        sp_Dtl.CHANNEL_TYPE,
@@ -27,26 +27,16 @@ SELECT DISTINCT
        sp_dtl.MANUFACTURER,
        sp_dtl.PRODUCT_NK,
        sp_dtl.ALT1_CODE,
-       sp_dtl.PRODUCT_NAME,
+       sp_dtl.PRODUCT_NAME,*/
        sp_dtl.STATUS,
-       sp_dtl.SHIPPED_QTY,
-       sp_dtl.EXT_SALES_AMOUNT,
-       sp_dtl.EXT_AVG_COGS_AMOUNT,
-       sp_dtl.REPLACEMENT_COST,
+       -- sp_dtl.SHIPPED_QTY,
+       SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
+       SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC --,
+       /*sp_dtl.REPLACEMENT_COST,
        sp_dtl.UNIT_INV_COST,
        sp_dtl.PRICE_CODE,
-       
-       CASE
-			 	WHEN sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE' THEN
-					'OVERRIDE'
-				WHEN sp_dtl.PRICE_CATEGORY IN ( 'MATRIX', 'MATRIX_BID' ) THEN
-					'MATRIX'
-				WHEN sp_dtl.PRICE_CATEGORY IN ( 'TOOLS', 'QUOTE', 'OTH/ERROR' ) THEN
-					'MANUAL'
-				ELSE
-					sp_dtl.PRICE_CATEGORY
-			END
-				PRICE_CAT,
+       sp_dtl.PRICE_CATEGORY,
+       sp_dtl.PRICE_CATEGORY_OVR,
        sp_dtl.PRICE_FORMULA,
        sp_dtl.UNIT_NET_PRICE_AMOUNT,
        sp_dtl.UM,
@@ -75,17 +65,12 @@ SELECT DISTINCT
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
        sp_dtl.CONSIGN_TYPE,
-       sp_dtl.MAIN_CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NAME,
-       sp_dtl.PRICE_COLUMN,
-       sp_dtl.CUSTOMER_TYPE,
        sp_dtl.REF_BID_NUMBER,
        sp_dtl.SOURCE_ORDER,
        sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER
+       sp_dtl.CONTRACT_NUMBER*/
   FROM   ( SELECT SP_HIST.*,
                   CASE
                     WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -549,15 +534,14 @@ SELECT DISTINCT
                                      DW_FEI.CUSTOMER_DIMENSION CUST,
                                      DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                                WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
-																			-- AND ILF.PRODUCT_STATUS = 'SP'
-																			AND IHF.ACCOUNT_NUMBER = '1480'
-																			-- AND IHF.WRITER IN ( 'JIS', 'LLM', 'VAB', 'SR', 'JAM', 'BWS', 'DWB', 'DPL', 'SDE', 'JNM', 'SGG', 'NTD', 'GMM', 'JBB', 'JRS' )
+																			AND ILF.PRODUCT_STATUS = 'SP'
+																			-- AND IHF.ACCOUNT_NUMBER IN ( '61', '448', '276', '331', '1020', '1599' )
 																			-- AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
 																			-- AND IHF.WRITER = 'CMC'
-																			-- AND CUST.ACCOUNT_NAME IN ('MIDATLWW','MYERSUG')
-																			-- AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
+																			AND CUST.ACCOUNT_NAME = 'MIDATLWW' -- IN ( 'MIDATLWW', 'MYERSUG' )
+																			-- AND IHF.INVOICE_NUMBER_NK = '4735080' --in ('2658674','2683795')
 																			-- AND ILF.PRICE_CODE in ('R','N/A','Q')
-																		  -- AND MAIN_CUSTOMER_NK = '123'
+																		  -- AND MAIN_CUSTOMER_NK = '44459'
 																			-- AND IHF.REF_BID_NUMBER='B225888'
 																			-- AND CUST.CUSTOMER_NK = '127896'
 																			-- AND PROD.LINEBUY_NK='200'
@@ -579,28 +563,25 @@ SELECT DISTINCT
 																						SP_PROD.SPECIAL_PRODUCT_GK(+)
 																			AND IHF.IC_FLAG = 0
 																			AND ILF.SHIPPED_QTY <> 0
-																			-- AND IHF.ORDER_CODE NOT IN 'IC'
-																			-- Excludes shipments to other FEI locations.
+																			--AND IHF.ORDER_CODE NOT IN 'IC'
+																			--Excludes shipments to other FEI locations.
 																			AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-																			AND IHF.YEARMONTH BETWEEN '201602' AND '201603'
-																			AND ILF.YEARMONTH BETWEEN '201602' AND '201603'
-																			--AND ILF.YEARMONTH = '201603'
-																			/* AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																									- NUMTOYMINTERVAL ( 12,
+																			AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																																									- NUMTOYMINTERVAL ( 24,
 																																																		'MONTH'
 																																										),
 																																									'MONTH'
 																																					),
 																																					'YYYYMM'
 																																)
-																														AND  TO_CHAR ( TRUNC ( SYSDATE,
+																														AND TO_CHAR ( TRUNC ( SYSDATE,
 																																									'MM'
 																																					)
 																																					- 1,
 																																					'YYYYMM'
 																																	)
-																				AND IHF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																										- NUMTOYMINTERVAL ( 12,
+																				AND IHF.YEARMONTH  BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																																										- NUMTOYMINTERVAL ( 24,
 																																																			'MONTH'
 																																											),
 																																										'MONTH'
@@ -612,7 +593,7 @@ SELECT DISTINCT
 																																						)
 																																						- 1,
 																																						'YYYYMM'
-																																		) */
+																																		)
 																						) SP_HIST
                           LEFT OUTER JOIN
                             DW_FEI.DISCOUNT_GROUP_DIMENSION DG
@@ -691,15 +672,24 @@ SELECT DISTINCT
                       AND NVL ( SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH' ) =
                            NVL ( PR_OVR.CONTRACT_ID, 'DEFAULT_MATCH' ) ) )
          sp_dtl
-       LEFT OUTER JOIN
-         EBUSINESS.SALES_DIVISIONS SWD
-       ON sp_dtl.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK
- WHERE ( SUBSTR ( SWD.REGION_NAME,
-                 1,
-                 3
-        ) IN ('D10', 'D11', 'D12', 'D13', 'D14', 'D30', 'D31', 'D32') )
-       -- AND sp_dtl.DISCOUNT_GROUP_NK IN ('1072', '1076', '0540', '0545')
-			 AND sp_dtl.TYPE_OF_SALE = 'Counter'
+	LEFT OUTER JOIN
+		SALES_MART.TIME_PERIOD_DIMENSION TPD
+			ON TPD.YEARMONTH = sp_dtl.YEARMONTH
+		WHERE TPD.FISCAL_YEAR_TO_DATE IS NOT NULL
+		AND sp_dtl.EXT_SALES_AMOUNT >= 0
+GROUP BY 
+			 TPD.FISCAL_YEAR_TO_DATE,
+       sp_dtl.YEARMONTH,
+       sp_dtl.ACCOUNT_NUMBER,
+       sp_dtl.ACCOUNT_NAME,
+       sp_dtl.WAREHOUSE_NUMBER,
+       sp_dtl.STATUS
+ORDER BY 
+       sp_dtl.ACCOUNT_NAME,
+       sp_dtl.WAREHOUSE_NUMBER,
+       sp_dtl.STATUS,
+			 TPD.FISCAL_YEAR_TO_DATE,
+       sp_dtl.YEARMONTH
+       --sp_dtl.ACCOUNT_NUMBER,
+		
 	;
-
-GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;

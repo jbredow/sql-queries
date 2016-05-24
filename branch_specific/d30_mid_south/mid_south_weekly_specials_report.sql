@@ -7,18 +7,19 @@ CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL
 AS */
 
 SELECT DISTINCT
-       /*sp_dtl.YEARMONTH,
+       sp_dtl.YEARMONTH,
        sp_dtl.ACCOUNT_NUMBER,
-       sp_dtl.ACCOUNT_NAME,*/
+       sp_dtl.ACCOUNT_NAME,
        sp_dtl.WAREHOUSE_NUMBER,
-      /* sp_dtl.INVOICE_NUMBER_NK,
+       sp_dtl.INVOICE_NUMBER_NK,
+			 sp_dtl.INVOICE_DATE,
        sp_dtl.TYPE_OF_SALE,
-       sp_dtl.SHIP_VIA_NAME,*/
+       sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
-      -- sp_dtl.OML_FL_INI,
+       sp_dtl.OML_FL_INI,
        sp_dtl.OML_ASSOC_NAME,
        sp_dtl.WRITER,
-       /*sp_dtl.WR_FL_INI,
+       sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
        sp_dtl.MAIN_CUSTOMER_NK,
        sp_dtl.CUSTOMER_NK,
@@ -32,12 +33,14 @@ SELECT DISTINCT
        sp_dtl.MANUFACTURER,
        sp_dtl.PRODUCT_NK,
        sp_dtl.ALT1_CODE,
-       sp_dtl.PRODUCT_NAME,*/
+       sp_dtl.PRODUCT_NAME,
        sp_dtl.STATUS,
-       --sp_dtl.SHIPPED_QTY,
-       SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
-       SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC
-       /*sp_dtl.REPLACEMENT_COST,
+       sp_dtl.SHIPPED_QTY,
+       sp_dtl.EXT_SALES_AMOUNT EX_SALES,
+       sp_dtl.EXT_AVG_COGS_AMOUNT EX_AC,
+			-- SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
+      -- SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC
+       sp_dtl.REPLACEMENT_COST,
        sp_dtl.UNIT_INV_COST,
        sp_dtl.PRICE_CODE,
        sp_dtl.PRICE_CATEGORY,
@@ -75,7 +78,7 @@ SELECT DISTINCT
        sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER*/
+       sp_dtl.CONTRACT_NUMBER
   FROM   ( SELECT SP_HIST.*,
                   CASE
                     WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -156,6 +159,7 @@ SELECT DISTINCT
                   MV.MASTER_VENDOR_NAME
              FROM           ( SELECT IHF.ACCOUNT_NUMBER,
                                      IHF.YEARMONTH,
+																		 IHF.INVOICE_DATE,
                                      CUST.ACCOUNT_NAME,
                                      IHF.WAREHOUSE_NUMBER,
                                      IHF.INVOICE_NUMBER_NK,
@@ -544,7 +548,7 @@ SELECT DISTINCT
 																			--AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
 																			--AND IHF.WRITER = 'CMC'
 																			--AND CUST.ACCOUNT_NAME IN ('MIDATLWW','MYERSUG')
-																			--AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
+																		  --AND IHF.INVOICE_NUMBER_NK = '4735080' -- in ('2658674','2683795')
 																			--AND ILF.PRICE_CODE in ('R','N/A','Q')
 																		  --AND MAIN_CUSTOMER_NK = '123'
 																			--AND IHF.REF_BID_NUMBER='B225888'
@@ -573,7 +577,7 @@ SELECT DISTINCT
 																			AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 																			
 																			AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
-                                                                                        SYSDATE - 7)
+                                                                                        SYSDATE - 8)
                                                                                  AND TRUNC (
                                                                                         SYSDATE - 1))
 																			
@@ -691,9 +695,9 @@ WHERE ( SUBSTR ( SWD.REGION_NAME,
                  3
         ) IN ('D10', 'D11', 'D12', 'D13', 'D14', 'D30', 'D31', 'D32') )
        -- AND sp_dtl.DISCOUNT_GROUP_NK IN ('1072', '1076', '0540', '0545')*/
-		GROUP BY sp_dtl.WAREHOUSE_NUMBER,
+		/*GROUP BY sp_dtl.WAREHOUSE_NUMBER,
 				sp_dtl.OML_ASSOC_INI,
 				sp_dtl.OML_ASSOC_NAME,
 				sp_dtl.WRITER,
-				sp_dtl.STATUS
+				sp_dtl.STATUS*/
 	;

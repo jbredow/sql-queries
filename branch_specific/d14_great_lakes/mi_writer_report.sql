@@ -20,6 +20,9 @@
 		
 	FROM	(SELECT SP_HIST.*,
 						CASE
+							WHEN SP_HIST.MAIN_CUSTOMER_NK = '12388'
+							THEN
+								'OVERRIDE'
 							WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
 							THEN
 							CASE
@@ -221,6 +224,9 @@
 						ILF.EXT_SALES_AMOUNT,
 						--ILF.MATRIX_PRICE,
 						CASE
+							WHEN CUST.MAIN_CUSTOMER_NK = '12388'
+							THEN
+								'OVERRIDE'
 							WHEN ihf.order_code = 'IC'
 							THEN
 								'CREDITS'

@@ -20,6 +20,11 @@ SELECT DISTINCT
        sp_dtl.WRITER,
        sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
+       sp_dtl.MAIN_CUSTOMER_NK,
+       sp_dtl.CUSTOMER_NK,
+       sp_dtl.CUSTOMER_NAME,
+       sp_dtl.PRICE_COLUMN,
+       sp_dtl.CUSTOMER_TYPE,
        sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
        sp_Dtl.CHANNEL_TYPE,
@@ -35,18 +40,8 @@ SELECT DISTINCT
        sp_dtl.REPLACEMENT_COST,
        sp_dtl.UNIT_INV_COST,
        sp_dtl.PRICE_CODE,
-       
-       CASE
-			 	WHEN sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE' THEN
-					'OVERRIDE'
-				WHEN sp_dtl.PRICE_CATEGORY IN ( 'MATRIX', 'MATRIX_BID' ) THEN
-					'MATRIX'
-				WHEN sp_dtl.PRICE_CATEGORY IN ( 'TOOLS', 'QUOTE', 'OTH/ERROR' ) THEN
-					'MANUAL'
-				ELSE
-					sp_dtl.PRICE_CATEGORY
-			END
-				PRICE_CAT,
+       sp_dtl.PRICE_CATEGORY,
+       sp_dtl.PRICE_CATEGORY_OVR,
        sp_dtl.PRICE_FORMULA,
        sp_dtl.UNIT_NET_PRICE_AMOUNT,
        sp_dtl.UM,
@@ -75,11 +70,6 @@ SELECT DISTINCT
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
        sp_dtl.CONSIGN_TYPE,
-       sp_dtl.MAIN_CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NAME,
-       sp_dtl.PRICE_COLUMN,
-       sp_dtl.CUSTOMER_TYPE,
        sp_dtl.REF_BID_NUMBER,
        sp_dtl.SOURCE_ORDER,
        sp_dtl.ORDER_ENTRY_DATE,
@@ -550,14 +540,13 @@ SELECT DISTINCT
                                      DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                                WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 																			-- AND ILF.PRODUCT_STATUS = 'SP'
-																			AND IHF.ACCOUNT_NUMBER = '1480'
-																			-- AND IHF.WRITER IN ( 'JIS', 'LLM', 'VAB', 'SR', 'JAM', 'BWS', 'DWB', 'DPL', 'SDE', 'JNM', 'SGG', 'NTD', 'GMM', 'JBB', 'JRS' )
+																			AND IHF.ACCOUNT_NUMBER IN ( '1550', '448', '276', '331', '1020', '1599' )
 																			-- AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
 																			-- AND IHF.WRITER = 'CMC'
-																			-- AND CUST.ACCOUNT_NAME IN ('MIDATLWW','MYERSUG')
+																			-- AND CUST.ACCOUNT_NAME = 'CHICAGO' --IN ('MIDATLWW','MYERSUG')
 																			-- AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
 																			-- AND ILF.PRICE_CODE in ('R','N/A','Q')
-																		  -- AND MAIN_CUSTOMER_NK = '123'
+																		  -- AND MAIN_CUSTOMER_NK = '44459'
 																			-- AND IHF.REF_BID_NUMBER='B225888'
 																			-- AND CUST.CUSTOMER_NK = '127896'
 																			-- AND PROD.LINEBUY_NK='200'
@@ -579,13 +568,10 @@ SELECT DISTINCT
 																						SP_PROD.SPECIAL_PRODUCT_GK(+)
 																			AND IHF.IC_FLAG = 0
 																			AND ILF.SHIPPED_QTY <> 0
-																			-- AND IHF.ORDER_CODE NOT IN 'IC'
-																			-- Excludes shipments to other FEI locations.
+																			--AND IHF.ORDER_CODE NOT IN 'IC'
+																			--Excludes shipments to other FEI locations.
 																			AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-																			AND IHF.YEARMONTH BETWEEN '201602' AND '201603'
-																			AND ILF.YEARMONTH BETWEEN '201602' AND '201603'
-																			--AND ILF.YEARMONTH = '201603'
-																			/* AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																			AND ILF.YEARMONTH = /*BETWEEN TO_CHAR ( TRUNC ( SYSDATE
 																																									- NUMTOYMINTERVAL ( 12,
 																																																		'MONTH'
 																																										),
@@ -593,13 +579,13 @@ SELECT DISTINCT
 																																					),
 																																					'YYYYMM'
 																																)
-																														AND  TO_CHAR ( TRUNC ( SYSDATE,
+																														AND */ TO_CHAR ( TRUNC ( SYSDATE,
 																																									'MM'
 																																					)
 																																					- 1,
 																																					'YYYYMM'
 																																	)
-																				AND IHF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																				AND IHF.YEARMONTH = /* BETWEEN TO_CHAR ( TRUNC ( SYSDATE
 																																										- NUMTOYMINTERVAL ( 12,
 																																																			'MONTH'
 																																											),
@@ -607,12 +593,12 @@ SELECT DISTINCT
 																																						),
 																																						'YYYYMM'
 																																	)
-																															AND  TO_CHAR ( TRUNC ( SYSDATE,
+																															AND  */ TO_CHAR ( TRUNC ( SYSDATE,
 																																										'MM'
 																																						)
 																																						- 1,
 																																						'YYYYMM'
-																																		) */
+																																		)
 																						) SP_HIST
                           LEFT OUTER JOIN
                             DW_FEI.DISCOUNT_GROUP_DIMENSION DG
@@ -691,15 +677,13 @@ SELECT DISTINCT
                       AND NVL ( SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH' ) =
                            NVL ( PR_OVR.CONTRACT_ID, 'DEFAULT_MATCH' ) ) )
          sp_dtl
-       LEFT OUTER JOIN
+       /*LEFT OUTER JOIN
          EBUSINESS.SALES_DIVISIONS SWD
        ON sp_dtl.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK
  WHERE ( SUBSTR ( SWD.REGION_NAME,
                  1,
                  3
         ) IN ('D10', 'D11', 'D12', 'D13', 'D14', 'D30', 'D31', 'D32') )
-       -- AND sp_dtl.DISCOUNT_GROUP_NK IN ('1072', '1076', '0540', '0545')
-			 AND sp_dtl.TYPE_OF_SALE = 'Counter'
+       -- AND sp_dtl.DISCOUNT_GROUP_NK IN ('1072', '1076', '0540', '0545')*/
+	-- WHERE DISCOUNT_GROUP_NK = '2119'
 	;
-
-GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;

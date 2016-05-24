@@ -125,7 +125,7 @@ FROM (  SELECT DISTINCT
                   AND IC_FLAG = 'REGULAR'
                   --AND (PM_DET.ACCOUNT_NUMBER_NK = '520')
                   AND ( SUBSTR (SWD.REGION_NAME, 1, 3) IN
-                                      ( 'D10', 'D11', 'D12', 'D13', 'D14', 'D30', 'D31', 'D32' ))
+                                      ( 'D10', 'D11', 'D12', 'D14', 'D30', 'D31', 'D32' ))
             GROUP BY PM_DET.YEARMONTH,
                     PM_DET.ACCOUNT_NUMBER_NK,
                     PM_DET.DISCOUNT_GROUP_NK 

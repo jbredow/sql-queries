@@ -39,24 +39,49 @@ AS
            EBUSINESS.SALES_DIVISIONS SWD
          ON ( CUST.ACCOUNT_NUMBER_NK = SWD.ACCOUNT_NUMBER_NK )
    WHERE ( SUBSTR ( SWD.REGION_NAME,
+																														1,
+																														3
+																										) ) IN
+																											( 'D10',
+																												'D11',
+																												'D12',
+																												'D13',
+																												'D14',
+																												'D30',
+																												'D31',
+																												'D32',
+																												'D50',
+																												'D51',
+																												'D53' )
+			AND CUST.DELETE_DATE IS NULL
+			-- AND CUST.PRICE_COLUMN BETWEEN '170' AND '193'
+			-- AND CUST.PRICE_COLUMN  <> '175'
+			/*AND CUST.CUSTOMER_TYPE IN (  'GOVT_AGENT',
+																											'GOVT_FEDERAL',
+																											'GOVT_LOCAL',
+																											'GOVT_STATE',
+																											'T_BUSINSER',
+																											'T_CHURCH',
+																											'T_COMMPROP',
+																											'T_EDUCATION',
+																											'T_FURNITURE',
+																											'T_HEALTH_PRIV',
+																											'T_HOTEL',
+																											'T_MISCRTL',
+																											'T_REALEST',
+																											'T_RECREAT',
+																											'T_RENOV_HOTEL',
+																											'T_RENOV_MULFAM',
+																											'T_RESPROP',
+																											'T_RESTURNT'
+																										)*/
+  ORDER BY 
+				SUBSTR ( SWD.REGION_NAME,
                    1,
                    3
-          ) ) IN
-             ( 'D10',
-              'D11',
-              'D12',
-              'D13',
-              'D14',
-              'D30',
-              'D31',
-              'D32',
-              'D50',
-              'D51',
-              'D53' )
-  ORDER BY SUBSTR ( SWD.REGION_NAME,
-                   1,
-                   3
-           ), CUST.ACCOUNT_NAME, CUST.CUSTOMER_NK;
+           		), 
+					 CUST.ACCOUNT_NAME, 
+					 CUST.CUSTOMER_NK;
 
 GRANT SELECT ON AAA6863.A_PCCA_CENT_201512 TO PUBLIC;
 
