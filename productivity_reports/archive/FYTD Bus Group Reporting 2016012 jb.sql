@@ -1,10 +1,7 @@
 SELECT 
        SELL_REGION_NAME,
 			 CASE
-			 	WHEN SUBSTR (SELL_DISTRICT, 1, 3 )
-				else 0
-			end case
-				DIST,
+			 	WHEN SUBSTR (SELL_DISTRICT, 1, 3 ) DIST,
 			 SELL_ACCOUNT_NAME,
        BUSINESS_GROUP,
        --CUSTOMER_GROUP,

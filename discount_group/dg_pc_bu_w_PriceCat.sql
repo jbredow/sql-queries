@@ -4,6 +4,7 @@ SELECT
 	xx.ACCOUNT_NUMBER,
 	xx.WAREHOUSE_NUMBER,
 	xx.DISCOUNT_GROUP_NK,
+	xx.DISCOUNT_GROUP_NAME,
 	-- xx.ALT1_CODE,
 	-- xx.PRODUCT_NAME,
 	-- xx.PRICE_COLUMN,
@@ -510,23 +511,23 @@ FROM (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               17,
+                                                               12,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
                                                 AND 
-                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 13,
+                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
                                           'YYYYMM')
                           AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               17,
+                                                               12,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
                                                 AND 
-                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 13,
+                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
                                           'YYYYMM')
 						) SP_HIST
                   LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
@@ -610,6 +611,7 @@ GROUP BY
 	xx.ACCOUNT_NUMBER,
 	xx.WAREHOUSE_NUMBER,
 	xx.DISCOUNT_GROUP_NK,
+	xx.DISCOUNT_GROUP_NAME,
 	-- xx.ALT1_CODE,
 	-- xx.PRODUCT_NAME,
 	-- xx.PRICE_COLUMN,
