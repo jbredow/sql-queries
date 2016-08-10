@@ -7,19 +7,19 @@ CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL
 AS */
 
 select
-	--V2.YEARMONTH,
-  --V2.ACCOUNT_NAME,
+	V2.YEARMONTH,
+  /* V2.ACCOUNT_NAME,
 	V2.ACCOUNT_NUMBER,
 	V2.WAREHOUSE_NUMBER,
   V2.MAIN_CUSTOMER_NK,
-	--V2.CUSTOMER_NK,
+	V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
-	V2.TYPE_OF_SALE,
+	V2.TYPE_OF_SALE, */
 	V2.DISCOUNT_GROUP_NK,
 	V2.DISCOUNT_GROUP_NAME,
-	--V2.PRODUCT_NK,
-	--V2.ALT1_CODE,
-	--V2.PRODUCT_NAME,
+	V2.PRODUCT_NK,
+	V2.ALT1_CODE,
+	V2.PRODUCT_NAME,
 	CASE
 		WHEN V2.price_category_ovr IS NOT NULL
 		THEN V2.price_category_ovr
@@ -565,7 +565,8 @@ SELECT DISTINCT
                                      DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                                WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 																			-- AND ILF.PRODUCT_STATUS = 'SP'
-																			AND IHF.ACCOUNT_NUMBER in ( '1657', '226', '520', '1674', '3093')
+																			AND IHF.ACCOUNT_NUMBER = '1550'
+																			-- AND IHF.ACCOUNT_NUMBER in ( '1657', '226', '520', '1674', '3093')
 																			-- AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
 																			-- AND IHF.WRITER = 'CMC'
 																			-- AND CUST.ACCOUNT_NAME = 'CHICAGO' --IN ('MIDATLWW','MYERSUG')
@@ -578,7 +579,7 @@ SELECT DISTINCT
 																																												'31606',
 																																												'108462',
 																																												'108799'
-																																												)*/
+																																												) */
 																			-- AND IHF.REF_BID_NUMBER='B225888'
 																			-- AND CUST.CUSTOMER_NK = '127896'
 																			-- AND PROD.LINEBUY_NK='200'
@@ -603,10 +604,26 @@ SELECT DISTINCT
 																			--AND IHF.ORDER_CODE NOT IN 'IC'
 																			--Excludes shipments to other FEI locations.
 																			AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-
+																			AND IHF.WAREHOUSE_NUMBER IN ('740',
+'2431',
+'1550',
+'1551',
+'1643',
+'1645',
+'1121',
+'1123',
+'1124',
+'1177',
+'1868',
+'754',
+'2079',
+'2778',
+'3816',
+'5870'
+)
 
 																			AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																									- NUMTOYMINTERVAL ( 12,
+																																									- NUMTOYMINTERVAL ( 6,
 																																																		'MONTH'
 																																										),
 																																									'MONTH'
@@ -620,7 +637,7 @@ SELECT DISTINCT
 																																					'YYYYMM'
 																																	)
 																				AND IHF.YEARMONTH  BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																										- NUMTOYMINTERVAL ( 12,
+																																										- NUMTOYMINTERVAL ( 6,
 																																																			'MONTH'
 																																											),
 																																										'MONTH'
@@ -721,21 +738,55 @@ SELECT DISTINCT
        -- AND sp_dtl.DISCOUNT_GROUP_NK IN ('1072', '1076', '0540', '0545')*/
 	--WHERE DISCOUNT_GROUP_NK = '5730'
 ) V2
-
+WHERE V2.ALT1_CODE IN (  'M10',
+																				'PFLT2522D',
+																				'M19F',
+																				'PFLT2123',
+																				'M19W',
+																				'PFLT2123W',
+																				'M27F',
+																				'PFLT4024',
+																				'M27W',
+																				'PFLT4024W',
+																				'M65MX',
+																				'PFMB3624S',
+																				'M63MX',
+																				'PFMB2424',
+																				'M3232M',
+																				'PFSB3232WH',
+																				'M3434M',
+																				'PFSB3434WH',
+																				'M3636CM',
+																				'PFSB3636NEOWH',
+																				'M3636M',
+																				'PFSB3636WH',
+																				'M3442M',
+																				'PFSB4234WH',
+																				'M4242M',
+																				'PFSB4242WH',
+																				'M3248M',
+																				'PFSB4832WH',
+																				'M3448M',
+																				'PFSB4834WH',
+																				'M3454M',
+																				'PFSB5434WH',
+																				'M3460M',
+																				'PFSB6034WH'
+																				)
 group by 
-	--V2.YEARMONTH,
-  --V2.ACCOUNT_NAME,
+	V2.YEARMONTH,
+  /* V2.ACCOUNT_NAME,
 	V2.ACCOUNT_NUMBER,
 	V2.WAREHOUSE_NUMBER,
   V2.MAIN_CUSTOMER_NK,
-	--V2.CUSTOMER_NK,
+	V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
-	V2.TYPE_OF_SALE,
+	V2.TYPE_OF_SALE, */
 	V2.DISCOUNT_GROUP_NK,
 	V2.DISCOUNT_GROUP_NAME,
-	--V2.PRODUCT_NK,
-	--V2.ALT1_CODE,
-	--V2.PRODUCT_NAME,
+	V2.PRODUCT_NK,
+	V2.ALT1_CODE,
+	V2.PRODUCT_NAME,
 	CASE
 		WHEN V2.price_category_ovr IS NOT NULL
 		THEN V2.price_category_ovr
@@ -743,4 +794,4 @@ group by
 	END
 	;
 
---GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;

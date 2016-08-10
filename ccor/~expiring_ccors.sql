@@ -196,24 +196,13 @@ SELECT *
                   CCORP.LAST_UPDATE,
                   CCORP.EFFECTIVE_PROD)) XX
 /* nov - feb  dec current */
-   WHERE TO_CHAR (xx.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR (
-														   TRUNC (
-															  SYSDATE
-															  - NUMTOYMINTERVAL (
-																   3,
-																   'MONTH'),
-															  'MONTH'),
-														   'YYYYMM')
-													
-													AND TO_CHAR (
-														   TRUNC (
-															  SYSDATE
-															  + NUMTOYMINTERVAL (
-																   3,
-																   'MONTH'),
-															  'MONTH'),
-														   'YYYYMM')
-															 
+
+				WHERE TRUNC (xx.EXPIRE_DATE) BETWEEN TRUNC (
+                                                            SYSDATE
+                                                          		- 60)
+                                                   			AND TRUNC (
+                                                          	SYSDATE
+																															+ 60 )
      -- AND  XX.DG IN ( '0504', '0505'	)
 		 -- AND XX.BRANCH_NO = '1480'
 		 

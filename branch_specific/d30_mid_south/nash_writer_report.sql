@@ -429,7 +429,7 @@
 						-- AND NVL (ILF.PRICE_CODE, 'N/A') IN
 						--			('Q', 'N/A', 'R')
 						-- AND IHF.WRITER = 'CMC'
-						AND CUST.ACCOUNT_NAME = 'DETROIT' --IN ('DETROIT', 'NASH' )
+						AND CUST.ACCOUNT_NAME = 'NASH' --IN ('DETROIT', 'NASH' )
 						-- AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
 						-- AND ILF.PRICE_CODE in ('R','N/A','Q')
 

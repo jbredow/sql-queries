@@ -1,11 +1,11 @@
 -- by dg report using vict2 data
 
 SELECT
-	/*CASE
-		WHEN V2.YEARMONTH BETWEEN '201405' AND '201504' THEN 'PREV_12MO'
+	CASE
+		WHEN V2.YEARMONTH BETWEEN '201407' AND '201506' THEN 'PREV_12MO'
 		ELSE 'CURRENT_12M0'
 	END
-		TPD,*/
+		TPD,
 	V2.ACCOUNT_NAME,
 	V2.ACCOUNT_NUMBER,
 	V2.WAREHOUSE_NUMBER,
@@ -15,9 +15,9 @@ SELECT
 	V2.TYPE_OF_SALE,
 	V2.DISCOUNT_GROUP_NK,
 	V2.DISCOUNT_GROUP_NAME,
-	V2.PRODUCT_NK,
-	V2.ALT1_CODE,
-	V2.PRODUCT_NAME,
+	--V2.PRODUCT_NK,
+	--V2.ALT1_CODE,
+	--V2.PRODUCT_NAME,
 	CASE
 		WHEN V2.price_category_ovr IS NOT NULL
 		THEN V2.price_category_ovr
@@ -487,17 +487,40 @@ SELECT
 								
 						WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 								--AND ILF.PRODUCT_STATUS = 'SP'
-							  AND IHF.ACCOUNT_NUMBER in ( '1550', '448', '276', '331', '1020', '2778' )
+							  --AND IHF.ACCOUNT_NUMBER in ( '1550', '448', '276', '331', '1020', '2778' )
 							  --AND IHF.ACCOUNT_NUMBER = '61'
+								AND IHF.WAREHOUSE_NUMBER IN ( '61',
+																																	'62',
+																																	'63',
+																																	'68',
+																																	'77',
+																																	'86',
+																																	'170',
+																																	'526',
+																																	'861',
+																																	'903',
+																																	'904',
+																																	'1171',
+																																	'1569',
+																																	'2353',
+																																	'2938',
+																																	'3111',
+																																	'5828',
+																																	'8061' )
+
 								--AND NVL (ILF.PRICE_CODE, 'N/A') IN
 							  --      ('Q', 'N/A', 'R')
 							  --AND IHF.WRITER = 'CMC'
 							  --AND CUST.ACCOUNT_NAME IN ('MIDATLWW','MYERSUG')
 							  --AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
 							  --AND ILF.PRICE_CODE in ('R','N/A','Q')
-                AND CUST.MAIN_CUSTOMER_NK IN  ( '27167',
-																																		'105727'
-																																		)
+               /* AND CUST.MAIN_CUSTOMER_NK IN  ( '16855',
+																																		'17113',
+																																		'31371',
+																																		'31606',
+																																		'108462',
+																																		'108799'
+																																		)*/
 							  --AND IHF.REF_BID_NUMBER='B225888'
 							  --AND CUST.CUSTOMER_NK = '127896'
 							  --AND PROD.LINEBUY_NK='200'
@@ -523,8 +546,8 @@ SELECT
 							  --Excludes shipments to other FEI locations.
 							  AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 								
-								AND ILF.YEARMONTH BETWEEN '201501' AND '201512' -- OR ILF.YEARMONTH BETWEEN '201508' AND '201605'
-								AND IHF.YEARMONTH BETWEEN '201501' AND '201512' -- OR IHF.YEARMONTH BETWEEN '201508' AND '201605'
+								AND ILF.YEARMONTH BETWEEN '201407' AND '201606' -- OR ILF.YEARMONTH BETWEEN '201508' AND '201605'
+								AND IHF.YEARMONTH BETWEEN '201407' AND '201606' --  OR IHF.YEARMONTH BETWEEN '201508' AND '201605'
 								
 							  /*AND ILF.YEARMONTH  BETWEEN TO_CHAR (
 														   TRUNC (
@@ -637,10 +660,10 @@ SELECT
 																									'16855'
 																							) */
 GROUP BY 
- /*CASE
-		WHEN V2.YEARMONTH BETWEEN '201408' AND '201505' THEN 'PREV_FYTD'
-		ELSE 'CURRENT_FYTD'
-	END,*/
+ CASE
+		WHEN V2.YEARMONTH BETWEEN '201407' AND '201506' THEN 'PREV_12MO'
+		ELSE 'CURRENT_12M0'
+	END,
 	V2.ACCOUNT_NAME,
 	V2.ACCOUNT_NUMBER,
 	V2.WAREHOUSE_NUMBER,
@@ -650,9 +673,9 @@ GROUP BY
 	V2.TYPE_OF_SALE,
 	V2.DISCOUNT_GROUP_NK,
 	V2.DISCOUNT_GROUP_NAME,
-	V2.PRODUCT_NK,
-	V2.ALT1_CODE,
-	V2.PRODUCT_NAME,
+	--V2.PRODUCT_NK,
+	--V2.ALT1_CODE,
+	--V2.PRODUCT_NAME,
 	CASE
 		WHEN V2.price_category_ovr IS NOT NULL
 		THEN V2.price_category_ovr
@@ -660,10 +683,10 @@ GROUP BY
 	END
 	
 ORDER BY
-	/*CASE
-		WHEN V2.YEARMONTH BETWEEN '201405' AND '201504' THEN 'PREV_12MO'
+	CASE
+		WHEN V2.YEARMONTH BETWEEN '201407' AND '201506' THEN 'PREV_12MO'
 		ELSE 'CURRENT_12M0'
-	END,*/
+	END,
 	V2.CUSTOMER_NAME,
 	V2.MAIN_CUSTOMER_NK,
 	V2.CUSTOMER_NK,

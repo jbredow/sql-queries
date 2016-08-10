@@ -19,11 +19,11 @@ SELECT XX.DIVISION_NAME REGION,
        NVL ( ROUND ( ( SUM ( XX.SALES ) - SUM ( XX.AC ) ) / SUM ( XX.SALES ),
                     3
             ),
-            0
+            1
        )
            GP_PCT,
    /* OUTBOUND */
-         SUM ( CASE WHEN PRICE_CAT = 'MATRIX'   THEN XX.SALES ELSE 0 END )
+          SUM ( CASE WHEN PRICE_CAT = 'MATRIX'   THEN XX.SALES ELSE 0 END )
        + SUM ( CASE WHEN PRICE_CAT = 'OVERRIDE' THEN XX.SALES ELSE 0 END )
        + SUM ( CASE WHEN PRICE_CAT = 'MANUAL'   THEN XX.SALES ELSE 0 END )
        + SUM ( CASE WHEN PRICE_CAT = 'SPECIAL'  THEN XX.SALES ELSE 0 END )
@@ -205,7 +205,7 @@ SELECT XX.DIVISION_NAME REGION,
 																END), 1 ),
                     3
             ),
-            0
+            1
        )
            SP_GP_PCT,
        /* MANAGED PRICING */
@@ -242,12 +242,12 @@ SELECT XX.DIVISION_NAME REGION,
            FROM         SALES_MART.PRICE_MGMT_DATA_DET PM_SUMM
                     INNER JOIN
                         SALES_MART.SALES_WAREHOUSE_DIM SWD
-                    ON ( PM_SUMM.ACCOUNT_NUMBER_NK = SWD.ACCOUNT_NUMBER_NK )
+                    ON ( PM_SUMM.SELL_WAREHOUSE_NUMBER_NK = SWD.WAREHOUSE_NUMBER_NK )
                 INNER JOIN
                     SALES_MART.TIME_PERIOD_DIMENSION TD
                 ON ( TD.YEARMONTH = PM_SUMM.YEARMONTH )
           WHERE TD.FISCAL_YEAR_TO_DATE = 'YEAR TO DATE'
-                -- AND SWD.ACCOUNT_NUMBER_NK = '480'            --xxx
+                AND SWD.ACCOUNT_NUMBER_NK = '61'            --xxx
                 AND ( SUBSTR ( SWD.REGION_NAME,
                               1,
                               3
@@ -299,7 +299,7 @@ SELECT XX.DIVISION_NAME REGION,
                  AND IHF.IC_FLAG = 0
                  AND IHF.ORDER_CODE <> 'IC'
                  AND TPD.FISCAL_YEAR_TO_DATE = 'YEAR TO DATE'
-                 -- AND SWD.ACCOUNT_NUMBER_NK = '480'            --xxx
+                 --AND SWD.ACCOUNT_NUMBER_NK = '61'            --xxx
                  AND ( SUBSTR ( SWD.REGION_NAME,
                                1,
                                3

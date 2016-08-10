@@ -160,7 +160,9 @@ SELECT XX.BRANCH_NO,
                 AND ( CUST_DIM.MAIN_CUSTOMER_NK IN
                          ('2219', '3258', '27743', '108990',
 												  '147880', '142512', '144334', '142737',
-													'138281', '144574', '144801', '143109') )
+													'138281', '144574', '144801', '143109',
+													'205671', '203022', '205671', '207948', 
+													'203022', '80160', '830') )
 								--AND ( CUST_DIM.MAIN_CUSTOMER_NK IN ('2219', '62054', '62059', '26347') )
                 AND ( TPD.FISCAL_YEAR_TO_DATE = 'YEAR TO DATE' )
          GROUP BY IHF.ACCOUNT_NUMBER,

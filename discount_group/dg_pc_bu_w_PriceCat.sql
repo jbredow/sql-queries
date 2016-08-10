@@ -505,9 +505,9 @@ FROM (
                        	--AND IHF.ORDER_CODE NOT IN 'IC'
                        	--Excludes shipments to other FEI locations.
                        	AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-												/* AND ILF.YEARMONTH = '201411'
-												AND IHF.YEARMONTH = '201411' */
-                          AND ILF.YEARMONTH BETWEEN TO_CHAR (
+												 AND ILF.YEARMONTH = '201607'
+												AND IHF.YEARMONTH = '201607' 
+                        /*  AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
@@ -528,7 +528,7 @@ FROM (
                                                        'YYYYMM')
                                                 AND 
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                          'YYYYMM')
+                                          'YYYYMM')*/
 						) SP_HIST
                   LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                      ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK

@@ -275,19 +275,20 @@ SELECT DISTINCT *
                        --AND CUST.PRICE_COLUMN NOT IN 'C'
                        --AND NVL (CUST.LAST_SALE, CUST.ACCOUNT_SETUP_DATE) >
                        --       TRUNC (SYSDATE - 183)
-                       AND TRUNC (
+                       /*AND TRUNC (
                               NVL (CUST.ACCOUNT_SETUP_DATE,
                                    CUST.INSERT_TIMESTAMP)) BETWEEN TRUNC (
                                                                         SYSDATE
                                                                       - 7)
                                                                AND TRUNC (
-                                                                      SYSDATE)
+                                                                      SYSDATE)*/
                        AND CUST.ACCOUNT_NAME NOT IN 'DIST'
                        AND CUST.ACCOUNT_NAME NOT LIKE 'INT%'
-                       AND REP.RPC IS NOT NULL /*AND (TRUNC (CUST.ACCOUNT_SETUP_DATE) BETWEEN TRUNC (
+                       AND REP.RPC IS NOT NULL 
+											 AND (TRUNC (CUST.ACCOUNT_SETUP_DATE) BETWEEN TRUNC (
                                                                                         SYSDATE - 8)
                                                                                  AND TRUNC (
-                                                                                        SYSDATE - 1))*/
+                                                                                        SYSDATE - 1))
                 GROUP BY NVL (PS_HIERARCHY.KIND_OF_BUSINESS, N'OTHER'),
                          CUST.ACCOUNT_NUMBER_NK,
                          CUST.ACCOUNT_NAME,
