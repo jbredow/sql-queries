@@ -1,12 +1,23 @@
 INNER JOIN
-           EBUSINESS.SALES_DIVISIONS SWD
-       ON ( cust.account_number_nk = SWD.ACCOUNT_NUMBER_NK )
+           SALES_MART.SALES_WAREHOUSE_DIM SWD
+       ON ( X.ACCOUNT_NUMBER_NK = SWD.ACCOUNT_NUMBER_NK )
 	   
 WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
 			 	 'D10', 'D11', 'D12', 'D13', 
 				 'D14', 'D30', 'D31', 'D32', 
 				 'D50', 'D51', 'D53'
 				 ))
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+SELECT TPD.ROLL12MONTHS,
+-- returns 'LAST TWELVE MONTHS' and 'LAST TWELVE MONTHS LAST YEAR'
+ 
+INNER JOIN
+		SALES_MART.TIME_PERIOD_DIMENSION TPD
+			ON ( X.YEARMONTH = TPD.YEARMONTH )
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 -- getting the top results of query
 SELECT *
@@ -18,6 +29,7 @@ SELECT * FROM
    (SELECT * FROM employees ORDER BY employee_id)
    WHERE ROWNUM < 11;
 
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 SQL INNER JOIN
 --  SQL INNER JOINS return all rows from multiple tables where the join condition is met.

@@ -203,6 +203,7 @@ SELECT *
                                                    			AND TRUNC (
                                                           	SYSDATE
 																															+ 60 )
+	;
      -- AND  XX.DG IN ( '0504', '0505'	)
 		 -- AND XX.BRANCH_NO = '1480'
 		 
