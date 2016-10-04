@@ -32,20 +32,23 @@ SELECT XX.DIVISION_NAME REGION,
        SUM ( CASE WHEN PRICE_CAT = 'MATRIX' THEN XX.SALES ELSE 0 END )
            MATRIX_SALES,
        SUM ( CASE WHEN PRICE_CAT = 'MATRIX' THEN XX.AC ELSE 0 END ) MATRIX_AC,
-       ROUND ( SUM(CASE
+       ROUND ( SUM(
+			 						 CASE
                        WHEN PRICE_CAT IN 'MATRIX' 
 											 THEN ( XX.SALES - XX.AC )
                        ELSE 0
                    END)
-              / NVL ( SUM(CASE 
-															WHEN PRICE_CAT IN 'MATRIX' 
-															THEN 
-																	CASE WHEN ( XX.SALES ) > 0 
-																	THEN ( XX.SALES ) 
+              / NVL ( SUM(
+															CASE 
+																WHEN PRICE_CAT IN 'MATRIX' 
+																THEN 
+																		CASE 
+																				WHEN ( XX.SALES ) > 0 
+																				THEN ( XX.SALES ) 
+																				ELSE 1 
+																		END 
 																	ELSE 1 
-															END 
-													ELSE 1 
-											END), 1 ),
+															END), 1 ),
               3
        )
            MATRIX_GP_PCT,
@@ -327,3 +330,5 @@ ORDER BY XX.DIVISION_NAME,
          XX.ALIAS_NAME,
          XX.ACCOUNT_NUMBER_NK,
          XX.YEARMONTH;
+				 
+			select value from v$parameter where name = 'undo_retention';

@@ -1,5 +1,10 @@
 grant select on AAA6863.branch_contacts to public;
 
+-- select previous month first day to last 
+AND IHF.INVOICE_DATE 
+  BETWEEN TRUNC(ADD_MONTHS(SYSDATE, -1), 'MM') 
+  AND TRUNC(LAST_DAY(ADD_MONTHS(SYSDATE, -1)))
+
 -- ###
 SELECT SWD.DIVISION_NAME,
        SWD.REGION_NAME,

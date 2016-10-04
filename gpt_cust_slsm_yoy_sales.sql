@@ -4,16 +4,16 @@ SELECT SELL_DISTRICT,
        SALESMAN_CODE,
        HOUSE,
        SALESREP_NAME,
-			 CHANNEL_TYPE,
+       --  CHANNEL_TYPE,
        --  MASTER_VENDOR_NAME,
        --  MAIN_CUSTOMER_NK,
-			 CUSTOMER_GK,
+       CUSTOMER_GK,
        CUST_DIM_MAIN,
        --  CUSTOMER_NAME,
        --  ACTIVE_ACCOUNT_NUMBER_NK,
        --  ACTIVE_CUSTOMER_NK,
        MAIN_CUST_NAME,
-       --DISCOUNT_GROUP_NK_NAME,
+       --  DISCOUNT_GROUP_NK_NAME,
        FYTD,
        EX_SALES,
        EX_COGS,
@@ -101,7 +101,7 @@ SELECT SELL_DISTRICT,
                --  SLS.ACTIVE_CUSTOMER_NK,
                --  SLS.CUSTOMER_NAME,
                CUST.CUSTOMER_NAME MAIN_CUST_NAME,
-               SLS.CHANNEL_TYPE,
+               --SLS.CHANNEL_TYPE,
                --SLS.DISCOUNT_GROUP_NK_NAME,
                CASE
                   WHEN     REGEXP_LIKE (SLS.SALESMAN_CODE,
@@ -257,8 +257,8 @@ SELECT SELL_DISTRICT,
                AND SLS.IC_FLAG = 'REGULAR'
                --AND SLS.SALESREP_NAME NOT LIKE '%HOUSE%'
                --AND SLS.SALESREP_NAME NOT LIKE '%COSTING%'
-               AND CUST.MAIN_CUSTOMER_NK IN ( '126162', '9237' )
-               AND SLS.SELL_ACCOUNT_NAME IN ('CHICAGO')
+               --AND CUST.MAIN_CUSTOMER_NK IN ( '126162', '9237' )
+               AND SLS.SELL_ACCOUNT_NAME IN ('DALLAS')
                --  AND SLS.SALESREP_NAME = 'KIRK FREYTAG'
         GROUP BY SLS.SELL_DISTRICT,
                  SLS.SELL_REGION_NAME,
@@ -274,7 +274,7 @@ SELECT SELL_DISTRICT,
                  CUST.MAIN_CUSTOMER_NK,
                  --  SLS.CUSTOMER_NAME,
                  CUST.CUSTOMER_NAME,
-								 SLS.CHANNEL_TYPE,
+								 --SLS.CHANNEL_TYPE,
                  TPD.FISCAL_YEAR_TO_DATE)
 ORDER BY SELL_DISTRICT ASC,
          SELL_ACCOUNT_NAME ASC,
