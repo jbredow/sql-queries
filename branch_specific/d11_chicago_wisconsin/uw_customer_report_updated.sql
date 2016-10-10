@@ -17,11 +17,23 @@ SELECT DISTINCT
        NVL ( ILF.PRODUCT_NUMBER_NK, SP_PROD.SPECIAL_PRODUCT_NK ) "Product #",
        NVL ( PD.ALT1_CODE, SP_PROD.ALT_CODE ) "Alt 1",
        PD.VENDOR_CODE AS "Vend Cd",
-       PD.PRODUCT_NAME AS "Product Description",
+       NVL ( PD.PRODUCT_NAME, SPECIAL_PRODUCT_NAME ) AS "Product Description",
        ILF.ORDERED_QTY AS "Ord Quan",
        ILF.SHIPPED_QTY AS "Ship Quan",
        ILF.EXT_SALES_AMOUNT AS "Ext Sales",
-			 ILF.EXT_AVG_COGS_AMOUNT AS "AC",
+			 -- ILF.EXT_AVG_COGS_AMOUNT AS "Ext AC",
+			 ROUND (
+     			( ILF.EXT_SALES_AMOUNT  -  ILF.EXT_AVG_COGS_AMOUNT )
+							/ CASE
+									WHEN ILF.EXT_SALES_AMOUNT  > 0
+									THEN  ILF.EXT_SALES_AMOUNT
+									ELSE
+										1
+								END
+									, 3 )
+							"GP %",
+			 
+			 
        ILF.UNIT_NET_PRICE_AMOUNT AS "Discounted Price Each",
        NVL ( ILF.LIST_PRICE, NULL ) AS "List Price",
        CASE
@@ -75,13 +87,13 @@ SELECT DISTINCT
        LEFT JOIN
          DW_FEI.INVOICE_PAYMETHOD_FACT IPF
        ON IPF.INVOICE_NUMBER_GK = IHF.INVOICE_NUMBER_GK
+			 
  WHERE     ILF.SHIPPED_QTY <> 0
        AND IHF.YEARMONTH = (SELECT PRIOR_YEARMONTH
                               FROM SALES_MART.TIME_DIM)
        AND ILF.YEARMONTH = (SELECT PRIOR_YEARMONTH
                               FROM SALES_MART.TIME_DIM)
---AND IHF.YEARMONTH = '201504'
---AND ILF.YEARMONTH = '201504'
+
 ORDER BY CUST.ACCOUNT_NAME,
          CUST.CUSTOMER_NAME,
          NVL ( PD.DISCOUNT_GROUP_NK, SP_PROD.SPECIAL_DISC_GROUP ),

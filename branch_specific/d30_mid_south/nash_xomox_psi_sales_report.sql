@@ -53,20 +53,29 @@ SELECT *
                LEFT JOIN DW_FEI.INVOICE_PAYMETHOD_FACT IPF
                   ON IHF.INVOICE_NUMBER_GK = IPF.INVOICE_NUMBER_GK
          WHERE ILF.SHIPPED_QTY <> 0
-               AND IHF.YEARMONTH BETWEEN '201604' AND '201606'
-               AND ILF.YEARMONTH BETWEEN '201604' AND '201606'
+               AND IHF.YEARMONTH BETWEEN '201607' AND '201609'
+               AND ILF.YEARMONTH BETWEEN '201607' AND '201609'
         ORDER BY CUST.ACCOUNT_NAME,
                  CUST.CUSTOMER_NAME,
                  NVL (PD.DISCOUNT_GROUP_NK, SP_PROD.SPECIAL_DISC_GROUP),
                  NVL (PD.ALT1_CODE, SP_PROD.ALT_CODE)) INV
- WHERE INV.DG IN ('0552',
-									'0554',
-									'0555',
-									'0558',
-									'0564',
-									'0876',
-									'0877',
-									'5853',
-									'5854')
+ WHERE INV.DG IN ('176',
+														'4125',
+														'4133',
+														'4134',
+														'5853',
+														'5854',
+														'8926',
+														'0552',
+														'0553',
+														'0554',
+														'0555',
+														'0558',
+														'0564',
+														'0567',
+														'0876',
+														'0877',
+														'0881'
+														)
        AND INV."Branch" IN ('NASH', 'OHVAL', 'LAIND','PORTLAND')
 			 ;

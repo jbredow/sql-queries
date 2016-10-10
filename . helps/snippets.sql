@@ -1,3 +1,11 @@
+--strip page# and alpha characters from invoice number
+REGEXP_SUBSTR ( 
+            LTRIM ( sp_dtl.INVOICE_NUMBER_NK,
+                      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                  ),
+                      '[^-]*'
+              )
+
 grant select on AAA6863.branch_contacts to public;
 
 -- select previous month first day to last 

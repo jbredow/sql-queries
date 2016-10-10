@@ -55,12 +55,13 @@ END "GP %",*/
 	SP.gr_ovr "Grp Ovr"*/
 	
 FROM	AAE0376.PR_VICT2_CUST_12MO SP
-	LEFT OUTER JOIN AAA6863.ohval_breakout ohv
-		ON SP.warehouse_number = ohv.warehouse_number_nk
-	LEFT OUTER JOIN AAF1046.branch_contacts bc
-		ON SP.account_number = bc.account_nk
+	-- LEFT OUTER JOIN AAA6863.ohval_breakout ohv
+--		ON SP.warehouse_number = ohv.warehouse_number_nk
 	LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION dg
 		ON SP.discount_group_nk = dg.discount_group_nk
+	LEFT OUTER JOIN AAF1046.branch_contacts bc
+		ON SP.account_number = bc.account_nk
+	
 	
 WHERE SP.STATUS IN ('SP-', 'SP')
 	AND SP.ext_sales_amount >= 0
