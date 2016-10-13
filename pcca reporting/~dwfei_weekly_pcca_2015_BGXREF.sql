@@ -3,67 +3,71 @@
 --AS
 
 SELECT DISTINCT *
-  FROM (SELECT NEW_CUST.CUSTOMER_NK "Cust #",
-               NEW_CUST.CUSTOMER_ALPHA "Alpha",
-               NEW_CUST.CUSTOMER_NAME "Customer Name",
-               NEW_CUST.MAIN_CUSTOMER_NK "Main Acct #",
-               NEW_CUST.MAIN_CUST_SLS_12M "12 mo. Sales",
-               NEW_CUST.LAST_SALE "Last Sale",
-               NEW_CUST.COLUMN_ALIGNED "PC Align",
-               NEW_CUST.CUSTOMER_TYPE "Customer Type",
-               NULL AS "New C-Type",
-               NEW_CUST.PRICE_COLUMN "PC",
-               NULL AS "New PC",
-               NULL AS "PC Approval",
-               NEW_CUST.COLUMN_DEFINITION "PC Name",
-               NULL AS "C-Type Apprival",
-               NEW_CUST.CTYPE_CATEGORY "C-Type Category",
-               NEW_CUST.CTYPE_SUBCATEGORY "C-Type Sub Cat",
-               NULL AS "Min PC",
-               NULL AS "Max PC",
-               NEW_CUST.BUSGRP "SIC Category",
-               NEW_CUST.CUSTOMER_SEGMENT "Sic Sub Cat",
-               NEW_CUST.GSA_LINK "GSA Link",
-               NEW_CUST.REVIEW_GSA "Rev GSA",
-               NEW_CUST.WHSE "Whse",
-               NEW_CUST.MSTR_TYPE "Master Type",
-               NEW_CUST.MSTR_CUSTNO "Master Cust #",
-               NEW_CUST.MSTR_CUST_NAME "Master Cust Name",
-               NEW_CUST.CUSTOMER_STATUS "Cust Status",
-               NEW_CUST.CREDIT_CODE "Credit Code",
-               NEW_CUST.SETUP_DATE "Setup Date",
-               NEW_CUST.DW_INSERT_TIMESTAMP "DW Insert Timestamp",
-               NEW_CUST.SALESMAN_CODE "Slsm Code",
-               NEW_CUST.SALESREP_NAME "Sales Rep Name",
-               NEW_CUST.HOUSE_ACCT "House",
-               NEW_CUST.TAX_JURISDICTION "Tax Jur",
-               NEW_CUST.CREDIT_LIMIT "Cr Limit",
-               NEW_CUST.ADDRESS1 "Address 1",
-               NEW_CUST.ADDRESS2 "Address 2",
-               NEW_CUST.JOB_YN "Job",
-							 NEW_CUST.ACCT_NK "BR #",
-               NEW_CUST.ACCOUNT_NAME "Branch",
-               NEW_CUST.CROSS_ACCT "Cross Acct",
-               NEW_CUST.CROSS_CUSTOMER_NK "Cross Cust"
-							 -- NEW_CUST.CUSTOMER_GK CUST_GK,
-               -- NEW_CUST.BRANCH_KOB,
-               -- NEW_CUST.KOB_ALIGNED KOB_ALIGN,
-               -- NEW_CUST.ACCT_NK,
-               -- NEW_CUST.COLUMN_CATEGORY PC_CATEGORY,
-               -- NEW_CUST.COLUMN_SUBCATEGORY PC_SUB_CAT,
-               -- NULL AS RSN_CODE,
-               -- NEW_CUST.PC_NUM,
-               -- NEW_CUST.PC_TRIM,
-               -- NEW_CUST.MSTR_CTYPE_ALIGNED MSTR_ALIGN,
-               -- NEW_CUST.AR_GL_NUMBER AR_GL,
-               -- NEW_CUST.DW_UPDATE_TIMESTAMP,
-               -- NEW_CUST.SEC_SLSM,
-               -- NEW_CUST.BUSINESS_GROUP,
-               -- NEW_CUST.CUSTOMER_GROUP,
-               -- NEW_CUST.BG_SUB_CATEGORY,
-               -- NEW_CUST.RPC,
-               -- NEW_CUST.RPC_MGR,
-               -- NEW_CUST.RPC_MGR_EMAIL
+  FROM (
+		SELECT 
+               NEW_CUST.CUSTOMER_NK CUST_NK,
+               NEW_CUST.CUSTOMER_ALPHA,
+               NEW_CUST.CUSTOMER_NAME,
+               NEW_CUST.MAIN_CUSTOMER_NK MAIN_CUST_NK,
+               NEW_CUST.MAIN_CUST_SLS_12M SALES_12M,
+               NEW_CUST.LAST_SALE,
+               NEW_CUST.COLUMN_ALIGNED PC_ALIGN,
+               NEW_CUST.CUSTOMER_TYPE CTYPE,
+               NULL AS NEW_CTYPE,
+               NEW_CUST.PRICE_COLUMN PC,
+               NULL AS NEW_PC,
+               NULL AS PC_APPRV,
+               NEW_CUST.COLUMN_DEFINITION PC_NAME,
+               NULL AS CTYPE_APPRV,
+               NEW_CUST.CTYPE_CATEGORY,
+               NEW_CUST.CTYPE_SUBCATEGORY CTYPE_SUB_CAT,
+               NULL AS MIN_PC,
+               NULL AS MAX_PC,
+               NEW_CUST.BUSGRP SIC_CATEGORY,
+               NEW_CUST.CUSTOMER_SEGMENT SIC_SUB_CAT,
+               NEW_CUST.GSA_LINK,
+               NEW_CUST.REVIEW_GSA,
+               NEW_CUST.WHSE,
+               NEW_CUST.MSTR_TYPE,
+               NEW_CUST.MSTR_CUSTNO,
+               NEW_CUST.MSTR_CUST_NAME,
+               NEW_CUST.CUSTOMER_STATUS CUST_STATUS,
+               NEW_CUST.CREDIT_CODE,
+               NEW_CUST.SETUP_DATE,
+               NEW_CUST.DW_INSERT_TIMESTAMP,
+               NEW_CUST.SALESMAN_CODE SLSM_CODE,
+               NEW_CUST.SALESREP_NAME SLSM_NAME,
+               NEW_CUST.HOUSE_ACCT HOUSE,
+               NEW_CUST.TAX_JURISDICTION TAX_JUR,
+               NEW_CUST.CREDIT_LIMIT,
+               NEW_CUST.ADDRESS1,
+               NEW_CUST.ADDRESS2,
+               NEW_CUST.JOB_YN JOB,
+               NEW_CUST.ACCT_NK,
+               NEW_CUST.ACCOUNT_NAME,
+               NEW_CUST.CROSS_ACCT,
+               NEW_CUST.CROSS_CUSTOMER_NK CROSS_CUST,
+               NEW_CUST.CUSTOMER_GROUP,
+               NEW_CUST.BUSINESS_GROUP,
+               NEW_CUST.BG_SUB_CATEGORY,
+							 NEW_CUST.TERRITORY
+							 /* NEW_CUST.CUSTOMER_GK CUST_GK,
+               NEW_CUST.BRANCH_KOB,
+               NEW_CUST.DW_UPDATE_TIMESTAMP,
+               NEW_CUST.KOB_ALIGNED KOB_ALIGN,
+               NEW_CUST.COLUMN_CATEGORY PC_CATEGORY,
+               NEW_CUST.COLUMN_SUBCATEGORY PC_SUB_CAT,
+               NULL AS RSN_CODE,
+               NEW_CUST.PC_NUM,
+               NEW_CUST.PC_TRIM,
+               NEW_CUST.MSTR_CTYPE_ALIGNED MSTR_ALIGN,
+
+               NEW_CUST.AR_GL_NUMBER AR_GL,
+               NEW_CUST.SEC_SLSM,
+               NEW_CUST.RPC,
+               NEW_CUST.RPC_MGR,
+               NEW_CUST.RPC_MGR_EMAIL,
+               */
           FROM (SELECT                                              --DISTINCT
                       NVL (PS_HIERARCHY.KIND_OF_BUSINESS, N'OTHER')
                           BRANCH_KOB,
@@ -184,6 +188,8 @@ SELECT DISTINCT *
                        TO_CHAR (LTRIM (CUST.PRICE_COLUMN, '0')) PC_TRIM,
                        --PC_CT_XREF.MIN_COLUMN,
                        --PC_CT_XREF.MAX_COLUMN,
+
+
                        --PC_CT_XREF.ALTERNATE,
                        CUST.AR_GL_NUMBER,
                        CUST.CUSTOMER_STATUS,
@@ -215,7 +221,8 @@ SELECT DISTINCT *
                              SUBSTR (REP.RPC_MGR,
                                      (INSTR (REP.RPC_MGR, ' ', 1)) + 1))
                        || '@ferguson.com'
-                          RPC_MGR_EMAIL
+                          RPC_MGR_EMAIL,
+                       CUST.TERRITORY   
                   FROM DW_FEI.CUSTOMER_DIMENSION CUST
                        LEFT OUTER JOIN
                        SCORECARD1.PS_HIERARCHY PS_HIERARCHY
@@ -284,10 +291,11 @@ SELECT DISTINCT *
                                                                       SYSDATE)
                        AND CUST.ACCOUNT_NAME NOT IN 'DIST'
                        AND CUST.ACCOUNT_NAME NOT LIKE 'INT%'
-                       AND REP.RPC IS NOT NULL /*AND (TRUNC (CUST.ACCOUNT_SETUP_DATE) BETWEEN TRUNC (
-                                                                                                                                                    SYSDATE - 8)
-                                                                                                                                             AND TRUNC (
-                                                                                                                                                    SYSDATE - 1))*/
+                       --AND REP.RPC IS NOT NULL 
+											 /*AND (TRUNC (CUST.ACCOUNT_SETUP_DATE) BETWEEN TRUNC (
+                                                                                              SYSDATE - 8)
+                                                                                       AND TRUNC (
+                                                                                              SYSDATE - 1))*/
                 GROUP BY NVL (PS_HIERARCHY.KIND_OF_BUSINESS, N'OTHER'),
                          CUST.ACCOUNT_NUMBER_NK,
                          CUST.ACCOUNT_NAME,
@@ -431,8 +439,11 @@ SELECT DISTINCT *
                          || INITCAP (
                                SUBSTR (REP.RPC_MGR,
                                        (INSTR (REP.RPC_MGR, ' ', 1)) + 1))
-                         || '@ferguson.com') NEW_CUST
-        --WHERE --NEW_CUST.HOUSE_ACCT = 'N' --                   AND NEW_CUST.JOB_YN = 'N'
+                         || '@ferguson.com',
+                         CUST.TERRITORY) NEW_CUST
+        
+				--WHERE --NEW_CUST.HOUSE_ACCT = 'N' 
+				--                   AND NEW_CUST.JOB_YN = 'N'
         /*AND (   NEW_CUST.COLUMN_ALIGNED = 'N'
              OR NEW_CUST.CTYPE_CATEGORY IS NULL
              OR NEW_CUST.REVIEW_GSA = 'Y'
@@ -458,7 +469,7 @@ SELECT DISTINCT *
                NEW_CUST.BUSGRP,
                NEW_CUST.CUSTOMER_SEGMENT,
                NEW_CUST.GSA_LINK,
-							 NEW_CUST.REVIEW_GSA,
+               NEW_CUST.REVIEW_GSA,
                NEW_CUST.WHSE,
                NEW_CUST.MSTR_TYPE,
                NEW_CUST.MSTR_CUSTNO,
@@ -475,37 +486,40 @@ SELECT DISTINCT *
                NEW_CUST.ADDRESS1,
                NEW_CUST.ADDRESS2,
                NEW_CUST.JOB_YN,
-							 NEW_CUST.ACCT_NK
+               NEW_CUST.ACCT_NK,
                NEW_CUST.ACCOUNT_NAME,
                NEW_CUST.CROSS_ACCT,
-               NEW_CUST.CROSS_CUSTOMER_NK
-							 -- NEW_CUST.CUSTOMER_GK CUST_GK,
-               -- NEW_CUST.BRANCH_KOB,
-               -- NEW_CUST.KOB_ALIGNED KOB_ALIGN,
-               -- NEW_CUST.ACCT_NK,
-               -- NEW_CUST.COLUMN_CATEGORY PC_CATEGORY,
-               -- NEW_CUST.COLUMN_SUBCATEGORY PC_SUB_CAT,
-               -- NULL AS RSN_CODE,
-               -- NEW_CUST.PC_NUM,
-               -- NEW_CUST.PC_TRIM,
-               -- NEW_CUST.REVIEW_GSA,
-               -- NEW_CUST.MSTR_CTYPE_ALIGNED MSTR_ALIGN,
-               -- NEW_CUST.AR_GL_NUMBER AR_GL,
-               -- NEW_CUST.DW_UPDATE_TIMESTAMP,
-               -- NEW_CUST.SEC_SLSM,
-               -- NEW_CUST.BUSINESS_GROUP,
-               -- NEW_CUST.CUSTOMER_GROUP,
-               -- NEW_CUST.BG_SUB_CATEGORY,
-               -- NEW_CUST.RPC,
-               -- NEW_CUST.RPC_MGR,
-               -- NEW_CUST.RPC_MGR_EMAIL
+               NEW_CUST.CROSS_CUSTOMER_NK,
+               NEW_CUST.CUSTOMER_GROUP,
+               NEW_CUST.BUSINESS_GROUP,
+               NEW_CUST.BG_SUB_CATEGORY,
+							 NEW_CUST.TERRITORY
+							 
+							 /* NEW_CUST.CUSTOMER_GK CUST_GK,
+               NEW_CUST.BRANCH_KOB,
+               NEW_CUST.DW_UPDATE_TIMESTAMP,
+               NEW_CUST.KOB_ALIGNED KOB_ALIGN,
+               NEW_CUST.COLUMN_CATEGORY PC_CATEGORY,
+               NEW_CUST.COLUMN_SUBCATEGORY PC_SUB_CAT,
+               NULL AS RSN_CODE,
+               NEW_CUST.PC_NUM,
+               NEW_CUST.PC_TRIM,
+               NEW_CUST.MSTR_CTYPE_ALIGNED MSTR_ALIGN,
+
+               NEW_CUST.AR_GL_NUMBER AR_GL,
+               NEW_CUST.SEC_SLSM,
+               NEW_CUST.RPC,
+               NEW_CUST.RPC_MGR,
+               NEW_CUST.RPC_MGR_EMAIL,
+               */
         ORDER BY NEW_CUST.BRANCH_KOB ASC,
                  NEW_CUST.ACCOUNT_NAME ASC,
                  NEW_CUST.PRICE_COLUMN ASC,
                  NEW_CUST.CTYPE_CATEGORY ASC,
                  NEW_CUST.CTYPE_SUBCATEGORY ASC,
                  NEW_CUST.CUSTOMER_NAME ASC)
+								 
 --WHERE PC_ALIGN = 'N' OR KOB_ALIGN = 'N'
---ORDER BY NEW_CUST.RPC, NEW_CUST.ACCOUNT_NAME, NEW_CUST.PC
+--ORDER BY RPC, ACCOUNT_NAME, PC
 ;
 --GRANT SELECT ON AAD9606.CTYPE_REVIEW_2013 TO PUBLIC;
