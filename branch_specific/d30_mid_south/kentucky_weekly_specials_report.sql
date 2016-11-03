@@ -590,13 +590,16 @@ SELECT DISTINCT
 																			--Excludes shipments to other FEI locations.
 																			AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 																			
-																			AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
+																			AND ILF.YEARMONTH BETWEEN '201610' AND '201612'
+																			AND IHF.YEARMONTH BETWEEN '201610' AND '201612'
+																			
+																			/*AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
                                                                                         SYSDATE - 8)
                                                                                  AND TRUNC (
                                                                                         SYSDATE - 1))
 																			
-																			/*AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																									- NUMTOYMINTERVAL ( 12,
+																			AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																																									- NUMTOYMINTERVAL ( 2,
 																																																		'MONTH'
 																																										),
 																																									'MONTH'
@@ -610,7 +613,7 @@ SELECT DISTINCT
 																																					'YYYYMM'
 																																	)
 																				AND IHF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																										- NUMTOYMINTERVAL ( 12,
+																																										- NUMTOYMINTERVAL ( 2,
 																																																			'MONTH'
 																																											),
 																																										'MONTH'
@@ -622,7 +625,7 @@ SELECT DISTINCT
 																																						)
 																																						- 1,
 																																						'YYYYMM'
-																																		)*/
+																																		) */
 																						) SP_HIST
                           LEFT OUTER JOIN
                             DW_FEI.DISCOUNT_GROUP_DIMENSION DG
