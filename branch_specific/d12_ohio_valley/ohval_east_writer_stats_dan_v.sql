@@ -1,5 +1,6 @@
 SELECT MAIN.ACCOUNT_NUMBER BR_NK,
        MAIN.ACCOUNT_NAME ACCOUNT,
+			 MAIN.YEARMONTH,
        MAIN.WRITER,
        SUM(CASE WHEN MAIN.STATUS = 'SP' THEN MAIN.EXT_SALES_AMOUNT ELSE 0 END)
          SP_SALES,
@@ -354,7 +355,9 @@ SELECT MAIN.ACCOUNT_NUMBER BR_NK,
                 AND ILF.SHIPPED_QTY <> 0
                 AND IHF.ORDER_CODE NOT IN 'IC'
                 AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                AND ILF.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE,
+								/* AAND ILF.YEARMONTH BETWEEN 201608 AND 201610
+								AND IHF.YEARMONTH BETWEEN 201608 AND 201610 */
+                ND ILF.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE,
                                                      'MM'
                                              )
                                              - 1,
@@ -365,9 +368,11 @@ SELECT MAIN.ACCOUNT_NUMBER BR_NK,
                                              )
                                              - 1,
                                              'YYYYMM'
-                                    ) ) MAIN
+                                    )
+								) MAIN
 GROUP BY MAIN.ACCOUNT_NUMBER,
          MAIN.ACCOUNT_NAME,
+				 MAIN.YEARMONTH,
          --MAIN.WAREHOUSE_NUMBER,
          MAIN.WRITER,
          -- COUNT ( MAIN.STRIPPED_INV ) STRIPPED_INV,

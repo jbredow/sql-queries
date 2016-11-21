@@ -401,9 +401,9 @@ SELECT
                 AND ILF.SHIPPED_QTY <> 0
                 AND IHF.ORDER_CODE NOT IN 'IC'
                 AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-								AND IHF.YEARMONTH BETWEEN '201508' AND '201609'
-								AND ILF.YEARMONTH BETWEEN '201508' AND '201609'
-                /*AND ILF.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE,
+								 /*AND IHF.YEARMONTH BETWEEN '201508' AND '201609'
+								AND ILF.YEARMONTH BETWEEN '201508' AND '201609' */ 
+               AND ILF.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE,
                                                      'MM'
                                              )
                                              - 1,
@@ -414,7 +414,7 @@ SELECT
                                              )
                                              - 1,
                                              'YYYYMM'
-                                    )*/ 
+                                    )
 											) MAIN
 GROUP BY  
        MAIN.YEARMONTH,

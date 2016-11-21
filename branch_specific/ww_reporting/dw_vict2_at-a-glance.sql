@@ -85,7 +85,7 @@ SELECT DISTINCT
                                                        AND
                                                               NVL(PR_OVR.
                                                               EXPIRE_DATE,
-    SP_HIST.ORDER_ENTRY_DATE)
+    															SP_HIST.ORDER_ENTRY_DATE)
                      THEN
 
                               CASE
@@ -115,7 +115,7 @@ SELECT DISTINCT
                                                        AND
                                                               NVL(GR_OVR.
                                                               EXPIRE_DATE,
-    SP_HIST.ORDER_ENTRY_DATE)
+    																SP_HIST.ORDER_ENTRY_DATE)
     THEN
                                 CASE WHEN REPLACE (SP_HIST.PRICE_FORMULA,
                                                '0.',

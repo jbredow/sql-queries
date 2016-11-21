@@ -462,6 +462,8 @@ SELECT DISTINCT
                     WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 													-- AND ILF.PRODUCT_STATUS = 'SP'
                           AND IHF.ACCOUNT_NUMBER = '61'
+													-- AND CUST.CROSS_CUSTOMER_NK = '332'
+													-- AND CUST.MSTR_CUSTNO = '332'
                           -- AND NVL (ILF.PRICE_CODE, 'N/A') IN
                           --      ('Q', 'N/A', 'R')
                           -- AND IHF.WRITER IN ( 'BJS', 'JGR' )

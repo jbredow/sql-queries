@@ -14,7 +14,7 @@ SELECT DISTINCT
        sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.INVOICE_NUMBER_NK,
        sp_dtl.TYPE_OF_SALE,
-	     sp_dtl.SHIP_VIA_NAME,
+       sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
        sp_dtl.OML_FL_INI,
        sp_dtl.OML_ASSOC_NAME,
@@ -33,8 +33,8 @@ SELECT DISTINCT
        sp_dtl.SHIPPED_QTY,
        sp_dtl.EXT_SALES_AMOUNT,
        sp_dtl.EXT_AVG_COGS_AMOUNT,
-	     sp_dtl.REPLACEMENT_COST,
-	     sp_dtl.UNIT_INV_COST,
+       sp_dtl.REPLACEMENT_COST,
+       sp_dtl.UNIT_INV_COST,
        sp_dtl.PRICE_CODE,
        sp_dtl.PRICE_CATEGORY,
        sp_dtl.PRICE_CATEGORY_OVR,
@@ -43,7 +43,7 @@ SELECT DISTINCT
        sp_dtl.UM,
        sp_dtl.SELL_MULT,
        sp_dtl.PACK_QTY,
-	     sp_dtl.LIST_PRICE,
+       sp_dtl.LIST_PRICE,
        sp_dtl.MATRIX_PRICE,
        sp_dtl.MATRIX,
        sp_dtl.OG_MATRIX,
@@ -64,7 +64,7 @@ SELECT DISTINCT
        sp_dtl.CUSTOMER_TYPE,
        sp_dtl.REF_BID_NUMBER,
        sp_dtl.SOURCE_ORDER,
-	     sp_dtl.ORDER_ENTRY_DATE,
+       sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
        sp_dtl.CONTRACT_NUMBER
@@ -600,4 +600,4 @@ LEFT OUTER JOIN
 			ON sp_dtl.ACCOUNT_NAME = emp.ACCOUNT_NAME
 			AND sp_dtl.WRITER = emp.INITIALS */;
 
-GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;
+-- GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;

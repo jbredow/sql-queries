@@ -199,10 +199,10 @@ SELECT *
 
 				WHERE TRUNC (xx.EXPIRE_DATE) BETWEEN TRUNC (
                                                             SYSDATE
-                                                          		- 60)
+                                                          		- 45)
                                                    			AND TRUNC (
                                                           	SYSDATE
-																															+ 60 )
+																															+ 45 )
 	;
      -- AND  XX.DG IN ( '0504', '0505'	)
 		 -- AND XX.BRANCH_NO = '1480'

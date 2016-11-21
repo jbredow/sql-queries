@@ -59,8 +59,8 @@ SELECT DISTINCT
        END
          AS "Calc Disc",
        MVD.MASTER_VENDOR_NAME AS "Manufacturer",
-       CASE WHEN IPF.PAID_METHOD = 'VI' THEN 'P-Card' ELSE NULL END AS P_CARD,
-       IHF.SOURCE_SYSTEM,
+       CASE WHEN IPF.PAID_METHOD = 'VI' THEN 'P-Card' ELSE NULL END AS "P Card",
+       IHF.SOURCE_SYSTEM SS,
        IHF.WRITER
   FROM               DW_FEI.INVOICE_HEADER_FACT IHF
                    INNER JOIN

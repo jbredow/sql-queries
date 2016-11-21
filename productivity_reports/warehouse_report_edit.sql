@@ -21,6 +21,7 @@ SELECT
 	ACCT.ACCOUNT_NAME,
 	GP_DATA.WAREHOUSE_NUMBER_NK WHSE,
 	
+	--change the showroom direct to showroom only
 	SUM (
 		GP_DATA.SLS_SUBTOTAL
 		+ GP_DATA.SLS_FREIGHT
@@ -48,7 +49,7 @@ SELECT
 			+ GP_DATA.AVG_COST_FREIGHT
 			+ GP_DATA.AVG_COST_MISC))
 				"Total GP$",
-	ROUND (
+	/*ROUND (
 		SUM (
 			(  GP_DATA.SLS_SUBTOTAL
 				+ GP_DATA.SLS_FREIGHT
@@ -72,7 +73,7 @@ SELECT
 					ELSE 1
 				END ),
 	3)
-		"Total GP%",
+		"Total GP%",*/
 	SUM (GP_DATA.INVOICE_LINES) "Total # Lines",
 	SUM (
 		CASE
@@ -95,7 +96,7 @@ SELECT
 			ELSE 0
 		END)
 			"Price Matrix GP$",
-	ROUND (
+	/*ROUND (
 		SUM (
 			CASE
 				WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
@@ -157,14 +158,14 @@ SELECT
 				WHEN GP_DATA.ROLLUP = 'Total'
 				THEN
 					CASE
-						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) > 0
+						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <> 0
 						THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
 						ELSE 1
 					END
 				ELSE 1
 			END),
 		3)
-			"Price Matrix Profit%$",
+			"Price Matrix Profit%$",*/
 	SUM (
 		CASE
 			WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
@@ -193,7 +194,7 @@ SELECT
 			ELSE 0
 		END)
 			"Contract GP$",
-	ROUND (
+	/*ROUND (
 		SUM (
 			CASE
 				WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
@@ -254,14 +255,14 @@ SELECT
 				WHEN GP_DATA.ROLLUP = 'Total'
 				THEN
 					CASE
-						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) > 0
+						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <> 0
 						THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
 						ELSE 1
 					END
 				ELSE 1
 			END),
 		3)
-			"Contract Profit%$",
+			"Contract Profit%$",*/
 	SUM (
 		CASE
 			WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
@@ -271,35 +272,35 @@ SELECT
 			"Contract # Lines",
 	SUM (
 		CASE
-			WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
+			WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE', 'OTH/ERROR')
 			THEN (GP_DATA.EXT_SALES)
 			ELSE 0
 		END)
 			"Manual Sales",
 	SUM (
 		CASE
-			WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
+			WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE', 'OTH/ERROR')
 			THEN (GP_DATA.AVG_COGS)
 			ELSE 0
 		END)
 			"Manual Cost",
 	SUM (
 		CASE
-			WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
+			WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE', 'OTH/ERROR')
 			THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
 			ELSE 0
 		END)
 			"Manual GP$",
-	ROUND (
+	/*ROUND (
 		SUM (
 			CASE
-				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
+				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE', 'OTH/ERROR')
 				THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
 				ELSE 0
 			END)
 		/ SUM (
 			CASE
-				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
+				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE', 'OTH/ERROR')
 				THEN
 					CASE
 						WHEN GP_DATA.EXT_SALES > 0 
@@ -313,7 +314,7 @@ SELECT
 	ROUND (
 		SUM (
 			CASE
-				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
+				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE', 'OTH/ERROR')
 				THEN (GP_DATA.EXT_SALES)
 				ELSE 0
 			END)
@@ -328,7 +329,7 @@ SELECT
 	ROUND (
 		SUM (
 			CASE
-				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
+				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE', 'OTH/ERROR')
 				THEN (GP_DATA.INVOICE_LINES)
 				ELSE 0
 			END)
@@ -343,7 +344,7 @@ SELECT
 	ROUND (
 		SUM (
 			CASE
-				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
+				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE', 'OTH/ERROR')
 				THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
 				ELSE 0
 			END)
@@ -352,17 +353,17 @@ SELECT
 				WHEN GP_DATA.ROLLUP = 'Total'
 				THEN
 					CASE
-						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) > 0
+						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <> 0
 						THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
 						ELSE 1
 					END
 				ELSE 1
 			END),
 		3)
-			"Manual Profit%$",
+			"Manual Profit%$",*/
 	SUM (
 		CASE
-			WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
+			WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE', 'OTH/ERROR')
 			THEN (GP_DATA.INVOICE_LINES)
 			ELSE 0
 		END)
@@ -375,6 +376,7 @@ SELECT
 				'MANUAL',
 				'CREDITS',
 				'TOOLS',
+				'OTH/ERROR',
 				'QUOTE',
 				'MATRIX_BID',
 				'Total')
@@ -390,6 +392,7 @@ SELECT
 				'MANUAL',
 				'CREDITS',
 				'TOOLS',
+				'OTH/ERROR',
 				'QUOTE',
 				'MATRIX_BID',
 				'Total')
@@ -405,6 +408,7 @@ SELECT
 				'MANUAL',
 				'CREDITS',
 				'TOOLS',
+				'OTH/ERROR',
 				'QUOTE',
 				'MATRIX_BID',
 				'Total')
@@ -412,7 +416,7 @@ SELECT
 			ELSE 0
 		END)
 			"OtherGP$",
-	ROUND(
+	/*ROUND(
 		SUM(
 			CASE
 				WHEN GP_DATA.PRICE_CATEGORY NOT IN
@@ -421,6 +425,7 @@ SELECT
 					'MANUAL',
 					'CREDITS',
 					'TOOLS',
+					'OTH/ERROR',
 					'QUOTE',
 					'MATRIX_BID',
 					'Total')
@@ -435,6 +440,7 @@ SELECT
 				'MANUAL',
 				'CREDITS',
 				'TOOLS',
+				'OTH/ERROR',
 				'QUOTE',
 				'MATRIX_BID',
 				'Total')
@@ -457,6 +463,7 @@ SELECT
 					'MANUAL',
 					'CREDITS',
 					'TOOLS',
+					'OTH/ERROR',
 					'QUOTE',
 					'MATRIX_BID',
 					'Total')
@@ -480,6 +487,7 @@ SELECT
 					'MANUAL',
 					'CREDITS',
 					'TOOLS',
+					'OTH/ERROR',
 					'QUOTE',
 					'MATRIX_BID',
 					'Total')
@@ -503,6 +511,7 @@ SELECT
 					 'MANUAL',
 					 'CREDITS',
 					 'TOOLS',
+					 'OTH/ERROR',
 					 'QUOTE',
 					 'MATRIX_BID',
 					 'Total')
@@ -514,14 +523,14 @@ SELECT
 				WHEN GP_DATA.ROLLUP = 'Total'
 				THEN
 					CASE
-						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) > 0
+						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <> 0
 						THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
 						ELSE 1
 					END
 				ELSE 1
 			END),
 		3)
-			"Other Profit%$",
+			"Other Profit%$",*/
 	SUM (
 		CASE
 			WHEN GP_DATA.PRICE_CATEGORY NOT IN
@@ -530,6 +539,7 @@ SELECT
 				'MANUAL',
 				'CREDITS',
 				'TOOLS',
+				'OTH/ERROR',
 				'QUOTE',
 				'MATRIX_BID',
 				'Total')

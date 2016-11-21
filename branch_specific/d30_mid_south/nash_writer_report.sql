@@ -1,6 +1,6 @@
 ./*
-	Great Lakes Writer Report
-	run monthly for Rich Kulp
+	Mid South Counter Writer Report
+	run every 3 months for Andy Ethridge and Rich Gardner
 */	
 	SELECT DISTINCT
 		sp_dtl.ACCOUNT_NAME,
@@ -458,25 +458,25 @@
 						--AND IHF.ORDER_CODE NOT IN 'IC'
 						--Excludes shipments to other FEI locations.
 						AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-						AND ILF.YEARMONTH = /* BETWEEN TO_CHAR (
+						AND ILF.YEARMONTH BETWEEN TO_CHAR (
 													 TRUNC (
 														SYSDATE
 														- NUMTOYMINTERVAL (
-															 12,
+															 3,
 															 'MONTH'),
 														'MONTH'),
 													 'YYYYMM')
-											AND*/
+											AND
 							TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,'YYYYMM')
-						AND IHF.YEARMONTH = /*BETWEEN TO_CHAR (
+						AND IHF.YEARMONTH BETWEEN TO_CHAR (
 												   TRUNC (
 													  SYSDATE
 													  - NUMTOYMINTERVAL (
-														   12,
+														   3,
 														   'MONTH'),
 													  'MONTH'),
 												   'YYYYMM')
-											AND*/
+											AND
 							TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
 		) SP_HIST
 				LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
