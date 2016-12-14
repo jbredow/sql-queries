@@ -19,7 +19,9 @@ SELECT EMP_DIM.USER_LOGON,
        INNER JOIN
          SALES_MART.SALES_WAREHOUSE_DIM SWD
        ON ( EMP_DIM.WAREHOUSE_ASSIGNED_NK = SWD.WAREHOUSE_NUMBER_NK )
- WHERE ( EMP_DIM.DELETE_DATE IS NULL ) --AND ( SWD.ACCOUNT_NUMBER_NK = '1480' )
+ WHERE ( EMP_DIM.DELETE_DATE IS NULL ) 
+ 		AND SWD.ACCOUNT_NUMBER_NK = '1480'
+		--AND ( SWD.ACCOUNT_NUMBER_NK = '1480' )
        /* AND ( SUBSTR ( SWD.REGION_NAME,
                      1,
                      3
@@ -35,6 +37,7 @@ SELECT EMP_DIM.USER_LOGON,
                  'D50',
                  'D51',
                  'D53' ) ) */
+								 
 	ORDER BY SWD.DIVISION_NAME,
        SUBSTR ( SWD.REGION_NAME,
                      1,

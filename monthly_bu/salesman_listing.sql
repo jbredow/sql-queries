@@ -12,14 +12,13 @@ SELECT SWD.DIVISION_NAME AS REGION,
        INNER JOIN
            EBUSINESS.SALES_DIVISIONS SWD
        ON ( SLS_REP.ACCOUNT_NUMBER_NK = SWD.ACCOUNT_NUMBER_NK )
- WHERE ( SUBSTR ( SWD.REGION_NAME,
+ /*WHERE ( SUBSTR ( SWD.REGION_NAME,
                  1,
                  3
         ) IN
                 ( 'D10',
                  'D11',
                  'D12',
-                 'D13',
                  'D14',
                  'D30',
                  'D31',
@@ -27,7 +26,7 @@ SELECT SWD.DIVISION_NAME AS REGION,
                  'D50',
                  'D51',
                  'D53',
-								 'D59') )
+								 'D59') )*/
 GROUP BY SWD.DIVISION_NAME,
          SWD.REGION_NAME,
          SLS_REP.ACCOUNT_NUMBER_NK,

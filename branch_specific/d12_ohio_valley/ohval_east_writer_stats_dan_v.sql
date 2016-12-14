@@ -357,7 +357,7 @@ SELECT MAIN.ACCOUNT_NUMBER BR_NK,
                 AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 								/* AAND ILF.YEARMONTH BETWEEN 201608 AND 201610
 								AND IHF.YEARMONTH BETWEEN 201608 AND 201610 */
-                ND ILF.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE,
+                AND ILF.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE,
                                                      'MM'
                                              )
                                              - 1,
@@ -377,5 +377,8 @@ GROUP BY MAIN.ACCOUNT_NUMBER,
          MAIN.WRITER,
          -- COUNT ( MAIN.STRIPPED_INV ) STRIPPED_INV,
          CASE WHEN MAIN.STRIPPED_INV >= 0 THEN 1 ELSE 0 END
-ORDER BY MAIN.ACCOUNT_NUMBER, MAIN.ACCOUNT_NAME,      --MAIN.WAREHOUSE_NUMBER,
-                                                MAIN.WRITER;
+ORDER BY MAIN.ACCOUNT_NUMBER, 
+		MAIN.ACCOUNT_NAME,      
+		--MAIN.WAREHOUSE_NUMBER,
+    MAIN.WRITER
+;

@@ -35,7 +35,7 @@ FROM (  SELECT DISTINCT
               AND (PRICE.PRICE_COLUMN <> '0')
               AND (PRICE.DELETE_DATE IS NULL)
               AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
-                          ('D10', 'D11', 'D12', 'D13', 'D14', 'D30', 'D31', 'D32'))
+                          ('D10', 'D11', 'D12', 'D14', 'D30', 'D31', 'D32'))
         GROUP BY SWD.REGION_NAME,
                 SWD.ACCOUNT_NUMBER_NK,
                 PRICE.DISC_GROUP,
@@ -50,7 +50,7 @@ FROM (  SELECT DISTINCT
               FROM (SELECT CCOR.BRANCH_NUMBER_NK BR_NO,
                           PROD.ALT1_CODE,
                           CCOR.CUSTOMER_GK,
-                          TO_NUMBER (PROD.DISCOUNT_GROUP_GK) DG_NK,
+                          PROD.DISCOUNT_GROUP_NK DG_NK,
                           CCOR.OVERRIDE_TYPE
                       FROM    DW_FEI.CUSTOMER_OVERRIDE_DIMENSION CCOR
                           INNER JOIN
@@ -63,7 +63,7 @@ FROM (  SELECT DISTINCT
                     SELECT CCOR.BRANCH_NUMBER_NK BR_NO,
                           NULL AS ALT1_CODE,
                           CCOR.CUSTOMER_GK,
-                          TO_NUMBER (CCOR.DISC_GROUP) DG_NK,
+                          CCOR.DISC_GROUP DG_NK,
                           CCOR.OVERRIDE_TYPE
                       FROM DW_FEI.CUSTOMER_OVERRIDE_DIMENSION CCOR
                      WHERE  (CCOR.OVERRIDE_TYPE = 'G')
@@ -73,7 +73,7 @@ FROM (  SELECT DISTINCT
                     SELECT CCOR.BRANCH_NUMBER_NK BR_NO,
                           PROD.ALT1_CODE,
                           CCOR.CUSTOMER_GK,
-                          TO_NUMBER (PROD.DISCOUNT_GROUP_NK) DG_NK,
+                         PROD.DISCOUNT_GROUP_NK DG_NK,
                           CCOR.OVERRIDE_TYPE
                       FROM (   DW_FEI.CUSTOMER_OVERRIDE_DIMENSION CCOR
                             INNER JOIN
@@ -82,6 +82,11 @@ FROM (  SELECT DISTINCT
                     WHERE     (CCOR.OVERRIDE_TYPE = 'C')
 													--AND (CCOR.BRANCH_NUMBER_NK = '520')
                           AND (CCOR.DELETE_DATE IS NULL)) X
+							RIGHT OUTER JOIN
+                      EBUSINESS.SALES_DIVISIONS SWD
+                  ON (X.BR_NO = SWD.ACCOUNT_NUMBER_NK)
+						WHERE ( SUBSTR (SWD.REGION_NAME, 1, 3) IN
+                                      ( 'D10', 'D11', 'D12', 'D14', 'D30', 'D31', 'D32' ))
             GROUP BY X.BR_NO, X.DG_NK
         ) CCOR
       ON  STATS.ACCOUNT_NUMBER_NK = CCOR.BR_NO
@@ -101,7 +106,7 @@ FROM (  SELECT DISTINCT
                       DW_FEI.PRODUCT_DIMENSION PROD
                   ON (PROD.ALT1_CODE = WPF.ALT_CODE)
             WHERE (SUBSTR (SWD.REGION_NAME, 1, 3) IN
-                          ('D10', 'D11', 'D12', 'D13', 'D14', 'D30', 'D31', 'D32'))
+                          ('D10', 'D11', 'D12', 'D14', 'D30', 'D31', 'D32'))
                   --AND (SWD.ACCOUNT_NUMBER_NK = '520')
             			--AND (WPF.DISCOUNT_GROUP_NK = '3915')
             GROUP BY SWD.ACCOUNT_NUMBER_NK, PROD.DISCOUNT_GROUP_NK

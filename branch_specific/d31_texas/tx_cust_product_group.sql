@@ -32,6 +32,10 @@ SELECT --XX.BRANCH_NO,
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '23573' THEN '232176'
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '38772' THEN '233700'
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '9099' THEN '246123'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK ='60745' THEN  '201365'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '1158' THEN '175331'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '59669' THEN '201265'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '830' THEN '205671'
 														ELSE CUST_DIM.MAIN_CUSTOMER_NK
 									END
 											MAIN_NO,
@@ -65,35 +69,41 @@ SELECT --XX.BRANCH_NO,
                 INNER JOIN
                   SALES_MART.TIME_PERIOD_DIMENSION TPD
                 ON ( IHF.YEARMONTH = TPD.YEARMONTH )
-          WHERE ( IHF.ACCOUNT_NUMBER IN ( '61', '1869' ))
+          WHERE ( IHF.ACCOUNT_NUMBER IN ( '61', '1869', '190' ))
                 AND ( CUST_DIM.MAIN_CUSTOMER_NK IN
                          ( '2219',
-                          '3258',
-                          '27743',
-                          '108990',
-                          '147880',
-                          '142512',
-                          '144334',
-                          '142737',
-                          '138281',
-                          '144574',
-                          '144801',
-                          '143109',
-                          '205671',
-                          '203022',
-                          '205671',
-                          '207948',
-                          '203022',
-                          '80160',
-                          '830',
-                          '230869',
-                          '232176',
-                          '233700',
-                          '246123',
-                          '14145',
-                          '23573',
-                          '38772',
-                          '9099' ) )
+														'3258',
+														'27743',
+														'108990',
+														'147880',
+														'142512',
+														'144334',
+														'142737',
+														'138281',
+														'144574',
+														'144801',
+														'143109',
+														'205671',
+														'203022',
+														'205671',
+														'207948',
+														'203022',
+														'80160',
+														'830',
+														'230869',
+														'232176',
+														'233700',
+														'246123',
+														'14145',
+														'23573',
+														'38772',
+														'9099',
+														'201365',
+														'175331',
+														'201265',
+														'60745',
+														'1158',
+														'59669' ) )
                 --AND ( CUST_DIM.MAIN_CUSTOMER_NK IN ('2219', '62054', '62059', '26347') )
                 -- AND ( TPD.FISCAL_YEAR_TO_DATE = 'YEAR TO DATE' )
                 AND TPD.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE,
@@ -115,6 +125,10 @@ SELECT --XX.BRANCH_NO,
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '23573' THEN '232176'
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '38772' THEN '233700'
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '9099' THEN '246123'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK ='60745' THEN  '201365'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '1158' THEN '175331'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '59669' THEN '201265'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '830' THEN '205671'
 														ELSE CUST_DIM.MAIN_CUSTOMER_NK
 									END
 											MAIN_NO,
@@ -148,7 +162,7 @@ SELECT --XX.BRANCH_NO,
                 INNER JOIN
                   SALES_MART.TIME_PERIOD_DIMENSION TPD
                 ON ( IHF.YEARMONTH = TPD.YEARMONTH )
-          WHERE ( IHF.ACCOUNT_NUMBER IN ( '61', '1869' ))
+          WHERE ( IHF.ACCOUNT_NUMBER IN ( '61', '1869', '190' ))
                 AND ( CUST_DIM.MAIN_CUSTOMER_NK IN
                          (  '2219',
 														'3258',
@@ -176,7 +190,13 @@ SELECT --XX.BRANCH_NO,
 														'14145',
 														'23573',
 														'38772',
-														'9099' ) )
+														'9099',
+														'201365',
+														'175331',
+														'201265',
+														'60745',
+														'1158',
+														'59669') )
                 --AND ( CUST_DIM.MAIN_CUSTOMER_NK IN ('2219', '62054', '62059', '26347') )
                 -- AND ( TPD.FISCAL_YEAR_TO_DATE = 'LAST YEAR TO DATE' )
                 AND TPD.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE,
@@ -198,6 +218,10 @@ SELECT --XX.BRANCH_NO,
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '23573' THEN '232176'
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '38772' THEN '233700'
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '9099' THEN '246123'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK ='60745' THEN  '201365'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '1158' THEN '175331'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '59669' THEN '201265'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '830' THEN '205671'
 														ELSE CUST_DIM.MAIN_CUSTOMER_NK
 									END
 											MAIN_NO,
@@ -231,35 +255,41 @@ SELECT --XX.BRANCH_NO,
                 INNER JOIN
                   SALES_MART.TIME_PERIOD_DIMENSION TPD
                 ON ( IHF.YEARMONTH = TPD.YEARMONTH )
-          WHERE ( IHF.ACCOUNT_NUMBER IN ( '61', '1869' ))
+          WHERE ( IHF.ACCOUNT_NUMBER IN ( '61', '1869', '190' ))
                 AND ( CUST_DIM.MAIN_CUSTOMER_NK IN
                          ( '2219',
-                          '3258',
-                          '27743',
-                          '108990',
-                          '147880',
-                          '142512',
-                          '144334',
-                          '142737',
-                          '138281',
-                          '144574',
-                          '144801',
-                          '143109',
-                          '205671',
-                          '203022',
-                          '205671',
-                          '207948',
-                          '203022',
-                          '80160',
-                          '830',
-                          '230869',
-                          '232176',
-                          '233700',
-                          '246123',
-                          '14145',
-                          '23573',
-                          '38772',
-                          '9099' ) )
+														'3258',
+														'27743',
+														'108990',
+														'147880',
+														'142512',
+														'144334',
+														'142737',
+														'138281',
+														'144574',
+														'144801',
+														'143109',
+														'205671',
+														'203022',
+														'205671',
+														'207948',
+														'203022',
+														'80160',
+														'830',
+														'230869',
+														'232176',
+														'233700',
+														'246123',
+														'14145',
+														'23573',
+														'38772',
+														'9099',
+														'201365',
+														'175331',
+														'201265',
+														'60745',
+														'1158',
+														'59669' ) )
                 --AND ( CUST_DIM.MAIN_CUSTOMER_NK IN ('2219', '62054', '62059', '26347') )
                 AND ( TPD.FISCAL_YEAR_TO_DATE = 'YEAR TO DATE' )
          GROUP BY IHF.ACCOUNT_NUMBER,
@@ -275,6 +305,10 @@ SELECT --XX.BRANCH_NO,
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '23573' THEN '232176'
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '38772' THEN '233700'
 														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '9099' THEN '246123'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK ='60745' THEN  '201365'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '1158' THEN '175331'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '59669' THEN '201265'
+														WHEN CUST_DIM.MAIN_CUSTOMER_NK = '830' THEN '205671'
 														ELSE CUST_DIM.MAIN_CUSTOMER_NK
 									END
 											MAIN_NO,
@@ -308,35 +342,41 @@ SELECT --XX.BRANCH_NO,
                 INNER JOIN
                   SALES_MART.TIME_PERIOD_DIMENSION TPD
                 ON ( IHF.YEARMONTH = TPD.YEARMONTH )
-          WHERE ( IHF.ACCOUNT_NUMBER IN ( '61', '1869' ))
+          WHERE ( IHF.ACCOUNT_NUMBER IN ( '61', '1869', '190' ))
                 AND ( CUST_DIM.MAIN_CUSTOMER_NK IN
-                         ( '2219',
-                          '3258',
-                          '27743',
-                          '108990',
-                          '147880',
-                          '142512',
-                          '144334',
-                          '142737',
-                          '138281',
-                          '144574',
-                          '144801',
-                          '143109',
-                          '205671',
-                          '203022',
-                          '205671',
-                          '207948',
-                          '203022',
-                          '80160',
-                          '830',
-                          '230869',
-                          '232176',
-                          '233700',
-                          '246123',
-                          '14145',
-                          '23573',
-                          '38772',
-                          '9099' ) )
+                         (  '2219',
+														'3258',
+														'27743',
+														'108990',
+														'147880',
+														'142512',
+														'144334',
+														'142737',
+														'138281',
+														'144574',
+														'144801',
+														'143109',
+														'205671',
+														'203022',
+														'205671',
+														'207948',
+														'203022',
+														'80160',
+														'830',
+														'230869',
+														'232176',
+														'233700',
+														'246123',
+														'14145',
+														'23573',
+														'38772',
+														'9099',
+														'201365',
+														'175331',
+														'201265',
+														'60745',
+														'1158',
+														'59669' ) )
                 --AND ( CUST_DIM.MAIN_CUSTOMER_NK IN ('2219', '62054', '62059', '26347') )
                 AND ( TPD.FISCAL_YEAR_TO_DATE = 'LAST YEAR TO DATE' )
          GROUP BY IHF.ACCOUNT_NUMBER,

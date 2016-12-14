@@ -57,7 +57,6 @@ SELECT DISTINCT
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
        sp_dtl.CONSIGN_TYPE,
-			 sp_dtl.MASTER_VENDOR_NK,
        sp_dtl.MAIN_CUSTOMER_NK,
        sp_dtl.CUSTOMER_NK,
        sp_dtl.CUSTOMER_NAME,
@@ -140,8 +139,7 @@ SELECT DISTINCT
                   NVL (PR_OVR.EXPIRE_DATE, GR_OVR.EXPIRE_DATE) CCOR_EXPIRE,
                   LB.LINEBUY_NAME,
                   DG.DISCOUNT_GROUP_NAME,
-                  MV.MASTER_VENDOR_NAME,
-									MV.MASTER_VENDOR_NK
+                  MV.MASTER_VENDOR_NAME
              FROM (SELECT IHF.ACCOUNT_NUMBER,
              							IHF.YEARMONTH,
                           CUST.ACCOUNT_NAME,

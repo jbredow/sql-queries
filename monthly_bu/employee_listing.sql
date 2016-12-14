@@ -21,7 +21,7 @@ SELECT SWD.ACCOUNT_NUMBER_NK || '^' || EMP_DIM.INITIALS CAT,
        ON ( EMP_DIM.WAREHOUSE_ASSIGNED_NK = SWD.WAREHOUSE_NUMBER_NK )
  WHERE ( EMP_DIM.DELETE_DATE IS NULL ) 
  			 --AND ( SWD.ACCOUNT_NUMBER_NK = '1480' )
-       AND ( SUBSTR ( SWD.REGION_NAME,
+       /*AND ( SUBSTR ( SWD.REGION_NAME,
                      1,
                      3
             ) IN
@@ -35,7 +35,7 @@ SELECT SWD.ACCOUNT_NUMBER_NK || '^' || EMP_DIM.INITIALS CAT,
                  'D32',
                  'D50',
                  'D51',
-                 'D53' ) )
+                 'D53' ) )*/
 	ORDER BY SWD.DIVISION_NAME,
        SUBSTR ( SWD.REGION_NAME,
                      1,
