@@ -37,7 +37,8 @@ END "GP %",*/
 	--SP.matrix_price "Matrix",
 	--ROUND(SP.unit_net_price_amount - SP.matrix_price, 2) "Matrix Var",
 	SP.ext_sales_amount "Ext Net",
-	SP.ext_avg_cogs_amount "Ext AC"
+	SP.ext_avg_cogs_amount "Ext AC",
+	SP.TYPE_OF_SALE "Sale Type"
 	/*SP.unit_inv_cost "Unit Inv",
 	SP.replacement_cost "Unit Rep",
 	SP.list_price "List",
@@ -59,26 +60,33 @@ FROM	AAE0376.PR_VICT2_CUST_12MO SP
 --		ON SP.warehouse_number = ohv.warehouse_number_nk
 	LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION dg
 		ON SP.discount_group_nk = dg.discount_group_nk
-	LEFT OUTER JOIN AAF1046.branch_contacts bc
-		ON SP.account_number = bc.account_nk
-	
+	-- LEFT OUTER JOIN AAF1046.branch_contacts bc
+	-- 	ON SP.account_number = bc.account_nk
+	INNER JOIN
+           SALES_MART.SALES_WAREHOUSE_DIM SWD
+       ON ( SP.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK )
 	
 WHERE SP.STATUS IN ('SP-', 'SP')
 	AND SP.ext_sales_amount >= 0
-	--SP.price_category  IN ('TOOLS', 'MANUAL', 'QUOTE')
-	--AND NVL (SP.price_category_ovr, 'N/A') NOT IN ('OVERRIDE')
-	--AND SP.account_number IN ('150')
-	--AND SP.price_code <> 'C'
-	--AND UPPER (SP.price_formula) <> 'SPEC'
-	--AND UPPER (SP.alt1_code) <> 'APPDEP'
+	-- SP.price_category  IN ('TOOLS', 'MANUAL', 'QUOTE')
+	-- AND NVL (SP.price_category_ovr, 'N/A') NOT IN ('OVERRIDE')
+	-- AND SP.account_number IN ('20', '1480')
+	-- AND SP.price_code <> 'C'
+	-- AND UPPER (SP.price_formula) <> 'SPEC'
+	-- AND UPPER (SP.alt1_code) <> 'APPDEP'
 	
-	--AND UPPER(bc.rpc) = 'SOUTHERN'
-	--AND UPPER(bc.rpc) = 'WESTERN'
-	--AND UPPER(bc.rpc) = 'ATLANTIC'
-	AND UPPER(bc.rpc) = 'MIDWEST'	
+	-- AND UPPER(bc.rpc) = 'SOUTHERN'
+	-- AND UPPER(bc.rpc) = 'WESTERN'
+	-- AND UPPER(bc.rpc) = 'ATLANTIC'
+	-- AND UPPER(bc.rpc) = 'MIDWEST'	
 	
-	--AND NOT UPPER(SP.alt1_code) LIKE('SP-%')
-
+	-- AND NOT UPPER(SP.alt1_code) LIKE('SP-%')
+		AND ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
+																																			'D10', 'D11', 'D12', 'D13', 
+																																			'D14', 'D30', 'D31', 'D32', 
+																																			'D50', 'D51', 'D53'
+																																		 	)
+			)
 ORDER BY 
 	SP.account_number ASC,
 	SP.discount_group_nk ASC,

@@ -598,7 +598,7 @@ SELECT DISTINCT
 													
 													AND IHF.INVOICE_DATE BETWEEN TRUNC (
                                                                         SYSDATE
-                                                                      - 60)
+                                                                      - 65)
                                                                AND TRUNC (
                                                                       SYSDATE) 
 													
