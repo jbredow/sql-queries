@@ -353,7 +353,7 @@ SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
                 AND IHF.ORDER_CODE NOT IN 'IC'
                 AND IHF.PO_WAREHOUSE_NUMBER IS NULL
                 AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-                                                           - NUMTOYMINTERVAL ( 3,
+                                                           - NUMTOYMINTERVAL ( 6,
                                                                               'MONTH'
                                                              ),
                                                            'MONTH'
@@ -367,7 +367,7 @@ SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
                                                     'YYYYMM'
                                            )
                 AND IHF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-                                                           - NUMTOYMINTERVAL ( 3,
+                                                           - NUMTOYMINTERVAL ( 6,
                                                                               'MONTH'
                                                              ),
                                                            'MONTH'

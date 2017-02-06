@@ -68,11 +68,13 @@ WHERE
   --AND MAN.PRICE_CATEGORY_OVR_GR IS NULL
 	AND UPPER (MAN.PRICE_FORMULA) <> 'SPEC'
 	AND UPPER (MAN.ALT1_CODE) <> 'APPDEP'
-	/* AND ( SUBSTR(SWD.REGION_NAME,1,3) IN ( 
+	
+	AND MAN.WAREHOUSE_NUMBER = '5350'
+			OR ( SUBSTR(SWD.REGION_NAME,1,3) IN ( 
 			 					'D10', 'D11', 'D12', 'D13', 
 								'D14', 'D30', 'D31', 'D32', 
-								'D50', 'D51', 'D53' , 'D59'))*/
-		
+								'D50', 'D51', 'D53' , 'D59'))
+				
 	AND NOT UPPER ( MAN.ALT1_CODE ) LIKE('SP-%')
 	--AND UPPER(bc.rpc) = 'SOUTHERN'
 	--AND UPPER(bc.rpc) = 'WESTERN'

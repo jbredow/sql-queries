@@ -1,23 +1,34 @@
 -- by dg report using vict2 data
 
 SELECT
-	/*CASE
-		WHEN V2.YEARMONTH BETWEEN '201405' AND '201504' THEN 'PREV_12MO'
-		ELSE 'CURRENT_12M0'
+	CASE
+		WHEN V2.YEARMONTH  BETWEEN TO_CHAR (
+														   TRUNC (
+															  SYSDATE
+															  - NUMTOYMINTERVAL (
+																   12,
+																   'MONTH'),
+															  'MONTH'),
+														   'YYYYMM')
+													AND 
+									 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+											  'YYYYMM')
+		THEN 'CURRENT_12M0'
+		ELSE 'PREVIOUS_12M0'
 	END
-		TPD,*/
+		TPD,
 	V2.ACCOUNT_NAME,
 	V2.ACCOUNT_NUMBER,
 	V2.WAREHOUSE_NUMBER,
   V2.MAIN_CUSTOMER_NK,
-	V2.CUSTOMER_NK,
+	--V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
 	V2.TYPE_OF_SALE,
-	V2.DISCOUNT_GROUP_NK,
+	/*V2.DISCOUNT_GROUP_NK,
 	V2.DISCOUNT_GROUP_NAME,
 	V2.PRODUCT_NK,
 	V2.ALT1_CODE,
-	V2.PRODUCT_NAME,
+	V2.PRODUCT_NAME,*/
 	CASE
 		WHEN V2.price_category_ovr IS NOT NULL
 		THEN V2.price_category_ovr
@@ -495,9 +506,9 @@ SELECT
 							  --AND CUST.ACCOUNT_NAME IN ('MIDATLWW','MYERSUG')
 							  --AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
 							  --AND ILF.PRICE_CODE in ('R','N/A','Q')
-                AND CUST.MAIN_CUSTOMER_NK IN  ( '27167',
-																																		'105727'
-																																		)
+                /* AND CUST.MAIN_CUSTOMER_NK IN  ( '27167',
+																								'105727'
+																							) */
 							  --AND IHF.REF_BID_NUMBER='B225888'
 							  --AND CUST.CUSTOMER_NK = '127896'
 							  --AND PROD.LINEBUY_NK='200'
@@ -523,10 +534,10 @@ SELECT
 							  --Excludes shipments to other FEI locations.
 							  AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 								
-								AND ILF.YEARMONTH BETWEEN '201501' AND '201512' -- OR ILF.YEARMONTH BETWEEN '201508' AND '201605'
-								AND IHF.YEARMONTH BETWEEN '201501' AND '201512' -- OR IHF.YEARMONTH BETWEEN '201508' AND '201605'
+								/* AND ILF.YEARMONTH BETWEEN '201501' AND '201512' -- OR ILF.YEARMONTH BETWEEN '201508' AND '201605'
+								AND IHF.YEARMONTH BETWEEN '201501' AND '201512' -- OR IHF.YEARMONTH BETWEEN '201508' AND '201605'*/
 								
-							  /*AND ILF.YEARMONTH  BETWEEN TO_CHAR (
+							  AND ILF.YEARMONTH  BETWEEN TO_CHAR (
 														   TRUNC (
 															  SYSDATE
 															  - NUMTOYMINTERVAL (
@@ -547,7 +558,7 @@ SELECT
 														   'YYYYMM')
 													AND 
 									 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-											  'YYYYMM')'*/
+											  'YYYYMM' )
 				) SP_HIST
 					  LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
 						 ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
@@ -637,22 +648,33 @@ SELECT
 																									'16855'
 																							) */
 GROUP BY 
- /*CASE
-		WHEN V2.YEARMONTH BETWEEN '201408' AND '201505' THEN 'PREV_FYTD'
-		ELSE 'CURRENT_FYTD'
-	END,*/
+  CASE
+		WHEN V2.YEARMONTH  BETWEEN TO_CHAR (
+														   TRUNC (
+															  SYSDATE
+															  - NUMTOYMINTERVAL (
+																   12,
+																   'MONTH'),
+															  'MONTH'),
+														   'YYYYMM')
+													AND 
+									 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+											  'YYYYMM')
+		THEN 'CURRENT_12M0'
+		ELSE 'PREVIOUS_12M0'
+	END,
 	V2.ACCOUNT_NAME,
 	V2.ACCOUNT_NUMBER,
 	V2.WAREHOUSE_NUMBER,
   V2.MAIN_CUSTOMER_NK,
-	V2.CUSTOMER_NK,
+	--V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
 	V2.TYPE_OF_SALE,
-	V2.DISCOUNT_GROUP_NK,
+	/*V2.DISCOUNT_GROUP_NK,
 	V2.DISCOUNT_GROUP_NAME,
 	V2.PRODUCT_NK,
 	V2.ALT1_CODE,
-	V2.PRODUCT_NAME,
+	V2.PRODUCT_NAME,*/
 	CASE
 		WHEN V2.price_category_ovr IS NOT NULL
 		THEN V2.price_category_ovr
@@ -660,12 +682,36 @@ GROUP BY
 	END
 	
 ORDER BY
-	/*CASE
-		WHEN V2.YEARMONTH BETWEEN '201405' AND '201504' THEN 'PREV_12MO'
-		ELSE 'CURRENT_12M0'
-	END,*/
-	V2.CUSTOMER_NAME,
-	V2.MAIN_CUSTOMER_NK,
-	V2.CUSTOMER_NK,
-	V2.TYPE_OF_SALE
+		V2.ACCOUNT_NAME,
+		V2.ACCOUNT_NUMBER,
+	  V2.WAREHOUSE_NUMBER,
+    V2.MAIN_CUSTOMER_NK,
+	  --V2.CUSTOMER_NK,
+	  V2.CUSTOMER_NAME,
+	  CASE
+			WHEN V2.YEARMONTH  BETWEEN TO_CHAR (
+														   TRUNC (
+															  SYSDATE
+															  - NUMTOYMINTERVAL (
+																   12,
+																   'MONTH'),
+															  'MONTH'),
+														   'YYYYMM')
+													AND 
+									 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+											  'YYYYMM')
+			THEN 'CURRENT_12M0'
+			ELSE 'PREVIOUS_12M0'
+		END,
+		V2.TYPE_OF_SALE,
+		/*V2.DISCOUNT_GROUP_NK,
+		V2.DISCOUNT_GROUP_NAME,
+		V2.PRODUCT_NK,
+		V2.ALT1_CODE,
+		V2.PRODUCT_NAME,*/
+		CASE
+			WHEN V2.price_category_ovr IS NOT NULL
+			THEN V2.price_category_ovr
+			ELSE V2.price_category
+		END
 ;

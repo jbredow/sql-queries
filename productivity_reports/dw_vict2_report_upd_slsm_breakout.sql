@@ -464,7 +464,7 @@ SELECT DISTINCT
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                     WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 													-- AND ILF.PRODUCT_STATUS = 'SP'
-                          AND IHF.ACCOUNT_NUMBER = '61'
+                          --AND IHF.ACCOUNT_NUMBER = '61'
 													-- AND CUST.CROSS_CUSTOMER_NK = '332'
 													-- AND CUST.MSTR_CUSTNO = '332'
                           -- AND NVL (ILF.PRICE_CODE, 'N/A') IN
@@ -610,4 +610,4 @@ LEFT OUTER JOIN
 			AND sp_dtl.WRITER = emp.INITIALS */
 	;
 
-GRANT SELECT ON PR_VICT2_SKU_DETAIL_SLSM TO PUBLIC;
+-- GRANT SELECT ON PR_VICT2_SKU_DETAIL_SLSM TO PUBLIC;

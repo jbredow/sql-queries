@@ -1,6 +1,6 @@
---DROP TABLE AAA6863.PR_VICT2_CUST_12MO_LN;
+DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
 
-CREATE TABLE AAD9606.PR_VICT2_DETROIT_TEST
+CREATE TABLE AAA6863.PR_VICT2_CUST_12MO
 AS
 
 SELECT DISTINCT
@@ -28,8 +28,8 @@ SELECT DISTINCT
        sp_dtl.SHIPPED_QTY,
        sp_dtl.EXT_SALES_AMOUNT,
        sp_dtl.EXT_AVG_COGS_AMOUNT,
-	   sp_dtl.REPLACEMENT_COST,
-	   sp_dtl.UNIT_INV_COST,
+       sp_dtl.REPLACEMENT_COST,
+       sp_dtl.UNIT_INV_COST,
        sp_dtl.PRICE_CODE,
        sp_dtl.PRICE_CATEGORY,
        sp_dtl.PRICE_CATEGORY_OVR,
@@ -52,14 +52,14 @@ SELECT DISTINCT
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
        sp_dtl.CONSIGN_TYPE,
-       --sp_dtl.MAIN_CUSTOMER_NK,
+       sp_dtl.MAIN_CUSTOMER_NK,
        sp_dtl.CUSTOMER_NK,
        sp_dtl.CUSTOMER_NAME,
        sp_dtl.PRICE_COLUMN,
        sp_dtl.CUSTOMER_TYPE,
        sp_dtl.REF_BID_NUMBER,
        sp_dtl.SOURCE_ORDER,
-	   sp_dtl.ORDER_ENTRY_DATE,
+       sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST
   FROM    (SELECT SP_HIST.*,
                   CASE
@@ -434,7 +434,7 @@ SELECT DISTINCT
                           --AND NVL (ILF.PRICE_CODE, 'N/A') IN
                           --      ('Q', 'N/A', 'R')
                           --AND IHF.WRITER = 'CMC'
-                          AND CUST.ACCOUNT_NAME IN ('DETROIT')
+                          --AND CUST.ACCOUNT_NAME IN ('DETROIT')
                           --AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
                           --AND ILF.PRICE_CODE in ('R','N/A','Q')
 
@@ -556,4 +556,4 @@ SELECT DISTINCT
 			ON sp_dtl.ACCOUNT_NAME = emp.ACCOUNT_NAME
 			AND sp_dtl.WRITER = emp.INITIALS */;
 
---GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO_LN TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;

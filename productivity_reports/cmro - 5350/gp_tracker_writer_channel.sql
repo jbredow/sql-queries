@@ -687,3 +687,4 @@ ORDER BY
                ELSE
                   GP_DATA.TYPE_OF_SALE
             END
+;

@@ -4,7 +4,7 @@ SELECT DISTINCT *
                NEW_CUST.CUSTOMER_NK "Cust #",
                NEW_CUST.CUSTOMER_ALPHA "Alpha",
                NEW_CUST.CUSTOMER_NAME  "Customer Name",
-               NEW_CUST.MAIN_CUSTOMER_NK "Main Acct #",
+               NEW_CUST.MAIN_CUSTOMER_NK "Main Cust #",
                NEW_CUST.MAIN_CUST_SLS_12M "12 mo. Sales",
                NEW_CUST.LAST_SALE "Last Sale",
                NEW_CUST.COLUMN_ALIGNED "PC Align",
@@ -269,12 +269,12 @@ SELECT DISTINCT *
                        LEFT OUTER JOIN USER_SHARED.BG_CUSTTYPE_XREF TYPEREF
                           ON CUST.CUSTOMER_TYPE = TYPEREF.CUSTOMER_TYPE
                  WHERE     (CUST.DELETE_DATE IS NULL)
-                       AND CUST.CUSTOMER_TYPE NOT IN
-                              ('O_INTRBRNCH', 'O_BRCHACCT', 'O_CASH')
-                       AND CUST.PRICE_COLUMN NOT IN 'C'
-                       AND CUST.ACCOUNT_NAME NOT LIKE 'INT%'
-                       --AND CUST.PRICE_COLUMN NOT IN 'C'
-                       --AND NVL (CUST.LAST_SALE, CUST.ACCOUNT_SETUP_DATE) >
+                       /* AND CUST.CUSTOMER_TYPE NOT IN
+                              ('O_INTRBRNCH', 'O_BRCHACCT', 'O_CASH') */
+                       -- AND CUST.PRICE_COLUMN NOT IN 'C'
+                       -- AND CUST.ACCOUNT_NAME NOT LIKE 'INT%'
+                       -- AND CUST.PRICE_COLUMN NOT IN 'C'
+                       -- AND NVL (CUST.LAST_SALE, CUST.ACCOUNT_SETUP_DATE) >
                        --       TRUNC (SYSDATE - 183)
                        /*AND TRUNC (
                               NVL (CUST.ACCOUNT_SETUP_DATE,
@@ -442,7 +442,7 @@ SELECT DISTINCT *
              OR NEW_CUST.CTYPE_CATEGORY IS NULL
              OR NEW_CUST.REVIEW_GSA = 'Y'
              OR NEW_CUST.KOB_ALIGNED = 'N')*/
-				WHERE NEW_CUST.ACCT_NK = '20'
+				WHERE NEW_CUST.ACCT_NK IN ( '215', '1657' )  -- = '20'
         GROUP BY NEW_CUST.CUSTOMER_NK,
                NEW_CUST.CUSTOMER_ALPHA,
                NEW_CUST.CUSTOMER_NAME,
@@ -513,7 +513,8 @@ SELECT DISTINCT *
                  NEW_CUST.CTYPE_SUBCATEGORY ASC,
                  NEW_CUST.CUSTOMER_NAME ASC)
 								 
---WHERE PC_ALIGN = 'N' OR KOB_ALIGN = 'N'
+-- WHERE ACCT_NK IN ( '215', '1657' )  
+	-- PC_ALIGN = 'N' OR KOB_ALIGN = 'N'
 --ORDER BY RPC, ACCOUNT_NAME, PC
 ;
 --GRANT SELECT ON AAD9606.CTYPE_REVIEW_2013 TO PUBLIC;

@@ -1,0 +1,56 @@
+SELECT DISTINCT
+       PR_V2.ACCOUNT_NAME,
+       PR_V2.ACCOUNT_NUMBER AS BR_NK,
+       PR_V2.WRITER,
+       PR_V2.ASSOC_NAME,
+       PR_V2.WAREHOUSE_NUMBER AS WHSE,
+       PR_V2.INVOICE_NUMBER_NK AS INV_NK,
+       PR_V2.ALT1_CODE,
+       PR_V2.PRODUCT_NAME,
+       PR_V2.STATUS,
+       PR_V2.UM,
+       PR_V2.DISCOUNT_GROUP_NK AS DG,
+       PR_V2.DISCOUNT_GROUP_NAME AS DG_NAME,
+       PR_V2.SHIPPED_QTY AS SHPD,
+       PR_V2.EXT_SALES_AMOUNT AS EX_SALES,
+       PR_V2.EXT_AVG_COGS_AMOUNT AS EX_AC,
+       PR_V2.TYPE_OF_SALE AS SALE_TYPE,
+       PR_V2.ORDER_CODE AS ORD_CD,
+       PR_V2.MAIN_CUSTOMER_NK AS MAIN_CUST,
+       PR_V2.CUSTOMER_NK AS CUST_NK,
+       PR_V2.CUSTOMER_NAME,
+       PR_V2.CUSTOMER_TYPE AS "C-TYPE",
+       BUSGRP.BUS_GRP,
+       PR_V2.PRICE_FORMULA AS "FORM",
+       PR_V2.PRICE_CODE AS PR_CD,
+       SUBSTR (SWD.REGION_NAME, 1, 3) AS DIST
+  FROM    (   (   AAE0376.PR_VICT2_CUST_12MO PR_V2   --jenn
+               INNER JOIN
+                  AAD9606.BUSGRP_CTYPE BUSGRP   --leigh
+               ON (PR_V2.CUSTOMER_TYPE = BUSGRP.CUSTOMER_TYPE))
+           LEFT OUTER JOIN
+              DW_FEI.DISCOUNT_GROUP_DIMENSION DG
+           ON (PR_V2.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK))
+       LEFT OUTER JOIN
+          SALES_MART.SALES_WAREHOUSE_DIM SWD
+       ON (PR_V2.WAREHOUSE_NUMBER = SWD.WAREHOUSE_NUMBER_NK)
+ WHERE ( PR_V2.STATUS IN ('SP-', 'SP'))
+ 			 -- AND (PR_V2.ACCOUNT_NUMBER IN ('2000', '39', '1480'))
+ 			 AND ((SUBSTR (SWD.REGION_NAME, 1, 3) IN
+                  ('D10',
+                   'D11',
+                   'D12',
+                   'D14',
+                   'D30',
+                   'D31',
+                   'D32',
+                   'D50',
+                   'D51',
+                   'D53')) 
+						OR PR_V2.WAREHOUSE_NUMBER = '5350')
+ORDER BY SUBSTR (SWD.REGION_NAME, 1, 3) ASC,
+         PR_V2.ACCOUNT_NAME ASC,
+         PR_V2.WAREHOUSE_NUMBER ASC,
+         PR_V2.WRITER ASC,
+         PR_V2.INVOICE_NUMBER_NK ASC
+;

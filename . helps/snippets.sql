@@ -8,6 +8,8 @@ REGEXP_SUBSTR (
 
 grant select on AAA6863.branch_contacts to public;
 
+/* ############################################################# */
+
 -- select previous month first day to last 
 AND IHF.INVOICE_DATE 
   BETWEEN TRUNC(ADD_MONTHS(SYSDATE, -1), 'MM') 
