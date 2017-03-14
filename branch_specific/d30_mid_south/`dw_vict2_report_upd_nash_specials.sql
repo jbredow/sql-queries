@@ -9,17 +9,25 @@ AS */
 
 SELECT DISTINCT
        sp_dtl.YEARMONTH,
-       sp_dtl.ACCOUNT_NUMBER,
+       --sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
-       sp_dtl.WAREHOUSE_NUMBER,
-       sp_dtl.INVOICE_NUMBER_NK,
+       /*sp_dtl.WAREHOUSE_NUMBER,
+       sp_dtl.INVOICE_NUMBER_NK,*/
        sp_dtl.TYPE_OF_SALE,
-       sp_dtl.SHIP_VIA_NAME,
+       /*sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
        --sp_dtl.OML_FL_INI,
-       sp_dtl.OML_ASSOC_NAME,
+       sp_dtl.OML_ASSOC_NAME,*/
+			 CASE
+			 		WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1979042' THEN '2788'
+					WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1976234' THEN '2047'
+					WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1976249' THEN '254'
+					ELSE '2034'
+			 END
+			 		SHIP_WHSE,
+			 
        sp_dtl.WRITER,
-       --sp_dtl.WR_FL_INI,
+       /*sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
        sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
@@ -30,18 +38,18 @@ SELECT DISTINCT
        sp_dtl.ALT1_CODE,
        sp_dtl.PRODUCT_NAME,
        sp_dtl.STATUS,
-       --sp_dtl.SHIPPED_QTY,
-       sp_dtl.EXT_SALES_AMOUNT,
-       sp_dtl.EXT_AVG_COGS_AMOUNT,
-       --sp_dtl.REPLACEMENT_COST,
+       --sp_dtl.SHIPPED_QTY,*/
+       SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
+       SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) UX_AC,
+       /*sp_dtl.REPLACEMENT_COST,
        sp_dtl.UNIT_INV_COST,
-       sp_dtl.PRICE_CODE,
+       sp_dtl.PRICE_CODE,*/
 			 CASE
 			 	WHEN sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE' THEN 'OVERRIDE'
 				ELSE  sp_dtl.PRICE_CATEGORY
 			END
-				PRICE_CAT,
-       sp_dtl.PRICE_FORMULA,
+				PRICE_CAT 
+       /*sp_dtl.PRICE_FORMULA,
        sp_dtl.UNIT_NET_PRICE_AMOUNT,
        sp_dtl.UM,
        sp_dtl.SELL_MULT,
@@ -50,7 +58,7 @@ SELECT DISTINCT
        sp_dtl.MATRIX_PRICE,
        --sp_dtl.MATRIX,
        --sp_dtl.OG_MATRIX,
-       /*CASE
+       CASE
          WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN sp_dtl.PR_OVR
          ELSE NULL
        END
@@ -65,7 +73,7 @@ SELECT DISTINCT
          ELSE NULL
        END
          GR_OVR,
-       sp_dtl.TRIM_FORM,*/
+       sp_dtl.TRIM_FORM,
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
        -- sp_dtl.CONSIGN_TYPE,
@@ -79,7 +87,7 @@ SELECT DISTINCT
        sp_dtl.ORDER_ENTRY_DATE,
        --sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER
+       sp_dtl.CONTRACT_NUMBER*/
   FROM   ( SELECT SP_HIST.*,
                   CASE
                     WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -162,6 +170,7 @@ SELECT DISTINCT
                                      IHF.YEARMONTH,
                                      CUST.ACCOUNT_NAME,
                                      IHF.WAREHOUSE_NUMBER,
+																		 IHF.SHIP_FROM_WAREHOUSE_GK,
                                      IHF.INVOICE_NUMBER_NK,
                                      IHF.JOB_NAME,
                                      IHF.CONTRACT_DESCRIPTION,
@@ -392,7 +401,7 @@ SELECT DISTINCT
                                        --WHEN NVL (ihf.split_ticket_flag, '0') = '1'
                                        --THEN
                                        --   'MATRIX'
-                                     WHEN ilf.price_code IN ('FC', 'PM', 'spec')
+                                       WHEN ilf.price_code IN ('FC', 'PM', 'spec')
                                        THEN
                                          'MATRIX'
                                        WHEN ilf.price_code LIKE 'M%'
@@ -518,7 +527,8 @@ SELECT DISTINCT
                                      ILF.MATRIX,
                                      ILF.MATRIX_PRICE OG_MATRIX,
                                      NVL ( ILF.MATRIX_PRICE, ILF.MATRIX )
-                                       MATRIX_PRICE,
+                                     
+																		 MATRIX_PRICE,
                                      IHF.CONSIGN_TYPE,
                                      IHF.ORDER_CODE,
                                      IHF.CREDIT_CODE,
@@ -543,10 +553,22 @@ SELECT DISTINCT
                                      DW_FEI.CUSTOMER_DIMENSION CUST,
                                      DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                                WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
-																		 AND ILF.PRODUCT_STATUS = 'SP'
-																		 AND IHF.WAREHOUSE_NUMBER IN ( '254', '2034', '2047' )
+																		 --AND ILF.PRODUCT_STATUS = 'SP'
+																		 
 
-                                     --AND IHF.ACCOUNT_NUMBER IN ( '20', '13', '26', '56', '100', '150', '1717' )
+                                     AND IHF.ACCOUNT_NUMBER IN ('13',
+																																'20',
+																																'26',
+																																'56',
+																																'93',
+																																'100',
+																																'141',
+																																'150',
+																																'185',
+																																'254',
+																																'1480',
+																																'1717',
+																																'2778' )
                                      --AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
                                      --AND IHF.WRITER = 'CMC'
                                      --AND CUST.ACCOUNT_NAME = 'ALIND' --IN ('MIDATLWW','MYERSUG')
@@ -575,13 +597,18 @@ SELECT DISTINCT
                                      AND ILF.SHIPPED_QTY <> 0
                                      --AND IHF.ORDER_CODE NOT IN 'IC'
                                      --Excludes shipments to other FEI locations.
+																		 AND IHF.SHIP_FROM_WAREHOUSE_GK IN ('1979042',
+'1976234',
+'1976249',
+'1976252'
+)
                                      AND IHF.PO_WAREHOUSE_NUMBER IS NULL
                                      /* 
 																		 AND  IHF.YEARMONTH = '201602'
 																		 AND  ILF.YEARMONTH = '201602'
 																		*/
 																		 AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-                                                                                - NUMTOYMINTERVAL ( 6,
+                                                                                - NUMTOYMINTERVAL ( 7,
                                                                                                    'MONTH'
                                                                                   ),
                                                                                 'MONTH'
@@ -595,7 +622,7 @@ SELECT DISTINCT
                                                                          'YYYYMM'
                                                                 )
                                      AND IHF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-                                                                                - NUMTOYMINTERVAL ( 6,
+                                                                                - NUMTOYMINTERVAL ( 7,
                                                                                                    'MONTH'
                                                                                   ),
                                                                                 'MONTH'
@@ -686,14 +713,81 @@ SELECT DISTINCT
                       AND NVL ( SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH' ) =
                            NVL ( PR_OVR.CONTRACT_ID, 'DEFAULT_MATCH' ) ) )
          sp_dtl
-   /*     LEFT OUTER JOIN
-         EBUSINESS.SALES_DIVISIONS SWD
-       ON sp_dtl.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK
-WHERE ( SUBSTR ( SWD.REGION_NAME,
-                 1,
-                 3
-        ) IN ('D10', 'D11', 'D12', 'D13', 'D14', 'D30', 'D31', 'D32') )*/
-       -- AND sp_dtl.DISCOUNT_GROUP_NK IN ('1072', '1076', '0540', '0545')
+GROUP BY
+		   sp_dtl.YEARMONTH,
+       --sp_dtl.ACCOUNT_NUMBER,
+       sp_dtl.ACCOUNT_NAME,
+       /*sp_dtl.WAREHOUSE_NUMBER,
+       sp_dtl.INVOICE_NUMBER_NK,*/
+			 CASE
+			 		WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1979042' THEN '2788'
+					WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1976234' THEN '2047'
+					WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1976249' THEN '254'
+					ELSE '2034'
+			 END,
+       sp_dtl.TYPE_OF_SALE,
+       sp_dtl.WRITER,
+       /*sp_dtl.WR_FL_INI,
+       sp_dtl.ASSOC_NAME,
+       sp_dtl.DISCOUNT_GROUP_NK,
+       sp_Dtl.DISCOUNT_GROUP_NAME,
+       sp_Dtl.CHANNEL_TYPE,
+       --sp_dtl.INVOICE_LINE_NUMBER,
+       --sp_dtl.MANUFACTURER,
+       sp_dtl.PRODUCT_NK,
+       sp_dtl.ALT1_CODE,
+       sp_dtl.PRODUCT_NAME,
+       sp_dtl.STATUS,
+       --sp_dtl.SHIPPED_QTY,*/
+       --SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
+       --SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) UX_AC,
+       /*sp_dtl.REPLACEMENT_COST,
+       sp_dtl.UNIT_INV_COST,
+       sp_dtl.PRICE_CODE,*/
+			 CASE
+			 	WHEN sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE' THEN 'OVERRIDE'
+				ELSE  sp_dtl.PRICE_CATEGORY
+			END
+				  --,
+       /*sp_dtl.PRICE_FORMULA,
+       sp_dtl.UNIT_NET_PRICE_AMOUNT,
+       sp_dtl.UM,
+       sp_dtl.SELL_MULT,
+       sp_dtl.PACK_QTY,
+       sp_dtl.LIST_PRICE,
+       sp_dtl.MATRIX_PRICE,
+       --sp_dtl.MATRIX,
+       --sp_dtl.OG_MATRIX,
+       CASE
+         WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN sp_dtl.PR_OVR
+         ELSE NULL
+       END
+         PR_OVR,
+       CASE
+         WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN sp_dtl.PR_OVR_BASIS
+         ELSE NULL
+       END
+         PR_OVR_BASIS,
+       CASE
+         WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN sp_dtl.GR_OVR
+         ELSE NULL
+       END
+         GR_OVR,
+       sp_dtl.TRIM_FORM,
+       sp_dtl.ORDER_CODE,
+       sp_dtl.SOURCE_SYSTEM,
+       -- sp_dtl.CONSIGN_TYPE,
+       sp_dtl.MAIN_CUSTOMER_NK,
+       sp_dtl.CUSTOMER_NK,
+       sp_dtl.CUSTOMER_NAME,
+       --sp_dtl.PRICE_COLUMN,
+       --sp_dtl.CUSTOMER_TYPE,
+       sp_dtl.REF_BID_NUMBER,
+       sp_dtl.SOURCE_ORDER,
+       sp_dtl.ORDER_ENTRY_DATE,
+       --sp_dtl.COPY_SOURCE_HIST,
+       sp_dtl.CONTRACT_DESCRIPTION,
+       sp_dtl.CONTRACT_NUMBER*/
 			 ;
 
-GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;
+--GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;

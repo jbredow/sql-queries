@@ -459,10 +459,26 @@ SELECT DISTINCT
                           DW_FEI.CUSTOMER_DIMENSION CUST,
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                     WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK --AND ILF.PRODUCT_STATUS = 'SP'
-                          --AND IHF.ACCOUNT_NUMBER = '13'
+                          AND IHF.ACCOUNT_NUMBER = '20'
                           --AND NVL (ILF.PRICE_CODE, 'N/A') IN
                           --      ('Q', 'N/A', 'R')
-                          --AND IHF.WRITER = 'CMC'
+                          AND IHF.WRITER IN ( 'GXB',
+																							'LCF',
+																							'LF',
+																							'PCT',
+																							'MBA',
+																							'MLF',
+																							'MPW',
+																							'ZDH',
+																							'BDF',
+																							'CSP',
+																							'DTW',
+																							'HLM',
+																							'HM',
+																							'JET',
+																							'JYW',
+																							'SPT'
+																							)
                           --AND CUST.ACCOUNT_NAME IN ('MIDATLWW','MYERSUG')
                           --AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
                           --AND ILF.PRICE_CODE in ('R','N/A','Q')

@@ -8,125 +8,129 @@ DROP TABLE AAA6863.PR_VICT2_SKU_DETAIL;
 CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL
 AS */
 SELECT DISTINCT
-       sp_dtl.YEARMONTH,
-			 SUBSTR ( SWD.REGION_NAME, 1 ,3 ) "Dist",
-       sp_dtl.ACCOUNT_NUMBER "Branch",
-       sp_dtl.ACCOUNT_NAME "Account Name",
-       /*sp_dtl.WAREHOUSE_NUMBER,
-       sp_dtl.INVOICE_NUMBER_NK,
-       sp_dtl.TYPE_OF_SALE,
-	     sp_dtl.SHIP_VIA_NAME,
-       sp_dtl.OML_ASSOC_INI,
-       sp_dtl.OML_FL_INI,
-       sp_dtl.OML_ASSOC_NAME,
-       sp_dtl.WRITER,
-       sp_dtl.WR_FL_INI,
-       sp_dtl.ASSOC_NAME,
-       sp_dtl.DISCOUNT_GROUP_NK,
-       sp_Dtl.DISCOUNT_GROUP_NAME,
-       sp_Dtl.CHANNEL_TYPE,
-       sp_dtl.INVOICE_LINE_NUMBER,
-       sp_dtl.MANUFACTURER,
-       sp_dtl.PRODUCT_NK,
-       sp_dtl.ALT1_CODE,
-       sp_dtl.PRODUCT_NAME,
-       sp_dtl.STATUS,
-       sp_dtl.SHIPPED_QTY,*/
-       sum ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
-       sum ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC,
-      /*sp_dtl.REPLACEMENT_COST,
-	     sp_dtl.UNIT_INV_COST,
-       sp_dtl.PRICE_CODE,*/
-    case
-					when sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE' then  'OVERRIDE'
-					when sp_dtl.PRICE_CATEGORY like 'MATR%' then 'MATRIX'
-					when sp_dtl.PRICE_CATEGORY in ( 'TOOLS', 'QUOTE', 'OTH/ERROR' ) then
-					'MANUAL'
-					else sp_dtl.PRICE_CATEGORY
-    end
-    PRICE_CAT
-       /*sp_dtl.PRICE_FORMULA,
-       sp_dtl.UNIT_NET_PRICE_AMOUNT,
-       sp_dtl.UM,
-       sp_dtl.SELL_MULT,
-       sp_dtl.PACK_QTY,
-	     sp_dtl.LIST_PRICE,
-       sp_dtl.MATRIX_PRICE,
-       sp_dtl.MATRIX,
-       sp_dtl.OG_MATRIX,
-       CASE WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN 
-       sp_dtl.PR_OVR ELSE NULL END PR_OVR,
-       CASE WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN 
-       sp_dtl.PR_OVR_BASIS ELSE NULL END PR_OVR_BASIS,
-       CASE WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN 
-       sp_dtl.GR_OVR ELSE NULL END GR_OVR,
-       sp_dtl.TRIM_FORM,
-       sp_dtl.ORDER_CODE,
-       sp_dtl.SOURCE_SYSTEM,
-       sp_dtl.CONSIGN_TYPE,
-       --sp_dtl.MAIN_CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NAME,
-       sp_dtl.PRICE_COLUMN,
-       sp_dtl.CUSTOMER_TYPE,
-       sp_dtl.REF_BID_NUMBER,
-       sp_dtl.SOURCE_ORDER,
-	     sp_dtl.ORDER_ENTRY_DATE,
-       sp_dtl.COPY_SOURCE_HIST,
-       sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER*/
-  FROM    (SELECT SP_HIST.*,
+			SP_DTL.YEARMONTH,
+			SUBSTR ( SWD.REGION_NAME, 1 ,3 ) DIST,
+			SP_DTL.ACCOUNT_NUMBER BRANCH,
+			SP_DTL.ACCOUNT_NAME,
+			/*SP_DTL.WAREHOUSE_NUMBER,
+			SP_DTL.INVOICE_NUMBER_NK,
+			SP_DTL.TYPE_OF_SALE,
+			SP_DTL.SHIP_VIA_NAME,
+			SP_DTL.OML_ASSOC_INI,
+			SP_DTL.OML_FL_INI,
+			SP_DTL.OML_ASSOC_NAME,
+			SP_DTL.WRITER,
+			SP_DTL.WR_FL_INI,
+			SP_DTL.ASSOC_NAME,
+			SP_DTL.DISCOUNT_GROUP_NK,
+			SP_DTL.DISCOUNT_GROUP_NAME,
+			SP_DTL.CHANNEL_TYPE,
+			SP_DTL.INVOICE_LINE_NUMBER,
+			SP_DTL.MANUFACTURER,
+			SP_DTL.PRODUCT_NK,
+			SP_DTL.ALT1_CODE,
+			SP_DTL.PRODUCT_NAME,
+			SP_DTL.STATUS,
+			SP_DTL.SHIPPED_QTY,*/
+			SUM ( SP_DTL.EXT_SALES_AMOUNT ) EX_SALES,
+			SUM ( SP_DTL.EXT_AVG_COGS_AMOUNT ) EX_AC,
+			/*SP_DTL.REPLACEMENT_COST,
+			SP_DTL.UNIT_INV_COST,
+			SP_DTL.PRICE_CODE,*/
+			CASE
+					WHEN SP_DTL.PRICE_CATEGORY_OVR = 'OVERRIDE' THEN  
+							'OVERRIDE'
+					WHEN SP_DTL.PRICE_CATEGORY like 'MATR%' THEN 
+							'MATRIX'
+					WHEN SP_DTL.PRICE_CATEGORY in ( 'TOOLS', 'QUOTE', 'OTH/ERROR' ) THEN
+							'MANUAL'
+					ELSE SP_DTL.PRICE_CATEGORY
+    	END
+    			PRICE_CAT
+			/*SP_DTL.PRICE_FORMULA,
+			SP_DTL.UNIT_NET_PRICE_AMOUNT,
+			SP_DTL.UM,
+			SP_DTL.SELL_MULT,
+			SP_DTL.PACK_QTY,
+			SP_DTL.LIST_PRICE,
+			SP_DTL.MATRIX_PRICE,
+			SP_DTL.MATRIX,
+			SP_DTL.OG_MATRIX,
+			CASE WHEN SP_DTL.PRICE_CATEGORY_OVR IS NOT NULL THEN 
+			SP_DTL.PR_OVR ELSE NULL END PR_OVR,
+			CASE WHEN SP_DTL.PRICE_CATEGORY_OVR IS NOT NULL THEN 
+			SP_DTL.PR_OVR_BASIS ELSE NULL END PR_OVR_BASIS,
+			CASE WHEN SP_DTL.PRICE_CATEGORY_OVR IS NOT NULL THEN 
+			SP_DTL.GR_OVR ELSE NULL END GR_OVR,
+			SP_DTL.TRIM_FORM,
+			SP_DTL.ORDER_CODE,
+			SP_DTL.SOURCE_SYSTEM,
+			SP_DTL.CONSIGN_TYPE,
+			SP_DTL.MAIN_CUSTOMER_NK,
+			SP_DTL.CUSTOMER_NK,
+			SP_DTL.CUSTOMER_NAME,
+			SP_DTL.PRICE_COLUMN,
+			SP_DTL.CUSTOMER_TYPE,
+			SP_DTL.REF_BID_NUMBER,
+			SP_DTL.SOURCE_ORDER,
+			SP_DTL.ORDER_ENTRY_DATE,
+			SP_DTL.COPY_SOURCE_HIST,
+			SP_DTL.CONTRACT_DESCRIPTION,
+			SP_DTL.CONTRACT_NUMBER*/
+  FROM    ( SELECT SP_HIST.*,
                   CASE
                      WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
-                           THEN
-                         CASE  WHEN SP_HIST.ORDER_ENTRY_DATE BETWEEN
+                     THEN
+                         CASE  
+												 		WHEN SP_HIST.ORDER_ENTRY_DATE BETWEEN
                                                               PR_OVR.
                                                               INSERT_TIMESTAMP
                                                        AND
                                                               NVL(PR_OVR.
                                                               EXPIRE_DATE,
     															SP_HIST.ORDER_ENTRY_DATE)
-                     THEN
-
-                              CASE
-                                 WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                         PR_OVR.MULTIPLIER
-                                 THEN
-                                    'OVERRIDE'
-                                 WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                         (TRUNC (PR_OVR.MULTIPLIER, 2) + .01)
-                                 THEN
-                                    'OVERRIDE'
-                                 WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                         (ROUND (PR_OVR.MULTIPLIER, 2))
-                                 THEN
-                                    'OVERRIDE'
-                                 WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                         (TRUNC (PR_OVR.MULTIPLIER, 1) + .1)
-                                 THEN
-                                    'OVERRIDE'
-                                 WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                         FLOOR (PR_OVR.MULTIPLIER) + 1
-                                 THEN
-                                    'OVERRIDE'
-                                 WHEN SP_HIST.ORDER_ENTRY_DATE BETWEEN
-                                                              GR_OVR.
-                                                              INSERT_TIMESTAMP
-                                                       AND
-                                                              NVL(GR_OVR.
-                                                              EXPIRE_DATE,
-    																SP_HIST.ORDER_ENTRY_DATE)
-    THEN
-                                CASE WHEN REPLACE (SP_HIST.PRICE_FORMULA,
-                                               '0.',
-                                               '.') =
-                                         REPLACE (
-                                            NVL (PR_OVR.FORMULA,
-                                                 GR_OVR.FORMULA),
-                                            '0.',
-                                            '.')
-                                 THEN
-                                    'OVERRIDE'
+                     				THEN
+                            		CASE
+																		WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
+																						PR_OVR.MULTIPLIER
+																		THEN
+																				'OVERRIDE'
+																		WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
+																						(TRUNC (PR_OVR.MULTIPLIER, 2) + .01)
+																		THEN
+																				'OVERRIDE'
+																		WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
+																						(ROUND (PR_OVR.MULTIPLIER, 2))
+																		THEN
+																				'OVERRIDE'
+																		WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
+																						(TRUNC (PR_OVR.MULTIPLIER, 1) + .1)
+																		THEN
+																				'OVERRIDE'
+																		WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
+																						FLOOR (PR_OVR.MULTIPLIER) + 1
+																		THEN
+																				'OVERRIDE'
+																		WHEN SP_HIST.ORDER_ENTRY_DATE BETWEEN
+																																	GR_OVR.
+																																	INSERT_TIMESTAMP
+																													AND
+																																	NVL(GR_OVR.
+																																	EXPIRE_DATE,
+																				SP_HIST.ORDER_ENTRY_DATE)
+																		THEN
+                                				CASE 
+																						WHEN 
+																								REPLACE (SP_HIST.PRICE_FORMULA,
+																										'0.',
+																										'.') =
+																								REPLACE (
+																										NVL (PR_OVR.FORMULA,
+																														GR_OVR.FORMULA),
+																										'0.',
+																										'.')
+																						THEN
+                                    						'OVERRIDE'
                                  --ELSE
                                     --SP_HIST.PRICE_CATEGORY
                               END
@@ -138,7 +142,7 @@ SELECT DISTINCT
                   END
                    --ELSE
                               --SP_HIST.PRICE_CATEGORY
-                END
+                  END
                      PRICE_CATEGORY_OVR,
                   PR_OVR.FORMULA PR_OVR,
                   REPLACE (PR_OVR.FORMULA, '0.', '.') TRIM_FORM,
@@ -150,8 +154,10 @@ SELECT DISTINCT
                   LB.LINEBUY_NAME,
                   DG.DISCOUNT_GROUP_NAME,
                   MV.MASTER_VENDOR_NAME
-             FROM (SELECT IHF.ACCOUNT_NUMBER,
-             IHF.YEARMONTH,
+									
+             FROM ( SELECT 
+						 							IHF.ACCOUNT_NUMBER,
+             							IHF.YEARMONTH,
                           CUST.ACCOUNT_NAME,
                           IHF.WAREHOUSE_NUMBER,
                           IHF.INVOICE_NUMBER_NK,
@@ -174,7 +180,7 @@ SELECT DISTINCT
                           NVL (IHF.WRITER, IHF.OML_ASSOC_INI) WRITER,
                           SUBSTR (NVL (IHF.WRITER, IHF.OML_ASSOC_INI), 0, 1)
                           || SUBSTR (NVL (IHF.WRITER, IHF.OML_ASSOC_INI), -1)
-                             WR_FL_INI,
+                          WR_FL_INI,
                           IHF.OML_ASSOC_INI,
                           SUBSTR (IHF.OML_ASSOC_INI, 0, 1)
                           || SUBSTR (IHF.OML_ASSOC_INI, -1)
@@ -301,19 +307,18 @@ SELECT DISTINCT
                                            (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
                                    THEN
                                       'MATRIX'
-
                                    WHEN ilf.UNIT_NET_PRICE_AMOUNT =
                                            (TRUNC (ilf.MATRIX, 2) + .01)
                                    THEN
                                       'MATRIX_BID'
-                                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
                                          (ROUND (ilf.MATRIX_PRICE, 2))
-                                 THEN
-                                    'MATRIX'
-                                    WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                         (ROUND (ilf.MATRIX, 2))
-                                 THEN
-                                    'MATRIX_BID'
+																	 THEN
+																				'MATRIX'
+																	 WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+																						(ROUND (ilf.MATRIX, 2))
+																	 THEN
+																				'MATRIX_BID'
                                    WHEN ilf.UNIT_NET_PRICE_AMOUNT =
                                            (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
                                    THEN
@@ -337,10 +342,10 @@ SELECT DISTINCT
                                                '[0-9]?[0-9]?[0-9]')
                              THEN
                                 'MATRIX'
-                             --WHEN NVL (ihf.split_ticket_flag, '0') = '1'
-                             --THEN
-                             --   'MATRIX'
-                          WHEN ilf.price_code IN ('FC', 'PM', 'spec')
+																--WHEN NVL (ihf.split_ticket_flag, '0') = '1'
+																--THEN
+																--   'MATRIX'
+														 WHEN ilf.price_code IN ('FC', 'PM', 'spec')
                              THEN
                                 'MATRIX'
                              WHEN ilf.price_code LIKE 'M%'
@@ -470,7 +475,7 @@ SELECT DISTINCT
                           DW_FEI.CUSTOMER_DIMENSION CUST,
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                     WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
-    --AND ILF.PRODUCT_STATUS = 'SP'
+                          --AND ILF.PRODUCT_STATUS = 'SP'
                           --AND IHF.ACCOUNT_NUMBER = '13'
                           --AND NVL (ILF.PRICE_CODE, 'N/A') IN
                           --      ('Q', 'N/A', 'R')
@@ -478,7 +483,6 @@ SELECT DISTINCT
                           --AND CUST.ACCOUNT_NAME IN ('MIDATLWW','MYERSUG')
                           --AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
                           --AND ILF.PRICE_CODE in ('R','N/A','Q')
-
                           --AND IHF.REF_BID_NUMBER='B225888'
                           --AND CUST.CUSTOMER_NK = '127896'
                           --AND PROD.LINEBUY_NK='200'
@@ -599,33 +603,33 @@ SELECT DISTINCT
                          AND SP_HIST.CUSTOMER_ACCOUNT_GK = PR_OVR.CUSTOMER_GK
                          AND NVL(SP_HIST.CONTRACT_NUMBER,'DEFAULT_MATCH')=NVL(
     PR_OVR.CONTRACT_ID,'DEFAULT_MATCH'))
-              ) sp_dtl
+              ) SP_DTL
 LEFT OUTER JOIN
   EBUSINESS.SALES_DIVISIONS SWD
-   ON sp_dtl.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK
+   ON SP_DTL.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK
 
    WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN (
                      'D50', 'D51', 'D52', 'D53',
                      'D54', 'D55', 'D59'
                      ))
-    /*	AND sp_dtl.DISCOUNT_GROUP_NK IN ( '1072',
+    /*	AND SP_DTL.DISCOUNT_GROUP_NK IN ( '1072',
 																					'1076',
 																					'0540',
 																					'0545'
 																					)
        LEFT OUTER JOIN DW_FEI.EMPLOYEE_DIMENSION emp
-			ON sp_dtl.ACCOUNT_NAME = emp.ACCOUNT_NAME
-			AND sp_dtl.WRITER = emp.INITIALS */
+			ON SP_DTL.ACCOUNT_NAME = emp.ACCOUNT_NAME
+			AND SP_DTL.WRITER = emp.INITIALS */
 GROUP BY
-    sp_dtl.YEARMONTH,
-       sp_dtl.ACCOUNT_NUMBER,
-       sp_dtl.ACCOUNT_NAME,
+    SP_DTL.YEARMONTH,
+       SP_DTL.ACCOUNT_NUMBER,
+       SP_DTL.ACCOUNT_NAME,
 			 SUBSTR ( SWD.REGION_NAME, 1 ,3 ),
      case
-     when sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE' then  'OVERRIDE'
-    when sp_dtl.PRICE_CATEGORY like 'MATR%' then 'MATRIX'
-    when sp_dtl.PRICE_CATEGORY in ( 'TOOLS', 'QUOTE', 'OTH/ERROR' ) then
+     when SP_DTL.PRICE_CATEGORY_OVR = 'OVERRIDE' then  'OVERRIDE'
+    when SP_DTL.PRICE_CATEGORY like 'MATR%' then 'MATRIX'
+    when SP_DTL.PRICE_CATEGORY in ( 'TOOLS', 'QUOTE', 'OTH/ERROR' ) then
     'MANUAL'
-    else sp_dtl.PRICE_CATEGORY
+    else SP_DTL.PRICE_CATEGORY
     end;
 GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;

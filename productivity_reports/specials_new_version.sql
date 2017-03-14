@@ -1,7 +1,9 @@
-/*
-	updated specials report to include the columns requested by John Jorstad
-*/
-
+/* 
+	use for monthly reports in toolbox
+		updated specials report to include the columns requested by John Jorstad
+	AAE0376 - Jenn
+	AAD9606 - Leigh
+ */
 SELECT DISTINCT
 	SP.ACCOUNT_NAME,
 	SP.ACCOUNT_NUMBER BR_NK,

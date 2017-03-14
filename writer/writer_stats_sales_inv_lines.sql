@@ -1,28 +1,115 @@
-SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
+SELECT 
        MAIN.YEARMONTH,
-       MAIN.ACCOUNT_NUMBER BR_NK,
+			 MAIN.ACCOUNT_NUMBER BR_NK,
        MAIN.ACCOUNT_NAME ACCOUNT,
        MAIN.WRITER,
+       /*SUM ( CASE WHEN MAIN.STATUS = 'SP' THEN MAIN.EXT_SALES_AMOUNT ELSE 0 END )
+         SP_SALES,
+       SUM ( CASE
+             WHEN MAIN.STATUS = 'SP' THEN MAIN.EXT_AVG_COGS_AMOUNT
+             ELSE 0
+           END )
+         SP_AC,
+       ROUND ( SUM ( CASE
+                     WHEN MAIN.STATUS = 'SP'
+                     THEN
+                       ( MAIN.EXT_SALES_AMOUNT - MAIN.EXT_AVG_COGS_AMOUNT )
+                     ELSE
+                       0
+                   END)
+              / SUM ( CASE
+                      WHEN MAIN.STATUS = 'SP'
+                      THEN
+                        CASE
+                          WHEN MAIN.EXT_SALES_AMOUNT > 0
+                          THEN
+                            MAIN.EXT_SALES_AMOUNT
+                          ELSE
+                            1
+                        END
+                      ELSE
+                        1
+                    END ),
+              3
+       )
+         SP_GPP,*/
        SUM ( MAIN.EXT_SALES_AMOUNT ) EX_SALES,
        SUM ( MAIN.EXT_AVG_COGS_AMOUNT ) EX_AC,
+       ROUND ( ( SUM ( MAIN.EXT_SALES_AMOUNT )
+                - SUM ( MAIN.EXT_AVG_COGS_AMOUNT ) )
+              / CASE
+                  WHEN SUM ( MAIN.EXT_SALES_AMOUNT ) > 0
+                  THEN
+                    SUM ( MAIN.EXT_SALES_AMOUNT )
+                  ELSE
+                    1
+                END,
+              3
+       )
+         TOTAL_GPP,
        COUNT ( MAIN.INV_LINE_COUNT ) INV_LINE_CT,
-       COUNT ( DISTINCT MAIN.STRIPPED_INV ) INV_COUNT,
-       SUM(CASE
-             WHEN MAIN.PRICE_CATEGORY IN 'MANUAL'
-             THEN
-               ( MAIN.EXT_SALES_AMOUNT )
-             ELSE
-               0
-           END)
-         MAN_SALES,
-       SUM(CASE
-             WHEN MAIN.PRICE_CATEGORY IN 'MANUAL'
-             THEN
-               ( MAIN.EXT_AVG_COGS_AMOUNT )
-             ELSE
-               0
-           END)
-         MAN_AC,
+       COUNT ( DISTINCT MAIN.STRIPPED_INV ) - COUNT ( DISTINCT MAIN.NO_CR )
+         INV_COUNT,
+       /*COUNT(CASE
+               WHEN MAIN.PRICE_CATEGORY LIKE 'MATRIX%'
+               THEN
+                 ( MAIN.INV_LINE_COUNT )
+               ELSE
+                 NULL
+             END)
+         MTX_LINES,
+       COUNT(CASE
+               WHEN MAIN.PRICE_CATEGORY = 'OVERRIDE'
+               THEN
+                 ( MAIN.INV_LINE_COUNT )
+               ELSE
+                 NULL
+             END)
+         CCOR_LINES,*/
+			 SUM (
+						CASE
+							WHEN MAIN.PRICE_CATEGORY IN 'MANUAL'
+							THEN 
+								( MAIN.EXT_SALES_AMOUNT )
+							ELSE
+								0
+						END )
+							MANUAL_SALES,
+						SUM (
+							CASE
+							WHEN MAIN.PRICE_CATEGORY IN 'MANUAL'
+							THEN 
+								( MAIN.EXT_AVG_COGS_AMOUNT )
+							ELSE
+								0
+						END )
+							MAN_AC,
+					ROUND (
+						SUM (
+							CASE
+								WHEN MAIN.PRICE_CATEGORY IN 'MANUAL'
+								THEN
+									( MAIN.EXT_SALES_AMOUNT - MAIN.EXT_AVG_COGS_AMOUNT )
+								ELSE
+									0
+							END)
+						/ SUM (
+							CASE
+								WHEN MAIN.PRICE_CATEGORY IN 'MANUAL'
+								THEN
+									CASE
+										WHEN MAIN.EXT_SALES_AMOUNT > 0
+										THEN
+											(MAIN.EXT_SALES_AMOUNT)
+										ELSE
+											1
+									END
+								ELSE
+									1
+							END),
+						3)
+							"MAN GP%",
+			 
        COUNT(CASE
                WHEN MAIN.PRICE_CATEGORY = 'MANUAL'
                THEN
@@ -30,86 +117,48 @@ SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
                ELSE
                  NULL
              END)
-         MAN_LINES,
-       COUNT ( DISTINCT ( CASE
-                           WHEN MAIN.PRICE_CATEGORY = 'MANUAL'
-                           THEN
-                             ( MAIN.STRIPPED_INV )
-                           ELSE
-                             NULL
-                         END )
-       )
-         MAN_INV,
-       SUM(CASE
-             WHEN MAIN.PRICE_CATEGORY IN 'SPECIALS'
-             THEN
-               ( MAIN.EXT_SALES_AMOUNT )
-             ELSE
-               0
-           END)
-         SPECIALS_SALES,
-       SUM(CASE
-             WHEN MAIN.PRICE_CATEGORY IN 'SPECIALS'
-             THEN
-               ( MAIN.EXT_AVG_COGS_AMOUNT )
-             ELSE
-               0
-           END)
-         SPECIALS_AC,
-       COUNT(CASE
+         MAN_LINES        --,
+       /*COUNT(CASE
                WHEN MAIN.PRICE_CATEGORY = 'SPECIALS'
                THEN
                  ( MAIN.INV_LINE_COUNT )
                ELSE
                  NULL
              END)
-         SPECIALS_LINES,
-       COUNT ( DISTINCT ( CASE
-                           WHEN MAIN.PRICE_CATEGORY = 'SPECIALS'
-                           THEN
-                             ( MAIN.STRIPPED_INV )
-                           ELSE
-                             NULL
-                         END )
-       )
-         SPECIALS_INV,
-       SUM(CASE
-             WHEN MAIN.SALE_TYPE = '3' THEN ( MAIN.EXT_SALES_AMOUNT )
-             ELSE 0
-           END)
-         DIR_SALES,
-       SUM(CASE
-             WHEN MAIN.SALE_TYPE = '3' THEN ( MAIN.EXT_AVG_COGS_AMOUNT )
-             ELSE 0
-           END)
-         DIR_AC,
+         SPEC_LINES,
        COUNT(CASE
-               WHEN MAIN.SALE_TYPE = '3' THEN ( MAIN.INV_LINE_COUNT )
-               ELSE NULL
+               WHEN MAIN.PRICE_CATEGORY = 'CREDITS'
+               THEN
+                 ( MAIN.INV_LINE_COUNT )
+               ELSE
+                 NULL
              END)
-         DIR_LINES,
-       COUNT ( DISTINCT ( CASE
-                           WHEN MAIN.SALE_TYPE = '3'
-                           THEN
-                             ( MAIN.STRIPPED_INV )
-                           ELSE
-                             NULL
-                         END )
-       )
-         DIR_INV
+         CR_LINES*/
   FROM ( SELECT IHF.ACCOUNT_NUMBER,
                 CUST.ACCOUNT_NAME,
                 IHF.YEARMONTH,
-                IHF.SALE_TYPE,
                 IHF.WAREHOUSE_NUMBER,
                 -- HF.WRITER WRITER_INIT,
-                --IHF.INVOICE_NUMBER_NK,
+                IHF.INVOICE_NUMBER_NK,
                 REGEXP_SUBSTR ( LTRIM ( IHF.INVOICE_NUMBER_NK,
                                        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
                                ),
                                '[^-]*'
                 )
                   STRIPPED_INV,
+                CASE
+                  WHEN SUBSTR ( IHF.INVOICE_NUMBER_NK,
+                               0,
+                               2
+                       ) = 'CR'
+                  THEN
+                    REGEXP_SUBSTR ( IHF.INVOICE_NUMBER_NK,
+                                   '[^-]*'
+                    )
+                  ELSE
+                    NULL
+                END
+                  NO_CR,
                 CASE
                   WHEN INSTR ( IHF.INVOICE_NUMBER_NK,
                               '-'
@@ -153,67 +202,67 @@ SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
                   WHEN ihf.order_code = 'IC'
                   THEN
                     'CREDITS'
-                  WHEN ILF.special_product_gk IS NOT NULL
+                  WHEN ilf.special_product_gk IS NOT NULL
                   THEN
                     'SPECIALS'
-                  WHEN ILF.price_code = 'Q'
+                  WHEN ilf.price_code = 'Q'
                   THEN
                     CASE
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT = ILF.MATRIX_PRICE
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT = ilf.MATRIX_PRICE
                       THEN
                         'MATRIX'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT = ILF.MATRIX
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT = ilf.MATRIX
                       THEN
                         'MATRIX_BID'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT =
-                             (TRUNC ( ILF.MATRIX_PRICE,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                             (TRUNC ( ilf.MATRIX_PRICE,
                                      2
                               )
                               + .01)
                       THEN
                         'MATRIX'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT = (TRUNC ( ILF.MATRIX,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT = (TRUNC ( ilf.MATRIX,
                                                                2
                                                         )
                                                         + .01)
                       THEN
                         'MATRIX_BID'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT =
-                             (ROUND ( ILF.MATRIX_PRICE,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                             (ROUND ( ilf.MATRIX_PRICE,
                                      2
                               ))
                       THEN
                         'MATRIX'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT = (ROUND ( ILF.MATRIX,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT = (ROUND ( ilf.MATRIX,
                                                                2
                                                         ))
                       THEN
                         'MATRIX_BID'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT =
-                             (TRUNC ( ILF.MATRIX_PRICE,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                             (TRUNC ( ilf.MATRIX_PRICE,
                                      1
                               )
                               + .1)
                       THEN
                         'MATRIX'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT = (TRUNC ( ILF.MATRIX,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT = (TRUNC ( ilf.MATRIX,
                                                                1
                                                         )
                                                         + .1)
                       THEN
                         'MATRIX_BID'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT =
-                             FLOOR ( ILF.MATRIX_PRICE ) + 1
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                             FLOOR ( ilf.MATRIX_PRICE ) + 1
                       THEN
                         'MATRIX'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT =
-                             FLOOR ( ILF.MATRIX ) + 1
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                             FLOOR ( ilf.MATRIX ) + 1
                       THEN
                         'MATRIX_BID'
                       ELSE
                         'MANUAL'
                     END
-                  WHEN REGEXP_LIKE ( ILF.price_code,
+                  WHEN REGEXP_LIKE ( ilf.price_code,
                                     '[0-9]?[0-9]?[0-9]'
                        )
                   THEN
@@ -221,16 +270,16 @@ SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
                   --WHEN NVL (ihf.split_ticket_flag, '0') = '1'
                   --THEN
                   --   'MATRIX'
-                WHEN ILF.price_code IN ('FC', 'PM', 'spec')
+                WHEN ilf.price_code IN ('FC', 'PM', 'spec')
                   THEN
                     'MATRIX'
-                  WHEN ILF.price_code LIKE 'M%'
+                  WHEN ilf.price_code LIKE 'M%'
                   THEN
                     'MATRIX'
-                  WHEN ILF.price_formula IN ('CPA', 'CPO')
+                  WHEN ilf.price_formula IN ('CPA', 'CPO')
                   THEN
                     'OVERRIDE'
-                  WHEN ILF.price_code IN
+                  WHEN ilf.price_code IN
                            ( 'PR',
                             'GR',
                             'CB',
@@ -245,73 +294,73 @@ SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
                             'P' )
                   THEN
                     'OVERRIDE'
-                  WHEN ILF.price_code IN ('GI', 'GPC', 'HPF', 'HPN', 'NC')
+                  WHEN ilf.price_code IN ('GI', 'GPC', 'HPF', 'HPN', 'NC')
                   THEN
                     'MANUAL'
-                  WHEN ILF.price_code = '*E'
+                  WHEN ilf.price_code = '*E'
                   THEN
                     'MANUAL'
-                  WHEN ILF.price_code = 'SKC'
+                  WHEN ilf.price_code = 'SKC'
                   THEN
                     'MANUAL'
-                  WHEN ILF.price_code IN ('%', '$', 'N', 'F', 'B', 'PO')
+                  WHEN ilf.price_code IN ('%', '$', 'N', 'F', 'B', 'PO')
                   THEN
                     'MANUAL'
-                  WHEN ILF.price_code IS NULL
+                  WHEN ilf.price_code IS NULL
                   THEN
                     'MANUAL'
-                  WHEN ILF.price_code IN ('R', 'N/A')
+                  WHEN ilf.price_code IN ('R', 'N/A')
                   THEN
                     CASE
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT = ILF.MATRIX_PRICE
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT = ilf.MATRIX_PRICE
                       THEN
                         'MATRIX'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT = ILF.MATRIX
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT = ilf.MATRIX
                       THEN
                         'MATRIX_BID'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT =
-                             (TRUNC ( ILF.MATRIX_PRICE,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                             (TRUNC ( ilf.MATRIX_PRICE,
                                      2
                               )
                               + .01)
                       THEN
                         'MATRIX'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT = (TRUNC ( ILF.MATRIX,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT = (TRUNC ( ilf.MATRIX,
                                                                2
                                                         )
                                                         + .01)
                       THEN
                         'MATRIX_BID'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT =
-                             (ROUND ( ILF.MATRIX_PRICE,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                             (ROUND ( ilf.MATRIX_PRICE,
                                      2
                               ))
                       THEN
                         'MATRIX'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT = (ROUND ( ILF.MATRIX,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT = (ROUND ( ilf.MATRIX,
                                                                2
                                                         ))
                       THEN
                         'MATRIX_BID'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT =
-                             (TRUNC ( ILF.MATRIX_PRICE,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                             (TRUNC ( ilf.MATRIX_PRICE,
                                      1
                               )
                               + .1)
                       THEN
                         'MATRIX'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT = (TRUNC ( ILF.MATRIX,
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT = (TRUNC ( ilf.MATRIX,
                                                                1
                                                         )
                                                         + .1)
                       THEN
                         'MATRIX_BID'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT =
-                             FLOOR ( ILF.MATRIX_PRICE ) + 1
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                             FLOOR ( ilf.MATRIX_PRICE ) + 1
                       THEN
                         'MATRIX'
-                      WHEN ILF.UNIT_NET_PRICE_AMOUNT =
-                             FLOOR ( ILF.MATRIX ) + 1
+                      WHEN ilf.UNIT_NET_PRICE_AMOUNT =
+                             FLOOR ( ilf.MATRIX ) + 1
                       THEN
                         'MATRIX_BID'
                       ELSE
@@ -325,15 +374,15 @@ SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
                 DW_FEI.INVOICE_LINE_FACT ILF,
                 DW_FEI.PRODUCT_DIMENSION PROD,
                 DW_FEI.CUSTOMER_DIMENSION CUST,
-                DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
+                DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD                  -- ,
           --DW_FEI.WAREHOUSE_DIMENSION WHSE
           WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
                 -- AND ILF.PRODUCT_STATUS = 'SP'
                 AND IHF.ACCOUNT_NUMBER IN ('1480')
-                AND IHF.CREDIT_MEMO_TYPE IS NULL
-                -- AND TO_CHAR ( IHF.WAREHOUSE_NUMBER ) = '290'
+                -- AND TO_CHAR ( IHF.WAREHOUSE_NUMBER ) =
                 -- TO_CHAR ( WHSE.WAREHOUSE_NUMBER_NK )
                 AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
+								--AND ihf.SALE_TYPE IN ('2', '4' )   -- counter
                 AND DECODE ( NVL ( cust.ar_gl_number, '9999' ),
                      '1320', 0,
                      '1360', 0,
@@ -352,37 +401,34 @@ SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
                 AND ILF.SHIPPED_QTY <> 0
                 AND IHF.ORDER_CODE NOT IN 'IC'
                 AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-                                                           - NUMTOYMINTERVAL ( 6,
-                                                                              'MONTH'
-                                                             ),
-                                                           'MONTH'
-                                                   ),
-                                                   'YYYYMM'
-                                          )
-                                      AND  TO_CHAR ( TRUNC ( SYSDATE,
-                                                            'MM'
-                                                    )
-                                                    - 1,
-                                                    'YYYYMM'
-                                           )
-                AND IHF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-                                                           - NUMTOYMINTERVAL ( 6,
-                                                                              'MONTH'
-                                                             ),
-                                                           'MONTH'
-                                                   ),
-                                                   'YYYYMM'
-                                          )
-                                      AND  TO_CHAR ( TRUNC ( SYSDATE,
-                                                            'MM'
-                                                    )
-                                                    - 1,
-                                                    'YYYYMM'
-                                           ) ) MAIN
-GROUP BY MAIN.YEARMONTH,
-         MAIN.ACCOUNT_NUMBER,
-         MAIN.ACCOUNT_NAME,
-         MAIN.WRITER,
-         CASE WHEN MAIN.STRIPPED_INV >= 0 THEN 1 ELSE 0 END
-ORDER BY MAIN.ACCOUNT_NUMBER, MAIN.ACCOUNT_NAME, MAIN.WRITER;
+								AND IHF.YEARMONTH BETWEEN '201608' AND '201701'
+								AND ILF.YEARMONTH BETWEEN '201608' AND '201701'  
+                /*AND ILF.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE,
+                                                     'MM'
+                                             )
+                                             - 1,
+                                             'YYYYMM'
+                                    )
+                AND IHF.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE,
+                                                     'MM'
+                                             )
+                                             - 1,
+                                             'YYYYMM'
+                                    )*/
+											) MAIN
+GROUP BY  
+       MAIN.YEARMONTH,
+			 MAIN.ACCOUNT_NUMBER,
+       MAIN.ACCOUNT_NAME,
+       --MAIN.WAREHOUSE_NUMBER,
+       MAIN.WRITER,
+       -- COUNT ( MAIN.STRIPPED_INV ) STRIPPED_INV,
+       CASE WHEN MAIN.STRIPPED_INV >= 0 THEN 1 ELSE 0 END
+				 
+ORDER BY  
+       MAIN.YEARMONTH,
+			 MAIN.ACCOUNT_NUMBER,
+			 MAIN.ACCOUNT_NAME,      
+			 --MAIN.WAREHOUSE_NUMBER,
+       MAIN.WRITER
+	;

@@ -8,8 +8,26 @@ CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL
 AS*/
  
 SELECT DISTINCT
-       sp_dtl.YEARMONTH,
-       sp_dtl.ACCOUNT_NUMBER,
+			 sp_dtl.YEARMONTH,
+       CASE
+			 		WHEN sp_dtl.YEARMONTH BETWEEN TO_CHAR (
+                                                 TRUNC (
+                                                    SYSDATE
+                                                    - NUMTOYMINTERVAL (
+                                                         12,
+                                                         'MONTH'),
+                                                    'MONTH'),
+                                                 'YYYYMM')
+                                          AND
+                           TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                    'YYYYMM')
+					THEN
+							'CURRENT_12MO'
+					ELSE
+							'PREVIOUS_12MO'
+			 END
+			 		TPD,
+       /*sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
        sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.INVOICE_NUMBER_NK,
@@ -17,11 +35,11 @@ SELECT DISTINCT
 	     sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
        sp_dtl.OML_FL_INI,
-       sp_dtl.OML_ASSOC_NAME,
+       sp_dtl.OML_ASSOC_NAME,*/
        sp_dtl.WRITER,
        sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
-       sp_dtl.DISCOUNT_GROUP_NK,
+       /*sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
        sp_Dtl.CHANNEL_TYPE,
        sp_dtl.INVOICE_LINE_NUMBER,
@@ -30,15 +48,22 @@ SELECT DISTINCT
        sp_dtl.ALT1_CODE,
        sp_dtl.PRODUCT_NAME,
        sp_dtl.STATUS,
-       sp_dtl.SHIPPED_QTY,
-       sp_dtl.EXT_SALES_AMOUNT,
-       sp_dtl.EXT_AVG_COGS_AMOUNT,
-	     sp_dtl.REPLACEMENT_COST,
+       sp_dtl.SHIPPED_QTY,*/
+       SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
+       SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC,
+	     /*sp_dtl.REPLACEMENT_COST,
 	     sp_dtl.UNIT_INV_COST,
-       sp_dtl.PRICE_CODE,
-       sp_dtl.PRICE_CATEGORY,
-       sp_dtl.PRICE_CATEGORY_OVR,
-       sp_dtl.PRICE_FORMULA,
+       sp_dtl.PRICE_CODE,*/
+       
+       CASE
+			 		WHEN sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE' 
+					THEN 
+							'OVERRIDE'
+					ELSE
+							sp_dtl.PRICE_CATEGORY
+			 END
+			 		TPD
+       /*sp_dtl.PRICE_FORMULA,
        sp_dtl.UNIT_NET_PRICE_AMOUNT,
        sp_dtl.UM,
        sp_dtl.SELL_MULT,
@@ -57,6 +82,7 @@ SELECT DISTINCT
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
        sp_dtl.CONSIGN_TYPE,
+			 sp_dtl.MASTER_VENDOR_NK,
        sp_dtl.MAIN_CUSTOMER_NK,
        sp_dtl.CUSTOMER_NK,
        sp_dtl.CUSTOMER_NAME,
@@ -67,7 +93,7 @@ SELECT DISTINCT
 	     sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER
+       sp_dtl.CONTRACT_NUMBER*/
   FROM    (SELECT SP_HIST.*,
                   CASE
                      WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -139,7 +165,8 @@ SELECT DISTINCT
                   NVL (PR_OVR.EXPIRE_DATE, GR_OVR.EXPIRE_DATE) CCOR_EXPIRE,
                   LB.LINEBUY_NAME,
                   DG.DISCOUNT_GROUP_NAME,
-                  MV.MASTER_VENDOR_NAME
+                  MV.MASTER_VENDOR_NAME,
+									MV.MASTER_VENDOR_NK
              FROM (SELECT IHF.ACCOUNT_NUMBER,
              							IHF.YEARMONTH,
                           CUST.ACCOUNT_NAME,
@@ -461,8 +488,8 @@ SELECT DISTINCT
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                     WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 													-- AND ILF.PRODUCT_STATUS = 'SP'
-                          -- AND IHF.ACCOUNT_NUMBER = '61'
-													AND CUST.CROSS_CUSTOMER_NK = '332'
+                          AND IHF.ACCOUNT_NUMBER = '1539'
+													-- AND CUST.CROSS_CUSTOMER_NK = '332'
 													-- AND CUST.MSTR_CUSTNO = '332'
                           -- AND NVL (ILF.PRICE_CODE, 'N/A') IN
                           --      ('Q', 'N/A', 'R')
@@ -501,7 +528,7 @@ SELECT DISTINCT
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               12,
+                                                               24,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
@@ -512,7 +539,7 @@ SELECT DISTINCT
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               12,
+                                                               24,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
@@ -592,10 +619,65 @@ LEFT OUTER JOIN
 		EBUSINESS.SALES_DIVISIONS SWD
 			ON sp_dtl.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK
 			
-			WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
+			/*WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
 																					'D10', 'D11', 'D12', 'D13', 
-																					'D14', 'D30', 'D31', 'D32'
-																					))
+																					'D14', 'D30', 'D31', 'D32',
+																					'D50', 'D51', 'D53'
+																				))*/
+GROUP BY 
+			 sp_dtl.YEARMONTH,
+			 CASE
+					WHEN sp_dtl.YEARMONTH BETWEEN TO_CHAR (
+                                                 TRUNC (
+                                                    SYSDATE
+                                                    - NUMTOYMINTERVAL (
+                                                         12,
+                                                         'MONTH'),
+                                                    'MONTH'),
+                                                 'YYYYMM')
+                                          AND
+                           TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                    'YYYYMM')
+					THEN
+							'CURRENT_12MO'
+					ELSE
+							'PREVIOUS_12MO'
+			 END,
+       /*sp_dtl.ACCOUNT_NUMBER,
+       sp_dtl.ACCOUNT_NAME,
+       sp_dtl.WAREHOUSE_NUMBER,
+       sp_dtl.INVOICE_NUMBER_NK,
+       sp_dtl.TYPE_OF_SALE,
+	     sp_dtl.SHIP_VIA_NAME,
+       sp_dtl.OML_ASSOC_INI,
+       sp_dtl.OML_FL_INI,
+       sp_dtl.OML_ASSOC_NAME,*/
+       sp_dtl.WRITER,
+       sp_dtl.WR_FL_INI,
+       sp_dtl.ASSOC_NAME,
+       /*sp_dtl.DISCOUNT_GROUP_NK,
+       sp_Dtl.DISCOUNT_GROUP_NAME,
+       sp_Dtl.CHANNEL_TYPE,
+       sp_dtl.INVOICE_LINE_NUMBER,
+       sp_dtl.MANUFACTURER,
+       sp_dtl.PRODUCT_NK,
+       sp_dtl.ALT1_CODE,
+       sp_dtl.PRODUCT_NAME,
+       sp_dtl.STATUS,
+       sp_dtl.SHIPPED_QTY,*/
+       --SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
+       --SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC,
+	     /*sp_dtl.REPLACEMENT_COST,
+	     sp_dtl.UNIT_INV_COST,
+       sp_dtl.PRICE_CODE,*/
+       
+       CASE
+			 		WHEN sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE' 
+					THEN 
+							'OVERRIDE'
+					ELSE
+							sp_dtl.PRICE_CATEGORY
+			 END
 			 /*	AND sp_dtl.DISCOUNT_GROUP_NK IN ( '1072',
 																					'1076',
 																					'0540',
