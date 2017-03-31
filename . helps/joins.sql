@@ -8,7 +8,7 @@ WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN (
 				 'D50', 'D51', 'D53'
 				 ))
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 SELECT TPD.ROLL12MONTHS,
 -- returns 'LAST TWELVE MONTHS' and 'LAST TWELVE MONTHS LAST YEAR'
@@ -17,7 +17,7 @@ INNER JOIN
 		SALES_MART.TIME_PERIOD_DIMENSION TPD
 			ON ( X.YEARMONTH = TPD.YEARMONTH )
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 -- getting the top results of query
 SELECT *
@@ -29,7 +29,7 @@ SELECT * FROM
    (SELECT * FROM employees ORDER BY employee_id)
    WHERE ROWNUM < 11;
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 SQL INNER JOIN
 --  SQL INNER JOINS return all rows from multiple tables where the join condition is met.

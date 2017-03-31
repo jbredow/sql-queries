@@ -580,22 +580,19 @@ FROM  AAE0376.GP_TRACKER_13MO GP_DATA,
 		) ACCT
 	WHERE GP_DATA.ACCOUNT_NUMBER = ACCT.ACCOUNT_NUMBER_NK(+)
 		AND GP_DATA.WAREHOUSE_NUMBER_NK = '5350'
-		AND GP_DATA.YEARMONTH  BETWEEN TO_CHAR (
-                                   TRUNC (
-                                    SYSDATE
-                                    - NUMTOYMINTERVAL (
-                                       4,
-                                       'MONTH'),
-                                    'MONTH'),
-                                   'YYYYMM')
- 															AND TO_CHAR (
-                                   TRUNC (
-                                    SYSDATE
-                                    - NUMTOYMINTERVAL (
-                                       1,
-                                       'MONTH'),
-                                    'MONTH'),
-                                   'YYYYMM')
+		AND GP_DATA.YEARMONTH  BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+                                                    - NUMTOYMINTERVAL ( 12,
+                                                                       'MONTH'
+                                                      ),
+                                                    'MONTH'
+                                            ),
+                                            'YYYYMM'
+                                   )
+                               AND  TO_CHAR ( TRUNC ( SYSDATE,
+                                                     'MM'
+                                             )
+                                             - 1,
+                                             'YYYYMM')
 	HAVING SUM (GP_DATA.SLS_SUBTOTAL) <> 0
 
 GROUP BY 

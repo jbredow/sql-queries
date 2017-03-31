@@ -26,6 +26,8 @@ SELECT
   V2.MAIN_CUSTOMER_NK,
 	--V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
+	V2.MSTR_CUSTNO,
+	V2.MSTR_CUST_NAME,
 	--V2.TYPE_OF_SALE,
 	--    V2.DISCOUNT_GROUP_NK,
 	--    V2.DISCOUNT_GROUP_NAME,
@@ -97,6 +99,8 @@ SELECT
 		   --sp_dtl.MAIN_CUSTOMER_NK,
 		   sp_dtl.CUSTOMER_NK,
 		   sp_dtl.CUSTOMER_NAME,
+			 sp_dtl.MSTR_CUSTNO,
+			 sp_dtl.MSTR_CUST_NAME,
 		   sp_dtl.PRICE_COLUMN,
 		   sp_dtl.CUSTOMER_TYPE,
 		   sp_dtl.REF_BID_NUMBER,
@@ -490,6 +494,8 @@ SELECT
 							  CUST.JOB_YN,
 							  CUST.CUSTOMER_NK,
 							  CUST.CUSTOMER_NAME,
+								CUST.MSTR_CUSTNO,
+								CUST.MSTR_CUST_NAME,
 							  CUST.PRICE_COLUMN,
 							  CUST.CUSTOMER_TYPE
 								
@@ -501,9 +507,9 @@ SELECT
 								
 						WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 								--AND ILF.PRODUCT_STATUS = 'SP'
-							  --AND IHF.ACCOUNT_NUMBER in ( '1550', '448', '276', '331', '1020', '2778' )
+							  AND IHF.ACCOUNT_NUMBER in ( '61', '116', '190', '454', '480', '1869' )
 							  --AND IHF.ACCOUNT_NUMBER = '61'
-								AND IHF.WAREHOUSE_NUMBER IN ( '61',
+								/*AND IHF.WAREHOUSE_NUMBER IN ( '61',
 																																	'62',
 																																	'63',
 																																	'68',
@@ -520,7 +526,7 @@ SELECT
 																																	'2938',
 																																	'3111',
 																																	'5828',
-																																	'8061' )
+																																	'8061' )*/
 
 								--AND NVL (ILF.PRICE_CODE, 'N/A') IN
 							  --      ('Q', 'N/A', 'R')
@@ -698,6 +704,8 @@ GROUP BY
   V2.MAIN_CUSTOMER_NK,
 	--V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
+	V2.MSTR_CUSTNO,
+	V2.MSTR_CUST_NAME,
 	--V2.TYPE_OF_SALE,
 	--    V2.DISCOUNT_GROUP_NK,
 	--    V2.DISCOUNT_GROUP_NAME,
@@ -729,7 +737,9 @@ ORDER BY
 				 'PREVIOUS_12M0'
 	END,
 	V2.CUSTOMER_NAME,
-	V2.MAIN_CUSTOMER_NK
+	V2.MAIN_CUSTOMER_NK,
+	V2.MSTR_CUSTNO,
+	V2.MSTR_CUST_NAME
 	--V2.CUSTOMER_NK,
 	--V2.TYPE_OF_SALE
 ;

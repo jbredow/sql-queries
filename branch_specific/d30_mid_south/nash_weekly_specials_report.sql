@@ -544,8 +544,8 @@ SELECT DISTINCT
                                      DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                                WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 																			AND ILF.PRODUCT_STATUS = 'SP'
-																			-- AND IHF.ACCOUNT_NUMBER IN ( '20', '254', '13', '26', '56', '150', '100', '1717' )
-																			AND IHF.WAREHOUSE_NUMBER IN (
+																			AND IHF.ACCOUNT_NUMBER IN ( '20', '254', '13', '26', '56', '150', '100', '1717' )
+																			/*AND IHF.WAREHOUSE_NUMBER IN (
 																																												'93',
 																																												'213',
 																																												'291',
@@ -558,7 +558,7 @@ SELECT DISTINCT
 																																												'2097',
 																																												'2727',
 																																												'5860'
-																																												)
+																																												)*/
 																			--AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
 																			--AND IHF.WRITER = 'CMC'
 																			--AND CUST.ACCOUNT_NAME IN ('MIDATLWW','MYERSUG')
@@ -590,9 +590,9 @@ SELECT DISTINCT
 																			--Excludes shipments to other FEI locations.
 																			AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 																			
-																			AND ILF.YEARMONTH BETWEEN '201610' AND '201612'
+																			/*AND ILF.YEARMONTH BETWEEN '201610' AND '201612'
 																			AND IHF.YEARMONTH BETWEEN '201610' AND '201612'
-																			/*AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
+																			AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
                                                                                         SYSDATE - 8)
                                                                                  AND TRUNC (
                                                                                         SYSDATE - 1))
@@ -703,6 +703,12 @@ SELECT DISTINCT
                       AND NVL ( SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH' ) =
                            NVL ( PR_OVR.CONTRACT_ID, 'DEFAULT_MATCH' ) ) )
          sp_dtl
+	
+	WHERE TRUNC (sp_dtl.INVOICE_DATE) BETWEEN TRUNC (
+																									SYSDATE
+																									- 22)
+																					AND TRUNC (
+																									SYSDATE)
  /*       LEFT OUTER JOIN
          EBUSINESS.SALES_DIVISIONS SWD
        ON sp_dtl.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK

@@ -1,8 +1,9 @@
-/*
-	pull from "pr_vict2_cust_12mo.sql"  
-	added source order field 2/20/15
-*/
 
+/* 
+	use for monthly reports in toolbox
+	AAE0376 - Jenn
+	AAD9606 - Leigh
+ */
 SELECT DISTINCT
 	MAN.ACCOUNT_NAME,
 	MAN.ACCOUNT_NUMBER "BR #",
