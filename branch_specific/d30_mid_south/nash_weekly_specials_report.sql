@@ -591,13 +591,13 @@ SELECT DISTINCT
 																			AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 																			
 																			/*AND ILF.YEARMONTH BETWEEN '201610' AND '201612'
-																			AND IHF.YEARMONTH BETWEEN '201610' AND '201612'
+																			AND IHF.YEARMONTH BETWEEN '201610' AND '201612' */
 																			AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
-                                                                                        SYSDATE - 8)
+                                                                                        SYSDATE - 21)
                                                                                  AND TRUNC (
-                                                                                        SYSDATE - 1))
+                                                                                        SYSDATE - 6))
 																			
-																			AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																			/*AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
 																																									- NUMTOYMINTERVAL ( 2,
 																																																		'MONTH'
 																																										),
@@ -704,12 +704,12 @@ SELECT DISTINCT
                            NVL ( PR_OVR.CONTRACT_ID, 'DEFAULT_MATCH' ) ) )
          sp_dtl
 	
-	WHERE TRUNC (sp_dtl.INVOICE_DATE) BETWEEN TRUNC (
+	/*WHERE TRUNC (sp_dtl.INVOICE_DATE) BETWEEN TRUNC (
 																									SYSDATE
 																									- 22)
 																					AND TRUNC (
 																									SYSDATE)
- /*       LEFT OUTER JOIN
+        LEFT OUTER JOIN
          EBUSINESS.SALES_DIVISIONS SWD
        ON sp_dtl.ACCOUNT_NUMBER = SWD.ACCOUNT_NUMBER_NK
 WHERE ( SUBSTR ( SWD.REGION_NAME,

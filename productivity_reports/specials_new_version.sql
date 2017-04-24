@@ -67,7 +67,7 @@ FROM	AAE0376.PR_VICT2_CUST_12MO SP
 			
 WHERE SP.STATUS IN ('SP-', 'SP')
 	AND SP.EXT_SALES_AMOUNT >= 0
-	AND SP.ACCOUNT_NUMBER IN ('1350',
+	/*AND SP.ACCOUNT_NUMBER IN ('1350',
 														'3370',
 														'3014',
 														'1001',
@@ -84,7 +84,7 @@ WHERE SP.STATUS IN ('SP-', 'SP')
 														'1743',
 														'3371',
 														'3067'
-														)
+														)*/
 	-- AND SP.PRICE_CODE <> 'C'
 
 	/*AND UPPER(BC.RPC) = 'SOUTHERN'
@@ -93,12 +93,12 @@ WHERE SP.STATUS IN ('SP-', 'SP')
 	AND UPPER(BC.RPC) = 'MIDWEST'*/
 
 	-- AND NOT UPPER(SP.ALT1_CODE) LIKE('SP-%')
-	/*AND ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN (
+	AND ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN (
         'D10', 'D11', 'D12', 'D13',
         'D14', 'D30', 'D31', 'D32',
         'D50', 'D51', 'D53'
       	)
-			)*/
+			)
 ORDER BY
 	SP.ACCOUNT_NUMBER ASC,
 	SP.DISCOUNT_GROUP_NK ASC,

@@ -1,8 +1,8 @@
-/* monthly pcca archive */
+/* monthly pcca archive 
 --DROP TABLE AAA6863.A_PCCA_CENT_201506;
 
 CREATE TABLE AAA6863.A_PCCA_CENT_201607
-AS
+AS */
   SELECT SUBSTR ( SWD.REGION_NAME,
                  1,
                  3
@@ -47,6 +47,7 @@ AS
 																												'D11',
 																												'D12',
 																												'D13',
+																												'D14',
 																												'D30',
 																												'D31',
 																												'D32',
@@ -75,7 +76,8 @@ AS
 																											'T_RESPROP',
 																											'T_RESTURNT'
 																										)*/
-  ORDER BY 
+  AND CUST.ACCOUNT_NUMBER_NK = '2000'
+	ORDER BY 
 				SUBSTR ( SWD.REGION_NAME,
                    1,
                    3
@@ -86,6 +88,47 @@ AS
 GRANT SELECT ON AAA6863.A_PCCA_CENT_201607 TO PUBLIC;
 
 SELECT *
+  FROM AAA6863.A_PCCA_CENT_201704 PCCA
+ WHERE PCCA.DIST = 'D10';
+ 
+ SELECT *
+  FROM AAA6863.A_PCCA_CENT_201704 PCCA
+ WHERE PCCA.DIST = 'D11';
+ 
+ SELECT *
+  FROM AAA6863.A_PCCA_CENT_201704 PCCA
+ WHERE PCCA.DIST = 'D12';
+ 
+ SELECT *
+  FROM AAA6863.A_PCCA_CENT_201704 PCCA
+ WHERE PCCA.DIST = 'D14';
+ 
+ SELECT *
+  FROM AAA6863.A_PCCA_CENT_201704 PCCA
+ WHERE PCCA.DIST = 'D30';
+ 
+ SELECT *
+  FROM AAA6863.A_PCCA_CENT_201704 PCCA
+ WHERE PCCA.DIST = 'D31';
+ 
+ SELECT *
+  FROM AAA6863.A_PCCA_CENT_201704 PCCA
+ WHERE PCCA.DIST = 'D32';
+ 
+ SELECT *
+  FROM AAA6863.A_PCCA_CENT_201704 PCCA
+ WHERE PCCA.DIST = 'D50';
+ 
+ SELECT *
+  FROM AAA6863.A_PCCA_CENT_201704 PCCA
+ WHERE PCCA.DIST = 'D51';
+ 
+ SELECT *
+  FROM AAA6863.A_PCCA_CENT_201704 PCCA
+ WHERE PCCA.DIST = 'D53';
+ 
+ 
+/*SELECT *
   FROM AAA6863.A_PCCA_CENT_201607 PCCA
  WHERE PCCA.DIST BETWEEN 'D10' AND 'D14';
 
@@ -95,4 +138,4 @@ SELECT *
 
 SELECT *
   FROM AAA6863.A_PCCA_CENT_201607 PCCA
- WHERE PCCA.DIST IN ('D50', 'D51', 'D53');
+ WHERE PCCA.DIST IN ('D50', 'D51', 'D53');*/

@@ -1,7 +1,9 @@
 -- VICT2 sql with updated rounding logic aligned with pricing cube
 -- 10/7/2013, Leigh North
 -- Old
-/*  */
+/*
+		change the schema and timeframe as appropriate
+*/
 DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
 
 CREATE TABLE AAA6863.PR_VICT2_CUST_12MO
@@ -67,7 +69,8 @@ SELECT DISTINCT
 	     sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER
+       sp_dtl.CONTRACT_NUMBER,
+			 sp_dtl.INVOICE_DATE
   FROM    (SELECT SP_HIST.*,
                   CASE
                      WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -145,6 +148,7 @@ SELECT DISTINCT
                           CUST.ACCOUNT_NAME,
                           IHF.WAREHOUSE_NUMBER,
                           IHF.INVOICE_NUMBER_NK,
+													IHF.INVOICE_DATE,
                           IHF.JOB_NAME,
                           IHF.CONTRACT_DESCRIPTION,
                           IHF.CONTRACT_NUMBER,
@@ -492,7 +496,12 @@ SELECT DISTINCT
                           --AND IHF.ORDER_CODE NOT IN 'IC'
                           --Excludes shipments to other FEI locations.
                           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                          AND ILF.YEARMONTH = /*BETWEEN TO_CHAR (
+													
+													AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
+                                                                      SYSDATE - 15)
+                                                               AND TRUNC (
+                                                                      SYSDATE - 1))
+                          /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
@@ -500,10 +509,10 @@ SELECT DISTINCT
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
-                                                AND */
+                                                AND 
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
                                           'YYYYMM')
-                          AND IHF.YEARMONTH = /* BETWEEN TO_CHAR (
+                          AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
@@ -511,9 +520,9 @@ SELECT DISTINCT
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
-                                                AND */
+                                                AND 
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                          'YYYYMM')
+                                          'YYYYMM')*/
             ) SP_HIST
                   LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                      ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK

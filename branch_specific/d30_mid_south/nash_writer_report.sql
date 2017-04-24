@@ -418,18 +418,20 @@
 						DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
 					WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 						-- AND ILF.PRODUCT_STATUS = 'SP'
-						/*AND IHF.ACCOUNT_NUMBER IN ( '226',
-																				'448',	
-																				'520',	
-																				'1020',	
-																				'1550',	
-																				'1657',	
-																				'1674',	
-																				'3093' )*/
+						AND IHF.ACCOUNT_NUMBER IN ( '20',
+																				'13',	
+																				'26',	
+																				'56',	
+																				'93',	
+																				'185',	
+																				'100',	
+																				'150',
+                                        '1717'
+                                        )
 						-- AND NVL (ILF.PRICE_CODE, 'N/A') IN
 						--			('Q', 'N/A', 'R')
 						-- AND IHF.WRITER = 'CMC'
-						AND CUST.ACCOUNT_NAME = 'NASH' --IN ('DETROIT', 'NASH' )
+						-- AND CUST.ACCOUNT_NAME = 'NASH' --IN ('DETROIT', 'NASH' )
 						-- AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
 						-- AND ILF.PRICE_CODE in ('R','N/A','Q')
 
@@ -458,25 +460,25 @@
 						--AND IHF.ORDER_CODE NOT IN 'IC'
 						--Excludes shipments to other FEI locations.
 						AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-						AND ILF.YEARMONTH BETWEEN TO_CHAR (
+						AND ILF.YEARMONTH = /*BETWEEN TO_CHAR (
 													 TRUNC (
 														SYSDATE
 														- NUMTOYMINTERVAL (
-															 3,
+															 8,
 															 'MONTH'),
 														'MONTH'),
 													 'YYYYMM')
-											AND
+											AND*/
 							TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,'YYYYMM')
-						AND IHF.YEARMONTH BETWEEN TO_CHAR (
+						AND IHF.YEARMONTH = /*BETWEEN TO_CHAR (
 												   TRUNC (
 													  SYSDATE
 													  - NUMTOYMINTERVAL (
-														   3,
+														   8,
 														   'MONTH'),
 													  'MONTH'),
 												   'YYYYMM')
-											AND
+											AND*/
 							TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
 		) SP_HIST
 				LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG

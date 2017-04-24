@@ -5,7 +5,10 @@
 DROP TABLE AAA6863.PR_VICT2_SKU_DETAIL;
 
 CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL
-AS */
+AS 
+
+		for tony dixon - nick builds
+*/
 
 SELECT DISTINCT
        sp_dtl.YEARMONTH,
@@ -550,19 +553,13 @@ SELECT DISTINCT
 																		 --AND ILF.PRODUCT_STATUS = 'SP'
 																		 
 
-                                     AND IHF.ACCOUNT_NUMBER IN ('13',
-																																'20',
-																																'26',
-																																'56',
-																																'93',
-																																'100',
-																																'141',
-																																'150',
-																																'185',
-																																'254',
-																																'1480',
-																																'1717',
-																																'2778' )
+                                     AND IHF.ACCOUNT_NUMBER IN ('61',
+																																'190',
+																																'116',
+																																'454',
+																																'480',
+																																'1869'
+                                                                )
                                      --AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
                                      --AND IHF.WRITER = 'CMC'
                                      --AND CUST.ACCOUNT_NAME = 'ALIND' --IN ('MIDATLWW','MYERSUG')
@@ -597,29 +594,29 @@ SELECT DISTINCT
 																		 AND  IHF.YEARMONTH = '201602'
 																		 AND  ILF.YEARMONTH = '201602'
 																		*/
-																		 AND ILF.YEARMONTH = /*BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-                                                                                - NUMTOYMINTERVAL ( 7,
+																		 AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+                                                                                - NUMTOYMINTERVAL ( 8,
                                                                                                    'MONTH'
                                                                                   ),
                                                                                 'MONTH'
                                                                         ),
                                                                         'YYYYMM'
                                                                )
-                                                           AND */ TO_CHAR ( TRUNC ( SYSDATE,
+                                                           AND  TO_CHAR ( TRUNC ( SYSDATE,
                                                                                  'MM'
                                                                          )
                                                                          - 1,
                                                                          'YYYYMM'
                                                                 )
-                                     AND IHF.YEARMONTH = /*BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-                                                                                - NUMTOYMINTERVAL ( 7,
+                                     AND IHF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+                                                                                - NUMTOYMINTERVAL ( 8,
                                                                                                    'MONTH'
                                                                                   ),
                                                                                 'MONTH'
                                                                         ),
                                                                         'YYYYMM'
                                                                )
-                                                           AND*/  TO_CHAR ( TRUNC ( SYSDATE,
+                                                           AND  TO_CHAR ( TRUNC ( SYSDATE,
                                                                                  'MM'
                                                                          )
                                                                          - 1,

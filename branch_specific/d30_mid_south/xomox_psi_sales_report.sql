@@ -99,5 +99,5 @@ SELECT *
 									'0877',
 									'0881'
 									)
-       AND INV."Branch" IN ('NASH', 'OHVAL', 'LAIND','PORTLAND')
+       AND INV."Branch" IN ('NASH', 'OHVAL', 'SEATTLE', 'PETRO')
 			 ;
