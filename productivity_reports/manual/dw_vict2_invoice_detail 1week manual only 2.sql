@@ -1,7 +1,11 @@
---DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
+/*
+	one week report
+*/
+DROP TABLE AAA6863.PR_VICT2_MANUAL_1WK;
 
-INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
+CREATE TABLE AAA6863.PR_VICT2_MANUAL_1WK
 
+AS
    SELECT sp_dtl.YEARMONTH,
           sp_dtl.ACCOUNT_NUMBER,
           sp_dtl.ACCOUNT_NAME,
@@ -65,14 +69,14 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                      THEN
                         CASE
                            WHEN SP_HIST.PROCESS_DATE BETWEEN COALESCE (
-                                                                  PR_OVR_JOB.INSERT_TIMESTAMP
-                                                                - 1,
-                                                                  PR_OVR_BASE.INSERT_TIMESTAMP
-                                                                - 1)
+                                                             PR_OVR_JOB.INSERT_TIMESTAMP
+                                                             		- 1,
+                                                             PR_OVR_BASE.INSERT_TIMESTAMP
+                                                             - 1)
                                                          AND COALESCE (
-                                                                PR_OVR_JOB.EXPIRE_DATE,
-                                                                PR_OVR_BASE.EXPIRE_DATE,
-                                                                SP_HIST.PROCESS_DATE)
+                                                             PR_OVR_JOB.EXPIRE_DATE,
+                                                             PR_OVR_BASE.EXPIRE_DATE,
+                                                             SP_HIST.PROCESS_DATE)
                            THEN
                               CASE
                                  WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
@@ -487,7 +491,7 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                           AND IHF.IC_FLAG = 0
                           AND ILF.SHIPPED_QTY <> 0
                           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                          AND DECODE (ILF.PRICE_CODE,
+                          /* AND DECODE (ILF.PRICE_CODE,
                                       'R', 0,
                                       'N/A', 0,
                                       '%', 0,
@@ -496,19 +500,21 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                                       'F', 0,
                                       'B', 0,
                                       'PO', 0,
-                                      NULL, 0) = 0
-                          /*AND NVL (ILF.PRICE_CODE, 'N/A') IN ('R',
+                                      NULL, 0) = 0 */
+                          AND NVL (ILF.PRICE_CODE, 'N/A') IN ('R',
                                                               'N/A',
                                                               '%',
                                                               '$',
                                                               'N',
                                                               'F',
                                                               'B',
-                                                              'PO')*/
-                          AND (TRUNC (IHF.INVOICE_DATE) = TRUNC (
+                                                              'PO')
+                          AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
                                                                      SYSDATE
-                                                                   - 1)
-                                                            ))
+                                                                   - 8)
+                                                            AND TRUNC (
+                                                                     SYSDATE
+                                                                   - 1)))
                   SP_HIST
                   INNER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                      ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
@@ -539,6 +545,17 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                           AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                           AND COD.DELETE_DATE IS NULL
                           AND CUST.JOB_YN = 'Y'
+                          AND DECODE (NVL (CUST.AR_GL_NUMBER, '9999'),
+                                      '1320', 0,
+                                      '1360', 0,
+                                      '1380', 0,
+                                      '1400', 0,
+                                      '1401', 0,
+                                      '1500', 0,
+                                      '4000', 0,
+                                      '7100', 0,
+                                      '9999', 0,
+                                      1) <> 0
                           AND NVL (COD.EXPIRE_DATE, SYSDATE) >=
                                  (SYSDATE - 62)) GR_OVR_JOB
                      ON (    SP_HIST.DISCOUNT_GROUP_NK =
@@ -573,6 +590,17 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                     WHERE     COD.OVERRIDE_TYPE = 'G'
                           AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                           AND COD.DELETE_DATE IS NULL
+                          AND DECODE (NVL (CUST.AR_GL_NUMBER, '9999'),
+                                      '1320', 0,
+                                      '1360', 0,
+                                      '1380', 0,
+                                      '1400', 0,
+                                      '1401', 0,
+                                      '1500', 0,
+                                      '4000', 0,
+                                      '7100', 0,
+                                      '9999', 0,
+                                      1) <> 0
                           AND CUST.JOB_YN = 'N'
                           AND NVL (COD.EXPIRE_DATE, SYSDATE) >=
                                  (SYSDATE - 62)) GR_OVR_BASE
@@ -616,6 +644,17 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                           AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                           AND COD.DELETE_DATE IS NULL
                           AND CUST.JOB_YN = 'Y'
+                          AND DECODE (NVL (CUST.AR_GL_NUMBER, '9999'),
+                                      '1320', 0,
+                                      '1360', 0,
+                                      '1380', 0,
+                                      '1400', 0,
+                                      '1401', 0,
+                                      '1500', 0,
+                                      '4000', 0,
+                                      '7100', 0,
+                                      '9999', 0,
+                                      1) <> 0
                           AND NVL (COD.EXPIRE_DATE, SYSDATE) >=
                                  (SYSDATE - 62)) PR_OVR_JOB
                      ON (    SP_HIST.PRODUCT_NK = PR_OVR_JOB.MASTER_PRODUCT
@@ -656,6 +695,17 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                           AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                           AND COD.DELETE_DATE IS NULL
                           AND CUST.JOB_YN = 'N'
+                          AND DECODE (NVL (CUST.AR_GL_NUMBER, '9999'),
+                                      '1320', 0,
+                                      '1360', 0,
+                                      '1380', 0,
+                                      '1400', 0,
+                                      '1401', 0,
+                                      '1500', 0,
+                                      '4000', 0,
+                                      '7100', 0,
+                                      '9999', 0,
+                                      1) <> 0
                           AND NVL (COD.EXPIRE_DATE, SYSDATE) >=
                                  (SYSDATE - 62)) PR_OVR_BASE
                      ON (    SP_HIST.PRODUCT_NK = PR_OVR_BASE.MASTER_PRODUCT
@@ -666,10 +716,7 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                          AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                                 NVL (PR_OVR_BASE.CONTRACT_ID,
                                      'DEFAULT_MATCH'))) sp_dtl
-    WHERE COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
-                    sp_dtl.PRICE_CATEGORY_OVR_GR,
-                    sp_dtl.PRICE_CATEGORY) = 'MANUAL'
-   GROUP BY sp_dtl.YEARMONTH,
+      GROUP BY sp_dtl.YEARMONTH,
             sp_dtl.ACCOUNT_NUMBER,
             sp_dtl.ACCOUNT_NAME,
             sp_dtl.WAREHOUSE_NUMBER,
@@ -728,4 +775,4 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
             sp_dtl.INVOICE_DATE;
 
 --
---GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_MANUAL_1WK TO PUBLIC;

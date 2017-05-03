@@ -331,7 +331,7 @@ SELECT DISTINCT
                                       'G',
                                       'GJ',
                                       'P',
-									  'T')
+				      'T')
                              THEN
                                 'OVERRIDE'
                              WHEN ilf.price_code IN
@@ -430,14 +430,14 @@ SELECT DISTINCT
                           DW_FEI.CUSTOMER_DIMENSION CUST,
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                     WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK --AND ILF.PRODUCT_STATUS = 'SP'
-                          --AND IHF.ACCOUNT_NUMBER = '13'
+                          AND IHF.ACCOUNT_NUMBER = '39'
                           --AND NVL (ILF.PRICE_CODE, 'N/A') IN
                           --      ('Q', 'N/A', 'R')
                           --AND IHF.WRITER = 'CMC'
                           --AND CUST.ACCOUNT_NAME IN ('DETROIT')
                           --AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
                           --AND ILF.PRICE_CODE in ('R','N/A','Q')
-
+                          AND IHF.WAREHOUSE_NUMBER = '5350'
                           --AND IHF.REF_BID_NUMBER='B225888'
                           --AND CUST.CUSTOMER_NK = '22383'
                           --AND PROD.LINEBUY_NK='200'
@@ -453,7 +453,7 @@ SELECT DISTINCT
                                    '7100', 0,
                                    '9999', 0,
                                    1) <> 0
-								AND NVL (IHF.CONSIGN_TYPE, 'N/A') <> 'R'
+			  AND NVL (IHF.CONSIGN_TYPE, 'N/A') <> 'R'
                           AND NVL (IHF.CONSIGN_TYPE, 'N/A') NOT IN 'R'
                           AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
                           AND ILF.SPECIAL_PRODUCT_GK =

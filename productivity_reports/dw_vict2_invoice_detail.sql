@@ -483,7 +483,7 @@ SELECT DISTINCT
                           AND IHF.IC_FLAG = 0
                           AND ILF.SHIPPED_QTY <> 0
                           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-													AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
+                          AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
                                                                       SYSDATE - 15)
                                                                AND TRUNC (
                                                                       SYSDATE - 1))

@@ -4,10 +4,15 @@
 */
 SELECT
 	X.ACCOUNT_NUMBER_NK,
-	NVL ( X.SELL_ALIAS_NAME, NULL ) LOGON_NAME, 
+	NVL ( X.SELL_ALIAS_NAME, NULL ) ALIAS, 
+	--X.CUSTOMER_NK,
+	--X.CUSTOMER_NAME,
 	X.CUSTOMER_TYPE,
+	X.PRICE_COLUMN,
 	X.MAIN_CUSTOMER_NK,
-	X.MAIN_CUSTOMER_NAME,
+	--X.MAIN_CUSTOMER_NAME,
+	X.DISCOUNT_GROUP_NK,
+	DG.DISCOUNT_GROUP_NAME,
 	
 	SUM ( X.EXT_SALES_AMOUNT ) SALES,
 	SUM ( X.EXT_AVG_COGS_AMOUNT ) AVG_COST,
@@ -348,14 +353,66 @@ FROM SALES_MART.PRICE_MGMT_DATA_DET X
 	INNER JOIN
 		SALES_MART.SALES_WAREHOUSE_DIM SWD
        ON ( X.ACCOUNT_NUMBER_NK = SWD.ACCOUNT_NUMBER_NK )
-WHERE X.YEARMONTH BETWEEN  '201508' AND '201602'
-	--AND X.ACCOUNT_NUMBER_NK = 	'1550'
+WHERE X.YEARMONTH BETWEEN  '201603' AND '201702'
+	AND X.ACCOUNT_NUMBER_NK = 	'61'
 	AND ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
 			 	 'D10', 'D11', 'D12', 'D14', 
-				   'D30', 'D31', 'D32' 
-				   --'D50', 'D51', 'D53'
+			   'D30', 'D31', 'D32' 
+			   --'D50', 'D51', 'D53'
 				 )
 			)										
+	AND X.DISCOUNT_GROUP_NK IN (
+															'0007',
+															'0089',
+															'0095',
+															'0152',
+															'0207',
+															'0225',
+															'0511',
+															'0517',
+															'0545',
+															'0551',
+															'0582',
+															'0658',
+															'0660',
+															'0674',
+															'0678',
+															'0686',
+															'0687',
+															'1072',
+															'1076',
+															'1077',
+															'1082',
+															'1153',
+															'1199',
+															'1205',
+															'1208',
+															'1209',
+															'1213',
+															'1219',
+															'1220',
+															'1224',
+															'1229',
+															'1260',
+															'1261',
+															'1262',
+															'1285',
+															'1444',
+															'2098',
+															'2205',
+															'2232',
+															'2285',
+															'2289',
+															'2544',
+															'2643',
+															'3012',
+															'3400',
+															'3404',
+															'3421',
+															'4605',
+															'4809',
+															'7152'
+															)
 	AND X.IC_FLAG = 'REGULAR'
 	-- AND X.CHANNEL_TYPE
 	-- AND X.SALES_TYPE
@@ -375,7 +432,9 @@ GROUP BY
   
 ORDER BY X.ACCOUNT_NUMBER_NK,
 	NVL ( X.SELL_ALIAS_NAME, NULL ), 
+	--X.CUSTOMER_NK,
+	--X.CUSTOMER_NAME,
 	X.CUSTOMER_TYPE,
-	X.MAIN_CUSTOMER_NK,
-	X.MAIN_CUSTOMER_NAME
+	X.PRICE_COLUMN,
+	X.MAIN_CUSTOMER_NK
 ;

@@ -1,4 +1,8 @@
-SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
+/*
+  data for fbp sales stats report - marilyn
+*/
+SELECT MAIN.ACCOUNT_NAME "DEL",
+			 MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
        MAIN.YEARMONTH,
        MAIN.ACCOUNT_NUMBER BR_NK,
        MAIN.ACCOUNT_NAME ACCOUNT,
@@ -380,7 +384,8 @@ SELECT MAIN.WRITER || '^' || MAIN.YEARMONTH LOOKUP,
                                                     - 1,
                                                     'YYYYMM'
                                            ) ) MAIN
-GROUP BY MAIN.YEARMONTH,
+GROUP BY MAIN.ACCOUNT_NAME,
+			   MAIN.YEARMONTH,
          MAIN.ACCOUNT_NUMBER,
          MAIN.ACCOUNT_NAME,
          MAIN.WRITER,

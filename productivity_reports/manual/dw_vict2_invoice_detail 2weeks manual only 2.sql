@@ -1,6 +1,6 @@
---DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
+DROP TABLE AAA6863.PR_VICT2_MANUAL_2WK;
 
-CREATE TABLE AAD9606.PR_VICT2_MANUAL_2WK
+CREATE TABLE AAA6863.PR_VICT2_MANUAL_2WK
 
 AS
    SELECT sp_dtl.YEARMONTH,
@@ -488,7 +488,7 @@ AS
                           AND IHF.IC_FLAG = 0
                           AND ILF.SHIPPED_QTY <> 0
                           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                          AND DECODE (ILF.PRICE_CODE,
+                          /*AND DECODE (ILF.PRICE_CODE,
                                       'R', 0,
                                       'N/A', 0,
                                       '%', 0,
@@ -497,15 +497,15 @@ AS
                                       'F', 0,
                                       'B', 0,
                                       'PO', 0,
-                                      NULL, 0) = 0
-                          /*AND NVL (ILF.PRICE_CODE, 'N/A') IN ('R',
+                                      NULL, 0) = 0*/
+                          AND NVL (ILF.PRICE_CODE, 'N/A') IN ('R',
                                                               'N/A',
                                                               '%',
                                                               '$',
                                                               'N',
                                                               'F',
                                                               'B',
-                                                              'PO')*/
+                                                              'PO')
                           AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
                                                                      SYSDATE
                                                                    - 15)
@@ -769,7 +769,7 @@ AS
             sp_dtl.COPY_SOURCE_HIST,
             sp_dtl.CONTRACT_DESCRIPTION,
             sp_dtl.CONTRACT_NUMBER,
-            sp_dtl.INVOICE_DATE;
+            sp_dtl.INVOICE_DATE
+	;
 
---
---GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_MANUAL_2WK TO PUBLIC;
