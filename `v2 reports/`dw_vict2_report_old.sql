@@ -68,7 +68,8 @@ SELECT DISTINCT
 	     sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER
+       sp_dtl.CONTRACT_NUMBER,
+			 sp_dtl.INVOICE_DATE
   FROM    (SELECT SP_HIST.*,
                   CASE
                      WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -455,7 +456,8 @@ SELECT DISTINCT
                           CUST.CUSTOMER_NK,
                           CUST.CUSTOMER_NAME,
                           CUST.PRICE_COLUMN,
-                          CUST.CUSTOMER_TYPE
+                          CUST.CUSTOMER_TYPE,
+													IHF.INVOICE_DATE
                      FROM DW_FEI.INVOICE_HEADER_FACT IHF,
                           DW_FEI.INVOICE_LINE_FACT ILF,
                           DW_FEI.PRODUCT_DIMENSION PROD,
@@ -463,7 +465,7 @@ SELECT DISTINCT
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                     WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 													-- AND ILF.PRODUCT_STATUS = 'SP'
-                          AND IHF.ACCOUNT_NUMBER = '61'
+                          AND IHF.ACCOUNT_NUMBER = '1480'
 													-- AND CUST.CROSS_CUSTOMER_NK = '332'
 													-- AND CUST.MSTR_CUSTNO = '332'
                           -- AND NVL (ILF.PRICE_CODE, 'N/A') IN
@@ -497,7 +499,13 @@ SELECT DISTINCT
                           -- AND IHF.ORDER_CODE NOT IN 'IC'
                           --Excludes shipments to other FEI locations.
                           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-													-- AND IHF.YEARMONTH BETWEEN '201510' AND '201609'
+													AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
+                                                                     SYSDATE
+                                                                   - 18)
+                                                            AND TRUNC (
+                                                                     SYSDATE
+                                                                   - 5))
+													/*-- AND IHF.YEARMONTH BETWEEN '201510' AND '201609'
 													-- AND ILF.YEARMONTH BETWEEN '201510' AND '201609'
                           AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                                        TRUNC (
@@ -520,7 +528,7 @@ SELECT DISTINCT
                                                        'YYYYMM')
                                                 AND
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                          'YYYYMM')
+                                          'YYYYMM')*/
             ) SP_HIST
                   LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                      ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK

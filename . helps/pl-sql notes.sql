@@ -1,4 +1,13 @@
 C
+/*
+    If you drop a table without truncating it, it writes all the data to the archive 
+    logs and you are not saving any space on the database. Therefore,
+    When dropping a table, always truncate first.
+*/
+TRUNCATE TABLE AAD9606.PR_SP_STOCK_SPECIALS_CHECK;
+DROP TABLE AAD9606.PR_SP_STOCK_SPECIALS_CHECK;
+
+
 /*Shows list of tables in database*/
 select * from dba_tables;
 -------------------------------------------------

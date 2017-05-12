@@ -19,7 +19,8 @@ SELECT
 																					'768',
 																					'8869',
 																					'959',
-																					'2437') THEN
+																					'2437') 
+					 THEN
 							'AUSTIN'
 					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1130',
 																					'116',
@@ -27,7 +28,8 @@ SELECT
 																					'1918',
 																					'2770',
 																					'787',
-																					'2363') THEN
+																					'2363') 
+					 THEN
 							'CORPUS CHRISTI'																					
 					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1171',
 																					'1569',
@@ -44,7 +46,12 @@ SELECT
 																					'861',
 																					'903',
 																					'904',
-																					'8061') THEN
+																					'8061',
+																					'66',
+																					'8061',
+																					'8062',
+																					'8077') 
+					 THEN
 							'DALLAS'																					
 					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1027',
 																					'1278',
@@ -64,7 +71,9 @@ SELECT
 																					'8055',
 																					'8190',
 																					'888',
-																					'2373') THEN
+																					'2373',
+																					'3399') 
+					 THEN
 							'HOUSTON'																					
 					 WHEN MAIN.WAREHOUSE_NUMBER IN ('2716',
 																					'2759',
@@ -74,7 +83,10 @@ SELECT
 																					'484',
 																					'485',
 																					'8480',
-																					'2391') THEN
+																					'2391')
+					 THEN 
+																					
+																					
 							'LUBBOCK'																					
 					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1160',
 																					'1311',
@@ -87,7 +99,8 @@ SELECT
 																					'8454',
 																					'909',
 																					'97',
-																					'2389') THEN
+																					'2389') 
+					 THEN
 							'SAN ANTONIO'
 			 END
 			 	AS AREA,
@@ -413,7 +426,8 @@ GROUP BY
 																					'768',
 																					'8869',
 																					'959',
-																					'2437') THEN
+																					'2437') 
+					 THEN
 							'AUSTIN'
 					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1130',
 																					'116',
@@ -421,7 +435,8 @@ GROUP BY
 																					'1918',
 																					'2770',
 																					'787',
-																					'2363') THEN
+																					'2363') 
+					 THEN
 							'CORPUS CHRISTI'																					
 					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1171',
 																					'1569',
@@ -438,7 +453,12 @@ GROUP BY
 																					'861',
 																					'903',
 																					'904',
-																					'8061') THEN
+																					'8061',
+																					'66',
+																					'8061',
+																					'8062',
+																					'8077') 
+					 THEN
 							'DALLAS'																					
 					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1027',
 																					'1278',
@@ -458,7 +478,9 @@ GROUP BY
 																					'8055',
 																					'8190',
 																					'888',
-																					'2373') THEN
+																					'2373',
+																					'3399') 
+					 THEN
 							'HOUSTON'																					
 					 WHEN MAIN.WAREHOUSE_NUMBER IN ('2716',
 																					'2759',
@@ -468,7 +490,8 @@ GROUP BY
 																					'484',
 																					'485',
 																					'8480',
-																					'2391') THEN
+																					'2391')
+					 THEN 
 							'LUBBOCK'																					
 					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1160',
 																					'1311',
@@ -481,102 +504,8 @@ GROUP BY
 																					'8454',
 																					'909',
 																					'97',
-																					'2389') THEN
-							'SAN ANTONIO'
-			 END,
-			 CASE
-			 		WHEN MAIN.TYPE_OF_SALE LIKE '%Direct%' THEN
-						'DIRECT'
-					ELSE
-						'NON_DIRECT'
-			 END,
-       CASE WHEN MAIN.STRIPPED_INV >= 0 THEN 1 ELSE 0 END
-				 
-ORDER BY  
-			 MAIN.ACCOUNT_NUMBER,
-			 MAIN.ACCOUNT_NAME,      
-			 CASE
-					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1263',
-																					'1869',
-																					'245',
-																					'296',
-																					'30',
-																					'379',
-																					'456',
-																					'582',
-																					'5833',
-																					'768',
-																					'8869',
-																					'959',
-																					'2437') THEN
-							'AUSTIN'
-					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1130',
-																					'116',
-																					'1594',
-																					'1918',
-																					'2770',
-																					'787',
-																					'2363') THEN
-							'CORPUS CHRISTI'																					
-					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1171',
-																					'1569',
-																					'170',
-																					'2353',
-																					'526',
-																					'5828',
-																					'61',
-																					'62',
-																					'63',
-																					'68',
-																					'77',
-																					'86',
-																					'861',
-																					'903',
-																					'904',
-																					'8061') THEN
-							'DALLAS'																					
-					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1027',
-																					'1278',
-																					'1563',
-																					'1841',
-																					'190',
-																					'191',
-																					'192',
-																					'206',
-																					'2725',
-																					'2775',
-																					'3111',
-																					'455',
-																					'55',
-																					'555',
-																					'5830',
-																					'8055',
-																					'8190',
-																					'888',
-																					'2373') THEN
-							'HOUSTON'																					
-					 WHEN MAIN.WAREHOUSE_NUMBER IN ('2716',
-																					'2759',
-																					'480',
-																					'481',
-																					'483',
-																					'484',
-																					'485',
-																					'8480',
-																					'2391') THEN
-							'LUBBOCK'																					
-					 WHEN MAIN.WAREHOUSE_NUMBER IN ('1160',
-																					'1311',
-																					'2064',
-																					'242',
-																					'244',
-																					'333',
-																					'454',
-																					'5832',
-																					'8454',
-																					'909',
-																					'97',
-																					'2389') THEN
+																					'2389') 
+					 THEN
 							'SAN ANTONIO'
 			 END,
 			 CASE
