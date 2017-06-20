@@ -3,15 +3,19 @@
     final
 */
 SELECT STATS.DIST,
-      STATS .ACCOUNT_NUMBER_NK BR_NO,
+      STATS.ACCOUNT_NUMBER_NK BR_NO,
       STATS.DISC_GROUP DG,
       STATS.NAT_PC,
       STATS.PC_COUNT,
+			--STATS.LAST_SALE,
       CCOR.GROUP_CCOR,
       CCOR.PROD_CCOR,
       CCOR.COST_CCOR,
+      CCOR.INSERT_TIMESTAMP,
+			CCOR.UPDATE_TIMESTAMP,
       DPRO.OHB,
       DPRO.DEMAND,
+      
       sum(SALES.EX_SALES) ex_sales,
       sum(SALES.EX_AC) ex_ac
 
@@ -20,6 +24,7 @@ FROM (  SELECT DISTINCT
               SWD.ACCOUNT_NUMBER_NK,
               PRICE.DISC_GROUP,
               NAT_PC.PRICE_COLUMN AS NAT_PC,
+							--CD.LAST_SALE,
               COUNT (PRICE.MULTIPLIER) PC_COUNT
           FROM    (   AAA6863.NAT_BU_PRICE_COLUMNS NAT_PC
                   RIGHT OUTER JOIN
@@ -28,11 +33,14 @@ FROM (  SELECT DISTINCT
               LEFT OUTER JOIN
                   DW_FEI.PRICE_DIMENSION PRICE
               ON (PRICE.BRANCH_NUMBER_NK = SWD.ACCOUNT_NUMBER_NK)
+				--LEFT OUTER JOIN DW_FEI.CUSTOMER_DIMENSION CD
+						--ON SWD.ACCOUNT_NUMBER_NK = CD.ACTIVE_CUSTOMER_NK
         WHERE     (PRICE.DELETE_DATE IS NULL)
               --AND (SWD.ACCOUNT_NUMBER_NK = '520')
               AND (PRICE.PRICE_TYPE = 'G')
               AND (PRICE.PRICE_COLUMN <> '000')
               AND (PRICE.PRICE_COLUMN <> '0')
+              AND (PRICE.PRICE_COLUMN <= '175')
               AND (PRICE.DELETE_DATE IS NULL)
               AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
                           ('D10', 'D11', 'D12', 'D14', 'D30', 'D31', 'D32'))
@@ -40,10 +48,15 @@ FROM (  SELECT DISTINCT
                 SWD.ACCOUNT_NUMBER_NK,
                 PRICE.DISC_GROUP,
                 NAT_PC.PRICE_COLUMN
+								--CD.LAST_SALE
       ) STATS
+
+
     LEFT OUTER JOIN
          ( SELECT X.BR_NO,
                   X.DG_NK,
+									X.INSERT_TIMESTAMP,
+									X.UPDATE_TIMESTAMP,
                   SUM (CASE WHEN X.OVERRIDE_TYPE = 'P' THEN 1 ELSE 0 END) PROD_CCOR,
                   SUM (CASE WHEN X.OVERRIDE_TYPE = 'G' THEN 1 ELSE 0 END) GROUP_CCOR,
                   SUM (CASE WHEN X.OVERRIDE_TYPE = 'C' THEN 1 ELSE 0 END) COST_CCOR
@@ -51,7 +64,9 @@ FROM (  SELECT DISTINCT
                           PROD.ALT1_CODE,
                           CCOR.CUSTOMER_GK,
                           PROD.DISCOUNT_GROUP_NK DG_NK,
-                          CCOR.OVERRIDE_TYPE
+                          CCOR.OVERRIDE_TYPE,
+													CCOR.INSERT_TIMESTAMP,
+													CCOR.UPDATE_TIMESTAMP
                       FROM    DW_FEI.CUSTOMER_OVERRIDE_DIMENSION CCOR
                           INNER JOIN
                               DW_FEI.PRODUCT_DIMENSION PROD
@@ -59,12 +74,16 @@ FROM (  SELECT DISTINCT
                     WHERE  (CCOR.OVERRIDE_TYPE = 'P')
 													--AND (CCOR.BRANCH_NUMBER_NK = '520')
                           AND (CCOR.DELETE_DATE IS NULL)
-                    UNION
-                    SELECT CCOR.BRANCH_NUMBER_NK BR_NO,
+                    
+										UNION
+                    
+										SELECT CCOR.BRANCH_NUMBER_NK BR_NO,
                           NULL AS ALT1_CODE,
                           CCOR.CUSTOMER_GK,
                           CCOR.DISC_GROUP DG_NK,
-                          CCOR.OVERRIDE_TYPE
+                          CCOR.OVERRIDE_TYPE,
+													CCOR.INSERT_TIMESTAMP,
+													CCOR.UPDATE_TIMESTAMP
                       FROM DW_FEI.CUSTOMER_OVERRIDE_DIMENSION CCOR
                      WHERE  (CCOR.OVERRIDE_TYPE = 'G')
 													--AND (CCOR.BRANCH_NUMBER_NK = '520')
@@ -74,7 +93,9 @@ FROM (  SELECT DISTINCT
                           PROD.ALT1_CODE,
                           CCOR.CUSTOMER_GK,
                          PROD.DISCOUNT_GROUP_NK DG_NK,
-                          CCOR.OVERRIDE_TYPE
+                          CCOR.OVERRIDE_TYPE,
+													CCOR.INSERT_TIMESTAMP,
+													CCOR.UPDATE_TIMESTAMP
                       FROM (   DW_FEI.CUSTOMER_OVERRIDE_DIMENSION CCOR
                             INNER JOIN
                               DW_FEI.PRODUCT_DIMENSION PROD
@@ -87,8 +108,14 @@ FROM (  SELECT DISTINCT
                   ON (X.BR_NO = SWD.ACCOUNT_NUMBER_NK)
 						WHERE ( SUBSTR (SWD.REGION_NAME, 1, 3) IN
                                       ( 'D10', 'D11', 'D12', 'D14', 'D30', 'D31', 'D32' ))
-            GROUP BY X.BR_NO, X.DG_NK
+            GROUP BY X.BR_NO, 
+						X.DG_NK,
+								X.INSERT_TIMESTAMP,
+									X.UPDATE_TIMESTAMP
         ) CCOR
+
+
+        
       ON  STATS.ACCOUNT_NUMBER_NK = CCOR.BR_NO
         AND  STATS.DISC_GROUP =  CCOR.DG_NK
         
@@ -136,18 +163,24 @@ FROM (  SELECT DISTINCT
                     PM_DET.ACCOUNT_NUMBER_NK,
                     PM_DET.DISCOUNT_GROUP_NK 
         ) SALES
+				
+				
+				
       ON  STATS.ACCOUNT_NUMBER_NK = SALES.ACCOUNT_NUMBER_NK
         AND  STATS.DISC_GROUP =  SALES.DISCOUNT_GROUP_NK
 
 GROUP BY
 			STATS.DIST,
-			STATS .ACCOUNT_NUMBER_NK,
+      STATS.ACCOUNT_NUMBER_NK,
       STATS.DISC_GROUP,
       STATS.NAT_PC,
       STATS.PC_COUNT,
+			--STATS.LAST_SALE,
       CCOR.GROUP_CCOR,
       CCOR.PROD_CCOR,
       CCOR.COST_CCOR,
+      CCOR.INSERT_TIMESTAMP,
+			CCOR.UPDATE_TIMESTAMP,
       DPRO.OHB,
       DPRO.DEMAND
 ORDER BY 

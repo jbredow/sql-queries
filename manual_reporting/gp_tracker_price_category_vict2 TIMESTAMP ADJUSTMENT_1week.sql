@@ -1,8 +1,8 @@
-/*TRUNCATE TABLE AAA6863.PR_VICT2_CUST_12MO;
-DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
+--TRUNCATE TABLE AAA6863.PR_VICT2_MANUAL_1WK;
+DROP TABLE AAA6863.PR_VICT2_MANUAL_1WK;
 
-CREATE TABLE AAA6863.PR_VICT2_CUST_12MO
-AS*/
+CREATE TABLE AAA6863.PR_VICT2_MANUAL_1WK
+AS
 
 SELECT DISTINCT
        sp_dtl.YEARMONTH,
@@ -11,6 +11,8 @@ SELECT DISTINCT
        sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.INVOICE_NUMBER_NK,
        sp_dtl.TYPE_OF_SALE,
+			 sp_dtl.SALESREP_NK,
+       sp_dtl.SALESREP_NAME,
        sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
        sp_dtl.OML_FL_INI,
@@ -78,7 +80,9 @@ SELECT DISTINCT
        sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER
+       sp_dtl.CONTRACT_NUMBER,
+			 sp_dtl.INVOICE_DATE,
+			 sp_dtl.MASTER_VENDOR_NAME
   FROM (SELECT SP_HIST.*,
                CASE
                   WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -209,6 +213,8 @@ SELECT DISTINCT
           FROM (SELECT IHF.ACCOUNT_NUMBER,
                        IHF.YEARMONTH,
                        CUST.ACCOUNT_NAME,
+											 REPS.SALESREP_NK,
+                       REPS.SALESREP_NAME,
                        IHF.WAREHOUSE_NUMBER,
                        IHF.INVOICE_NUMBER_NK,
                        IHF.JOB_NAME,
@@ -505,28 +511,32 @@ SELECT DISTINCT
                        CUST.CUSTOMER_NK,
                        CUST.CUSTOMER_NAME,
                        CUST.PRICE_COLUMN,
-                       CUST.CUSTOMER_TYPE
+                       CUST.CUSTOMER_TYPE,
+											 IHF.INVOICE_DATE
                   FROM DW_FEI.INVOICE_HEADER_FACT IHF,
                        DW_FEI.INVOICE_LINE_FACT ILF,
                        DW_FEI.PRODUCT_DIMENSION PROD,
                        DW_FEI.CUSTOMER_DIMENSION CUST,
                        DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD,
-                       SALES_MART.SALES_WAREHOUSE_DIM SWD--,
+                       SALES_MART.SALES_WAREHOUSE_DIM SWD,
+											 DW_FEI.SALESREP_DIMENSION REPS
                        --DW_FEI.INVOICE_LINE_CORE_FACT ILCF
                  WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
                        AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
                        AND SWD.WAREHOUSE_NUMBER_NK = IHF.WAREHOUSE_NUMBER
+											 AND IHF.SALESREP_GK = REPS.SALESREP_GK
                        --AND IHF.INVOICE_NUMBER_GK = ILCF.INVOICE_NUMBER_GK
                        --AND ILCF.YEARMONTH = ILF.YEARMONTH
                        --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
                        --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
                         --AND PROD.MANUFACTURER = '774'
                        --AND ILF.
-                       AND IHF.ACCOUNT_NUMBER = '1480'
+                       --AND IHF.ACCOUNT_NUMBER = '1480'
                        --AND IHF.WRITER = 'JPB'
                        --AND CUST.CUSTOMER_NK = '19037'
                        --AND IHF.REF_BID_NUMBER <> 'N/A'
-                       AND DECODE (NVL (cust.ar_gl_number, '9999'),
+
+                       AND ( DECODE (NVL (cust.ar_gl_number, '9999'),
                                    '1320', 0,
                                    '1360', 0,
                                    '1380', 0,
@@ -536,7 +546,7 @@ SELECT DISTINCT
                                    '4000', 0,
                                    '7100', 0,
                                    '9999', 0,
-                                   1) <> 0
+                                   1) <> 0 )
                        AND NVL (IHF.CONSIGN_TYPE, 'N/A') NOT IN 'R'
                        AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
                        AND ILF.SPECIAL_PRODUCT_GK =
@@ -550,10 +560,10 @@ SELECT DISTINCT
                        --AND IHF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM'))
                        AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
                                                                      SYSDATE
-                                                                   - 18)
+                                                                   - 7)
                                                             AND TRUNC (
                                                                      SYSDATE
-                                                                   - 5)))
+                                                                   - 1)))
                SP_HIST
                LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                   ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
@@ -709,6 +719,11 @@ SELECT DISTINCT
                       AND SP_HIST.MAIN_CUSTOMER_NK = PR_OVR_BASE.CUSTOMER_NK
                       AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                              NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
-       sp_dtl;
-
-GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;
+       sp_dtl
+WHERE ( COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
+													sp_dtl.PRICE_CATEGORY_OVR_GR,
+													sp_dtl.PRICE_CATEGORY) IN ('TOOLS',
+																									'MANUAL',
+																									'QUOTE',
+																									'OTH/ERROR'));
+GRANT SELECT ON AAA6863.PR_VICT2_MANUAL_1WK TO PUBLIC;

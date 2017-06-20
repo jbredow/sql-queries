@@ -1,3 +1,7 @@
+/* Use this for monthly reporting
+			correct, change the current writer to include this result
+*/
+
 SELECT GP_DATA.YEARMONTH,
        CASE
           WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
@@ -637,7 +641,7 @@ SELECT GP_DATA.YEARMONTH,
  WHERE GP_DATA.WAREHOUSE_NUMBER = ACCT.WAREHOUSE_NUMBER_NK(+) 
        AND GP_DATA.WRITER IS NOT NULL
        --AND GP_DATA.WAREHOUSE_NUMBER = BRCH.WHSE(+)
-			 AND GP_DATA.WAREHOUSE_NUMBER IN ( '5350', '5351' )
+			 AND GP_DATA.WAREHOUSE_NUMBER = '5350'  -- IN ( '5350', '5351' )
 HAVING SUM (
             GP_DATA.SLS_SUBTOTAL
           + GP_DATA.SLS_FREIGHT

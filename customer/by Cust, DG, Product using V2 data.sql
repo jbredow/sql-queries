@@ -1,6 +1,8 @@
 -- VICT2 sql with updated rounding logic aligned with pricing cube
 -- Leigh North
 
+Run for scottie Fri AM
+
 /*
 by customer, 
 CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL
@@ -10,7 +12,7 @@ select
 	CASE
 			WHEN V2.YEARMONTH BETWEEN TO_CHAR ( 
 							TRUNC ( SYSDATE
-															- NUMTOYMINTERVAL ( 13,
+															- NUMTOYMINTERVAL ( 12,
 																								'MONTH'
 																),
 															'MONTH'
@@ -20,7 +22,7 @@ select
 							AND TO_CHAR ( TRUNC ( SYSDATE,
 																		'MM'
 														)
-														- 2,
+														- 1,
 														'YYYYMM'
 										)
 			THEN
@@ -34,14 +36,15 @@ select
 	V2.ACCOUNT_NUMBER,
 	--V2.WAREHOUSE_NUMBER,
   V2.MAIN_CUSTOMER_NK,
-	--V2.CUSTOMER_NK,
+	V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
+	V2.MSTR_CUSTNO,
 	--V2.TYPE_OF_SALE,
 	V2.DISCOUNT_GROUP_NK,
 	V2.DISCOUNT_GROUP_NAME,
-	/*V2.PRODUCT_NK,
+	V2.PRODUCT_NK,
 	V2.ALT1_CODE,
-	V2.PRODUCT_NAME,*/
+	V2.PRODUCT_NAME,
 	CASE
 		WHEN V2.price_category_ovr IS NOT NULL
 		THEN V2.price_category_ovr
@@ -49,8 +52,8 @@ select
 	END
 		AS CATEGORY,
 	SUM ( V2.EXT_SALES_AMOUNT ) SALES,
-	SUM ( V2.EXT_AVG_COGS_AMOUNT ) AC
-	
+	SUM ( V2.EXT_AVG_COGS_AMOUNT ) AC,
+	SUM ( V2.SHIPPED_QTY ) SHIPPED
 from
 (
 SELECT DISTINCT
@@ -67,6 +70,7 @@ SELECT DISTINCT
        sp_dtl.WRITER,
        sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
+			 sp_dtl.MSTR_CUSTNO,
        sp_dtl.MAIN_CUSTOMER_NK,
        sp_dtl.CUSTOMER_NK,
        sp_dtl.CUSTOMER_NAME,
@@ -577,6 +581,7 @@ SELECT DISTINCT
                                      CUST.MAIN_CUSTOMER_NK,
                                      CUST.JOB_YN,
                                      CUST.CUSTOMER_NK,
+																		 CUST.MSTR_CUSTNO,
                                      CUST.CUSTOMER_NAME,
                                      CUST.PRICE_COLUMN,
                                      CUST.CUSTOMER_TYPE
@@ -587,7 +592,7 @@ SELECT DISTINCT
                                      DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                                WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 																			-- AND ILF.PRODUCT_STATUS = 'SP'
-																			AND IHF.ACCOUNT_NUMBER = '61'  --in ( '1550', '448', '1020', '2778', '331')
+																			AND IHF.ACCOUNT_NUMBER = '1550'  --in ( '1550', '448', '1020', '2778', '331')
 																			-- AND NVL (ILF.PRICE_CODE, 'N/A') IN ('Q', 'N/A', 'R')
 																			-- AND IHF.WRITER = 'CMC'
 																			-- AND CUST.ACCOUNT_NAME = 'CHICAGO' --IN ('MIDATLWW','MYERSUG')
@@ -629,7 +634,7 @@ SELECT DISTINCT
 
 
 																			AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																									- NUMTOYMINTERVAL ( 25,
+																																									- NUMTOYMINTERVAL ( 24,
 																																																		'MONTH'
 																																										),
 																																									'MONTH'
@@ -639,11 +644,11 @@ SELECT DISTINCT
 																														AND TO_CHAR ( TRUNC ( SYSDATE,
 																																									'MM'
 																																					)
-																																					- 2,
+																																					- 1,
 																																					'YYYYMM'
 																																	)
 																				AND IHF.YEARMONTH  BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																										- NUMTOYMINTERVAL ( 25,
+																																										- NUMTOYMINTERVAL ( 24,
 																																																			'MONTH'
 																																											),
 																																										'MONTH'
@@ -653,7 +658,7 @@ SELECT DISTINCT
 																															AND  TO_CHAR ( TRUNC ( SYSDATE,
 																																										'MM'
 																																						)
-																																						- 2,
+																																						- 1,
 																																						'YYYYMM'
 																																		)
 																						) SP_HIST
@@ -735,57 +740,40 @@ SELECT DISTINCT
                            NVL ( PR_OVR.CONTRACT_ID, 'DEFAULT_MATCH' ) ) )
          sp_dtl
 				 
-			WHERE sp_dtl.DISCOUNT_GROUP_NK IN ( '0007',
-																					'0089',
-																					'0095',
-																					'0152',
-																					'0207',
-																					'0225',
-																					'0511',
-																					'0517',
-																					'0545',
-																					'0551',
-																					'0582',
-																					'0658',
-																					'0660',
-																					'0674',
-																					'0678',
-																					'0686',
-																					'0687',
-																					'1072',
-																					'1076',
-																					'1077',
-																					'1082',
-																					'1153',
-																					'1199',
-																					'1205',
-																					'1208',
-																					'1209',
-																					'1213',
-																					'1219',
-																					'1220',
-																					'1224',
-																					'1229',
-																					'1260',
-																					'1261',
-																					'1262',
-																					'1285',
-																					'1444',
-																					'2098',
-																					'2205',
-																					'2232',
-																					'2285',
-																					'2289',
-																					'2544',
-																					'2643',
-																					'3012',
-																					'3400',
-																					'3404',
-																					'3421',
-																					'4605',
+			WHERE sp_dtl.DISCOUNT_GROUP_NK IN ( '4702',
+																					'4794',
+																					'4795',
+																					'4796',
+																					'4797',
+																					'4798',
+																					'4799',
+																					'4800',
+																					'4803',
+																					'4804',
+																					'4805',
+																					'4806',
+																					'4807',
+																					'4808',
 																					'4809',
-																					'7152'
-																																)
+																					'4810',
+																					'4811',
+																					'4812',
+																					'4813',
+																					'4814',
+																					'4815',
+																					'4819',
+																					'4820',
+																					'4864',
+																					'4924',
+																					'5125',
+																					'5389',
+																					'5651',
+																					'5751',
+																					'5752',
+																					'5753',
+																					'5758',
+																					'6288',
+																					'9143')
 																																			
 			
 			
@@ -804,7 +792,7 @@ group by
 	CASE
 			WHEN V2.YEARMONTH BETWEEN TO_CHAR ( 
 										TRUNC ( SYSDATE
-																		- NUMTOYMINTERVAL ( 13,
+																		- NUMTOYMINTERVAL ( 12,
 																											'MONTH'
 																			),
 																		'MONTH'
@@ -814,7 +802,7 @@ group by
 							AND TO_CHAR ( TRUNC ( SYSDATE,
 																		'MM'
 														)
-														- 2,
+														- 1,
 														'YYYYMM'
 										)
 			THEN
@@ -827,14 +815,15 @@ group by
 	V2.ACCOUNT_NUMBER,
 	--V2.WAREHOUSE_NUMBER,
   V2.MAIN_CUSTOMER_NK,
-	--V2.CUSTOMER_NK,
+	V2.CUSTOMER_NK,
 	V2.CUSTOMER_NAME,
+	V2.MSTR_CUSTNO,
 	--V2.TYPE_OF_SALE,
 	V2.DISCOUNT_GROUP_NK,
 	V2.DISCOUNT_GROUP_NAME,
-	/*V2.PRODUCT_NK,
+	V2.PRODUCT_NK,
 	V2.ALT1_CODE,
-	V2.PRODUCT_NAME,*/
+	V2.PRODUCT_NAME,
 	CASE
 		WHEN V2.price_category_ovr IS NOT NULL
 		THEN V2.price_category_ovr

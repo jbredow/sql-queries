@@ -1,0 +1,505 @@
+/* 
+	sales by customer with channel sales broken out 
+	horizontal view
+*/
+SELECT
+	TPD.ROLL12MONTHS TPD,
+	X.YEARMONTH,
+	x.OLD_ACCOUNT_NUMBER_NK,
+	X.ACCOUNT_NUMBER_NK BRANCH,
+	NVL ( X.SELL_ALIAS_NAME, NULL ) LOGON_NAME, 
+	X.SELL_WAREHOUSE_NUMBER_NK,
+	--X.CUSTOMER_NK CUST_NO,
+	--X.CUSTOMER_NAME,
+	--X.CUSTOMER_TYPE C_TYPE,
+	--X.PRICE_COLUMN PC,
+	X.DISCOUNT_GROUP_NK,
+	X.MAIN_CUSTOMER_NK MAIN_NO,
+	X.MAIN_CUSTOMER_NAME,
+	X.ACTIVE_CUSTOMER_NK,
+	--X.CHANNEL_TYPE,
+	--X.SALES_TYPE,
+	--X.PRICE_CATEGORY,
+	--X.CHANNEL_TYPE CHANNEL,
+	SUM ( X.EXT_SALES_AMOUNT ) SALES,
+	SUM ( X.EXT_AVG_COGS_AMOUNT ) AVG_COST,
+	
+  ROUND (
+    (SUM ( X.EXT_SALES_AMOUNT ) - SUM ( X.EXT_AVG_COGS_AMOUNT ))
+		/ CASE
+        WHEN SUM ( X.EXT_SALES_AMOUNT ) > 0
+        THEN SUM ( X.EXT_SALES_AMOUNT )
+        ELSE
+          1
+      END
+        , 3 )
+     "GP %",
+     
+	-- MATRIX SALES
+	SUM (
+		CASE
+			WHEN X.PRICE_CATEGORY IN 'MATRIX'
+			THEN 
+				( X.EXT_SALES_AMOUNT )
+			ELSE
+				0
+		END )
+			MTX_SALES,
+	SUM (
+		CASE
+			WHEN X.PRICE_CATEGORY IN 'MATRIX'
+			THEN 
+				( X.EXT_AVG_COGS_AMOUNT )
+			ELSE
+				0
+		END )
+			MTX_AC,
+	ROUND (
+		SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'MATRIX'
+				THEN
+					( X.EXT_SALES_AMOUNT - X.EXT_AVG_COGS_AMOUNT )
+				ELSE
+					0
+			END)
+	/ SUM (
+		CASE
+			WHEN X.PRICE_CATEGORY IN 'MATRIX'
+			THEN
+			CASE
+				WHEN X.EXT_SALES_AMOUNT > 0
+				THEN
+					(X.EXT_SALES_AMOUNT)
+				ELSE
+					1
+			END
+			ELSE
+				1
+		END),
+		3 )
+			"MTX GP%",
+	ROUND (
+		SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'MATRIX'
+				THEN
+					(X.EXT_SALES_AMOUNT)
+				ELSE
+				0
+			END)
+		/ SUM (
+			CASE
+				WHEN X.EXT_SALES_AMOUNT > 0
+				THEN
+					X.EXT_SALES_AMOUNT
+				ELSE
+					1
+			END),
+			3)
+				"PM Use%$",
+	-- CCOR SALES
+	SUM (
+		CASE
+			WHEN X.PRICE_CATEGORY IN 'OVERRIDE'
+			THEN 
+				( X.EXT_SALES_AMOUNT )
+			ELSE
+			0
+		END )
+			CCOR_SALES,
+	SUM (
+		CASE
+			WHEN X.PRICE_CATEGORY IN 'OVERRIDE'
+			THEN 
+				( X.EXT_AVG_COGS_AMOUNT )
+			ELSE
+			0
+		END )
+			CCOR_AC,
+	ROUND (
+		SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'OVERRIDE'
+				THEN
+					( X.EXT_SALES_AMOUNT - X.EXT_AVG_COGS_AMOUNT )
+				ELSE
+					0
+			END)
+		/ SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'OVERRIDE'
+				THEN
+					CASE
+						WHEN X.EXT_SALES_AMOUNT > 0
+						THEN
+							(X.EXT_SALES_AMOUNT)
+						ELSE
+							1
+					END
+				ELSE
+					1
+				END),
+			3)
+				"MAN GP%",
+	ROUND (
+		SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'OVERRIDE'
+				THEN
+					(X.EXT_SALES_AMOUNT)
+				ELSE
+					0
+			END)
+			/ SUM (
+				CASE
+					WHEN X.EXT_SALES_AMOUNT > 0
+					THEN
+						X.EXT_SALES_AMOUNT
+					ELSE
+						1
+				END),
+			3)
+				"Ovr Use%$",
+		
+	-- MANUAL SALES
+	SUM (
+		CASE
+			WHEN X.PRICE_CATEGORY IN 'MANUAL'
+			THEN 
+				( X.EXT_SALES_AMOUNT )
+			ELSE
+				0
+		END )
+			CCOR_SALES,
+		SUM (
+			CASE
+			WHEN X.PRICE_CATEGORY IN 'MANUAL'
+			THEN 
+				( X.EXT_AVG_COGS_AMOUNT )
+			ELSE
+				0
+		END )
+			MAN_AC,
+	ROUND (
+		SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'MANUAL'
+				THEN
+					( X.EXT_SALES_AMOUNT - X.EXT_AVG_COGS_AMOUNT )
+				ELSE
+					0
+			END)
+		/ SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'MANUAL'
+				THEN
+					CASE
+						WHEN X.EXT_SALES_AMOUNT > 0
+						THEN
+							(X.EXT_SALES_AMOUNT)
+						ELSE
+							1
+					END
+				ELSE
+					1
+			END),
+		3)
+			"MAN GP%",
+	ROUND (
+		SUM (
+			CASE
+			WHEN X.PRICE_CATEGORY IN 'MANUAL'
+			THEN
+				(X.EXT_SALES_AMOUNT)
+			ELSE
+				0
+		END)
+		/ SUM (
+			CASE
+			WHEN X.EXT_SALES_AMOUNT > 0
+			THEN
+				X.EXT_SALES_AMOUNT
+			ELSE
+				1
+		END),
+		3)
+			"Man Use%$",
+			
+	-- SPECIAL SALES
+	SUM (
+		CASE
+			WHEN X.PRICE_CATEGORY IN 'SPECIAL'
+			THEN 
+				( X.EXT_SALES_AMOUNT )
+			ELSE
+				0
+		END )
+			"SP- SALES",
+		SUM (
+			CASE
+			WHEN X.PRICE_CATEGORY IN 'SPECIAL'
+			THEN 
+				( X.EXT_AVG_COGS_AMOUNT )
+			ELSE
+				0
+		END )
+			"SP- AC",
+	ROUND (
+		SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'SPECIAL'
+				THEN
+					( X.EXT_SALES_AMOUNT - X.EXT_AVG_COGS_AMOUNT )
+				ELSE
+					0
+			END)
+		/ SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'SPECIAL'
+				THEN
+					CASE
+					WHEN X.EXT_SALES_AMOUNT > 0
+					THEN
+						(X.EXT_SALES_AMOUNT)
+					ELSE
+						1
+					END
+				ELSE
+					1
+			END),
+		3)
+		"SP- GP%",
+	ROUND (
+		SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'SPECIAL'
+				THEN
+					(X.EXT_SALES_AMOUNT)
+				ELSE
+					0
+			END)
+		/ SUM (
+			CASE
+				WHEN X.EXT_SALES_AMOUNT > 0
+				THEN
+					X.EXT_SALES_AMOUNT
+				ELSE
+					1
+			END ),
+		3 )
+		"SP- Use%$",
+		
+	-- CREDIT SALES
+	SUM (
+		CASE
+			WHEN X.PRICE_CATEGORY IN 'CREDITS'
+			THEN 
+				( X.EXT_SALES_AMOUNT )
+			ELSE
+				0
+		END )
+			CREDITS_SALES,
+		SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'CREDITS'
+				THEN 
+					( X.EXT_AVG_COGS_AMOUNT )
+				ELSE
+					0
+			END )
+				CREDITS_AC,
+	ROUND (
+		SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'CREDITS'
+				THEN
+					( X.EXT_SALES_AMOUNT - X.EXT_AVG_COGS_AMOUNT )
+				ELSE
+					0
+			END)
+		/ SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'CREDITS'
+				THEN
+				CASE
+					WHEN X.EXT_SALES_AMOUNT > 0
+					THEN
+						(X.EXT_SALES_AMOUNT)
+					ELSE
+						1
+				END
+				ELSE
+					1
+			END),
+		3)
+			"CR GP%",
+	ROUND (
+		SUM (
+			CASE
+				WHEN X.PRICE_CATEGORY IN 'CREDITS'
+				THEN
+					(X.EXT_SALES_AMOUNT)
+				ELSE
+					0
+			END)
+			/ SUM (
+				CASE
+					WHEN X.EXT_SALES_AMOUNT > 0
+					THEN
+						X.EXT_SALES_AMOUNT
+					ELSE
+						1
+				END),
+			3)
+			"CR Use%$"
+		
+FROM SALES_MART.PRICE_MGMT_DATA_SUMM X
+	LEFT OUTER JOIN SALES_MART.TIME_PERIOD_DIMENSION TPD
+		ON ( X.YEARMONTH = TPD.YEARMONTH ) 
+WHERE X.ACCOUNT_NUMBER_NK = '1657'  -- IN ( '20', '13', '26', '56', '93', '185', '100', '150', '1717' )
+	AND X.IC_FLAG = 'REGULAR'
+	/*AND X.SELL_WAREHOUSE_NUMBER_NK IN ('740',
+																														'1121',
+																														'1123',
+																														'1124',
+																														'1177',
+																														'1550',
+																														'1551',
+																														'1643',
+																														'1645',
+																														'2431'
+																														)*/
+	-- AND X.YEARMONTH BETWEEN  '201410' AND  '201609'
+	AND TPD.ROLL12MONTHS IS NOT NULL
+	AND (TPD.YEARMONTH = '201705' OR TPD.YEARMONTH = '201605')
+	AND X.MAIN_CUSTOMER_NK IN ('90386',
+'90500',
+'112251',
+'90988',
+'112484',
+'90081',
+'92295',
+'112233',
+'95588',
+'98350',
+'92951',
+'98448',
+'95149',
+'92871',
+'89800',
+'97727',
+'94148',
+'91855',
+'91939',
+'93728',
+'90619',
+'109388',
+'98702',
+'93033',
+'89507',
+'92617',
+'90104',
+'112463',
+'96492',
+'112388',
+'92041',
+'89525',
+'92709',
+'89954',
+'102858',
+'95499',
+'104066',
+'93904',
+'93192',
+'96248',
+'91748',
+'102151',
+'90474',
+'93816',
+'89597',
+'96673',
+'91099',
+'92329',
+'95737',
+'112451',
+'1491',
+'15564',
+'8351',
+'166',
+'917',
+'12952',
+'37406',
+'8216',
+'55821',
+'64794',
+'39402',
+'64862',
+'53572',
+'39143',
+'1197',
+'632',
+'46958',
+'20165',
+'332',
+'441',
+'1591',
+'76712',
+'64998',
+'39761',
+'100',
+'38630',
+'1297',
+'916',
+'59427',
+'8926',
+'36957',
+'1025',
+'39134',
+'12499',
+'692',
+'55364',
+'7055',
+'4536',
+'40365',
+'58936',
+'19649',
+'6856',
+'1536',
+'44618',
+'10889',
+'60058',
+'1700',
+'37416',
+'56585',
+'9129'
+)
+	-- AND X.PRICE_CATEGORY
+	-- AND X.PRICE_SUB_CATEGORY
+	-- AND X.CHANNEL_TYPE
+	-- AND X.SALES_TYPE
+
+GROUP BY 
+	TPD.ROLL12MONTHS,
+	X.YEARMONTH,
+	x.OLD_ACCOUNT_NUMBER_NK,
+	X.ACCOUNT_NUMBER_NK,
+	NVL ( X.SELL_ALIAS_NAME, NULL ), 
+	X.SELL_WAREHOUSE_NUMBER_NK,
+	X.CUSTOMER_NK,
+	X.CUSTOMER_NAME,
+	--X.CUSTOMER_TYPE C_TYPE,
+	--X.PRICE_COLUMN PC,
+	X.DISCOUNT_GROUP_NK,
+	--X.CHANNEL_TYPE,
+	--X.SALES_TYPE,
+	--X.PRICE_CATEGORY,
+	X.MAIN_CUSTOMER_NK,
+	X.MAIN_CUSTOMER_NAME,
+	X.ACTIVE_CUSTOMER_NK
+  
+ORDER BY X.ACCOUNT_NUMBER_NK ASC,
+	X.MAIN_CUSTOMER_NK ASC,
+  X.CUSTOMER_NAME,
+	X.DISCOUNT_GROUP_NK
+;

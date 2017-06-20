@@ -26,7 +26,7 @@ SELECT DISTINCT
        sp_dtl.CUSTOMER_NAME,
        sp_dtl.PRICE_COLUMN,
        sp_dtl.CUSTOMER_TYPE,
-       sp_dtl.DISCOUNT_GROUP_NK,
+       sp_dtl.DISCOUNT_GROUP_NK	UP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
        sp_Dtl.CHANNEL_TYPE,
        sp_dtl.INVOICE_LINE_NUMBER,
@@ -544,6 +544,7 @@ SELECT DISTINCT
                                      DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                                WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 																			AND ILF.PRODUCT_STATUS = 'SP'
+																			
 																			AND IHF.ACCOUNT_NUMBER IN ( '20', '254', '13', '26', '56', '150', '100', '1717' )
 																			/*AND IHF.WAREHOUSE_NUMBER IN (
 																																												'93',
@@ -593,7 +594,7 @@ SELECT DISTINCT
 																			/*AND ILF.YEARMONTH BETWEEN '201610' AND '201612'
 																			AND IHF.YEARMONTH BETWEEN '201610' AND '201612' */
 																			AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
-                                                                                        SYSDATE - 15)
+                                                                                        SYSDATE - 14)
                                                                                  AND TRUNC (
                                                                                         SYSDATE - 1))
 																			
@@ -703,7 +704,7 @@ SELECT DISTINCT
                       AND NVL ( SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH' ) =
                            NVL ( PR_OVR.CONTRACT_ID, 'DEFAULT_MATCH' ) ) )
          sp_dtl
-	
+	WHERE sp_dtl.ALT1_CODE LIKE 'SP-%'
 	/*WHERE TRUNC (sp_dtl.INVOICE_DATE) BETWEEN TRUNC (
 																									SYSDATE
 																									- 22)
