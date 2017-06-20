@@ -20,7 +20,7 @@ SELECT CASE
           THEN
              'MAIN_JOB_TYPE_CONSISTENT'
           ELSE
-             NULL
+             'NO_ACTION'
        END
           AS REVIEW_CATEGORY,
        /* CASE
@@ -175,8 +175,7 @@ SELECT CASE
                AND a.ACCOUNT_NAME = j.ACCOUNT_NAME
                AND g.EMPLOYEE_NUMBER_NK = k.EMPLOYEE_TRILOGIE_NK(+)
                --AND A.PRICE_COLUMN = 'C'
-               --AND a.ACCOUNT_NAME = 'SEATTLE'
-							 AND SUBSTR (j.DIVISION_NAME, 0, 4) = 'EAST'
+               AND a.ACCOUNT_NAME = 'SEATTLE'
                AND SUBSTR (j.DIVISION_NAME, 0, 4) IN ('NORT',
                                                       'SOUT',
                                                       'EAST',
