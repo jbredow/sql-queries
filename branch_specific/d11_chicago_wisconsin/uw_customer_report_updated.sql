@@ -10,7 +10,7 @@ SELECT DISTINCT
        CUST.CUSTOMER_NAME AS "Customer Name",
        IHF.INVOICE_NUMBER_NK AS "Inv #",
        IHF.INVOICE_DATE AS "Inv Date",
-       IHF.PO_NUMBER AS PO#,
+       IHF.PO_NUMBER AS "PO#",
        CUST.JOB_YN AS "Job?",
        IHF.JOB_NAME AS "Job Name/Notes",
        NVL ( PD.DISCOUNT_GROUP_NK, SP_PROD.SPECIAL_DISC_GROUP ) AS DG,

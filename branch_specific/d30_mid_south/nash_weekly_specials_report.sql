@@ -594,9 +594,9 @@ SELECT DISTINCT
 																			/*AND ILF.YEARMONTH BETWEEN '201610' AND '201612'
 																			AND IHF.YEARMONTH BETWEEN '201610' AND '201612' */
 																			AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
-                                                                                        SYSDATE - 14)
+                                                                                        SYSDATE - 16)
                                                                                  AND TRUNC (
-                                                                                        SYSDATE - 1))
+                                                                                        SYSDATE - 2))
 																			
 																			/*AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
 																																									- NUMTOYMINTERVAL ( 2,
