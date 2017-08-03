@@ -2,22 +2,24 @@ Sub EmailSelectedSheets()
 'PURPOSE: Create email message with only Selected Worksheets attached
 'SOURCE: www.TheSpreadsheetGuru.com
 
-Dim SourceWB As Workbook
-Dim DestinWB As Workbook
-Dim OutlookApp As Object
-Dim OutlookMessage As Object
-Dim TempFileName As Variant
-Dim ExternalLinks As Variant
-Dim TempFilePath As String
-Dim FileExtStr As String
-Dim DefaultName As String
-Dim UserAnswer As Long
-Dim x As Long
+  Dim SourceWB As Workbook
+  Dim DestinWB As Workbook
+  Dim OutlookApp As Object
+  Dim OutlookMessage As Object
+  Dim TempFileName As Variant
+  Dim ExternalLinks As Variant
+  Dim TempFilePath As String
+  Dim FileExtStr As String
+  Dim DefaultName As String
+  Dim UserAnswer As Long
+  Dim x As Long
 
 'Optimize Code
-  Application.ScreenUpdating = False
-  Application.EnableEvents = False
-  Application.DisplayAlerts = False
+  With Application
+    .ScreenUpdating = False
+    .EnableEvents = False
+    .DisplayAlerts = False
+  end With
 
 'Copy only selected sheets into new workbook
   Set SourceWB = ActiveWorkbook
@@ -114,8 +116,9 @@ Dim x As Long
   
 'Optimize Code
 ExitSub:
-  Application.ScreenUpdating = True
-  Application.EnableEvents = True
-  Application.DisplayAlerts = True
-
+  With Application
+    .ScreenUpdating = True
+    .EnableEvents = True
+    .DisplayAlerts = True
+  End With
 End Subf

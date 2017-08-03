@@ -76,7 +76,7 @@ SELECT MAN.ACCOUNT_NAME,
        AND MAN.PRICE_CODE <> 'C'
        AND UPPER (MAN.PRICE_FORMULA) <> 'SPEC'
        AND UPPER (MAN.ALT1_CODE) <> 'APPDEP'
-       AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN ('D10',
+       /*AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN ('D10',
                                                'D11',
                                                'D12',
                                                'D13',
@@ -87,6 +87,7 @@ SELECT MAN.ACCOUNT_NAME,
                                                'D50',
                                                'D51',
                                                'D53',
-                                               'D59'))
+                                               'D59',
+																							 'D39'))*/
        AND NOT UPPER (MAN.ALT1_CODE) LIKE ('SP-%')
 ORDER BY MAN.ACCOUNT_NUMBER ASC, MAN.CUSTOMER_NAME ASC;

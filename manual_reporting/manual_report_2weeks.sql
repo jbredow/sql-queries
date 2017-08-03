@@ -76,24 +76,37 @@ SELECT MAN.ACCOUNT_NAME,
        AND MAN.PRICE_CODE <> 'C'
        AND UPPER (MAN.PRICE_FORMULA) <> 'SPEC'
        AND UPPER (MAN.ALT1_CODE) <> 'APPDEP'
-       /*AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN ('D10',
-                                               'D11',
-                                               'D12',
-                                               'D13',
-                                               'D14',
-                                               'D30',
-                                               'D31',
-                                               'D32',
-                                               'D50',
-                                               'D51',
-                                               'D53',
-                                               'D59'))*/
-																							 
-			 AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN ( 'D01',
-																								'D02',
-																								'D03',
-																								'D04',
-																								'D05',
-																								'D41'))
+/* run in two chunks */
+			 AND ((MAN.WAREHOUSE_NUMBER = '5350') 
+			 		OR (SUBSTR (SWD.REGION_NAME, 1, 3) IN ('D10',
+                                               	 'D11',
+                                               	 'D12',
+                                                 'D13',
+                                               	 'D14',
+                                               	 'D30',
+                                               	 'D31',
+                                               	 'D32',
+                                               	 'D50',
+                                               	 'D51',
+                                               	 'D53',
+                                               	 'D59')))
+			 /* AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN (  'D10',
+                                               	 'D11',
+                                               	 'D12',
+                                                 'D13',
+                                               	 'D14',
+                                               	 'D30',
+                                               	 'D31',
+                                               	 'D32',
+                                               	 'D50',
+                                               	 'D51',
+                                               	 'D53',
+                                               	 'D59',
+																							 	 'D01',
+																							 	 'D02',
+																							 	 'D03',
+																							 	 'D04',
+																							 	 'D05',
+																							 	 'D41')) */
        AND NOT UPPER (MAN.ALT1_CODE) LIKE ('SP-%')
 ORDER BY MAN.ACCOUNT_NUMBER ASC, MAN.CUSTOMER_NAME ASC;
