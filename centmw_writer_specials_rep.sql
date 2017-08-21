@@ -1,45 +1,45 @@
 --TRUNCATE TABLE AAA6863.PR_VICT2_MANUAL_2WK;
-DROP TABLE AAA6863.PR_VICT2_MANUAL_2WK_ATL;
+/*DROP TABLE AAA6863.PR_VICT2_MANUAL_2WK_ATL;
 
 CREATE TABLE AAA6863.PR_VICT2_MANUAL_2WK_ATL
-AS
+AS*/
 
 SELECT DISTINCT
        sp_dtl.YEARMONTH,
        sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
-       sp_dtl.WAREHOUSE_NUMBER,
+       /*sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.INVOICE_NUMBER_NK,
        sp_dtl.TYPE_OF_SALE,
-       sp_dtl.SALESREP_NK,
+			 sp_dtl.SALESREP_NK,
        sp_dtl.SALESREP_NAME,
-       sp_dtl.SHIP_VIA_NAME,
+       sp_dtl.SHIP_VIA_NAME,*/
        sp_dtl.OML_ASSOC_INI,
-       sp_dtl.OML_FL_INI,
+       --sp_dtl.OML_FL_INI,
        sp_dtl.OML_ASSOC_NAME,
        sp_dtl.WRITER,
-       sp_dtl.WR_FL_INI,
+       --sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
-       sp_dtl.DISCOUNT_GROUP_NK,
+       /*sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
        sp_Dtl.CHANNEL_TYPE,
        sp_dtl.INVOICE_LINE_NUMBER,
        sp_dtl.MANUFACTURER,
        sp_dtl.PRODUCT_NK,
        sp_dtl.ALT1_CODE,
-       sp_dtl.PRODUCT_NAME,
+       sp_dtl.PRODUCT_NAME,*/
        sp_dtl.STATUS,
-       sp_dtl.SHIPPED_QTY,
-       sp_dtl.EXT_SALES_AMOUNT,
-       sp_dtl.EXT_AVG_COGS_AMOUNT,
-       sp_dtl.REPLACEMENT_COST,
+       --sp_dtl.SHIPPED_QTY,
+       sum ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
+       sum ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC,
+       /*sp_dtl.REPLACEMENT_COST,
        sp_dtl.UNIT_INV_COST,
        sp_dtl.PRICE_CODE,
-       --sp_dtl.COST_CODE_IND,
+       --sp_dtl.COST_CODE_IND,*/
        sp_dtl.PRICE_CATEGORY,
        sp_dtl.PRICE_CATEGORY_OVR_PR,
-       sp_dtl.PRICE_CATEGORY_OVR_GR,
-       sp_dtl.GR_OVR,
+       sp_dtl.PRICE_CATEGORY_OVR_GR
+       /*sp_dtl.GR_OVR,
        sp_dtl.PR_OVR,
        sp_dtl.PRICE_FORMULA,
        sp_dtl.UNIT_NET_PRICE_AMOUNT,
@@ -81,8 +81,8 @@ SELECT DISTINCT
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
        sp_dtl.CONTRACT_NUMBER,
-       sp_dtl.INVOICE_DATE,
-       sp_dtl.MASTER_VENDOR_NAME
+			 sp_dtl.INVOICE_DATE,
+			 sp_dtl.MASTER_VENDOR_NAME*/
   FROM (SELECT SP_HIST.*,
                CASE
                   WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -529,9 +529,9 @@ SELECT DISTINCT
                        --AND ILCF.YEARMONTH = ILF.YEARMONTH
                        --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
                        --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
-                        --AND PROD.MANUFACTURER = '774'
-                       --AND ILF.
-                       --AND IHF.ACCOUNT_NUMBER = '1480'
+                       --AND PROD.MANUFACTURER = '774'
+                       
+                       AND IHF.ACCOUNT_NUMBER IN ( '1550', '448', '276', '331', '1020', '2778' )
                        --AND IHF.WRITER = 'JPB'
                        --AND CUST.CUSTOMER_NK = '19037'
                        --AND IHF.REF_BID_NUMBER <> 'N/A'
@@ -555,14 +555,15 @@ SELECT DISTINCT
                        --AND IHF.ORDER_CODE NOT IN 'IC'
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                       --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
-                       --AND IHF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM'))
-                       AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
+                       AND ILF.YEARMONTH BETWEEN '201608' AND '201707'  -- = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
+                       AND IHF.YEARMONTH BETWEEN '201608' AND '201707'  -- = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM'))
+                       /*AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
                                                                      SYSDATE
                                                                    - 15)
                                                             AND TRUNC (
                                                                      SYSDATE
-                                                                   - 1)))
+                                                                   - 1))*/
+																				)
                SP_HIST
                LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                   ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
@@ -718,14 +719,49 @@ SELECT DISTINCT
                       AND SP_HIST.MAIN_CUSTOMER_NK = PR_OVR_BASE.CUSTOMER_NK
                       AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                              NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
-       sp_dtl;
-	
-        
-        WHERE ( COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
+       sp_dtl
+			 
+	WHERE sp_dtl.STATUS IN ('SP-', 'SP')
+	GROUP BY sp_dtl.YEARMONTH,
+       sp_dtl.ACCOUNT_NUMBER,
+       sp_dtl.ACCOUNT_NAME,
+       /*sp_dtl.WAREHOUSE_NUMBER,
+       sp_dtl.INVOICE_NUMBER_NK,
+       sp_dtl.TYPE_OF_SALE,
+			 sp_dtl.SALESREP_NK,
+       sp_dtl.SALESREP_NAME,
+       sp_dtl.SHIP_VIA_NAME,*/
+       sp_dtl.OML_ASSOC_INI,
+       --sp_dtl.OML_FL_INI,
+       sp_dtl.OML_ASSOC_NAME,
+       sp_dtl.WRITER,
+       --sp_dtl.WR_FL_INI,
+       sp_dtl.ASSOC_NAME,
+       /*sp_dtl.DISCOUNT_GROUP_NK,
+       sp_Dtl.DISCOUNT_GROUP_NAME,
+       sp_Dtl.CHANNEL_TYPE,
+       sp_dtl.INVOICE_LINE_NUMBER,
+       sp_dtl.MANUFACTURER,
+       sp_dtl.PRODUCT_NK,
+       sp_dtl.ALT1_CODE,
+       sp_dtl.PRODUCT_NAME,*/
+       sp_dtl.STATUS,
+       /*sp_dtl.SHIPPED_QTY,
+       sum ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
+       sum ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC,
+       sp_dtl.REPLACEMENT_COST,
+       sp_dtl.UNIT_INV_COST,
+       sp_dtl.PRICE_CODE,
+       --sp_dtl.COST_CODE_IND,*/
+       sp_dtl.PRICE_CATEGORY,
+       sp_dtl.PRICE_CATEGORY_OVR_PR,
+       sp_dtl.PRICE_CATEGORY_OVR_GR
+			 
+	/*WHERE ( COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
 													sp_dtl.PRICE_CATEGORY_OVR_GR,
 													sp_dtl.PRICE_CATEGORY) IN ('TOOLS',
 																									'MANUAL',
 																									'QUOTE',
-																									'OTH/ERROR'))
-
-GRANT SELECT ON AAA6863.PR_VICT2_MANUAL_2WK_ATL TO PUBLIC;
+																									'OTH/ERROR'))*/
+;
+--GRANT SELECT ON AAA6863.PR_VICT2_MANUAL_2WK_ATL TO PUBLIC;

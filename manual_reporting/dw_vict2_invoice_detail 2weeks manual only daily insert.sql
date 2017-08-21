@@ -1,3 +1,5 @@
+/* daily insert date line 510  >>AND (TRUNC (IHF.INVOICE_DATE) = TRUNC (SYSDATE - 1))*/
+
 --DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
 
 INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
@@ -508,7 +510,8 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                           AND (TRUNC (IHF.INVOICE_DATE) = TRUNC (
                                                                      SYSDATE
                                                                    - 1)
-                                                            ))
+                                                            )
+                                                            )
                   SP_HIST
                   INNER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                      ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
