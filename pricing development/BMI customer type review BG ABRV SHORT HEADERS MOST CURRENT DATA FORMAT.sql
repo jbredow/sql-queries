@@ -201,8 +201,9 @@ SELECT CASE
 																						)*/
 							 --AND A.PRICE_COLUMN = 'C'
                --AND a.ACCOUNT_NAME IN ('OHVAL', 'DETROIT')
-							 AND ( (j.REGION_NAME LIKE '%NORCAL%' )  OR ( j.REGION_NAME LIKE '%NORTHWEST%') )
-							 --AND SUBSTR (j.DIVISION_NAME, 0, 4) = 'WEST'
+							 --AND ( (j.REGION_NAME LIKE '%NORCAL%' )  
+							 --			OR ( j.REGION_NAME LIKE '%NORTHWEST%') )
+							 AND SUBSTR (j.DIVISION_NAME, 0, 4) = 'NORT'
                /*AND SUBSTR (j.DIVISION_NAME, 0, 4) IN ('NORT',
                                                       'SOUT',
                                                       'EAST',

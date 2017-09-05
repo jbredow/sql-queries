@@ -81,8 +81,8 @@ SELECT DISTINCT
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
        sp_dtl.CONTRACT_NUMBER,
-			 sp_dtl.INVOICE_DATE,
-			 sp_dtl.MASTER_VENDOR_NAME
+       sp_dtl.INVOICE_DATE,
+       sp_dtl.MASTER_VENDOR_NAME
   FROM (SELECT SP_HIST.*,
                CASE
                   WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -471,6 +471,9 @@ SELECT DISTINCT
                                         FLOOR (ilf.MATRIX) + 1
                                 THEN
                                    'MATRIX_BID'
+                                WHEN ILF.MATRIX_PRICE IS NULL AND ILF.PRICE_FORMULA LIKE 'L-0.%'
+                                THEN 
+                                  'NDP'
                                 ELSE
                                    'MANUAL'
                              END
@@ -512,19 +515,19 @@ SELECT DISTINCT
                        CUST.CUSTOMER_NAME,
                        CUST.PRICE_COLUMN,
                        CUST.CUSTOMER_TYPE,
-											 IHF.INVOICE_DATE
+                       IHF.INVOICE_DATE
                   FROM DW_FEI.INVOICE_HEADER_FACT IHF,
                        DW_FEI.INVOICE_LINE_FACT ILF,
                        DW_FEI.PRODUCT_DIMENSION PROD,
                        DW_FEI.CUSTOMER_DIMENSION CUST,
                        DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD,
                        SALES_MART.SALES_WAREHOUSE_DIM SWD,
-											 DW_FEI.SALESREP_DIMENSION REPS
+                       DW_FEI.SALESREP_DIMENSION REPS
                        --DW_FEI.INVOICE_LINE_CORE_FACT ILCF
                  WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
                        AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
                        AND SWD.WAREHOUSE_NUMBER_NK = IHF.WAREHOUSE_NUMBER
-											 AND IHF.SALESREP_GK = REPS.SALESREP_GK
+                       AND IHF.SALESREP_GK = REPS.SALESREP_GK
                        --AND IHF.INVOICE_NUMBER_GK = ILCF.INVOICE_NUMBER_GK
                        --AND ILCF.YEARMONTH = ILF.YEARMONTH
                        --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER

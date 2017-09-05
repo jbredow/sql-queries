@@ -38,14 +38,14 @@ SELECT DISTINCT
 			SP_DTL.UNIT_INV_COST,
 			SP_DTL.PRICE_CODE,*/
 			CASE
-					WHEN SP_DTL.PRICE_CATEGORY_OVR = 'OVERRIDE' THEN  
-							'OVERRIDE'
-					WHEN SP_DTL.PRICE_CATEGORY like 'MATR%' THEN 
-							'MATRIX'
-					WHEN SP_DTL.PRICE_CATEGORY in ( 'TOOLS', 'QUOTE', 'OTH/ERROR' ) THEN
-							'MANUAL'
-					ELSE SP_DTL.PRICE_CATEGORY
-    	END
+                                WHEN SP_DTL.PRICE_CATEGORY_OVR = 'OVERRIDE' THEN  
+                                                'OVERRIDE'
+                                WHEN SP_DTL.PRICE_CATEGORY like 'MATR%' THEN 
+                                                'MATRIX'
+                                WHEN SP_DTL.PRICE_CATEGORY in ( 'TOOLS', 'QUOTE', 'OTH/ERROR' ) THEN
+                                                'MANUAL'
+                                ELSE SP_DTL.PRICE_CATEGORY
+    	                END
     			PRICE_CAT
 			/*SP_DTL.PRICE_FORMULA,
 			SP_DTL.UNIT_NET_PRICE_AMOUNT,
@@ -429,6 +429,9 @@ SELECT DISTINCT
                                            FLOOR (ilf.MATRIX) + 1
                                    THEN
                                       'MATRIX_BID'
+                                   WHEN ILF.MATRIX_PRICE IS NULL AND ILF.PRICE_FORMULA LIKE 'L-0.%'
+                                   THEN
+                                        'NDP'
                                    ELSE
                                       'MANUAL'
                                 END
@@ -610,25 +613,23 @@ LEFT OUTER JOIN
 
    WHERE ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN (
                      	'D40',
-											'D41',
-											'D42',
-											'D50',
-											'D51',
-											'D52',
-											'D53',
-											'D54',
-											'D59',
-											'D60',
-											'D61',
-											'D62',
-											'D63',
-											'D69'
+                     	'D41',
+                     	'D42',
+                     	'D50',
+                     	'D51',
+                     	'D52',
+                     	'D53',
+                     	'D54',
+                     	'D59',
+                     	'D60',
+                     	'D61',
+                     	'D62',
+                     	'D63',
+                     	'D69'
                      ))
     	/*AND SP_DTL.DISCOUNT_GROUP_NK IN ( '1072',
 																					'1076',
-																					'0540',
-																					'0545'
-																					)
+																		)
        LEFT OUTER JOIN DW_FEI.EMPLOYEE_DIMENSION emp
 			ON SP_DTL.ACCOUNT_NAME = emp.ACCOUNT_NAME
 			AND SP_DTL.WRITER = emp.INITIALS */

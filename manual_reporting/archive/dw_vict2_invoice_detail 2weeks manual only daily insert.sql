@@ -1,3 +1,5 @@
+/* daily insert date line 510  >>AND (TRUNC (IHF.INVOICE_DATE) = TRUNC (SYSDATE - 1))*/
+
 --DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
 
 INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
@@ -423,6 +425,9 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                                            FLOOR (ilf.MATRIX) + 1
                                    THEN
                                       'MATRIX_BID'
+                                   WHEN ILF.MATRIX_PRICE IS NULL AND ILF.PRICE_FORMULA LIKE 'L-0.%'
+                                   THEN
+                                      'NDP'
                                    ELSE
                                       'MANUAL'
                                 END
@@ -508,7 +513,8 @@ INSERT INTO AAA6863.PR_VICT2_MANUAL_2WK
                           AND (TRUNC (IHF.INVOICE_DATE) = TRUNC (
                                                                      SYSDATE
                                                                    - 1)
-                                                            ))
+                                                            )
+                                                            )
                   SP_HIST
                   INNER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                      ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
