@@ -1,6 +1,5 @@
 /*
 		NOTE!
-		must be run after the SALES_MART.TIME_DIM has been updated
 		two reports, one with and one without the GP%
 */
 

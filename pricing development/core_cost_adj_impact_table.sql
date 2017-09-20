@@ -101,10 +101,41 @@ AS
           AND IHF.YEARMONTH = ILF.YEARMONTH
           AND IHF.YEARMONTH = CORE.YEARMONTH
           AND ILF.YEARMONTH = CORE.YEARMONTH
-          AND IHF.YEARMONTH BETWEEN 201608 AND 201707
-          AND ILF.YEARMONTH BETWEEN 201608 AND 201707
-          AND REPS.OUTSIDE_SALES_FLAG = 'Y'
+          
+					AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																													- NUMTOYMINTERVAL ( 12,
+																																						'MONTH'
+																														),
+																													'MONTH'
+																									),
+																									'YYYYMM'
+																				)
+																		AND TO_CHAR ( TRUNC ( SYSDATE,
+																													'MM'
+																									)
+																									- 1,
+																									'YYYYMM'
+																					)
+								AND IHF.YEARMONTH  BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+																														- NUMTOYMINTERVAL ( 12,
+																																							'MONTH'
+																															),
+																														'MONTH'
+																										),
+																										'YYYYMM'
+																					)
+																			AND  TO_CHAR ( TRUNC ( SYSDATE,
+																														'MM'
+																										)
+																										- 1,
+																										'YYYYMM'
+																						)
+
+					AND REPS.OUTSIDE_SALES_FLAG = 'Y'
           AND IHF.WAREHOUSE_NUMBER = SWD.WAREHOUSE_NUMBER_NK
+					
+					--AND SWD.DIVISION_NAME = 'EAST REGION'
+					
           AND SWD.DIVISION_NAME IN ('EAST REGION',
                                     'HVAC REGION',
                                     'NORTH CENTRAL REGION',

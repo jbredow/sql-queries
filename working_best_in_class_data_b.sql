@@ -36,7 +36,7 @@ SELECT
        CREDITS_SALES,
        CREDITS_AVGCOGS,
        CREDITS_ACTCOGS,
-                  CREDIT_LINES,
+       CREDIT_LINES,
 /* OUTBOUND */
        OUTBOUND_SALES,
        OUTBOUND_AVGCOGS,
@@ -49,12 +49,25 @@ SELECT
                 COALESCE ( XREF.BUSINESS_GROUP,
                           'OTHER'
                 )
-                  BUSINESS_GROUP,
-                  SLS.CUSTOMER_TYPE,
-                  SLS.SALES_TYPE,
-                  SLS.SALESREP_NAME,
-                  SLS.SALESMAN_CODE,
+                BUSINESS_GROUP,
+                SLS.CUSTOMER_TYPE,
+                SLS.SALES_TYPE,
+                SLS.SALESREP_NAME,
+                SLS.SALESMAN_CODE,
                 TPD.FISCAL_YEAR,
+								CASE
+										WHEN G.EMPLOYEE_NUMBER_NK IS NULL
+										THEN
+												'H/U'
+										WHEN ( L.TITLE_CODE LIKE '%O/S%'
+												OR L.TITLE_CODE LIKE 'Out Sales%'
+												OR L.TITLE_CODE LIKE 'Sales Rep%')
+										THEN
+												'O/S'
+										ELSE
+												'H/A'
+								END
+									AS HOUSE_FLAG,
                 NVL ( SUM ( SLS.EXT_SALES_AMOUNT ), 0 ) EX_SALES,
                 NVL ( SUM ( SLS.EXT_AVG_COGS_AMOUNT ), 0 ) EX_AVGCOGS,
                 NVL ( SUM ( SLS.EXT_ACTUAL_COGS_AMOUNT),0) EX_ACTCOGS,
@@ -264,18 +277,32 @@ SELECT
                       ELSE 0
                     END)
                   OUTBOUND_LINES
-           FROM     SALES_MART.PRICE_MGMT_DATA_DET SLS
-                  INNER JOIN
+           
+					 FROM     SALES_MART.PRICE_MGMT_DATA_DET SLS
+                  
+									INNER JOIN
                     SALES_MART.TIME_PERIOD_DIMENSION TPD
                   ON SLS.YEARMONTH = TPD.YEARMONTH
-                LEFT OUTER JOIN
+                
+								LEFT OUTER JOIN
                   USER_SHARED.BG_CUSTTYPE_XREF XREF
                 ON SLS.CUSTOMER_TYPE = XREF.CUSTOMER_TYPE
+							
+							INNER JOIN
+								DW_FEI.SALESREP_DIMENSION G
+							ON SLS.ACCOUNT_NUMBER_NK = G. ACCOUNT_NUMBER_NK
+								AND SLS.SALESMAN_CODE = G.SALESREP_NK
+								
+						LEFT OUTER JOIN
+							DW_FEI.EMPLOYEE_DIMENSION L
+						ON G.EMPLOYEE_NUMBER_NK = L.EMPLOYEE_TRILOGIE_NK
+						
 
           WHERE TPD.ROLL12MONTHS IS NOT NULL
                 AND SLS.IC_FLAG = 'REGULAR'
+								
                 AND TPD.FISCAL_YEAR IN ('2016', '2017')
-                AND SLS.ACCOUNT_NUMBER_NK IN ('1245',
+                /*AND SLS.ACCOUNT_NUMBER_NK IN ('1245',
 																							'1205',
 																							'2783',
 																							'52',
@@ -290,7 +317,7 @@ SELECT
 																							'1350',
 																							'3014',
 																							'3370'
-																							)
+																							)*/
                --AND SLS.SALESREP_NAME NOT LIKE '%HOUSE%'
                --AND SLS.SALESREP_NAME NOT LIKE '%COSTING%'
                --AND SLS.SELL_ACCOUNT_NAME IN ('DALLAS')
@@ -305,7 +332,19 @@ SELECT
                   SLS.SALES_TYPE,
                   SLS.SALESREP_NAME,
                   SLS.SALESMAN_CODE,
-                  TPD.FISCAL_YEAR)
+                  TPD.FISCAL_YEAR,
+									CASE
+											WHEN G.EMPLOYEE_NUMBER_NK IS NULL
+											THEN
+													'H/U'
+											WHEN ( L.TITLE_CODE LIKE '%O/S%'
+													OR L.TITLE_CODE LIKE 'Out Sales%'
+													OR L.TITLE_CODE LIKE 'Sales Rep%')
+											THEN
+													'O/S'
+										ELSE
+													'H/A'
+									END)
 ORDER BY  SELL_REGION_NAME,
 					SELL_DISTRICT,
 					BUSINESS_GROUP,
