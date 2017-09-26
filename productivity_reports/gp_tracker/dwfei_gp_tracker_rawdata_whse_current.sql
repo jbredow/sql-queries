@@ -4,10 +4,10 @@ Formatted 10/25/2011
 */
 --DROP TABLE AAD9606.GP_TRACKER_13MO;
 
-CREATE TABLE AAD9606.GP_TRACKER_13MO
+--CREATE TABLE AAD9606.GP_TRACKER_13MO
 --DROP TABLE AAD9606.GP_TRACKER_TEST;
 --CREATE TABLE AAD9606.GP_TRACKER_TEST
-AS
+--AS
    (SELECT SUBSTR (ihf.YEARMONTH, 0, 4) YYYY,
            ihf.YEARMONTH,
            ps.REGION,
@@ -285,6 +285,7 @@ AS
            SCORECARD1.PS_HIERARCHY ps
      WHERE ihf.CUSTOMER_ACCOUNT_GK = cust.CUSTOMER_GK
            --AND ihf.ACCOUNT_NUMBER = 39
+					 AND ihf.WAREHOUSE_NUMBER = '525'
            --AND (ilf.INVOICE_NUMBER_GK = ihf.INVOICE_NUMBER_GK)
            AND TO_CHAR (ihf.WAREHOUSE_NUMBER) =
                   TO_CHAR (ps.WAREHOUSE_NUMBER_NK)
@@ -294,7 +295,7 @@ AS
            AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                         TRUNC (
                                            SYSDATE
-                                           - NUMTOYMINTERVAL (13, 'MONTH'),
+                                           - NUMTOYMINTERVAL (3, 'MONTH'),
                                            'MONTH'),
                                         'YYYYMM')
                                  AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,

@@ -41,7 +41,7 @@ SELECT DISTINCT --SPECIALS.DIVISION_NAME REGION,
 
 FROM (
 
-				 SELECT SWD.DIVISION_NAME,
+		 SELECT SWD.DIVISION_NAME,
                 IHF.YEARMONTH,
                 SWD.REGION_NAME,
                 IHF.ACCOUNT_NUMBER,
@@ -360,9 +360,9 @@ FROM (
                               'D50',
                               'D51',
                               'D53' ) )
-									AND ILF.YEARMONTH BETWEEN '201408' AND '201507'
-									AND IHF.YEARMONTH BETWEEN '201408' AND '201507'
-                /*AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+									--AND ILF.YEARMONTH BETWEEN '201408' AND '201507'
+									--AND IHF.YEARMONTH BETWEEN '201408' AND '201507'
+                AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
                                                            - NUMTOYMINTERVAL ( 12,
                                                                               'MONTH'
                                                              ),
@@ -389,7 +389,7 @@ FROM (
                                                     )
                                                     - 1,
                                                     'YYYYMM'
-                                           )*/
+                                           )
 												) SPECIALS
 	GROUP BY 
 			--SPECIALS.DIVISION_NAME,
@@ -397,11 +397,11 @@ FROM (
 			--SPECIALS.REGION_NAME,
 			SPECIALS.ACCOUNT_NUMBER,
 			SPECIALS.WAREHOUSE_NUMBER,
-			CASE
+			/*CASE
 				WHEN SPECIALS.ACCOUNT_NAME = 'MILWAUKEE' 
 				THEN 'APPLETON'
 				ELSE SPECIALS.ACCOUNT_NAME
-			END,
+			END,*/
 			--SPECIALS.TYPE_OF_SALE,
 			--SPECIALS.PRICE_CATEGORY,
 			SPECIALS.PRODUCT_STATUS
