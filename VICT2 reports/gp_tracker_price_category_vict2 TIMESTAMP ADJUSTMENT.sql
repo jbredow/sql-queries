@@ -67,6 +67,7 @@ SELECT DISTINCT
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
        sp_dtl.CONSIGN_TYPE,
+			 sp_dtl.MSTR_CUSTNO,
        sp_dtl.MAIN_CUSTOMER_NK,
        sp_dtl.CUSTOMER_NK,
        sp_dtl.CUSTOMER_NAME,
@@ -508,7 +509,8 @@ SELECT DISTINCT
                        CUST.CUSTOMER_NK,
                        CUST.CUSTOMER_NAME,
                        CUST.PRICE_COLUMN,
-                       CUST.CUSTOMER_TYPE
+                       CUST.CUSTOMER_TYPE,
+											 CUST.MSTR_CUSTNO
                   FROM DW_FEI.INVOICE_HEADER_FACT IHF,
                        DW_FEI.INVOICE_LINE_FACT ILF,
                        DW_FEI.PRODUCT_DIMENSION PROD,
@@ -519,17 +521,128 @@ SELECT DISTINCT
                  WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
                        AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
                        AND SWD.WAREHOUSE_NUMBER_NK = IHF.WAREHOUSE_NUMBER
-											 AND IHF.WAREHOUSE_NUMBER = '525'
+											 --AND IHF.WAREHOUSE_NUMBER = '525'
                        --AND IHF.INVOICE_NUMBER_GK = ILCF.INVOICE_NUMBER_GK
                        --AND ILCF.YEARMONTH = ILF.YEARMONTH
                        --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
                        --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
                         --AND PROD.MANUFACTURER = '774'
-                       --AND ILF.
+                       /*AND ILF.DISCOUNT_GROUP_NK IN ( '4226',
+																											'4267',
+																											'4550',
+																											'4614',
+																											'4616',
+																											'4700',
+																											'4742',
+																											'4743',
+																											'4744',
+																											'4745',
+																											'4749',
+																											'4750',
+																											'4758',
+																											'4759',
+																											'4763',
+																											'4764',
+																											'4765',
+																											'4766',
+																											'4769',
+																											'4770',
+																											'4771',
+																											'4776',
+																											'4777',
+																											'4778',
+																											'4783',
+																											'4784',
+																											'4785',
+																											'4787',
+																											'4789',
+																											'4790',
+																											'4798',
+																											'4804',
+																											'4805',
+																											'4806',
+																											'4807',
+																											'4810',
+																											'4811',
+																											'4812',
+																											'4815',
+																											'4817',
+																											'4820',
+																											'4845',
+																											'4849',
+																											'4864',
+																											'4924',
+																											'4956',
+																											'5125',
+																											'5167',
+																											'5178',
+																											'5182',
+																											'5183',
+																											'5197',
+																											'5204',
+																											'5333',
+																											'5384',
+																											'5389',
+																											'5415',
+																											'5459',
+																											'5520',
+																											'5547',
+																											'5627',
+																											'5651',
+																											'5751',
+																											'5752',
+																											'5753',
+																											'5754',
+																											'5756',
+																											'5757',
+																											'5758',
+																											'5761',
+																											'6288',
+																											'6417',
+																											'6422',
+																											'6622',
+																											'6629',
+																											'6662',
+																											'6663',
+																											'6664',
+																											'6668',
+																											'6717',
+																											'6719',
+																											'7512',
+																											'7515',
+																											'7517',
+																											'7519',
+																											'7524',
+																											'7529',
+																											'7535',
+																											'7546',
+																											'7608',
+																											'7610',
+																											'7612',
+																											'7620',
+																											'7621',
+																											'7622',
+																											'7627',
+																											'7631',
+																											'7635',
+																											'7638',
+																											'8138',
+																											'9141',
+																											'9142',
+																											'9143',
+																											'9144'
+																											)*/
                        --AND IHF.ACCOUNT_NUMBER = 215
                        --AND IHF.WRITER = 'JPB'
                        --AND CUST.CUSTOMER_NK = '19037'
                        --AND IHF.REF_BID_NUMBER <> 'N/A'
+											 /*AND CUST.MSTR_CUSTNO IN ('187870',
+																								'103921',
+																								'121925',
+																								'191735',
+																								'445166',
+																								'585697'
+																								)*/
                        AND DECODE (NVL (cust.ar_gl_number, '9999'),
                                    '1320', 0,
                                    '1360', 0,
@@ -550,8 +663,8 @@ SELECT DISTINCT
                        --AND IHF.ORDER_CODE NOT IN 'IC'
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-											 AND ILF.YEARMONTH BETWEEN '201706' AND '201708'
-                       AND IHF.YEARMONTH BETWEEN '201706' AND '201708'
+											 AND ILF.YEARMONTH BETWEEN '201709' AND '201710'
+                       AND IHF.YEARMONTH BETWEEN '201709' AND '201710'
                        --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
                        --AND IHF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
 										)
@@ -712,4 +825,4 @@ SELECT DISTINCT
                              NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
        sp_dtl;
 
-GRANT SELECT ON AAE0376.PR_VICT2_CUST_12MO TO PUBLIC;
+-- GRANT SELECT ON AAE0376.PR_VICT2_CUST_12MO TO PUBLIC;
