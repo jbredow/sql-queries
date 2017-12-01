@@ -270,7 +270,7 @@ SELECT
                   --WHEN NVL (ihf.split_ticket_flag, '0') = '1'
                   --THEN
                   --   'MATRIX'
-                WHEN ilf.price_code IN ('FC', 'PM', 'spec')
+                  WHEN ilf.price_code IN ('FC', 'PM', 'spec')
                   THEN
                     'MATRIX'
                   WHEN ilf.price_code LIKE 'M%'

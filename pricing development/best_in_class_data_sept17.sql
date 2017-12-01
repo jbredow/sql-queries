@@ -13,6 +13,7 @@ SELECT
        SALES_TYPE,
        SALESREP_NAME,
        SALESMAN_CODE,
+			 JOB_YN,
        FISCAL_YEAR,
        EX_SALES,
        EX_AVGCOGS,
@@ -59,6 +60,7 @@ SELECT
                 )
                 BUSINESS_GROUP,
                 SLS.CUSTOMER_TYPE,
+								CUST.JOB_YN,
                 SLS.SALES_TYPE,
                 SLS.SALESREP_NAME,
                 SLS.SALESMAN_CODE,
@@ -306,6 +308,9 @@ SELECT
 							DW_FEI.EMPLOYEE_DIMENSION L
 						ON L.EMPLOYEE_TRILOGIE_NK = G.EMPLOYEE_NUMBER_NK
 						
+						LEFT OUTER JOIN
+							DW_FEI.CUSTOMER_DIMENSION CUST
+						ON SLS.CUSTOMER_GK = CUST.CUSTOMER_GK
 
           WHERE TPD.ROLL12MONTHS IS NOT NULL
                 AND SLS.IC_FLAG = 'REGULAR'
@@ -347,6 +352,7 @@ SELECT
                   SLS.SALES_TYPE,
                   SLS.SALESREP_NAME,
                   SLS.SALESMAN_CODE,
+									CUST.JOB_YN,
                   TPD.FISCAL_YEAR,
 									CASE
 											WHEN G.EMPLOYEE_NUMBER_NK IS NULL
@@ -368,6 +374,7 @@ GROUP BY SELL_REGION_NAME,
 					SALES_TYPE,
 					SALESREP_NAME,
 					SALESMAN_CODE,
+					JOB_YN,
 					FISCAL_YEAR,
 					EX_SALES,
 					EX_AVGCOGS,

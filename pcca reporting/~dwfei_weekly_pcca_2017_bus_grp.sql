@@ -20,7 +20,7 @@ SELECT DISTINCT *
                NULL AS "C-Type Approval",
                NEW_CUST.CTYPE_CATEGORY "C-Type Category",
                NEW_CUST.CTYPE_SUBCATEGORY "C-Type Sub Cat",
-							 NEW_CUST.BUS_GRP,
+               NEW_CUST.BUS_GRP,
                NULL AS "Min PC",
                NULL AS "Max PC",
                NEW_CUST.BUSGRP "SIC Category",
@@ -87,7 +87,7 @@ SELECT DISTINCT *
                        CUST.MSTR_CUSTNO,
                        CUST.MSTR_CUST_NAME,
                        CUST.MSTR_TYPE,
-											 BG.BUS_GRP,
+                       BG.BUS_GRP,
                        CUST.JOB_YN,
                        CASE
                           WHEN LTRIM (CUST.SALESMAN_CODE, '0123456789')
@@ -240,8 +240,8 @@ SELECT DISTINCT *
                                CONT.RPC_MGR
                           FROM DW_FEI.SALESREP_DIMENSION REPS,
                                AAD9606.BRANCH_CONTACTS CONT
-															 
                          WHERE REPS.ACCOUNT_NUMBER_NK = CONT.ACCOUNT_NK(+)
+
                         GROUP BY REPS.ACCOUNT_NAME,
                                  REPS.ACCOUNT_NUMBER_NK,
                                  REPS.SALESREP_NK,
@@ -258,9 +258,9 @@ SELECT DISTINCT *
                               AND TO_CHAR (LTRIM (CUST.PRICE_COLUMN, '0')) =
                                      TO_CHAR (
                                         LTRIM (PC_CT_XREF.PRICE_COLUMN, '0')))
-											 LEFT OUTER JOIN
-											 		AAD9606.BUSGRP_CTYPE BG
-													ON BG.CUSTOMER_TYPE = CUST.CUSTOMER_TYPE
+                       LEFT OUTER JOIN
+                       		AAD9606.BUSGRP_CTYPE BG
+                          ON BG.CUSTOMER_TYPE = CUST.CUSTOMER_TYPE
 													
 											 	
                        LEFT OUTER JOIN
@@ -300,10 +300,10 @@ SELECT DISTINCT *
                        --AND CUST.ACCOUNT_NAME NOT IN 'DIST'
                        AND CUST.ACCOUNT_NAME NOT LIKE 'INT%'
                        --AND REP.RPC IS NOT NULL 
-											 /*AND (TRUNC (CUST.ACCOUNT_SETUP_DATE) BETWEEN TRUNC (
-                                                                                              SYSDATE - 8)
-                                                                                       AND TRUNC (
-                                                                                              SYSDATE - 1))*/
+                        /*AND (TRUNC (CUST.ACCOUNT_SETUP_DATE) BETWEEN TRUNC (
+                                                SYSDATE - 8)
+                                          AND TRUNC (
+                                                SYSDATE - 1))*/
                 GROUP BY NVL (PS_HIERARCHY.KIND_OF_BUSINESS, N'OTHER'),
                          CUST.ACCOUNT_NUMBER_NK,
                          CUST.ACCOUNT_NAME,
@@ -505,7 +505,7 @@ SELECT DISTINCT *
                NEW_CUST.BG_SUB_CATEGORY,
                NEW_CUST.TERRITORY
 							 
-							 /* NEW_CUST.CUSTOMER_GK CUST_GK,
+               /* NEW_CUST.CUSTOMER_GK CUST_GK,
                NEW_CUST.BRANCH_KOB,
                NEW_CUST.DW_UPDATE_TIMESTAMP,
                NEW_CUST.KOB_ALIGNED KOB_ALIGN,

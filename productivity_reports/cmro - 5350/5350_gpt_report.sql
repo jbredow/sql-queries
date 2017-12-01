@@ -2,6 +2,7 @@
 	use for monthly reports in toolbox
 	AAE0376 - Jenn
 	AAD9606 - Leigh
+	12 month view
  */
  
 SELECT 

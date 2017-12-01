@@ -1,17 +1,20 @@
-/*TRUNCATE TABLE AAA6863.PR_VICT2_CUST_12MO;
+/*
+TRUNCATE TABLE AAA6863.PR_VICT2_CUST_12MO;
 DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
 
 CREATE TABLE AAA6863.PR_VICT2_CUST_12MO
-AS*/
+
+AS
+*/
 
 SELECT DISTINCT
        sp_dtl.YEARMONTH,
        sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
        sp_dtl.WAREHOUSE_NUMBER,
-       --sp_dtl.INVOICE_NUMBER_NK,
+       sp_dtl.INVOICE_NUMBER_NK,
        sp_dtl.TYPE_OF_SALE,
-       /*sp_dtl.SHIP_VIA_NAME,
+       sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
        sp_dtl.OML_FL_INI,
        sp_dtl.OML_ASSOC_NAME,
@@ -26,18 +29,20 @@ SELECT DISTINCT
        sp_dtl.PRODUCT_NK,
        sp_dtl.ALT1_CODE,
        sp_dtl.PRODUCT_NAME,
+       sp_dtl.INVOICE_LINES,
        sp_dtl.STATUS,
-       sp_dtl.SHIPPED_QTY,*/
-       SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
-       SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC,
-       /*sp_dtl.REPLACEMENT_COST,
+       sp_dtl.SHIPPED_QTY,
+       sp_dtl.EXT_SALES_AMOUNT,
+       sp_dtl.EXT_AVG_COGS_AMOUNT,
+       sp_dtl.REPLACEMENT_COST,
        sp_dtl.UNIT_INV_COST,
        sp_dtl.PRICE_CODE,
-       --sp_dtl.COST_CODE_IND,*/
-       sp_dtl.PRICE_CATEGORY,
-       sp_dtl.PRICE_CATEGORY_OVR_PR,
-       sp_dtl.PRICE_CATEGORY_OVR_GR               --,
-       /*sp_dtl.GR_OVR,
+       COALESCE (
+		 					sp_dtl.PRICE_CATEGORY_OVR_PR,
+							sp_dtl.PRICE_CATEGORY_OVR_GR,
+							sp_dtl.PRICE_CATEGORY) 
+				PRICE_CATEGORY,
+       sp_dtl.GR_OVR,
        sp_dtl.PR_OVR,
        sp_dtl.PRICE_FORMULA,
        sp_dtl.UNIT_NET_PRICE_AMOUNT,
@@ -68,6 +73,10 @@ SELECT DISTINCT
        sp_dtl.ORDER_CODE,
        sp_dtl.SOURCE_SYSTEM,
        sp_dtl.CONSIGN_TYPE,
+			 sp_dtl.COST_CODE_IND,
+			 sp_dtl.SUBLINE_COST,
+			 sp_dtl.CLAIM_AMOUNT,
+			 sp_dtl.MSTR_CUSTNO,
        sp_dtl.MAIN_CUSTOMER_NK,
        sp_dtl.CUSTOMER_NK,
        sp_dtl.CUSTOMER_NAME,
@@ -78,8 +87,12 @@ SELECT DISTINCT
        sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER*/
-  FROM (SELECT SP_HIST.*,
+       sp_dtl.CONTRACT_NUMBER,
+			 sp_dtl.COST_CODE_IND,
+     	 sp_dtl.SUBLINE_COST,
+     	 sp_dtl.CLAIM_AMOUNT
+  FROM (SELECT SP_HIST.*,                  --process date changed to include invoice processing date 
+                                           --price category change to include rounding and NDP 
                CASE
                   WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
                   THEN
@@ -145,6 +158,8 @@ SELECT DISTINCT
                      END
                END
                   PRICE_CATEGORY_OVR_PR,
+                  --process date changed to include invoice processing date 
+                  --price category change to include rounding and NDP 
                CASE
                   WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
                   THEN
@@ -215,6 +230,7 @@ SELECT DISTINCT
                        IHF.CONTRACT_DESCRIPTION,
                        IHF.CONTRACT_NUMBER,
                        IHF.OML_ASSOC_NAME,
+                       CASE WHEN ILF.SHIPPED_QTY > 0 THEN 1 ELSE 0 END INVOICE_LINES,
                        DECODE (ihf.SALE_TYPE,
                                '1', 'Our Truck',
                                '2', 'Counter',
@@ -320,6 +336,7 @@ SELECT DISTINCT
                        ILF.SHIPPED_QTY,
                        ILF.EXT_AVG_COGS_AMOUNT,
                        ILF.EXT_SALES_AMOUNT,
+                       --price category definition to include 
                        CASE
                           WHEN ihf.order_code = 'IC'
                           THEN
@@ -465,6 +482,11 @@ SELECT DISTINCT
                                         FLOOR (ilf.MATRIX) + 1
                                 THEN
                                    'MATRIX_BID'
+                                   --price category defined for NDP 
+                                WHEN ILF.MATRIX_PRICE IS NULL AND ILF.PRICE_FORMULA LIKE 'L-0.%'  
+                                THEN 
+                                   'NDP'
+ 
                                 ELSE
                                    'MANUAL'
                              END
@@ -478,7 +500,9 @@ SELECT DISTINCT
                        ILF.UNIT_INV_COST,
                        ILF.REPLACEMENT_COST,
                        ILF.LIST_PRICE,
-                       --ILCF.COST_CODE_IND,
+                       ilcf.COST_CODE_IND,
+                       ilcf.SUBLINE_COST,
+                       ilcf.CLAIM_AMOUNT,
                        ILF.ORDER_ENTRY_DATE,
                        ILF.PO_COST,
                        ILF.PO_DATE,
@@ -505,28 +529,38 @@ SELECT DISTINCT
                        CUST.CUSTOMER_NK,
                        CUST.CUSTOMER_NAME,
                        CUST.PRICE_COLUMN,
-                       CUST.CUSTOMER_TYPE
+                       CUST.CUSTOMER_TYPE,
+                       CUST.MSTR_CUSTNO
                   FROM DW_FEI.INVOICE_HEADER_FACT IHF,
                        DW_FEI.INVOICE_LINE_FACT ILF,
                        DW_FEI.PRODUCT_DIMENSION PROD,
                        DW_FEI.CUSTOMER_DIMENSION CUST,
                        DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD,
-                       SALES_MART.SALES_WAREHOUSE_DIM SWD--,
-                       --DW_FEI.INVOICE_LINE_CORE_FACT ILCF
+                       SALES_MART.SALES_WAREHOUSE_DIM SWD,
+                       DW_FEI.INVOICE_LINE_CORE_FACT ILCF
                  WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
                        AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
                        AND SWD.WAREHOUSE_NUMBER_NK = IHF.WAREHOUSE_NUMBER
-                       --AND IHF.INVOICE_NUMBER_GK = ILCF.INVOICE_NUMBER_GK
-                       --AND ILCF.YEARMONTH = ILF.YEARMONTH
-                       --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
-                       --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
+                       AND IHF.INVOICE_NUMBER_GK = ILCF.INVOICE_NUMBER_GK
+                       AND ILCF.YEARMONTH = ILF.YEARMONTH
+                       AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
+                       AND (ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK)
                        --AND PROD.MANUFACTURER = '774'
                        --AND ILF.
-                       --AND IHF.ACCOUNT_NUMBER = '2000'
+                       AND IHF.ACCOUNT_NUMBER = '1480'
+											 AND (ILCF.SELL_WAREHOUSE_NUMBER_NK = '1589')
                        --AND IHF.WRITER = 'JPB'
-                       --AND CUST.CUSTOMER_NK = '112224'
+                       --AND CUST.CUSTOMER_NK = '19037'
                        --AND IHF.REF_BID_NUMBER <> 'N/A'
-                       AND DECODE (NVL (cust.ar_gl_number, '9999'),
+                        /*AND CUST.MSTR_CUSTNO IN ( '187870',
+                                                    '103921',
+                                                    '121925',
+                                                    '191735',
+                                                    '445166',
+                                                    '585697'
+                                                    )*/
+
+                        AND DECODE (NVL (cust.ar_gl_number, '9999'),
                                    '1320', 0,
                                    '1360', 0,
                                    '1380', 0,
@@ -546,40 +580,11 @@ SELECT DISTINCT
                        --AND IHF.ORDER_CODE NOT IN 'IC'
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
+                       AND ILF.YEARMONTH IN ('201710', '201711')
+                       AND IHF.YEARMONTH IN ('201710', '201711')
                        --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
-                       --AND IHF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM'))
-                       AND ( IHF.YEARMONTH BETWEEN '201603' AND '201607' OR IHF.YEARMONTH BETWEEN '201703' AND '201707' )
-                       AND ( ILF.YEARMONTH BETWEEN '201603' AND '201607' OR ILF.YEARMONTH BETWEEN '201703' AND '201707' )
-                       /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
-                                                       TRUNC (
-                                                          SYSDATE
-                                                          - NUMTOYMINTERVAL (
-                                                               12,
-                                                               'MONTH'),
-                                                          'MONTH'),
-                                                       'YYYYMM')
-                                                AND
-                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                          'YYYYMM')
-                          AND IHF.YEARMONTH BETWEEN TO_CHAR (
-                                                       TRUNC (
-                                                          SYSDATE
-                                                          - NUMTOYMINTERVAL (
-                                                               12,
-                                                               'MONTH'),
-                                                          'MONTH'),
-                                                       'YYYYMM')
-                                                AND
-                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                          'YYYYMM')*/
-											 
-                       /*AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
-                                                                     SYSDATE
-                                                                   - 18)
-                                                            AND TRUNC (
-                                                                     SYSDATE
-                                                                   - 5)))*/
-               ) SP_HIST
+                       --AND IHF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
+			) SP_HIST
                LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                   ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
                LEFT OUTER JOIN DW_FEI.LINE_BUY_DIMENSION LB
@@ -734,39 +739,6 @@ SELECT DISTINCT
                       AND SP_HIST.MAIN_CUSTOMER_NK = PR_OVR_BASE.CUSTOMER_NK
                       AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                              NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
-       sp_dtl
-		GROUP BY sp_dtl.YEARMONTH,
-       sp_dtl.ACCOUNT_NUMBER,
-       sp_dtl.ACCOUNT_NAME,
-       sp_dtl.WAREHOUSE_NUMBER,
-       --sp_dtl.INVOICE_NUMBER_NK,
-       sp_dtl.TYPE_OF_SALE,
-       /*sp_dtl.SHIP_VIA_NAME,
-       sp_dtl.OML_ASSOC_INI,
-       sp_dtl.OML_FL_INI,
-       sp_dtl.OML_ASSOC_NAME,
-       sp_dtl.WRITER,
-       sp_dtl.WR_FL_INI,
-       sp_dtl.ASSOC_NAME,
-       sp_dtl.DISCOUNT_GROUP_NK,
-       sp_Dtl.DISCOUNT_GROUP_NAME,
-       sp_Dtl.CHANNEL_TYPE,
-       sp_dtl.INVOICE_LINE_NUMBER,
-       sp_dtl.MANUFACTURER,
-       sp_dtl.PRODUCT_NK,
-       sp_dtl.ALT1_CODE,
-       sp_dtl.PRODUCT_NAME,
-       sp_dtl.STATUS,
-       sp_dtl.SHIPPED_QTY,*/
-       --SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
-       --SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC,
-       /*sp_dtl.REPLACEMENT_COST,
-       sp_dtl.UNIT_INV_COST,
-       sp_dtl.PRICE_CODE,
-       --sp_dtl.COST_CODE_IND,*/
-       sp_dtl.PRICE_CATEGORY,
-       sp_dtl.PRICE_CATEGORY_OVR_PR,
-       sp_dtl.PRICE_CATEGORY_OVR_GR
-			 ;
+       sp_dtl;
 
---GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;

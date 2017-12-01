@@ -1,7 +1,6 @@
 /*
 		NOTE!
 		two reports, one with and one without the GP%
-    original query
 */
 
 SELECT DISTINCT
@@ -32,9 +31,7 @@ SELECT DISTINCT
 										1
 								END
 									, 3 )
-							"GP %",
-			 
-			 
+					"GP %",
        ILF.UNIT_NET_PRICE_AMOUNT AS "Discounted Price Each",
        NVL ( ILF.LIST_PRICE, NULL ) AS "List Price",
        CASE
@@ -60,6 +57,7 @@ SELECT DISTINCT
        END
          AS "Calc Disc",
        MVD.MASTER_VENDOR_NAME AS "Manufacturer",
+			 ILF.PRICE_CODE,
        CASE WHEN IPF.PAID_METHOD = 'VI' THEN 'P-Card' ELSE NULL END AS "P Card",
        IHF.SOURCE_SYSTEM SS,
        IHF.WRITER

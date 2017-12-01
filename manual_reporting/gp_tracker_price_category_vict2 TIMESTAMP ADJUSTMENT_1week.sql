@@ -11,7 +11,7 @@ SELECT DISTINCT
        sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.INVOICE_NUMBER_NK,
        sp_dtl.TYPE_OF_SALE,
-			 sp_dtl.SALESREP_NK,
+       sp_dtl.SALESREP_NK,
        sp_dtl.SALESREP_NAME,
        sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
@@ -81,8 +81,8 @@ SELECT DISTINCT
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
        sp_dtl.CONTRACT_NUMBER,
-			 sp_dtl.INVOICE_DATE,
-			 sp_dtl.MASTER_VENDOR_NAME
+       sp_dtl.INVOICE_DATE,
+       sp_dtl.MASTER_VENDOR_NAME
   FROM (SELECT SP_HIST.*,
                CASE
                   WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')

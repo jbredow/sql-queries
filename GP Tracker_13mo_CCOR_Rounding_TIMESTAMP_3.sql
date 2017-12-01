@@ -83,7 +83,7 @@ SELECT LINE_HIST.YYYY,
           WHEN LINE_HIST.PROCESS_DATE BETWEEN COALESCE (
                                                      GR_OVR_JOB.INSERT_TIMESTAMP,
                                                      GR_OVR_BASE.INSERT_TIMESTAMP)
-                                              AND COALESCE (
+                                          AND COALESCE (
                                                      GR_OVR_JOB.EXPIRE_DATE,
                                                      GR_OVR_BASE.EXPIRE_DATE,
                                                      LINE_HIST.PROCESS_DATE)
