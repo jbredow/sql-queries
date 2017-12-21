@@ -1,6 +1,6 @@
---DROP TABLE AAD9606.PR_CORE_YOY2;
+DROP TABLE AAA6863.PR_CORE_YOY2;
 
-CREATE TABLE AAD9606.PR_CORE_YOY2
+CREATE TABLE AAA6863.PR_CORE_YOY2
 
 AS
    SELECT SWD.DIVISION_NAME,
@@ -18,7 +18,12 @@ AS
                   '7', 'Showroom Direct',
                   '8', 'eBusiness')
              TYPE_OF_SALE,
-          CASE
+          
+					EMP.TITLE_DESC,
+					REPS.SALESREP_NK,
+					REPS.SALESREP_NAME,
+					
+					CASE
              WHEN REPS.EMPLOYEE_NUMBER_NK IS NULL
              THEN
                 'H/U'
@@ -33,7 +38,8 @@ AS
              AS HOUSE_FLAG,
           NVL (PROD.DISCOUNT_GROUP_NK, 'SP-') DISCOUNT_GROUP_NK,
           COUNT (ILF.INVOICE_LINE_NUMBER) LINES,
-          SUM (ILF.EXT_AVG_COGS_AMOUNT) AVG_COGS,
+          
+					SUM (ILF.EXT_AVG_COGS_AMOUNT) AVG_COGS,
           SUM (ILF.EXT_ACTUAL_COGS_AMOUNT) INVOICE_COGS,
           SUM (ILF.EXT_SALES_AMOUNT) SALES,
           SUM (ILF.CORE_ADJ_AVG_COST) CORE_ADJ_AVG_COGS,
@@ -62,7 +68,8 @@ AS
           SALES_MART.SALES_WAREHOUSE_DIM SWD,
           SALES_MART.TIME_PERIOD_DIMENSION TPD
     --DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
-    WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK --AND ILF.PRODUCT_STATUS = 'SP'
+    WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
+					--AND ILF.PRODUCT_STATUS = 'SP'
           --AND IHF.INVOICE_NUMBER_GK = CORE.INVOICE_NUMBER_GK(+)
           AND ILF.INVOICE_NUMBER_GK = CORE.INVOICE_NUMBER_GK(+)
           AND ILF.INVOICE_LINE_NUMBER = CORE.INVOICE_LINE_NUMBER(+)
@@ -132,7 +139,10 @@ AS
                     '6', 'Showroom',
                     '7', 'Showroom Direct',
                     '8', 'eBusiness'),
-            CASE
+            EMP.TITLE_DESC,
+						REPS.SALESREP_NK,
+						REPS.SALESREP_NAME,
+						CASE
                WHEN REPS.EMPLOYEE_NUMBER_NK IS NULL
                THEN
                   'H/U'
