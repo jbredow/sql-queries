@@ -547,10 +547,10 @@ SELECT DISTINCT
                        AND (ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK)
                        --AND PROD.MANUFACTURER = '774'
                        --AND ILF.
-                       AND IHF.ACCOUNT_NUMBER = '1480'
-											 AND (ILCF.SELL_WAREHOUSE_NUMBER_NK = '1589')
+                       AND IHF.ACCOUNT_NUMBER = '52'
+											 --AND (ILCF.SELL_WAREHOUSE_NUMBER_NK = '1589')
                        --AND IHF.WRITER = 'JPB'
-                       --AND CUST.CUSTOMER_NK = '19037'
+                       AND CUST.CUSTOMER_NK = '119121'
                        --AND IHF.REF_BID_NUMBER <> 'N/A'
                         /*AND CUST.MSTR_CUSTNO IN ( '187870',
                                                     '103921',
@@ -580,8 +580,8 @@ SELECT DISTINCT
                        --AND IHF.ORDER_CODE NOT IN 'IC'
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                       AND ILF.YEARMONTH IN ('201710', '201711')
-                       AND IHF.YEARMONTH IN ('201710', '201711')
+                       AND ILF.YEARMONTH BETWEEN '201706' AND '201711'
+                       AND IHF.YEARMONTH BETWEEN '201706' AND '201711'
                        --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
                        --AND IHF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
 			) SP_HIST
