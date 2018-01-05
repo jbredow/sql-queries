@@ -92,7 +92,9 @@ SELECT MAN.ACCOUNT_NAME,
 																				 '761',
 																				 '5351',
 																				 '8090',
-																				 '9009')
+																				 '9009',
+																				 '2920',
+																				 '2934')
 
        /*AND (MAN.WAREHOUSE_NUMBER = '5350' 
 			 			OR (SUBSTR (SWD.REGION_NAME, 1, 3) IN ('D10',

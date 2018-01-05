@@ -15,7 +15,7 @@ SELECT SWD.DIVISION_NAME AS REGION,
        CUST.CUSTOMER_TYPE,
 -- change below
        NVL (BG_CT.BUS_GRP, 'OTHER') BUS_GRP,
-			 NVL (PC."PriceColGroup",'OTHER') PC_GROUP,
+       NVL (PC."PriceColGroup",'OTHER') PC_GROUP,
 -- end change
        /* POA_HDR.DRAWER,
         POA_HDR.APPLY_TO,
