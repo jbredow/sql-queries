@@ -51,7 +51,7 @@ SELECT STATS.DIST,
                                        'D01',
                                        'D02',
                                        'D03',
-                                       'DO4',
+                                       'D04',
                                        'D05'
                                        ))
                     GROUP BY SWD.REGION_NAME,
@@ -115,7 +115,7 @@ SELECT STATS.DIST,
                                 'D01',
                                 'D02',
                                 'D03',
-                                'DO4',
+                                'D04',
                                 'D05'
                                 ))
                  -- AND ( SWD.ACCOUNT_NUMBER_NK = '2000' )
