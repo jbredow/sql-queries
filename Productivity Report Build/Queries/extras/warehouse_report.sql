@@ -2,11 +2,9 @@
 	use for monthly reports in toolbox
 	AAE0376 - Jenn
 	AAD9606 - Leigh
-	12 month view
  */
  
 SELECT 
-	GP_DATA.YEARMONTH,
 	CASE	
 		WHEN UPPER(GP_DATA.TYPE_OF_SALE) = 'SHOWROOM DIRECT' 
 		THEN 'Showroom'
@@ -22,7 +20,12 @@ SELECT
 		"Region",
 	ACCT.ACCOUNT_NAME,
 	GP_DATA.WAREHOUSE_NUMBER_NK WHSE,
-	
+  SUM (
+			CASE WHEN GP_DATA.ROLLUP = 'Subtotal' AND GP_DATA.EXT_SALES > 0 THEN 
+				GP_DATA.EXT_SALES
+				ELSE 1
+			END) OUTBOUND_SLS,
+
 	SUM (
 		GP_DATA.SLS_SUBTOTAL
 		+ GP_DATA.SLS_FREIGHT
@@ -125,12 +128,8 @@ SELECT
 				ELSE 0
 			END)
 		/ SUM (
-			CASE
-				WHEN GP_DATA.SLS_SUBTOTAL > 0 
-				THEN GP_DATA.SLS_SUBTOTAL
-				ELSE 1
-			END),
-	3)
+			CASE WHEN GP_DATA.ROLLUP = 'Subtotal' AND GP_DATA.EXT_SALES > 0 THEN GP_DATA.EXT_SALES ELSE 1 END),6)
+				
 		"Price Matrix Use%$",
 	ROUND (
 		SUM (
@@ -223,11 +222,8 @@ SELECT
 				ELSE 0
 			END)
 		/ SUM (
-			CASE
-				WHEN GP_DATA.SLS_SUBTOTAL > 0 THEN GP_DATA.SLS_SUBTOTAL
-				ELSE 1
-			END),
-		3)
+			CASE WHEN GP_DATA.ROLLUP = 'Subtotal' AND GP_DATA.EXT_SALES>0 THEN GP_DATA.EXT_SALES ELSE 1 END ),6)
+				
 			"Contract Use%$",
 	ROUND (
 		SUM (
@@ -320,12 +316,8 @@ SELECT
 				ELSE 0
 			END)
 		/ SUM (
-			CASE
-				WHEN GP_DATA.SLS_SUBTOTAL > 0 
-				THEN GP_DATA.SLS_SUBTOTAL
-				ELSE 1
-			END),
-		3)
+			CASE WHEN GP_DATA.ROLLUP = 'Subtotal' AND GP_DATA.EXT_SALES>0 THEN GP_DATA.EXT_SALES ELSE 1 END ),6)
+				
 			"Manual Use%$",
 	ROUND (
 		SUM (
@@ -466,12 +458,12 @@ SELECT
 				ELSE 0
 			END)
 			/SUM(
-				CASE
-					WHEN GP_DATA.SLS_SUBTOTAL>0
-					THEN GP_DATA.SLS_SUBTOTAL
+				CASE WHEN GP_DATA.ROLLUP = 'Subtotal' 
+					AND GP_DATA.EXT_SALES>0
+					THEN GP_DATA.EXT_SALES
 					ELSE 1
 				END),
-		3)
+		6)
 			"OtherUse%$",
 	ROUND(
 		SUM(
@@ -539,6 +531,14 @@ SELECT
 			ELSE 0
 		END)
 		  "Other # Lines",
+ SUM (
+		CASE
+			WHEN GP_DATA.PRICE_CATEGORY IN
+				('CREDITS')
+			THEN (GP_DATA.EXT_SALES)
+			ELSE 0
+		END)
+			"Credit Sales",
 	ROUND (
 		SUM (
 			CASE
@@ -547,12 +547,11 @@ SELECT
 				ELSE	0
 			END)
 		/ SUM (
-			CASE
-				WHEN GP_DATA.SLS_SUBTOTAL > 0 
-				THEN GP_DATA.SLS_SUBTOTAL
+			CASE WHEN GP_DATA.ROLLUP = 'Subtotal' AND GP_DATA.EXT_SALES>0 THEN 
+				GP_DATA.EXT_SALES
 				ELSE 1
 			END),
-	3)
+	6)
 		"Credits Use%$",
 	ROUND (
 	SUM (
@@ -572,7 +571,7 @@ SELECT
 	SUM (GP_DATA.SLS_FREIGHT - GP_DATA.AVG_COST_FREIGHT)
 		"Freight Profit (Loss)"
 
-FROM  AAA6863.GP_TRACKER_13MO GP_DATA,
+FROM  AAE0376.GP_TRACKER_13MO GP_DATA,
 		(
 		SELECT WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK
 		FROM DW_FEI.WAREHOUSE_DIMENSION WD
@@ -580,24 +579,18 @@ FROM  AAA6863.GP_TRACKER_13MO GP_DATA,
 		GROUP BY WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK
 		) ACCT
 	WHERE GP_DATA.ACCOUNT_NUMBER = ACCT.ACCOUNT_NUMBER_NK(+)
-		AND GP_DATA.WAREHOUSE_NUMBER_NK = '5350'
-		AND GP_DATA.YEARMONTH  BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-                                                    - NUMTOYMINTERVAL ( 12,
-                                                                       'MONTH'
-                                                      ),
-                                                    'MONTH'
-                                            ),
-                                            'YYYYMM'
-                                   )
-                               AND  TO_CHAR ( TRUNC ( SYSDATE,
-                                                     'MM'
-                                             )
-                                             - 1,
-                                             'YYYYMM')
+		AND GP_DATA.YEARMONTH  = TO_CHAR (
+                                   TRUNC (
+                                    SYSDATE
+                                    - NUMTOYMINTERVAL (
+                                       1,
+                                       'MONTH'),
+                                    'MONTH'),
+                                   'YYYYMM')
+ 	
 	HAVING SUM (GP_DATA.SLS_SUBTOTAL) <> 0
 
 GROUP BY 
-	GP_DATA.YEARMONTH,
 	CASE	
 		WHEN UPPER(GP_DATA.TYPE_OF_SALE) = 'SHOWROOM DIRECT' 
 		THEN 'Showroom'
@@ -612,13 +605,5 @@ GROUP BY
 	ACCT.ACCOUNT_NAME,
 	GP_DATA.WAREHOUSE_NUMBER_NK
 
-ORDER BY GP_DATA.WAREHOUSE_NUMBER_NK,
-	
-	CASE	
-		WHEN UPPER(GP_DATA.TYPE_OF_SALE) = 'SHOWROOM DIRECT' 
-		THEN 'Showroom'
-		ELSE GP_DATA.TYPE_OF_SALE
-	END,
-GP_DATA.YEARMONTH
-
+ORDER BY GP_DATA.WAREHOUSE_NUMBER_NK
 ;

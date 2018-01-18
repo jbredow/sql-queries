@@ -2,11 +2,9 @@
 	use for monthly reports in toolbox
 	AAE0376 - Jenn
 	AAD9606 - Leigh
-	12 month view
  */
  
 SELECT 
-	GP_DATA.YEARMONTH,
 	CASE	
 		WHEN UPPER(GP_DATA.TYPE_OF_SALE) = 'SHOWROOM DIRECT' 
 		THEN 'Showroom'
@@ -572,32 +570,23 @@ SELECT
 	SUM (GP_DATA.SLS_FREIGHT - GP_DATA.AVG_COST_FREIGHT)
 		"Freight Profit (Loss)"
 
-FROM  AAA6863.GP_TRACKER_13MO GP_DATA,
-		(
-		SELECT WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK
-		FROM DW_FEI.WAREHOUSE_DIMENSION WD
-		WHERE (WD.ACTIVE_FLAG = 1) AND (WD.DELETE_DATE IS NULL)
-		GROUP BY WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK
-		) ACCT
+FROM  AAE0376.GP_TRACKER_13MO GP_DATA,
+		(SELECT WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK, WD.WAREHOUSE_NUMBER_NK
+          FROM SALES_MART.SALES_WAREHOUSE_DIM WD
+         GROUP BY WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK, WD.WAREHOUSE_NUMBER_NK) ACCT
 	WHERE GP_DATA.ACCOUNT_NUMBER = ACCT.ACCOUNT_NUMBER_NK(+)
-		AND GP_DATA.WAREHOUSE_NUMBER_NK = '5350'
-		AND GP_DATA.YEARMONTH  BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-                                                    - NUMTOYMINTERVAL ( 12,
-                                                                       'MONTH'
-                                                      ),
-                                                    'MONTH'
-                                            ),
-                                            'YYYYMM'
-                                   )
-                               AND  TO_CHAR ( TRUNC ( SYSDATE,
-                                                     'MM'
-                                             )
-                                             - 1,
-                                             'YYYYMM')
+		AND GP_DATA.YEARMONTH = TO_CHAR (
+                                   TRUNC (
+                                    SYSDATE
+                                    - NUMTOYMINTERVAL (
+                                       1,
+                                       'MONTH'),
+                                    'MONTH'),
+                                   'YYYYMM')
+ 	
 	HAVING SUM (GP_DATA.SLS_SUBTOTAL) <> 0
 
 GROUP BY 
-	GP_DATA.YEARMONTH,
 	CASE	
 		WHEN UPPER(GP_DATA.TYPE_OF_SALE) = 'SHOWROOM DIRECT' 
 		THEN 'Showroom'
@@ -612,13 +601,5 @@ GROUP BY
 	ACCT.ACCOUNT_NAME,
 	GP_DATA.WAREHOUSE_NUMBER_NK
 
-ORDER BY GP_DATA.WAREHOUSE_NUMBER_NK,
-	
-	CASE	
-		WHEN UPPER(GP_DATA.TYPE_OF_SALE) = 'SHOWROOM DIRECT' 
-		THEN 'Showroom'
-		ELSE GP_DATA.TYPE_OF_SALE
-	END,
-GP_DATA.YEARMONTH
-
+ORDER BY GP_DATA.WAREHOUSE_NUMBER_NK
 ;
