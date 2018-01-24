@@ -1,70 +1,49 @@
-/*INSERT INTO AAE0376.GP_TRACKER_13MO
-   (SELECT YYYY,
-           YEARMONTH,
-           ROLLING_QTR,
-           REGION,
-           ACCOUNT_NUMBER,
-           WAREHOUSE_NUMBER,
-           KOB,
-           TYPE_OF_SALE,
-           INVOICE_LINES,
-           AVG_COGS,
-           ACTUAL_COGS,
-           EXT_SALES,
-           /*CASE
-          WHEN CCOR.PRICE_CATEGORY IN
-                  ('MATRIX', 'MATRIX_BID', 'QUOTE', 'MANUAL')
-          THEN
-             COALESCE (CCOR.PRICE_CATEGORY_OVR_PR,
-                       CCOR.PRICE_CATEGORY_OVR_GR,
-                       CCOR.PRICE_CATEGORY)
-          ELSE
-             CCOR.PRICE_CATEGORY
-       END*/
-          PRICE_CATEGORY,
-           ROLLUP,
-           SLS_TOTAL,
-           SLS_SUBTOTAL,
-           SLS_FREIGHT,
-           SLS_MISC,
-           SLS_RESTOCK,
-           AVG_COST_SUBTOTAL,
-           AVG_COST_FREIGHT,
-           AVG_COST_MISC
-      FROM AAE0376.GP_TRACKER_13MO_NOT_CCOR CCOR)*/
-      
-      INSERT INTO AAE0376.GP_TRACKER_13MO
-   (SELECT YYYY,
-           YEARMONTH,
-           ROLLING_QTR,
-           REGION,
-           ACCOUNT_NUMBER,
-           WAREHOUSE_NUMBER,
-           KOB,
-           TYPE_OF_SALE,
-           INVOICE_LINES,
-           AVG_COGS,
-           ACTUAL_COGS,
-           EXT_SALES,
-           CASE
-          WHEN CCOR.PRICE_CATEGORY IN
-                  ('MATRIX', 'MATRIX_BID', 'QUOTE', 'MANUAL')
-          THEN
-             COALESCE (CCOR.PRICE_CATEGORY_OVR_PR,
-                       CCOR.PRICE_CATEGORY_OVR_GR,
-                       CCOR.PRICE_CATEGORY)
-          ELSE
-             CCOR.PRICE_CATEGORY
-       END
-          PRICE_CATEGORY,
-           ROLLUP,
-           SLS_TOTAL,
-           SLS_SUBTOTAL,
-           SLS_FREIGHT,
-           SLS_MISC,
-           SLS_RESTOCK,
-           AVG_COST_SUBTOTAL,
-           AVG_COST_FREIGHT,
-           AVG_COST_MISC
-      FROM AAE0376.GP_TRACKER_13MO_CCOR CCOR);
-      
+INSERT INTO AAA6863.GP_TRACKER_13MO
+   (SELECT A.YYYY,
+           A.YEARMONTH,
+           A.ROLLING_QTR,
+           A.REGION,
+           A.ACCOUNT_NUMBER,
+           A.WAREHOUSE_NUMBER,
+           A.KOB,
+           A.TYPE_OF_SALE,
+           --GP_TRACKER_13MO_CCOR.PRICE_CODE,
+           SUM (A.INVOICE_LINES) INVOICE_LINES,
+           SUM (A.AVG_COGS) AVG_COGS,
+           SUM (A.ACTUAL_COGS) ACTUAL_COGS,
+           SUM (A.EXT_SALES) EXT_SALES,
+           COALESCE (A.PRICE_CATEGORY_OVR_PR,
+                     A.PRICE_CATEGORY_OVR_GR,
+                     A.PRICE_CATEGORY)
+              PRICE_CATEGORY,
+           A.ROLLUP,
+           A.SLS_TOTAL,
+           A.SLS_SUBTOTAL,
+           A.SLS_FREIGHT,
+           A.SLS_MISC,
+           A.SLS_RESTOCK,
+           A.AVG_COST_SUBTOTAL,
+           A.AVG_COST_FREIGHT,
+           A.AVG_COST_MISC
+      FROM AAA6863.GP_TRACKER_13MO_CCOR A
+    GROUP BY A.YYYY,
+             A.YEARMONTH,
+             A.ROLLING_QTR,
+             A.REGION,
+             A.ACCOUNT_NUMBER,
+             A.WAREHOUSE_NUMBER,
+             A.KOB,
+             A.TYPE_OF_SALE,
+             COALESCE (A.PRICE_CATEGORY_OVR_PR,
+                       A.PRICE_CATEGORY_OVR_GR,
+                       A.PRICE_CATEGORY),
+             A.ROLLUP,
+             A.SLS_TOTAL,
+             A.SLS_SUBTOTAL,
+             A.SLS_FREIGHT,
+             A.SLS_MISC,
+             A.SLS_RESTOCK,
+             A.AVG_COST_SUBTOTAL,
+             A.AVG_COST_FREIGHT,
+             A.AVG_COST_MISC);
+

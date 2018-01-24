@@ -630,7 +630,7 @@ AS
                                    1) <> 0
 
     GROUP BY  ihf.YEARMONTH,
-    ps.division_name,
+    				 ps.division_name,
              ps.ACCOUNT_NUMBER_NK,
              ps.WAREHOUSE_NUMBER_nk,
              DECODE (ps.DIVISION_NAME,
@@ -652,4 +652,5 @@ AS
                      '6', 'Showroom',
                      '7', 'Showroom Direct',
                      '8', 'eBusiness'));
-                     GRANT SELECT ON AAA6863.GP_TRACKER_WRITER_YTD TO PUBLIC;
+
+GRANT SELECT ON AAA6863.GP_TRACKER_WRITER_YTD TO PUBLIC;
