@@ -293,10 +293,10 @@ SELECT DISTINCT *
                               NVL (CUST.ACCOUNT_SETUP_DATE,
                                    CUST.INSERT_TIMESTAMP)) BETWEEN TRUNC (
                                                                         SYSDATE
-                                                                       - 8 )
+                                                                        - 8 )
                                                                AND TRUNC (
                                                                       SYSDATE
-																																			 - 1 )
+											      - 1 )
                        --AND CUST.ACCOUNT_NAME NOT IN 'DIST'
                        AND CUST.ACCOUNT_NAME NOT LIKE 'INT%'
                        --AND REP.RPC IS NOT NULL 

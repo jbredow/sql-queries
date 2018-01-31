@@ -1,3 +1,6 @@
+/*
+  queries > from AAA6863.GP_TRACKER_WRITER_SUMS 
+*/
 CREATE OR REPLACE FORCE VIEW "AAA6863"."WRITER"
 AS
 SELECT "YEARMONTH",
@@ -53,6 +56,7 @@ SELECT "YEARMONTH",
        "Other Invoice Cnt",
        "Credits $" "Credit Sales",
        ROUND((CASE WHEN "Outbound Sales">0 THEN "Credits $"/"Outbound Sales" ELSE 0 END),3) "Credits Use%$",
-       ROUND((CASE WHEN "Total # Lines">0 THEN "Credits Lines"/"Total # Lines"ELSE 0 END),3) "Credits Use%#"
-	FROM AAA6863.GP_TRACKER_WRITER_SUMS_5350
+       ROUND((CASE WHEN "Total # Lines">0 THEN "Credits Lines"/"Total # Lines"ELSE 0 END),3) "Credits Use%#",
+       "Credits Lines"
+	FROM AAA6863.GP_TRACKER_WRITER_SUMS
 	;

@@ -1,10 +1,5 @@
 /*
-TRUNCATE TABLE AAE0376.PR_VICT2_CUST_12MO;
-DROP TABLE AAE0376.PR_VICT2_CUST_12MO;
-
-CREATE TABLE AAE0376.PR_VICT2_CUST_12MO
-
-AS
+		atlanta specials contest - daily query
 */
 
 SELECT DISTINCT
@@ -13,6 +8,7 @@ SELECT DISTINCT
        sp_dtl.ACCOUNT_NAME,
        sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.INVOICE_NUMBER_NK,
+			 sp_dtl.INVOICE_DATE,
        sp_dtl.TYPE_OF_SALE,
        sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
@@ -223,6 +219,8 @@ SELECT DISTINCT
                        CUST.ACCOUNT_NAME,
                        IHF.WAREHOUSE_NUMBER,
                        IHF.INVOICE_NUMBER_NK,
+											 IHF.INVOICE_DATE,
+											 IHF.SHIP_DATE,
                        IHF.JOB_NAME,
                        IHF.CONTRACT_DESCRIPTION,
                        IHF.CONTRACT_NUMBER,
@@ -579,8 +577,8 @@ SELECT DISTINCT
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 											 
-                       AND ILF.YEARMONTH BETWEEN '201701' AND '201712'
-                       AND IHF.YEARMONTH BETWEEN '201701' AND '201712'
+                       AND ILF.YEARMONTH BETWEEN '201801' AND '201803'
+                       AND IHF.YEARMONTH BETWEEN '201801' AND '201803'
 											 
                        --AND IHF.YEARMONTH IN ('201710', '201711')
                        --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
@@ -742,6 +740,12 @@ SELECT DISTINCT
                              NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
        sp_dtl
 			 WHERE sp_dtl.STATUS IN ('SP-', 'SP')
+			 		
+					AND TRUNC ( NVL(sp_dtl.INVOICE_DATE, 
+													sp_dtl.SHIP_DATE))
+														BETWEEN TRUNC ( TO_DATE('25-JAN-17')) 
+																AND TRUNC ( SYSDATE - 1)
+					
  ;
 
 --GRANT SELECT ON AAE0376.PR_VICT2_CUST_12MO TO PUBLIC;

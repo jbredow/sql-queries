@@ -1,3 +1,6 @@
+/*
+      queries > gpt writer channel
+*/
 SELECT GP_DATA.YEARMONTH,
        CASE
           WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')

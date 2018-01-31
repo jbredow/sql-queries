@@ -23,7 +23,7 @@ SELECT LINE_HIST.YYYY,
           WHEN LINE_HIST.PROCESS_DATE BETWEEN COALESCE (
                                                      PR_OVR_JOB.INSERT_TIMESTAMP-2,
                                                      PR_OVR_BASE.INSERT_TIMESTAMP-2)
-                                              AND COALESCE (
+                                          AND COALESCE (
                                                      PR_OVR_JOB.EXPIRE_DATE,
                                                      PR_OVR_BASE.EXPIRE_DATE,
                                                      LINE_HIST.PROCESS_DATE)
@@ -452,7 +452,7 @@ SELECT LINE_HIST.YYYY,
               AND COALESCE (LINE_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                      COALESCE (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))
 GROUP BY LINE_HIST.YYYY,
-LINE_HIST.YEARMONTH,
+         LINE_HIST.YEARMONTH,
          LINE_HIST.ROLLING_QTR,
          LINE_HIST.REGION,
          LINE_HIST.ACCOUNT_NUMBER,

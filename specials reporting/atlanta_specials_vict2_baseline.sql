@@ -1,14 +1,9 @@
 /*
-TRUNCATE TABLE AAE0376.PR_VICT2_CUST_12MO;
-DROP TABLE AAE0376.PR_VICT2_CUST_12MO;
-
-CREATE TABLE AAE0376.PR_VICT2_CUST_12MO
-
-AS
+		specials baseline query calander 2017 - Atlanta
 */
 
 SELECT DISTINCT
-       sp_dtl.YEARMONTH,
+       /*sp_dtl.YEARMONTH,
        sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
        sp_dtl.WAREHOUSE_NUMBER,
@@ -17,11 +12,11 @@ SELECT DISTINCT
        sp_dtl.SHIP_VIA_NAME,
        sp_dtl.OML_ASSOC_INI,
        sp_dtl.OML_FL_INI,
-       sp_dtl.OML_ASSOC_NAME,
+       sp_dtl.OML_ASSOC_NAME,*/
        sp_dtl.WRITER,
-       sp_dtl.WR_FL_INI,
-       sp_dtl.ASSOC_NAME,
-       sp_dtl.DISCOUNT_GROUP_NK,
+       --sp_dtl.WR_FL_INI,
+       NVL(sp_dtl.ASSOC_NAME, NULL) WRITER_NAME,
+       /*sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
        sp_Dtl.CHANNEL_TYPE,
        sp_dtl.INVOICE_LINE_NUMBER,
@@ -29,20 +24,20 @@ SELECT DISTINCT
        sp_dtl.PRODUCT_NK,
        sp_dtl.ALT1_CODE,
        sp_dtl.PRODUCT_NAME,
-       sp_dtl.INVOICE_LINES,
+       sp_dtl.INVOICE_LINES,*/
        sp_dtl.STATUS,
-       sp_dtl.SHIPPED_QTY,
-       sp_dtl.EXT_SALES_AMOUNT,
-       sp_dtl.EXT_AVG_COGS_AMOUNT,
-       sp_dtl.REPLACEMENT_COST,
+       --sp_dtl.SHIPPED_QTY,
+       SUM(sp_dtl.EXT_SALES_AMOUNT) EX_SALES,
+       SUM(sp_dtl.EXT_AVG_COGS_AMOUNT) EX_AC,
+       /*sp_dtl.REPLACEMENT_COST,
        sp_dtl.UNIT_INV_COST,
-       sp_dtl.PRICE_CODE,
+       sp_dtl.PRICE_CODE,*/
        COALESCE (
 		 					sp_dtl.PRICE_CATEGORY_OVR_PR,
 							sp_dtl.PRICE_CATEGORY_OVR_GR,
 							sp_dtl.PRICE_CATEGORY) 
-				PRICE_CATEGORY,
-       sp_dtl.GR_OVR,
+				PRICE_CATEGORY
+       /*sp_dtl.GR_OVR,
        sp_dtl.PR_OVR,
        sp_dtl.PRICE_FORMULA,
        sp_dtl.UNIT_NET_PRICE_AMOUNT,
@@ -87,7 +82,7 @@ SELECT DISTINCT
        sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER
+       sp_dtl.CONTRACT_NUMBER*/
   FROM (SELECT SP_HIST.*,                  --process date changed to include invoice processing date 
                                            --price category change to include rounding and NDP 
                CASE
@@ -579,8 +574,8 @@ SELECT DISTINCT
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 											 
-                       AND ILF.YEARMONTH BETWEEN '201701' AND '201712'
-                       AND IHF.YEARMONTH BETWEEN '201701' AND '201712'
+                       AND ILF.YEARMONTH BETWEEN '201708' AND '201801'
+                       AND IHF.YEARMONTH BETWEEN '201708' AND '201801'
 											 
                        --AND IHF.YEARMONTH IN ('201710', '201711')
                        --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
@@ -742,6 +737,87 @@ SELECT DISTINCT
                              NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
        sp_dtl
 			 WHERE sp_dtl.STATUS IN ('SP-', 'SP')
+			 GROUP BY 
+			 /*sp_dtl.YEARMONTH,
+       sp_dtl.ACCOUNT_NUMBER,
+       sp_dtl.ACCOUNT_NAME,
+       sp_dtl.WAREHOUSE_NUMBER,
+       sp_dtl.INVOICE_NUMBER_NK,
+       sp_dtl.TYPE_OF_SALE,
+       sp_dtl.SHIP_VIA_NAME,
+       sp_dtl.OML_ASSOC_INI,
+       sp_dtl.OML_FL_INI,
+       sp_dtl.OML_ASSOC_NAME,*/
+       sp_dtl.WRITER,
+       --sp_dtl.WR_FL_INI,
+       NVL(sp_dtl.ASSOC_NAME, NULL),
+       /*sp_dtl.DISCOUNT_GROUP_NK,
+       sp_Dtl.DISCOUNT_GROUP_NAME,
+       sp_Dtl.CHANNEL_TYPE,
+       sp_dtl.INVOICE_LINE_NUMBER,
+       sp_dtl.MANUFACTURER,
+       sp_dtl.PRODUCT_NK,
+       sp_dtl.ALT1_CODE,
+       sp_dtl.PRODUCT_NAME,
+       sp_dtl.INVOICE_LINES,*/
+       sp_dtl.STATUS,
+       --sp_dtl.SHIPPED_QTY,
+       --SUM(sp_dtl.EXT_SALES_AMOUNT) EX_SALES,
+       --SUM(sp_dtl.EXT_AVG_COGS_AMOUNT) EX_AC,
+       /*sp_dtl.REPLACEMENT_COST,
+       sp_dtl.UNIT_INV_COST,
+       sp_dtl.PRICE_CODE,*/
+       COALESCE (
+		 					sp_dtl.PRICE_CATEGORY_OVR_PR,
+							sp_dtl.PRICE_CATEGORY_OVR_GR,
+							sp_dtl.PRICE_CATEGORY) 
+				
+       /*sp_dtl.GR_OVR,
+       sp_dtl.PR_OVR,
+       sp_dtl.PRICE_FORMULA,
+       sp_dtl.UNIT_NET_PRICE_AMOUNT,
+       sp_dtl.UM,
+       sp_dtl.SELL_MULT,
+       sp_dtl.PACK_QTY,
+       sp_dtl.LIST_PRICE,
+       sp_dtl.MATRIX_PRICE,
+       sp_dtl.MATRIX,
+       CASE
+          WHEN sp_dtl.PRICE_CATEGORY_OVR_PR IS NOT NULL THEN sp_dtl.PR_OVR
+          ELSE NULL
+       END
+          PR_TRIM_FORM,
+       CASE
+          WHEN sp_dtl.PRICE_CATEGORY_OVR_PR IS NOT NULL
+          THEN
+             sp_dtl.PR_OVR_BASIS
+          ELSE
+             NULL
+       END
+          PR_OVR_BASIS,
+       CASE
+          WHEN sp_dtl.PRICE_CATEGORY_OVR_GR IS NOT NULL THEN sp_dtl.GR_OVR
+          ELSE NULL
+       END
+          GR_TRIM_FORM,
+       sp_dtl.ORDER_CODE,
+       sp_dtl.SOURCE_SYSTEM,
+       sp_dtl.CONSIGN_TYPE,
+			 sp_dtl.COST_CODE_IND,
+			 sp_dtl.SUBLINE_COST,
+			 sp_dtl.CLAIM_AMOUNT,
+			 sp_dtl.MSTR_CUSTNO,
+       sp_dtl.MAIN_CUSTOMER_NK,
+       sp_dtl.CUSTOMER_NK,
+       sp_dtl.CUSTOMER_NAME,
+       sp_dtl.PRICE_COLUMN,
+       sp_dtl.CUSTOMER_TYPE,
+       sp_dtl.REF_BID_NUMBER,
+       sp_dtl.SOURCE_ORDER,
+       sp_dtl.ORDER_ENTRY_DATE,
+       sp_dtl.COPY_SOURCE_HIST,
+       sp_dtl.CONTRACT_DESCRIPTION,
+       sp_dtl.CONTRACT_NUMBER*/
  ;
 
 --GRANT SELECT ON AAE0376.PR_VICT2_CUST_12MO TO PUBLIC;

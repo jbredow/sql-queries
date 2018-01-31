@@ -5,6 +5,7 @@ SELECT SPEC.DIVISION_NAME AS REGION,
        )
            AS DIST,
        SPEC.ACCOUNT_NAME,
+       SPEC.WRITER,
        SPEC.TYPE_OF_SALE,
        SPEC.STATUS,
        SPEC.YEARMONTH,

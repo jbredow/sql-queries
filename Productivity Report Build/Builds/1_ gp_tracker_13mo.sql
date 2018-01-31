@@ -145,3 +145,4 @@ AS
                      '6', 'Showroom',
                      '7', 'Showroom Direct',
                      '8', 'eBusiness'))
+					;

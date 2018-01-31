@@ -45,5 +45,6 @@ INSERT INTO AAA6863.GP_TRACKER_13MO
              A.SLS_RESTOCK,
              A.AVG_COST_SUBTOTAL,
              A.AVG_COST_FREIGHT,
-             A.AVG_COST_MISC);
+             A.AVG_COST_MISC)
+		;
 
