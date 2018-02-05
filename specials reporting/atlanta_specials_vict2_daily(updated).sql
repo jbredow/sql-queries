@@ -2,9 +2,9 @@ SELECT SWD.DIVISION_NAME REGION,
        IHF.YEARMONTH,
        SWD.REGION_NAME DISTRICT,
        IHF.ACCOUNT_NUMBER ACCT_NO,
-       CUST.ACCOUNT_NAME ACCT_NAME,
-       IHF.WAREHOUSE_NUMBER WH_NO,
-       IHF.INVOICE_NUMBER_NK INV_NO,
+       CUST.ACCOUNT_NAME,
+       IHF.WAREHOUSE_NUMBER WHSE_NO,
+       IHF.INVOICE_NUMBER_NK,
        DECODE (ihf.SALE_TYPE,
                '1',
                'Our Truck',
@@ -40,6 +40,11 @@ SELECT SWD.DIVISION_NAME REGION,
        END
           ASSOC_NAME,
        CASE
+          WHEN ILF.PRODUCT_GK IS NOT NULL THEN PROD.DISCOUNT_GROUP_NK
+          ELSE SP_PROD.SPECIAL_DISC_GROUP
+       END
+          AS DG,       
+       CASE
           WHEN ILF.PRODUCT_GK IS NOT NULL THEN PROD.PRODUCT_NK
           ELSE SP_PROD.SPECIAL_PRODUCT_NK
        END
@@ -49,11 +54,7 @@ SELECT SWD.DIVISION_NAME REGION,
           ELSE SP_PROD.ALT_CODE
        END
           AS ALT1_CODE,
-       CASE
-          WHEN ILF.PRODUCT_GK IS NOT NULL THEN PROD.DISCOUNT_GROUP_NK
-          ELSE SP_PROD.SPECIAL_DISC_GROUP
-       END
-          AS DISCOUNT_GROUP_NK DG,
+
        CASE
           WHEN ILF.PRODUCT_GK IS NOT NULL THEN PROD.PRODUCT_NAME
           ELSE SP_PROD.SPECIAL_PRODUCT_NAME
@@ -66,22 +67,22 @@ SELECT SWD.DIVISION_NAME REGION,
           ELSE
              'SP-'
        END
-          AS ST,
+          AS STATUS,
        CASE WHEN ILF.EXT_SALES_AMOUNT <= 1500 THEN 'Y' ELSE 'N' END "<1500",
        PROD.UNIT_OF_MEASURE UM,
        ILF.SHIPPED_QTY,
        ILF.EXT_AVG_COGS_AMOUNT,
        ILF.EXT_SALES_AMOUNT,
-       
-      (ILF.EXT_SALES_AMOUNT-ILF.EXT_AVG_COGS_AMOUNT)
-      / CASE
-          WHEN ILF.EXT_SALES_AMOUNT > 0
-          THEN ILF.EXT_SALES_AMOUNT
-          ELSE
-            1
-        END
-           GPP,
-       
+
+        ROUND (
+          (ILF.EXT_SALES_AMOUNT-ILF.EXT_AVG_COGS_AMOUNT)
+            / CASE
+                    WHEN ILF.EXT_SALES_AMOUNT > 0
+                    THEN ILF.EXT_SALES_AMOUNT
+                    ELSE
+                    1
+            END , 3)
+                GPP,
        CASE
           WHEN ihf.order_code = 'IC'
           THEN

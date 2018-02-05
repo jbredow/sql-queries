@@ -3,7 +3,8 @@ DROP TABLE AAA6863.PR_CORE_YOY2;
 CREATE TABLE AAA6863.PR_CORE_YOY2
 
 AS 
-   SELECT TPD.ROLL12MONTHS TPD,
+
+   SELECT TPD.FISCAL_YEAR_TO_DATE TPD,
           SWD.DIVISION_NAME REGION,
           SWD.REGION_NAME DISTRICT,
           IHF.ACCOUNT_NUMBER,
@@ -109,7 +110,7 @@ AS
                                  '7409',
                                  '7410',
                                  '7411')*/
-          AND TPD.ROLL12MONTHS IS NOT NULL
+          AND TPD.FISCAL_YEAR_TO_DATE IS NOT NULL
           AND NVL (IHF.CONSIGN_TYPE, 'N/A') NOT IN 'R'
           AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
           AND IHF.IC_FLAG = 0

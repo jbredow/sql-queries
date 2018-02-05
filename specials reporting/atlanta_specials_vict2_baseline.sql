@@ -3,8 +3,8 @@
 */
 
 SELECT DISTINCT
-       /*sp_dtl.YEARMONTH,
-       sp_dtl.ACCOUNT_NUMBER,
+       sp_dtl.YEARMONTH,
+       /*sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
        sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.INVOICE_NUMBER_NK,
@@ -738,8 +738,8 @@ SELECT DISTINCT
        sp_dtl
 			 WHERE sp_dtl.STATUS IN ('SP-', 'SP')
 			 GROUP BY 
-			 /*sp_dtl.YEARMONTH,
-       sp_dtl.ACCOUNT_NUMBER,
+			 sp_dtl.YEARMONTH,
+       /*sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
        sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.INVOICE_NUMBER_NK,
