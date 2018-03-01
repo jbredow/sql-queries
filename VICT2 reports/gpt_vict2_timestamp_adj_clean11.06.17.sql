@@ -544,10 +544,10 @@ SELECT DISTINCT
                        AND (ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK)
                        --AND PROD.MANUFACTURER = '774'
                        --AND ILF.
-                       AND IHF.ACCOUNT_NUMBER = '107'
+                       AND IHF.ACCOUNT_NUMBER = '34'
 											 
-		       --AND (ILCF.SELL_WAREHOUSE_NUMBER_NK = '1589')
-                       --AND IHF.WRITER = 'JPB'
+                       --AND (ILCF.SELL_WAREHOUSE_NUMBER_NK = '1589')
+                       AND IHF.WRITER = 'WBD'
                        --AND CUST.CUSTOMER_NK = '19037'
                        --AND IHF.REF_BID_NUMBER <> 'N/A'
                         /*AND CUST.MSTR_CUSTNO IN ( '187870',
@@ -579,8 +579,8 @@ SELECT DISTINCT
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 											 
-                       AND ILF.YEARMONTH BETWEEN '201701' AND '201712'
-                       AND IHF.YEARMONTH BETWEEN '201701' AND '201712'
+                       AND ILF.YEARMONTH = '201802' --BETWEEN '201701' AND '201712'
+                       AND IHF.YEARMONTH = '201802' --BETWEEN '201701' AND '201712'
 											 
                        --AND IHF.YEARMONTH IN ('201710', '201711')
                        --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
@@ -741,7 +741,7 @@ SELECT DISTINCT
                       AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                              NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
        sp_dtl
-			 WHERE sp_dtl.STATUS IN ('SP-', 'SP')
+			 --WHERE sp_dtl.STATUS IN ('SP-', 'SP')
  ;
 
 --GRANT SELECT ON AAE0376.PR_VICT2_CUST_12MO TO PUBLIC;

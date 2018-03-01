@@ -1,22 +1,22 @@
 /*
 		Account KPI GP Tracker Report
 */
-SELECT GPTRACK_KEY,
-REGION,
-ACCOUNT_NAME,
-ACCOUNT_NUMBER,
-WAREHOUSE_NUMBER_NK WHSE,
-MM,
-YEARMONTH,
-ROUND("Price Matrix Use%$"+
-"Contract Use%$",4) "Managed Price Use%$",
-"Price Matrix Use%$",
-"Contract Use%$"
-
-
+SELECT 	GPTRACK_KEY,
+				REGION,
+				ACCOUNT_NAME,
+				ACCOUNT_NUMBER,
+				WAREHOUSE_NUMBER_NK WHSE,
+				MM,
+				YEARMONTH,
+				/*ROUND("Price Matrix Use%$"+
+				"Contract Use%$",4) "Managed Price Use%$",
+				"Price Matrix Use%$",
+				"Contract Use%$",*/
+				TYPE_OF_SALE,
+				
 FROM (
 
-	SELECT GP_DATA.YEARMONTH,
+	SELECT --GP_DATA.YEARMONTH,
        DENSE_RANK () OVER (ORDER BY GP_DATA.YEARMONTH ASC) AS MM,
        CASE
           WHEN GP_DATA.REGION IS NULL THEN ACCT.ACCOUNT_NAME
@@ -43,6 +43,7 @@ FROM (
        || TO_CHAR (DENSE_RANK () OVER (ORDER BY GP_DATA.YEARMONTH ASC),
                    'FM00')
           AS GPTRACK_KEY,
+			 GP_DATA.TYPE_OF_SALE,
        SUM (
             GP_DATA.SLS_SUBTOTAL
           + GP_DATA.SLS_FREIGHT
@@ -671,17 +672,25 @@ FROM (
                 0
           END)
           "Subtotal GP$"
+					
   FROM AAA6863.GP_TRACKER_13MO GP_DATA,
        SALES_MART.SALES_WAREHOUSE_DIM ACCT
  WHERE GP_DATA.WAREHOUSE_NUMBER_NK = ACCT.WAREHOUSE_NUMBER_NK
        AND GP_DATA.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
                                               'YYYYMM')
  HAVING SUM (GP_DATA.SLS_SUBTOTAL) <> 0
- GROUP BY GP_DATA.YEARMONTH,
-          GP_DATA.REGION, 
-          GP_DATA.ACCOUNT_NUMBER,
-          ACCT.ACCOUNT_NAME,
-          GP_DATA.WAREHOUSE_NUMBER_nk
+ GROUP BY --GPTRACK_KEY,
+						REGION,
+						--ACCOUNT_NAME,
+						--ACCOUNT_NUMBER,
+						--WAREHOUSE_NUMBER_NK WHSE,
+						--MM,
+						--YEARMONTH,
+						/*ROUND("Price Matrix Use%$"+
+						"Contract Use%$",4) "Managed Price Use%$",
+						"Price Matrix Use%$",
+						"Contract Use%$",*/
+						TYPE_OF_SALE
 ORDER BY    GP_DATA.REGION 
          || '*'
          || GP_DATA.ACCOUNT_NUMBER

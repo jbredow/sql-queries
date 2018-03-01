@@ -1,7 +1,7 @@
 --TRUNCATE TABLE AAA6863.PR_VICT2_MANUAL_1WK;
-DROP TABLE AAA6863.PR_VICT2_MANUAL_2000;
+DROP TABLE AAA6863.PR_VICT2_MANUAL_3MONTH;
 
-CREATE TABLE AAA6863.PR_VICT2_MANUAL_2000
+CREATE TABLE AAA6863.PR_VICT2_MANUAL_3MONTH
 AS
 
 SELECT DISTINCT
@@ -515,7 +515,7 @@ SELECT DISTINCT
                        CUST.CUSTOMER_NAME,
                        CUST.PRICE_COLUMN,
                        CUST.CUSTOMER_TYPE,
-											 IHF.INVOICE_DATE
+                       IHF.INVOICE_DATE
                   FROM DW_FEI.INVOICE_HEADER_FACT IHF,
                        DW_FEI.INVOICE_LINE_FACT ILF,
                        DW_FEI.PRODUCT_DIMENSION PROD,
@@ -534,7 +534,7 @@ SELECT DISTINCT
                        --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
                        --AND PROD.MANUFACTURER = '774'
                        --AND ILF.
-                       AND IHF.ACCOUNT_NUMBER = '2000'
+                       AND IHF.ACCOUNT_NUMBER = '1300'
                        --AND IHF.WRITER = 'JPB'
                        --AND CUST.CUSTOMER_NK = '19037'
                        --AND IHF.REF_BID_NUMBER <> 'N/A'
@@ -561,8 +561,8 @@ SELECT DISTINCT
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
                        --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
                        --AND IHF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM'))
-											 AND ILF.YEARMONTH BETWEEN '201710' AND '201712'
-                       AND IHF.YEARMONTH BETWEEN '201710' AND '201712'
+                       AND ILF.YEARMONTH BETWEEN '201711' AND '201801'
+                       AND IHF.YEARMONTH BETWEEN '201711' AND '201801'
                       /* AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
                                                                      SYSDATE
                                                                    - 7)
@@ -726,12 +726,12 @@ SELECT DISTINCT
                       AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                              NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
        sp_dtl
-WHERE ( COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
-													sp_dtl.PRICE_CATEGORY_OVR_GR,
-													sp_dtl.PRICE_CATEGORY) IN ('TOOLS',
-																									'MANUAL',
-																									'QUOTE',
-																									'OTH/ERROR'))
-					AND sp_dtl.SALESREP_NK = 'BJD'
+        WHERE ( COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
+                        sp_dtl.PRICE_CATEGORY_OVR_GR,
+                        sp_dtl.PRICE_CATEGORY) IN ('TOOLS',
+                                                'MANUAL',
+                                                'QUOTE',
+                                                'OTH/ERROR'))
+		--AND sp_dtl.SALESREP_NK = 'BJD'
 			;
 GRANT SELECT ON AAA6863.PR_VICT2_MANUAL_2000 TO PUBLIC;

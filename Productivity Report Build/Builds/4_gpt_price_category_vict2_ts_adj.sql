@@ -1,7 +1,7 @@
-TRUNCATE TABLE AAA6863.PR_VICT2_CUST_3MO;
-DROP TABLE AAA6863.PR_VICT2_CUST_3MO;
+TRUNCATE TABLE AAA6863.PR_VICT2_CUST_12MO;
+DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
 
-CREATE TABLE AAA6863.PR_VICT2_CUST_3MO
+CREATE TABLE AAA6863.PR_VICT2_CUST_12MO
 
 AS
 
@@ -471,8 +471,8 @@ SELECT DISTINCT
                                    'MATRIX_BID'
                                    --price category defined for NDP 
                                 WHEN ILF.MATRIX_PRICE IS NULL AND ILF.PRICE_FORMULA LIKE 'L-0.%'  
-            THEN 
-                'NDP'
+                                THEN 
+                                   'NDP'
  
                                 ELSE
                                    'MANUAL'
@@ -529,9 +529,9 @@ SELECT DISTINCT
                        --AND ILCF.YEARMONTH = ILF.YEARMONTH
                        --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
                        --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
-                        --AND PROD.MANUFACTURER = '774'
+                       --AND PROD.MANUFACTURER = '774'
                        --AND ILF.
-                       --AND IHF.ACCOUNT_NUMBER = 215
+                       --AND IHF.ACCOUNT_NUMBER = '1300'
                        --AND IHF.WRITER = 'JPB'
                        --AND CUST.CUSTOMER_NK = '19037'
                        --AND IHF.REF_BID_NUMBER <> 'N/A'
@@ -556,7 +556,7 @@ SELECT DISTINCT
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 											 AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																			- NUMTOYMINTERVAL ( 24,
+																																			- NUMTOYMINTERVAL ( 12,
 																																												'MONTH'
 																																				),
 																																			'MONTH'
@@ -570,7 +570,7 @@ SELECT DISTINCT
 																															'YYYYMM'
 																											)
 														AND IHF.YEARMONTH  BETWEEN TO_CHAR ( TRUNC ( SYSDATE
-																																				- NUMTOYMINTERVAL ( 24,
+																																				- NUMTOYMINTERVAL ( 12,
 																																													'MONTH'
 																																					),
 																																				'MONTH'

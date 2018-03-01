@@ -133,7 +133,7 @@ SELECT STATS.DIST,
                       ON (PM_DET.YEARMONTH = TPD.YEARMONTH))
                WHERE (TPD.ROLL12MONTHS = 'LAST TWELVE MONTHS')
                      AND (IC_FLAG = 'REGULAR')
-                     -- AND (PM_DET.ACCOUNT_NUMBER_NK = '2000')
+                     AND (PM_DET.ACCOUNT_NUMBER_NK = '2000')
                      AND SUBSTR (PM_DET.SELL_DISTRICT, 1, 3) IN
                               ('D10', 'D11', 'D12', 'D14', 'D30', 'D31', 'D32')
               GROUP BY PM_DET.ACCOUNT_NUMBER_NK, PM_DET.DISCOUNT_GROUP_NK)

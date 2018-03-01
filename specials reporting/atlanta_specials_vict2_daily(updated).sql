@@ -260,8 +260,11 @@ SELECT SWD.DIVISION_NAME REGION,
        AND IHF.IC_FLAG = 0
        AND ILF.SHIPPED_QTY <> 0
        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-       /*AND IHF.YEARMONTH = '201712'
-                AND ILF.YEARMONTH = '201712'*/
-
+       
        AND IHF.PROCESS_DATE BETWEEN TRUNC (TO_DATE ('01-FEB-18'), 'DDD')
-                                AND  TRUNC (SYSDATE - 1);
+                                AND  TRUNC (SYSDATE - 1)
+
+       --AND IHF.PROCESS_DATE > TRUNC (TO_DATE ('31-JAN-18'), 'DDD')
+
+
+                                ;

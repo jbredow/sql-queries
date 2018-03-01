@@ -296,7 +296,7 @@ SELECT DISTINCT *
                                                                         - 8 )
                                                                AND TRUNC (
                                                                       SYSDATE
-											      - 1 )
+											      																						- 1 )
                        --AND CUST.ACCOUNT_NAME NOT IN 'DIST'
                        AND CUST.ACCOUNT_NAME NOT LIKE 'INT%'
                        --AND REP.RPC IS NOT NULL 
