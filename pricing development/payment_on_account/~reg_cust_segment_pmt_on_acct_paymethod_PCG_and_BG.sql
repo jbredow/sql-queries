@@ -2,6 +2,8 @@
 		pm_data
     regional customer segment pmt on account paymethod summary
 	>>	using for BOTH PC and BG
+	  
+		>> SALES_MART.PRICE_MGMT_DATA_DET
 */
 
 SELECT SWD.DIVISION_NAME AS REGION,

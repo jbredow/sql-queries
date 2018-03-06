@@ -1,3 +1,4 @@
+/* use this for monthly travelling contractors report */
 SELECT TPD.ROLL12MONTHS TPD,
        SWD.REGION_NAME AS DISTRICT,
        CUST.ACCOUNT_NUMBER_NK AS ACCT_NK,

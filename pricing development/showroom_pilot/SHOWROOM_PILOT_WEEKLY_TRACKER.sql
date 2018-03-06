@@ -2,7 +2,7 @@
 
 AS*/
 
-SELECT                                                        --DTL.YEARMONTH,
+SELECT --DTL.YEARMONTH,
        SWD.DIVISION_NAME
           AS REGION,
        SWD.REGION_NAME

@@ -1,7 +1,7 @@
 /*
     measure single branch/district against average of 6 best in class
     LN added logic to include count of sales reps within each category/group
-    
+    date filter FY17 v FY18 thru Jan 18
 */
 
 SELECT 
@@ -14,7 +14,13 @@ SELECT
        SALESREP_NAME,
        SALESMAN_CODE,
 			 JOB_YN,
-       FISCAL_YEAR,
+       --FISCAL_YEAR,
+			 CASE
+			 		WHEN YEARMONTH BETWEEN '201608' AND '201701'
+					THEN 'FY_2017'
+					ELSE 'FY_2018'
+			 END
+			 		FISCAL_YEAR,
        EX_SALES,
        EX_AVGCOGS,
        EX_ACTCOGS,
@@ -62,6 +68,7 @@ SELECT
                 SLS.CUSTOMER_TYPE,
 								CUST.JOB_YN,
                 SLS.SALES_TYPE,
+								SLS.YEARMONTH,
                 SLS.SALESREP_NAME,
                 SLS.SALESMAN_CODE,
                 TPD.FISCAL_YEAR,
@@ -314,8 +321,9 @@ SELECT
 
           WHERE TPD.ROLL12MONTHS IS NOT NULL
                 AND SLS.IC_FLAG = 'REGULAR'
-								
-                AND TPD.FISCAL_YEAR IN ('2016', '2017')
+								AND ((TPD.YEARMONTH BETWEEN '201708' AND '201801') 
+									OR (TPD.YEARMONTH BETWEEN '201708' AND '201801'))
+                --AND TPD.FISCAL_YEAR IN ('2016', '2017')
                 AND SUBSTR ( SLS.SELL_DISTRICT, 1, 3 ) IN ( 
 			 	 						'D01', 'D11', 'D14', 'D20', 
 				    				'D21', 'D23', 'D30')
@@ -347,6 +355,7 @@ SELECT
          GROUP BY SLS.SELL_DISTRICT,
                   SLS.SELL_REGION_NAME,
                   SLS.SELL_ACCOUNT_NAME,
+									SLS.YEARMONTH,
                   XREF.BUSINESS_GROUP,
                   SLS.CUSTOMER_TYPE,
                   SLS.SALES_TYPE,
@@ -375,7 +384,12 @@ GROUP BY SELL_REGION_NAME,
 					SALESREP_NAME,
 					SALESMAN_CODE,
 					JOB_YN,
-					FISCAL_YEAR,
+					--FISCAL_YEAR,
+					CASE
+							WHEN YEARMONTH BETWEEN '201608' AND '201701'
+							THEN 'FY_2017'
+							ELSE 'FY_2018'
+					END,
 					EX_SALES,
 					EX_AVGCOGS,
 					EX_ACTCOGS,
