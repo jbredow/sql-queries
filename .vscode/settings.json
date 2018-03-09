@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CSV": true,
+    "**/.DS_Store": true,
+    "**/.sql**": true,
+    "**/.xls**": true
+  }
+}
