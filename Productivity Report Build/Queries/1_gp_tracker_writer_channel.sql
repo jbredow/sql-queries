@@ -1,22 +1,44 @@
-SELECT CASE
+/*
+      queries > gpt writer channel
+*/
+SELECT GP_DATA.YEARMONTH,
+       CASE
           WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
           THEN
              'Showroom'
           ELSE
              GP_DATA.TYPE_OF_SALE
-       END        
+       END
           AS CHANNEL,
-       --GP_DATA.YEARMONTH,
-       GP_DATA.ROLLING_QTR,
-       DENSE_RANK () OVER (ORDER BY GP_DATA.ROLLING_QTR ASC) AS MM,
-       GP_DATA.REGION,
+       DENSE_RANK () OVER (ORDER BY GP_DATA.YEARMONTH ASC) AS MM,
+       CASE
+          WHEN GP_DATA.REGION IS NULL THEN ACCT.ACCOUNT_NAME
+          WHEN GP_DATA.REGION = 'EAST' THEN 'EASTERN'
+          WHEN GP_DATA.REGION = 'WEST' THEN 'WESTERN'
+          ELSE GP_DATA.REGION
+       END
+          REGION,
        GP_DATA.ACCOUNT_NUMBER,
-       ACCT.ACCOUNT_NAME BU_NAME,
-       GP_DATA.REGION|| '*'|| GP_DATA.ACCOUNT_NUMBER||
-            '*' 
-       || 'MM'
-       || TO_CHAR (DENSE_RANK () OVER (ORDER BY GP_DATA.ROLLING_QTR ASC),
-                   'FM00')
+       ACCT.ACCOUNT_NAME,
+       --NVL(BRCH.REG_ACCT_NAME, ACCT.ACCOUNT_NAME) AS BRANCH,
+       NVL (GP_DATA.WRITER, '#N/A') WRITER_INIT,
+          CASE
+             WHEN GP_DATA.REGION IS NULL THEN ACCT.ACCOUNT_NAME
+             WHEN GP_DATA.REGION = 'EAST' THEN 'EASTERN'
+             WHEN GP_DATA.REGION = 'WEST' THEN 'WESTERN'
+             ELSE GP_DATA.REGION
+          END
+       || '*'
+       || GP_DATA.ACCOUNT_NUMBER
+       || '*'
+       || NVL (GP_DATA.WRITER, '#N/A')
+       || CASE
+             WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
+             THEN
+                'Showroom'
+             ELSE
+                GP_DATA.TYPE_OF_SALE
+          END
           AS GPTRACK_KEY,
        SUM (
             GP_DATA.SLS_SUBTOTAL
@@ -62,9 +84,10 @@ SELECT CASE
           6)
           "Total GP%",
        SUM (GP_DATA.INVOICE_LINES) "Total # Lines",
+       
        SUM (
           CASE
-             WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+             WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
              THEN
                 (GP_DATA.EXT_SALES)
              ELSE
@@ -73,7 +96,7 @@ SELECT CASE
           "Price Matrix Sales",
        SUM (
           CASE
-             WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+             WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
              THEN
                 (GP_DATA.AVG_COGS)
              ELSE
@@ -82,7 +105,7 @@ SELECT CASE
           "Price Matrix Cost",
        SUM (
           CASE
-             WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+             WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
              THEN
                 (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
              ELSE
@@ -92,7 +115,7 @@ SELECT CASE
        ROUND (
           SUM (
              CASE
-                WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
                 THEN
                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                 ELSE
@@ -100,7 +123,7 @@ SELECT CASE
              END)
           / SUM (
                CASE
-                  WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                  WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
                   THEN
                      CASE
                         WHEN GP_DATA.EXT_SALES > 0 THEN (GP_DATA.EXT_SALES)
@@ -114,7 +137,7 @@ SELECT CASE
        ROUND (
           SUM (
              CASE
-                WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
                 THEN
                    (GP_DATA.EXT_SALES)
                 ELSE
@@ -130,7 +153,7 @@ SELECT CASE
        ROUND (
           SUM (
              CASE
-                WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
                 THEN
                    (GP_DATA.INVOICE_LINES)
                 ELSE
@@ -146,7 +169,7 @@ SELECT CASE
        ROUND (
           SUM (
              CASE
-                WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
                 THEN
                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                 ELSE
@@ -156,27 +179,22 @@ SELECT CASE
                CASE
                   WHEN GP_DATA.ROLLUP = 'Total'
                   THEN
-                     CASE
-                        WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <> 0
-                        THEN
-                           (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                        ELSE
-                           1
-                     END
+                     (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                   ELSE
-                     1
+                     0
                END),
           6)
           "Price Matrix Profit%$",
        SUM (
           CASE
-             WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+             WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
              THEN
                 (GP_DATA.INVOICE_LINES)
              ELSE
                 0
           END)
           "Price Matrix # Lines",
+      
        SUM (
           CASE
              WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
@@ -271,15 +289,9 @@ SELECT CASE
                CASE
                   WHEN GP_DATA.ROLLUP = 'Total'
                   THEN
-                     CASE
-                        WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <> 0
-                        THEN
-                           (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                        ELSE
-                           1
-                     END
+                     (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                   ELSE
-                     1
+                     0
                END),
           6)
           "Contract Profit%$",
@@ -292,6 +304,7 @@ SELECT CASE
                 0
           END)
           "Contract # Lines",
+       
        SUM (
           CASE
              WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
@@ -386,27 +399,22 @@ SELECT CASE
                CASE
                   WHEN GP_DATA.ROLLUP = 'Total'
                   THEN
-                     CASE
-                        WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <> 0
-                        THEN
-                           (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                        ELSE
-                           1
-                     END
+                     (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                   ELSE
-                     1
+                     0
                END),
           6)
           "Manual Profit%$",
+    
        SUM (
           CASE
              WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
              THEN
-                (GP_DATA.INVOICE_LINES)
+                (GP_DATA.INVOICE_CNT)
              ELSE
                 0
           END)
-          "Manual # Lines",
+          "Manual # Invoices",
        SUM (
           CASE
              WHEN GP_DATA.PRICE_CATEGORY NOT IN
@@ -416,7 +424,6 @@ SELECT CASE
                       'CREDITS',
                       'TOOLS',
                       'QUOTE',
-                      'NDP',
                       'MATRIX_BID',
                       'Total')
              THEN
@@ -434,7 +441,6 @@ SELECT CASE
                       'CREDITS',
                       'TOOLS',
                       'QUOTE',
-                      'NDP',
                       'MATRIX_BID',
                       'Total')
              THEN
@@ -452,7 +458,6 @@ SELECT CASE
                       'CREDITS',
                       'TOOLS',
                       'QUOTE',
-                      'NDP',
                       'MATRIX_BID',
                       'Total')
              THEN
@@ -471,7 +476,6 @@ SELECT CASE
                          'CREDITS',
                          'TOOLS',
                          'QUOTE',
-                         'NDP',
                          'MATRIX_BID',
                          'Total')
                 THEN
@@ -488,7 +492,6 @@ SELECT CASE
                            'CREDITS',
                            'TOOLS',
                            'QUOTE',
-                           'NDP',
                            'MATRIX_BID',
                            'Total')
                   THEN
@@ -511,7 +514,6 @@ SELECT CASE
                          'CREDITS',
                          'TOOLS',
                          'QUOTE',
-                         'NDP',
                          'MATRIX_BID',
                          'Total')
                 THEN
@@ -535,7 +537,6 @@ SELECT CASE
                          'MANUAL',
                          'CREDITS',
                          'TOOLS',
-                         'NDP',
                          'QUOTE',
                          'MATRIX_BID',
                          'Total')
@@ -560,7 +561,6 @@ SELECT CASE
                          'MANUAL',
                          'CREDITS',
                          'TOOLS',
-                         'NDP',
                          'QUOTE',
                          'MATRIX_BID',
                          'Total')
@@ -573,15 +573,9 @@ SELECT CASE
                CASE
                   WHEN GP_DATA.ROLLUP = 'Total'
                   THEN
-                     CASE
-                        WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <> 0
-                        THEN
-                           (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                        ELSE
-                           1
-                     END
+                     (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                   ELSE
-                     1
+                     0
                END),
           6)
           "Other Profit%$",
@@ -593,7 +587,6 @@ SELECT CASE
                       'MANUAL',
                       'CREDITS',
                       'TOOLS',
-                      'NDP',
                       'QUOTE',
                       'MATRIX_BID',
                       'Total')
@@ -603,14 +596,7 @@ SELECT CASE
                 0
           END)
           "Other # Lines",
-       SUM (
-             CASE
-                WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
-                THEN
-                   (GP_DATA.EXT_SALES)
-                ELSE
-                   0
-             END) "Credit Sales",
+        
        ROUND (
           SUM (
              CASE
@@ -645,58 +631,62 @@ SELECT CASE
           "Credits Use%#",
        SUM (GP_DATA.SLS_FREIGHT - GP_DATA.AVG_COST_FREIGHT)
           "Freight Profit (Loss)",
-        SUM (
-             CASE
-                WHEN GP_DATA.PRICE_CATEGORY NOT IN ('CREDITS', 'Total')
-                THEN
-                   (GP_DATA.EXT_SALES)
-                ELSE
-                   0
-             END)
-             "Outbound Sales"
-  FROM AAD9606.GP_TRACKER_13MO GP_DATA,
+       SUM(GP_DATA.INVOICE_CNT) "Total # Invoices"
+  FROM AAA6863.GP_TRACKER_WRITER_YTD GP_DATA,
        (SELECT WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK, WD.WAREHOUSE_NUMBER_NK
           FROM SALES_MART.SALES_WAREHOUSE_DIM WD
-         GROUP BY WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK, WD.WAREHOUSE_NUMBER_NK) ACCT
- WHERE GP_DATA.WAREHOUSE_NUMBER_NK = ACCT.WAREHOUSE_NUMBER_NK(+)
- 			 AND GP_DATA.ACCOUNT_NUMBER = '39'
-			 AND GP_DATA.WAREHOUSE_NUMBER_NK = '5350'
-       /*AND GP_DATA.YEARMONTH BETWEEN TO_CHAR (
-                                        TRUNC (
-                                           SYSDATE
-                                           - NUMTOYMINTERVAL (12, 'MONTH'),
-                                           'MONTH'),
-                                        'YYYYMM')
-                                 AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                              'YYYYMM')*/
+         GROUP BY WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK, WD.WAREHOUSE_NUMBER_NK) ACCT--
+        --AAE0376.MEGA_BRANCHES BRCH
+ WHERE GP_DATA.WAREHOUSE_NUMBER = ACCT.WAREHOUSE_NUMBER_NK(+) 
+       AND GP_DATA.WRITER IS NOT NULL
+       --AND GP_DATA.WAREHOUSE_NUMBER = BRCH.WHSE(+)
+			 AND GP_DATA.YEARMONTH = TO_CHAR ( TRUNC ( SYSDATE, 'MM')	- 1,	'YYYYMM' )
 HAVING SUM (
             GP_DATA.SLS_SUBTOTAL
           + GP_DATA.SLS_FREIGHT
           + GP_DATA.SLS_MISC
-          + GP_DATA.SLS_RESTOCK) <> 0
-GROUP BY CASE
-            WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
-            THEN
-               'Showroom'
-            ELSE
-               GP_DATA.TYPE_OF_SALE
+          + GP_DATA.SLS_RESTOCK) > 0
+       AND SUM (
+              CASE
+                 WHEN GP_DATA.ROLLUP = 'Total'
+                 THEN
+                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                 ELSE
+                    0
+              END) <> 0
+GROUP BY GP_DATA.YEARMONTH,
+         CASE
+            WHEN GP_DATA.REGION IS NULL THEN ACCT.ACCOUNT_NAME
+            WHEN GP_DATA.REGION = 'EAST' THEN 'EASTERN'
+            WHEN GP_DATA.REGION = 'WEST' THEN 'WESTERN'
+            ELSE GP_DATA.REGION
          END,
-         GP_DATA.ROLLING_QTR,
-         --GP_DATA.YEARMONTH,
-         GP_DATA.REGION,
          GP_DATA.ACCOUNT_NUMBER,
-         ACCT.ACCOUNT_NAME
-ORDER BY CASE
+         ACCT.ACCOUNT_NAME,
+         GP_DATA.INVOICE_CNT,
+         --.REG_ACCT_NAME,
+         GP_DATA.WRITER,
+         CASE
             WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
             THEN
                'Showroom'
             ELSE
                GP_DATA.TYPE_OF_SALE
-         END,
-         GP_DATA.REGION
-         || '*'||
-GP_DATA.ACCOUNT_NUMBER
+         END
+ORDER BY    CASE
+               WHEN GP_DATA.REGION IS NULL THEN ACCT.ACCOUNT_NAME
+               WHEN GP_DATA.REGION = 'EAST' THEN 'EASTERN'
+               WHEN GP_DATA.REGION = 'WEST' THEN 'WESTERN'
+               ELSE GP_DATA.REGION
+            END
          || '*'
-         || 'MM'
-         || TO_CHAR (DENSE_RANK () OVER (ORDER BY GP_DATA.ROLLING_QTR ASC),
-                     'FM00')
+         || GP_DATA.ACCOUNT_NUMBER
+         || '*'
+         || NVL (GP_DATA.WRITER, '#N/A')
+         || CASE
+               WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
+               THEN
+                  'Showroom'
+               ELSE
+                  GP_DATA.TYPE_OF_SALE
+            END

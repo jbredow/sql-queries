@@ -256,14 +256,15 @@ SELECT GP_DATA.YEARMONTH,
           "Other # Lines",
        COUNT (
           CASE
-             WHEN (GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+             WHEN (GP_DATA.PRICE_CATEGORY NOT IN ( 'MATRIX',
                                                    'OVERRIDE',
                                                    'MANUAL',
                                                    'CREDITS',
                                                    'TOOLS',
                                                    'QUOTE',
                                                    'MATRIX_BID',
-                                                   'Total')AND (GP_DATA.INVOICE_NUMBER_NK) NOT IN ('CM%', '%-%'))
+                                                   'Total')
+														AND (GP_DATA.INVOICE_NUMBER_NK) NOT IN ('CM%', '%-%'))
              THEN
                 (GP_DATA.INVOICE_NUMBER_NK)
              ELSE
@@ -309,7 +310,7 @@ SELECT GP_DATA.YEARMONTH,
         GROUP BY WD.REGION_NAME,
                  WD.ACCOUNT_NAME,
                  WD.ACCOUNT_NUMBER_NK,
-                 WD.WAREHOUSE_NUMBER_NK) ACCT                               --
+                 WD.WAREHOUSE_NUMBER_NK) ACCT
  WHERE     GP_DATA.WAREHOUSE_NUMBER = ACCT.WAREHOUSE_NUMBER_NK(+)
        AND GP_DATA.WRITER IS NOT NULL
 	 --AND GP_DATA.WAREHOUSE_NUMBER = '5350'

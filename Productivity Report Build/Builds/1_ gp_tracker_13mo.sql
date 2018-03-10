@@ -72,6 +72,7 @@ AS
       FROM DW_FEI.INVOICE_HEADER_FACT ihf,
            DW_FEI.CUSTOMER_DIMENSION cust,
            SALES_MART.SALES_WAREHOUSE_DIM ps
+           
      WHERE ihf.CUSTOMER_ACCOUNT_GK = cust.CUSTOMER_GK
            AND TO_CHAR (ihf.WAREHOUSE_NUMBER) = TO_CHAR (ps.WAREHOUSE_NUMBER_NK)           
            AND ihf.IC_FLAG = 0
