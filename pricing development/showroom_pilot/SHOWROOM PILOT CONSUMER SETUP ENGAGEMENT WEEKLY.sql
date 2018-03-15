@@ -1,6 +1,6 @@
 -- query pulls weekly totals of all showroom consumer setups vs consumer setups with sales
 -- consumer defined as E_ENDUSER in PC 024, 025
-
+-- leave in LN schema
 SELECT ALIAS_NAME,
        SETUP_YW,
        TO_CHAR (START_DATE, 'MM/DD/YYYY')

@@ -1,6 +1,6 @@
 SELECT 
-			 SELL_REGION_NAME REGION,
-       SELL_DISTRICT DISTRICT,
+			 DIVISION_NAME REGION,
+       REGION_NAME DISTRICT,
 			 NULL AS NULL_ACCT,
        BUSINESS_GROUP,
        --CUSTOMER_GROUP,
@@ -31,9 +31,9 @@ SELECT
 /* OUTBOUND */
        OUTBOUND_SALES
 
-  FROM ( SELECT SLS.SELL_DISTRICT,
-                SLS.SELL_REGION_NAME,
-                SLS.SELL_ACCOUNT_NAME,
+  FROM ( SELECT WD.DIVISION_NAME,
+                WD.REGION_NAME,
+                WD.ACCOUNT_NAME,
                 COALESCE ( XREF.BUSINESS_GROUP,
                           'OTHER'
                 )
@@ -197,12 +197,18 @@ SELECT
                     END)
                   OUTBOUND_LINES
            FROM     SALES_MART.PRICE_MGMT_DATA_DET SLS
+					 
+					 
+					 
                   INNER JOIN
                     SALES_MART.TIME_PERIOD_DIMENSION TPD
                   ON SLS.YEARMONTH = TPD.YEARMONTH
                 LEFT OUTER JOIN
                   USER_SHARED.BG_CUSTTYPE_XREF XREF
                 ON SLS.CUSTOMER_TYPE = XREF.CUSTOMER_TYPE
+								INNER JOIN
+									AAD9606.PR_SLS_WHSE_DIM WD
+								ON WD.WAREHOUSE_NUMBER_NK = SLS.SELL_WAREHOUSE_NUMBER_NK
 
           WHERE TPD.ROLL12MONTHS IS NOT NULL
                 AND SLS.IC_FLAG = 'REGULAR'
@@ -210,16 +216,15 @@ SELECT
 								--AND SLS.SALESREP_NAME NOT LIKE '%COSTING%'
 								--AND SLS.SELL_ACCOUNT_NAME IN ('DALLAS')
 								--AND SLS.SALESMAN_CODE = 'OWC'
-								AND SUBSTR (SLS.SELL_DISTRICT, 1, 1) = 'D'
-         GROUP BY SLS.SELL_DISTRICT,
-                  SLS.SELL_REGION_NAME,
-                  SLS.SELL_ACCOUNT_NAME,
+								AND SUBSTR (WD.REGION_NAME, 1, 1) = 'D'
+         GROUP BY WD.DIVISION_NAME,
+                  WD.REGION_NAME,
+                  WD.ACCOUNT_NAME,
                   XREF.BUSINESS_GROUP,
                   --XREF.CUSTOMER_GROUP,
                   TPD.ROLL12MONTHS )
-ORDER BY  SELL_REGION_NAME,
-								SELL_DISTRICT,
-								BUSINESS_GROUP,
-								--CUSTOMER_GROUP,
-								FYTD
+ORDER BY  DIVISION_NAME,
+       REGION_NAME,
+       BUSINESS_GROUP,
+       FYTD
 ;

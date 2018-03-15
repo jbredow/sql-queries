@@ -67,7 +67,8 @@ SELECT REGION,
         CREDITS_SALES,
        CREDITS_COGS,
        SP_SALES,
-       SP_COGS
+       SP_COGS,
+       OUTBOUND_SALES
        
        /*ROUND (
           CASE

@@ -224,7 +224,7 @@ SELECT GP_DATA.REGION,
                 0
           END)
           "Outbound Sales"
-FROM AAD9606.PR_SHOW_WEEKLY_SUMMARY GP_DATA                                 --
+FROM AAA6863.PR_SHOW_WEEKLY_SUMMARY GP_DATA                                 --
 GROUP BY GP_DATA.REGION,
          GP_DATA.DISTRICT,
          GP_DATA.ACCOUNT_NUMBER,
