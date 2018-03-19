@@ -81,10 +81,8 @@ SELECT STATS.DIST,
                            AND NVL (COD.EXPIRE_DATE, (SYSDATE + 1)) > SYSDATE
                     GROUP BY COD.BRANCH_NUMBER_NK,
                              NVL (PROD.DISCOUNT_GROUP_NK, COD.DISC_GROUP)) CCOR -- 0:1:23 duration @ 2000
-                ON TO_NUMBER (CCOR.BRANCH_NUMBER_NK) =
-                      TO_NUMBER (STATS.ACCOUNT_NUMBER_NK)
-                   AND TO_NUMBER (CCOR.DISC_GROUP) =
-                         TO_NUMBER (STATS.DISC_GROUP)
+                ON CCOR.BRANCH_NUMBER_NK = STATS.ACCOUNT_NUMBER_NK
+                   AND CCOR.DISC_GROUP = STATS.DISC_GROUP
              LEFT OUTER JOIN
                 (SELECT DISTINCT
                         SWD.ACCOUNT_NUMBER_NK,
