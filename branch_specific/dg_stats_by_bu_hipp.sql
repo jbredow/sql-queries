@@ -1,7 +1,7 @@
 /*
-	matt hipp
-    final
-		0:14:32 duration @ 2000
+	for matt hipp
+      final
+	updated 3/18
 */
 
 SELECT STATS.DIST,
@@ -41,13 +41,20 @@ SELECT STATS.DIST,
                            AND (PRICE.PRICE_COLUMN <= '175')
                            AND (PRICE.DELETE_DATE IS NULL)
                            AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
-                                      ('D10',
-                                       'D11',
-                                       'D12',
-                                       'D14',
-                                       'D30',
-                                       'D31',
-                                       'D32'))
+                               ('D10',
+																'D11',
+																'D12',
+																'D14',
+																'D30',
+																'D31',
+																'D32',
+																'D01',
+																'D01',
+																'D02',
+																'D03',
+																'D04',
+																'D04',
+																'D05'))
                     GROUP BY SWD.REGION_NAME,
                              SWD.ACCOUNT_NUMBER_NK,
                              PRICE.DISC_GROUP,
@@ -98,19 +105,25 @@ SELECT STATS.DIST,
                         ON (PROD.ALT1_CODE = WPF.ALT_CODE)
                   WHERE (SUBSTR (SWD.REGION_NAME, 1, 3) IN
                                ('D10',
-                                'D11',
-                                'D12',
-                                'D14',
-                                'D30',
-                                'D31',
-                                'D32'))
+																'D11',
+																'D12',
+																'D14',
+																'D30',
+																'D31',
+																'D32',
+																'D01',
+																'D01',
+																'D02',
+																'D03',
+																'D04',
+																'D04',
+																'D05'
+																))
                  -- AND ( SWD.ACCOUNT_NUMBER_NK = '2000' )
                  -- AND ( PROD.DISCOUNT_GROUP_NK = '3915' )
                  GROUP BY SWD.ACCOUNT_NUMBER_NK, PROD.DISCOUNT_GROUP_NK) DPRO -- 0:01:08 duration @ 2000
-             ON TO_NUMBER (DPRO.ACCOUNT_NUMBER_NK) =
-                   TO_NUMBER (STATS.ACCOUNT_NUMBER_NK)
-                AND TO_NUMBER (DPRO.DISCOUNT_GROUP_NK) =
-                      TO_NUMBER (CCOR.DISC_GROUP)
+             ON DPRO.ACCOUNT_NUMBER_NK = STATS.ACCOUNT_NUMBER_NK
+                AND DPRO.DISCOUNT_GROUP_NK = CCOR.DISC_GROUP
           LEFT OUTER JOIN
              (SELECT PM_DET.ACCOUNT_NUMBER_NK,
                      PM_DET.DISCOUNT_GROUP_NK,
@@ -131,15 +144,13 @@ SELECT STATS.DIST,
                       ON (PM_DET.YEARMONTH = TPD.YEARMONTH))
                WHERE (TPD.ROLL12MONTHS = 'LAST TWELVE MONTHS')
                      AND (IC_FLAG = 'REGULAR')
-                     AND (PM_DET.ACCOUNT_NUMBER_NK = '2000')
+                     /*AND (PM_DET.ACCOUNT_NUMBER_NK = '2000')
                      AND SUBSTR (PM_DET.SELL_DISTRICT, 1, 3) IN
-                              ('D10', 'D11', 'D12', 'D14', 'D30', 'D31', 'D32')
+                              ('D10', 'D11', 'D12', 'D14', 'D30', 'D31', 'D32')*/
               GROUP BY PM_DET.ACCOUNT_NUMBER_NK, PM_DET.DISCOUNT_GROUP_NK)
              SALES
-          ON TO_NUMBER (SALES.ACCOUNT_NUMBER_NK) =
-                TO_NUMBER (STATS.ACCOUNT_NUMBER_NK)
-             AND TO_NUMBER (SALES.DISCOUNT_GROUP_NK) =
-                   TO_NUMBER (STATS.DISC_GROUP)
+          ON SALES.ACCOUNT_NUMBER_NK = STATS.ACCOUNT_NUMBER_NK
+             AND SALES.DISCOUNT_GROUP_NK = STATS.DISC_GROUP
        LEFT OUTER JOIN
           (SELECT DISTINCT
                   PRICE.BRANCH_NUMBER_NK,
@@ -154,10 +165,8 @@ SELECT STATS.DIST,
            GROUP BY PRICE.BRANCH_NUMBER_NK,
                     PRICE.DISC_GROUP,
                     PRICE.DELETE_DATE) DATES
-       ON TO_NUMBER (DATES.BRANCH_NUMBER_NK) =
-             TO_NUMBER (SALES.ACCOUNT_NUMBER_NK)
-          AND TO_NUMBER (DATES.DISC_GROUP) =
-                TO_NUMBER (SALES.DISCOUNT_GROUP_NK)
+       ON DATES.BRANCH_NUMBER_NK = SALES.ACCOUNT_NUMBER_NK
+          AND DATES.DISC_GROUP = SALES.DISCOUNT_GROUP_NK
 GROUP BY STATS.DIST,
          STATS.ACCOUNT_NUMBER_NK,
          STATS.DISC_GROUP,

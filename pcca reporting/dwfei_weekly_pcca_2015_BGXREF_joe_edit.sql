@@ -134,17 +134,17 @@ SELECT DISTINCT *
                        END
                           AS MSTR_CTYPE_ALIGNED,
                        CASE
-                          WHEN CUST.PRICE_COLUMN IN 'C' THEN 'N'
+                          WHEN CUST.PRICE_COLUMN IN ('C') THEN 'N'
                           WHEN PC_CT_XREF.CUSTOMER_TYPE IS NOT NULL THEN 'Y'
                           ELSE 'N'
                        END
                           AS COLUMN_ALIGNED,
                        CASE
-                          WHEN PS_HIERARCHY.PBU IN '04_FF'
+                          WHEN PS_HIERARCHY.PBU IN ('04_FF')
                           THEN
                              CASE
-                                WHEN PC_CT_XREF.SUB_CATEGORY IN
-                                        'FIRE_PROTECTION'
+                                WHEN PC_CT_XREF.SUB_CATEGORY IN (
+                                        'FIRE_PROTECTION')
                                 THEN
                                    'Y'
                                 ELSE
@@ -282,7 +282,7 @@ SELECT DISTINCT *
                                                                       - 7)
                                                                AND TRUNC (
                                                                       SYSDATE)*/
-                       AND CUST.ACCOUNT_NAME NOT IN 'DIST'
+                       AND CUST.ACCOUNT_NAME NOT IN ('DIST')
                        AND CUST.ACCOUNT_NAME NOT LIKE 'INT%'
                        AND REP.RPC IS NOT NULL 
 											 AND (TRUNC (CUST.ACCOUNT_SETUP_DATE) BETWEEN TRUNC (
@@ -357,7 +357,7 @@ SELECT DISTINCT *
                                'N/A'
                          END,
                          CASE
-                            WHEN CUST.PRICE_COLUMN IN 'C'
+                            WHEN CUST.PRICE_COLUMN IN ('C')
                             THEN
                                'N'
                             WHEN PC_CT_XREF.CUSTOMER_TYPE IS NOT NULL
@@ -367,11 +367,11 @@ SELECT DISTINCT *
                                'N'
                          END,
                          CASE
-                            WHEN PS_HIERARCHY.PBU IN '04_FF'
+                            WHEN PS_HIERARCHY.PBU IN ('04_FF')
                             THEN
                                CASE
                                   WHEN PC_CT_XREF.SUB_CATEGORY IN
-                                          'FIRE_PROTECTION'
+                                          ('FIRE_PROTECTION')
                                   THEN
                                      'Y'
                                   ELSE
@@ -427,11 +427,8 @@ SELECT DISTINCT *
                             INITCAP (
                                SUBSTR (REP.RPC_MGR,
                                        1,
-                                       (INSTR (REP.RPC_MGR, ' ', 1) - 1)))
-                         || '.'
-                         || INITCAP (
-                               SUBSTR (REP.RPC_MGR,
-                                       (INSTR (REP.RPC_MGR, ' ', 1)) + 1))
+                                       (INSTR (REP.RPC_MGR, ' ', 1) - 1))) || '.'  || INITCAP (
+                               SUBSTR (REP.RPC_MGR, (INSTR (REP.RPC_MGR, ' ', 1)) + 1))
                          || '@ferguson.com') NEW_CUST
         -- WHERE --NEW_CUST.HOUSE_ACCT = 'N' --                   
 				-- AND NEW_CUST.JOB_YN = 'N'
@@ -506,8 +503,7 @@ SELECT DISTINCT *
                  NEW_CUST.PRICE_COLUMN ASC,
                  NEW_CUST.CTYPE_CATEGORY ASC,
                  NEW_CUST.CTYPE_SUBCATEGORY ASC,
-                 NEW_CUST.CUSTOMER_NAME ASC)
+                 NEW_CUST.CUSTOMER_NAME ASC);
+
 --WHERE PC_ALIGN = 'N' OR KOB_ALIGN = 'N'
---ORDER BY NEW_CUST.RPC, NEW_CUST.ACCOUNT_NAME, NEW_CUST.PC
-;
---GRANT SELECT ON AAD9606.CTYPE_REVIEW_2013 TO PUBLIC;
+--ORDER BY NEW_CUST.RPC, NEW_CUST.ACCOUNT_NAME, NEW_CUST.PC--GRANT SELECT ON AAD9606.CTYPE_REVIEW_2013 TO PUBLIC;
