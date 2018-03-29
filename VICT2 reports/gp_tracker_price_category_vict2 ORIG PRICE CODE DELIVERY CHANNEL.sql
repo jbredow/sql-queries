@@ -1,94 +1,94 @@
---TRUNCATE TABLE AAD9606.PR_VICT2_CUST_12MO;
---DROP TABLE AAD9606.PR_VICT2_CUST_12MO;
+TRUNCATE TABLE AAA6863.PR_VICT2_CUST_12MO;
+DROP TABLE AAA6863PR_VICT2_CUST_12MO;
 
-CREATE TABLE AAD9606.PR_VICT2_CUST_12MO
+CREATE TABLE AAA6863.PR_VICT2_CUST_12MO
 
 AS
    SELECT DISTINCT
-          sp_dtl.YEARMONTH,
-          sp_dtl.ACCOUNT_NUMBER,
-          sp_dtl.ACCOUNT_NAME,
-          sp_dtl.WAREHOUSE_NUMBER,
-          sp_dtl.INVOICE_NUMBER_NK,
-          sp_dtl.TYPE_OF_SALE,
-          sp_dtl.SHIP_VIA_NAME,
-          sp_dtl.OML_ASSOC_INI,
-          sp_dtl.OML_FL_INI,
-          sp_dtl.OML_ASSOC_NAME,
-          sp_dtl.WRITER,
-          sp_dtl.WR_FL_INI,
-          sp_dtl.ASSOC_NAME,
-          sp_dtl.DISCOUNT_GROUP_NK,
-          sp_Dtl.DISCOUNT_GROUP_NAME,
-          sp_Dtl.CHANNEL_TYPE,
-          sp_dtl.INVOICE_LINE_NUMBER,
-          sp_dtl.MANUFACTURER,
-          sp_dtl.PRODUCT_NK,
-          sp_dtl.ALT1_CODE,
-          sp_dtl.PRODUCT_NAME,
-          sp_dtl.INVOICE_LINES,
-          sp_dtl.STATUS,
-          sp_dtl.SHIPPED_QTY,
-          sp_dtl.EXT_SALES_AMOUNT,
-          sp_dtl.EXT_AVG_COGS_AMOUNT,
-          sp_dtl.CORE_ADJ_AVG_COST,
-          sp_dtl.ORDER_CHANNEL,
-          sp_dtl.DELIVERY_CHANNEL,
-          sp_dtl.REPLACEMENT_COST,
-          sp_dtl.UNIT_INV_COST,
-          sp_dtl.PRICE_CODE,
-          COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
-                    sp_dtl.PRICE_CATEGORY_OVR_GR,
-                    sp_dtl.PRICE_CATEGORY)
+          SP_DTL.YEARMONTH,
+          SP_DTL.ACCOUNT_NUMBER,
+          SP_DTL.ACCOUNT_NAME,
+          SP_DTL.WAREHOUSE_NUMBER,
+          SP_DTL.INVOICE_NUMBER_NK,
+          SP_DTL.TYPE_OF_SALE,
+          SP_DTL.SHIP_VIA_NAME,
+          SP_DTL.OML_ASSOC_INI,
+          SP_DTL.OML_FL_INI,
+          SP_DTL.OML_ASSOC_NAME,
+          SP_DTL.WRITER,
+          SP_DTL.WR_FL_INI,
+          SP_DTL.ASSOC_NAME,
+          SP_DTL.DISCOUNT_GROUP_NK,
+          SP_DTL.DISCOUNT_GROUP_NAME,
+          SP_DTL.CHANNEL_TYPE,
+          SP_DTL.INVOICE_LINE_NUMBER,
+          SP_DTL.MANUFACTURER,
+          SP_DTL.PRODUCT_NK,
+          SP_DTL.ALT1_CODE,
+          SP_DTL.PRODUCT_NAME,
+          SP_DTL.INVOICE_LINES,
+          SP_DTL.STATUS,
+          SP_DTL.SHIPPED_QTY,
+          SP_DTL.EXT_SALES_AMOUNT,
+          SP_DTL.EXT_AVG_COGS_AMOUNT,
+          SP_DTL.CORE_ADJ_AVG_COST,
+          SP_DTL.ORDER_CHANNEL,
+          SP_DTL.DELIVERY_CHANNEL,
+          SP_DTL.REPLACEMENT_COST,
+          SP_DTL.UNIT_INV_COST,
+          SP_DTL.PRICE_CODE,
+          COALESCE (SP_DTL.PRICE_CATEGORY_OVR_PR,
+                    SP_DTL.PRICE_CATEGORY_OVR_GR,
+                    SP_DTL.PRICE_CATEGORY)
              PRICE_CATEGORY,
-          sp_dtl.ORIG_PRICE_CODE,
-          COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR_JOB,
-                    sp_dtl.ORIG_PRICE_CATEGORY)
+          SP_DTL.ORIG_PRICE_CODE,
+          COALESCE (SP_DTL.PRICE_CATEGORY_OVR_PR_JOB,
+                    SP_DTL.ORIG_PRICE_CATEGORY)
              ORIG_PRICE_CATEGORY,
-          sp_dtl.GR_OVR,
-          sp_dtl.PR_OVR,
-          sp_dtl.PRICE_FORMULA,
-          sp_dtl.UNIT_NET_PRICE_AMOUNT,
-          sp_dtl.UM,
-          sp_dtl.SELL_MULT,
-          sp_dtl.PACK_QTY,
-          sp_dtl.LIST_PRICE,
-          sp_dtl.MATRIX_PRICE,
-          sp_dtl.MATRIX,
+          SP_DTL.GR_OVR,
+          SP_DTL.PR_OVR,
+          SP_DTL.PRICE_FORMULA,
+          SP_DTL.UNIT_NET_PRICE_AMOUNT,
+          SP_DTL.UM,
+          SP_DTL.SELL_MULT,
+          SP_DTL.PACK_QTY,
+          SP_DTL.LIST_PRICE,
+          SP_DTL.MATRIX_PRICE,
+          SP_DTL.MATRIX,
           CASE
-             WHEN sp_dtl.PRICE_CATEGORY_OVR_PR IS NOT NULL THEN sp_dtl.PR_OVR
+             WHEN SP_DTL.PRICE_CATEGORY_OVR_PR IS NOT NULL THEN SP_DTL.PR_OVR
              ELSE NULL
           END
              PR_TRIM_FORM,
           CASE
-             WHEN sp_dtl.PRICE_CATEGORY_OVR_PR IS NOT NULL
+             WHEN SP_DTL.PRICE_CATEGORY_OVR_PR IS NOT NULL
              THEN
-                sp_dtl.PR_OVR_BASIS
+                SP_DTL.PR_OVR_BASIS
              ELSE
                 NULL
           END
              PR_OVR_BASIS,
           CASE
-             WHEN sp_dtl.PRICE_CATEGORY_OVR_GR IS NOT NULL THEN sp_dtl.GR_OVR
+             WHEN SP_DTL.PRICE_CATEGORY_OVR_GR IS NOT NULL THEN SP_DTL.GR_OVR
              ELSE NULL
           END
              GR_TRIM_FORM,
-          sp_dtl.ORDER_CODE,
-          sp_dtl.SOURCE_SYSTEM,
-          sp_dtl.CONSIGN_TYPE,
-          sp_dtl.MAIN_CUSTOMER_NK,
-          sp_dtl.CUSTOMER_NK,
-          sp_dtl.CUSTOMER_NAME,
-          sp_dtl.PRICE_COLUMN,
-          sp_dtl.CUSTOMER_TYPE,
-          sp_dtl.REF_BID_NUMBER,
-          sp_dtl.SOURCE_ORDER,
-          sp_dtl.ORDER_ENTRY_DATE,
-          sp_dtl.COPY_SOURCE_HIST,
-          sp_dtl.CONTRACT_DESCRIPTION,
-          sp_dtl.CONTRACT_NUMBER
-     FROM (SELECT SP_HIST.*, --process date changed to include invoice processing date
-                  --price category change to include rounding and NDP
+          SP_DTL.ORDER_CODE,
+          SP_DTL.SOURCE_SYSTEM,
+          SP_DTL.CONSIGN_TYPE,
+          SP_DTL.MAIN_CUSTOMER_NK,
+          SP_DTL.CUSTOMER_NK,
+          SP_DTL.CUSTOMER_NAME,
+          SP_DTL.PRICE_COLUMN,
+          SP_DTL.CUSTOMER_TYPE,
+          SP_DTL.REF_BID_NUMBER,
+          SP_DTL.SOURCE_ORDER,
+          SP_DTL.ORDER_ENTRY_DATE,
+          SP_DTL.COPY_SOURCE_HIST,
+          SP_DTL.CONTRACT_DESCRIPTION,
+          SP_DTL.CONTRACT_NUMBER
+     FROM (SELECT SP_HIST.*, --PROCESS DATE CHANGED TO INCLUDE INVOICE PROCESSING DATE
+                  --PRICE CATEGORY CHANGE TO INCLUDE ROUNDING AND NDP
                   CASE
                      WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
                      THEN
@@ -209,8 +209,8 @@ AS
                         END
                   END
                      PRICE_CATEGORY_OVR_PR_JOB,
-                  --process date changed to include invoice processing date
-                  --price category change to include rounding and NDP
+                  --PROCESS DATE CHANGED TO INCLUDE INVOICE PROCESSING DATE
+                  --PRICE CATEGORY CHANGE TO INCLUDE ROUNDING AND NDP
                   CASE
                      WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
                      THEN
@@ -289,15 +289,15 @@ AS
                           IHF.OML_ASSOC_NAME,
                           CASE WHEN ILF.SHIPPED_QTY > 0 THEN 1 ELSE 0 END
                              INVOICE_LINES,
-                          DECODE (ihf.SALE_TYPE,
-                                  '1', 'Our Truck',
-                                  '2', 'Counter',
-                                  '3', 'Direct',
-                                  '4', 'Counter',
-                                  '5', 'Credit Memo',
-                                  '6', 'Showroom',
-                                  '7', 'Showroom Direct',
-                                  '8', 'eBusiness')
+                          DECODE (IHF.SALE_TYPE,
+                                  '1', 'OUR TRUCK',
+                                  '2', 'COUNTER',
+                                  '3', 'DIRECT',
+                                  '4', 'COUNTER',
+                                  '5', 'CREDIT MEMO',
+                                  '6', 'SHOWROOM',
+                                  '7', 'SHOWROOM DIRECT',
+                                  '8', 'EBUSINESS')
                              TYPE_OF_SALE,
                           IHF.CHANNEL_TYPE,
                           IHF.SHIP_VIA_NAME,
@@ -402,74 +402,74 @@ AS
                           ILF.EXT_AVG_COGS_AMOUNT,
                           ILF.EXT_SALES_AMOUNT,
                           ILF.CORE_ADJ_AVG_COST,
-                          --price category definition to include
+                          --PRICE CATEGORY DEFINITION TO INCLUDE
                           CASE
-                             WHEN ihf.order_code = 'IC'
+                             WHEN IHF.ORDER_CODE = 'IC'
                              THEN
                                 'CREDITS'
-                             WHEN ilf.special_product_gk IS NOT NULL
+                             WHEN ILF.SPECIAL_PRODUCT_GK IS NOT NULL
                              THEN
                                 'SPECIALS'
-                             WHEN ilf.price_code = 'Q'
+                             WHEN ILF.PRICE_CODE = 'Q'
                              THEN
                                 CASE
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           ilf.MATRIX_PRICE
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           ILF.MATRIX_PRICE
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           ilf.MATRIX
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           ILF.MATRIX
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX_PRICE, 2) + .01)
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX, 2) + .01)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX, 2) + .01)
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (ROUND (ilf.MATRIX_PRICE, 2))
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (ROUND (ILF.MATRIX_PRICE, 2))
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (ROUND (ilf.MATRIX, 2))
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (ROUND (ILF.MATRIX, 2))
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX_PRICE, 1) + .1)
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX, 1) + .1)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX, 1) + .1)
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           FLOOR (ilf.MATRIX_PRICE) + 1
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           FLOOR (ILF.MATRIX_PRICE) + 1
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           FLOOR (ilf.MATRIX) + 1
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           FLOOR (ILF.MATRIX) + 1
                                    THEN
                                       'MATRIX_BID'
                                    ELSE
                                       'QUOTE'
                                 END
-                             WHEN REGEXP_LIKE (ilf.price_code,
+                             WHEN REGEXP_LIKE (ILF.PRICE_CODE,
                                                '[0-9]?[0-9]?[0-9]')
                              THEN
                                 'MATRIX'
-                             WHEN ilf.price_code IN ('FC', 'PM', 'spec')
+                             WHEN ILF.PRICE_CODE IN ('FC', 'PM', 'SPEC')
                              THEN
                                 'MATRIX'
-                             WHEN ilf.price_code LIKE 'M%'
+                             WHEN ILF.PRICE_CODE LIKE 'M%'
                              THEN
                                 'MATRIX'
-                             WHEN ilf.price_formula IN ('CPA', 'CPO')
+                             WHEN ILF.PRICE_FORMULA IN ('CPA', 'CPO')
                              THEN
                                 'OVERRIDE'
-                             WHEN ilf.price_code IN ('PR',
+                             WHEN ILF.PRICE_CODE IN ('PR',
                                                      'GR',
                                                      'CB',
                                                      'GJ',
@@ -483,20 +483,20 @@ AS
                                                      'P')
                              THEN
                                 'OVERRIDE'
-                             WHEN ilf.price_code IN ('GI',
+                             WHEN ILF.PRICE_CODE IN ('GI',
                                                      'GPC',
                                                      'HPF',
                                                      'HPN',
                                                      'NC')
                              THEN
                                 'MANUAL'
-                             WHEN ilf.price_code = '*E'
+                             WHEN ILF.PRICE_CODE = '*E'
                              THEN
                                 'OTH/ERROR'
-                             WHEN ilf.price_code = 'SKC'
+                             WHEN ILF.PRICE_CODE = 'SKC'
                              THEN
                                 'OTH/ERROR'
-                             WHEN ilf.price_code IN ('%',
+                             WHEN ILF.PRICE_CODE IN ('%',
                                                      '$',
                                                      'N',
                                                      'F',
@@ -504,53 +504,53 @@ AS
                                                      'PO')
                              THEN
                                 'TOOLS'
-                             WHEN ilf.price_code IS NULL
+                             WHEN ILF.PRICE_CODE IS NULL
                              THEN
                                 'MANUAL'
-                             WHEN ilf.price_code IN ('R', 'N/A')
+                             WHEN ILF.PRICE_CODE IN ('R', 'N/A')
                              THEN
                                 CASE
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           ilf.MATRIX_PRICE
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           ILF.MATRIX_PRICE
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           ilf.MATRIX
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           ILF.MATRIX
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX_PRICE, 2) + .01)
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX, 2) + .01)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX, 2) + .01)
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (ROUND (ilf.MATRIX_PRICE, 2))
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (ROUND (ILF.MATRIX_PRICE, 2))
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (ROUND (ilf.MATRIX, 2))
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (ROUND (ILF.MATRIX, 2))
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX_PRICE, 1) + .1)
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX, 1) + .1)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX, 1) + .1)
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           FLOOR (ilf.MATRIX_PRICE) + 1
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           FLOOR (ILF.MATRIX_PRICE) + 1
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           FLOOR (ilf.MATRIX) + 1
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           FLOOR (ILF.MATRIX) + 1
                                    THEN
                                       'MATRIX_BID'
-                                   --price category defined for NDP
+                                   --PRICE CATEGORY DEFINED FOR NDP
                                    WHEN     ILF.MATRIX_PRICE IS NULL
                                         AND ILF.PRICE_FORMULA LIKE 'L-0.%'
                                    THEN
@@ -562,81 +562,81 @@ AS
                                 'MANUAL'
                           END
                              AS PRICE_CATEGORY,
-                          --price category definition using orig price code
+                          --PRICE CATEGORY DEFINITION USING ORIG PRICE CODE
                           CASE
-                             WHEN ihf.order_code = 'IC'
+                             WHEN IHF.ORDER_CODE = 'IC'
                              THEN
                                 'CREDITS'
-                             WHEN ilf.special_product_gk IS NOT NULL
+                             WHEN ILF.SPECIAL_PRODUCT_GK IS NOT NULL
                              THEN
                                 'SPECIALS'
-                             WHEN NVL (ilf.orig_price_code, ilf.price_code) =
+                             WHEN NVL (ILF.ORIG_PRICE_CODE, ILF.PRICE_CODE) =
                                      'Q'
                              THEN
                                 CASE
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           ilf.MATRIX_PRICE
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           ILF.MATRIX_PRICE
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           ilf.MATRIX
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           ILF.MATRIX
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX_PRICE, 2) + .01)
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX, 2) + .01)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX, 2) + .01)
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (ROUND (ilf.MATRIX_PRICE, 2))
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (ROUND (ILF.MATRIX_PRICE, 2))
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (ROUND (ilf.MATRIX, 2))
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (ROUND (ILF.MATRIX, 2))
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX_PRICE, 1) + .1)
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           (TRUNC (ilf.MATRIX, 1) + .1)
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           (TRUNC (ILF.MATRIX, 1) + .1)
                                    THEN
                                       'MATRIX_BID'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           FLOOR (ilf.MATRIX_PRICE) + 1
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           FLOOR (ILF.MATRIX_PRICE) + 1
                                    THEN
                                       'MATRIX'
-                                   WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                           FLOOR (ilf.MATRIX) + 1
+                                   WHEN ILF.UNIT_NET_PRICE_AMOUNT =
+                                           FLOOR (ILF.MATRIX) + 1
                                    THEN
                                       'MATRIX_BID'
                                    ELSE
                                       'QUOTE'
                                 END
                              WHEN REGEXP_LIKE (
-                                     NVL (ilf.orig_price_code,
-                                          ilf.price_code),
+                                     NVL (ILF.ORIG_PRICE_CODE,
+                                          ILF.PRICE_CODE),
                                      '[0-9]?[0-9]?[0-9]')
                              THEN
                                 'MATRIX'
-                             WHEN NVL (ilf.orig_price_code, ilf.price_code) IN ('FC',
+                             WHEN NVL (ILF.ORIG_PRICE_CODE, ILF.PRICE_CODE) IN ('FC',
                                                                                 'PM',
-                                                                                'spec')
+                                                                                'SPEC')
                              THEN
                                 'MATRIX'
-                             WHEN NVL (ilf.orig_price_code, ilf.price_code) LIKE
+                             WHEN NVL (ILF.ORIG_PRICE_CODE, ILF.PRICE_CODE) LIKE
                                      'M%'
                              THEN
                                 'NDP'
-                             WHEN NVL (ilf.orig_price_code, ilf.price_code) IN ('CPA',
+                             WHEN NVL (ILF.ORIG_PRICE_CODE, ILF.PRICE_CODE) IN ('CPA',
                                                                                 'CPO')
                              THEN
                                 'OVERRIDE'
-                             WHEN NVL (ilf.orig_price_code, ilf.price_code) IN ('PR',
+                             WHEN NVL (ILF.ORIG_PRICE_CODE, ILF.PRICE_CODE) IN ('PR',
                                                                                 'GR',
                                                                                 'CB',
                                                                                 'GJ',
@@ -650,22 +650,22 @@ AS
                                                                                 'P')
                              THEN
                                 'OVERRIDE'
-                             WHEN NVL (ilf.orig_price_code, ilf.price_code) IN ('GI',
+                             WHEN NVL (ILF.ORIG_PRICE_CODE, ILF.PRICE_CODE) IN ('GI',
                                                                                 'GPC',
                                                                                 'HPF',
                                                                                 'HPN',
                                                                                 'NC')
                              THEN
                                 'MANUAL'
-                             WHEN NVL (ilf.orig_price_code, ilf.price_code) =
+                             WHEN NVL (ILF.ORIG_PRICE_CODE, ILF.PRICE_CODE) =
                                      '*E'
                              THEN
                                 'OTH/ERROR'
-                             WHEN NVL (ilf.orig_price_code, ilf.price_code) =
+                             WHEN NVL (ILF.ORIG_PRICE_CODE, ILF.PRICE_CODE) =
                                      'SKC'
                              THEN
                                 'OTH/ERROR'
-                             WHEN NVL (ilf.orig_price_code, ilf.price_code) IN ('%',
+                             WHEN NVL (ILF.ORIG_PRICE_CODE, ILF.PRICE_CODE) IN ('%',
                                                                                 '$',
                                                                                 'N',
                                                                                 'F',
@@ -673,7 +673,7 @@ AS
                                                                                 'PO')
                              THEN
                                 'TOOLS'
-                             WHEN NVL (ilf.orig_price_code, ilf.price_code)
+                             WHEN NVL (ILF.ORIG_PRICE_CODE, ILF.PRICE_CODE)
                                      IS NULL
                              THEN
                                 'MANUAL'
@@ -723,7 +723,7 @@ AS
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD,
                           SALES_MART.SALES_WAREHOUSE_DIM SWD,
                           SALES_MART.INVOICE_CHANNEL_DIMENSION ICD
-                    --DW_FEI.INVOICE_LINE_CORE_FACT ILCF
+                          --DW_FEI.INVOICE_LINE_CORE_FACT ILCF
                     WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
                           AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
                           AND SWD.WAREHOUSE_NUMBER_NK = IHF.WAREHOUSE_NUMBER
@@ -738,7 +738,7 @@ AS
                           --AND IHF.WRITER = 'JPB'
                           --AND CUST.CUSTOMER_NK = '19037'
                           --AND IHF.REF_BID_NUMBER <> 'N/A'
-                          AND DECODE (NVL (cust.ar_gl_number, '9999'),
+                          AND DECODE (NVL (CUST.AR_GL_NUMBER, '9999'),
                                       '1320', 0,
                                       '1360', 0,
                                       '1380', 0,
@@ -756,7 +756,7 @@ AS
                           AND IHF.IC_FLAG = 0
                           AND ILF.SHIPPED_QTY <> 0
                           --AND IHF.ORDER_CODE NOT IN 'IC'
-                          --Excludes shipments to other FEI locations.
+                          --EXCLUDES SHIPMENTS TO OTHER FEI LOCATIONS.
                           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
                           AND ILF.YEARMONTH =
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
@@ -921,6 +921,8 @@ AS
                                 PR_OVR_BASE.CUSTOMER_NK
                          AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                                 NVL (PR_OVR_BASE.CONTRACT_ID,
-                                     'DEFAULT_MATCH'))) sp_dtl;
+                                     'DEFAULT_MATCH'))) SP_DTL
+        --WHERE SP_DTL.DISCOUNT_GROUP_NK IN ('5590','5594', '5605', '5606', '5608', '5617', '5786')
+;
 
---GRANT SELECT ON AAD9606.PR_VICT2_CUST_12MO TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;
