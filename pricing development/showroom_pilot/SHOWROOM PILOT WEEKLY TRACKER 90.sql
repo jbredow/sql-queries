@@ -1,4 +1,4 @@
-CREATE OR REPLACE FORCE VIEW AAK9658.PR_SHOW_WEEKLY_SUMMARY
+CREATE OR REPLACE FORCE VIEW AAA6863.PR_SHOW_WEEKLY_SUMMARY
 AS
    SELECT                                                     
           SWD.DIVISION_NAME
@@ -563,6 +563,6 @@ AS
                     'SPECIALS', 'SPECIALS',
                     'TOOLS', 'MANUAL',
                     'MANUAL');
-GRANT SELECT ON AAK9658.PR_SHOW_WEEKLY_SUMMARY TO PUBLIC;                    
+GRANT SELECT ON AAA6863.PR_SHOW_WEEKLY_SUMMARY TO PUBLIC;                    
                     
                     

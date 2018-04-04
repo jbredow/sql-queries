@@ -1,0 +1,39 @@
+SELECT SWD.DIVISION_NAME,
+       SWD.REGION_NAME,
+       SWD.ACCOUNT_NUMBER_NK,
+       SWD.ACCOUNT_NAME,
+       SWD.WAREHOUSE_NUMBER_NK,
+       SWD.WAREHOUSE_NAME,
+       POHF.PO_DATE,
+       POHF.WRITTEN_BY,
+       PROD.ALT1_CODE,
+       PROD.PRODUCT_NK,
+       PROD.PRODUCT_NAME,
+       PROD.DISCOUNT_GROUP_NK,
+       PROD.LINEBUY_NK,
+       POLF.FORMULA,
+       POLF.ORDERED_QTY,
+       POLF.RECEIPT_DATE,
+       POLF.EXT_LINE_COST,
+       POHF.PO_NUMBER_NK,
+       POLF.PO_LINE_NUMBER,
+       POLF.RECEIVED_QTY,
+       POLF.SHIP_VIA,
+       POLF.PO_DATE_YEARMONTH
+  FROM ((DW_FEI.PO_LINE_FACT POLF
+         INNER JOIN DW_FEI.PO_HEADER_ADD_FACT POHF
+            ON (POLF.PO_GK = POHF.PO_GK))
+        INNER JOIN SALES_MART.SALES_WAREHOUSE_DIM SWD
+           ON (POHF.WAREHOUSE_NUMBER_NK = SWD.WAREHOUSE_NUMBER_NK))
+       INNER JOIN DW_FEI.PRODUCT_DIMENSION PROD
+          ON (PROD.PRODUCT_GK = POLF.PRODUCT_GK)
+ WHERE     (SWD.ACCOUNT_NUMBER_NK = '61')
+       AND (POHF.DELETE_DATE IS NULL)
+       AND (POLF.DELETE_DATE IS NULL)
+       AND (PROD.DISCOUNT_GROUP_NK IN ('7722',
+                                       '7723',
+                                       '7724',
+                                       '7725',
+                                       '7726',
+                                       '7727'))
+       AND (POLF.PO_DATE_YEARMONTH BETWEEN 201801 AND 201803)
