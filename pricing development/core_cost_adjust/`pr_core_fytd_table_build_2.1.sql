@@ -123,12 +123,14 @@ AS
           --AND ILF.YEARMONTH = 201708
           --AND REPS.OUTSIDE_SALES_FLAG = 'Y'
           AND IHF.WAREHOUSE_NUMBER = SWD.WAREHOUSE_NUMBER_NK
-          AND SWD.DIVISION_NAME IN ('EAST REGION',
+          AND SWD.DIVISION_NAME IN (
+                                    'EAST REGION',
                                     'HVAC REGION',
                                     'NORTH CENTRAL REGION',
                                     'SOUTH CENTRAL REGION',
-                                    --'WATERWORKS REGION',
-                                    'WEST REGION')
+                                    'WEST REGION'       --,
+                                    --'WATERWORKS REGION'
+                                    )
    GROUP BY TPD.FISCAL_YEAR_TO_DATE ,
           SWD.DIVISION_NAME ,
           SWD.REGION_NAME ,
