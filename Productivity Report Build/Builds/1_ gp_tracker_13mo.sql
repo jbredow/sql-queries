@@ -1,40 +1,54 @@
 TRUNCATE TABLE AAA6863.GP_TRACKER_13MO;
 DROP TABLE AAA6863.GP_TRACKER_13MO;
+
 CREATE TABLE AAA6863.GP_TRACKER_13MO
+
 AS
-   (SELECT SUBSTR (ihf.YEARMONTH, 0, 4) YYYY,
-           ihf.YEARMONTH,
+   (SELECT SUBSTR (IHF.YEARMONTH, 0, 4) YYYY,
+           IHF.YEARMONTH,
            DECODE (
-          ihf.YEARMONTH,
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q1',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (11, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q1',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (10, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q1',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (9, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q2',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (8, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q2',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (7, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q2',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (6, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q3',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (5, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q3',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (4, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q3',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (3, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q4',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (2, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q4',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q4')
-          ROLLING_QTR,
-           ps.DIVISION_NAME REGION,
-           ps.ACCOUNT_NUMBER_NK ACCOUNT_NUMBER,
+              IHF.YEARMONTH,
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q1',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (11, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q1',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (10, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q1',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (9, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q2',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (8, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q2',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (7, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q2',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (6, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q3',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (5, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q3',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (4, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q3',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (3, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q4',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (2, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q4',
+              TO_CHAR (
+                 TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'), 'MONTH'),
+                 'YYYYMM'), 'ROLL_Q4')
+              ROLLING_QTR,
+           PS.DIVISION_NAME REGION,
+           PS.ACCOUNT_NUMBER_NK ACCOUNT_NUMBER,
            PS.WAREHOUSE_NUMBER_NK,
-           DECODE (ps.DIVISION_NAME,
+           DECODE (PS.DIVISION_NAME,
                    'EAST REGION', 'BLENDED',
                    'WEST REGION', 'BLENDED',
                    'NORTH CENTRAL REGION', 'BLENDED',
@@ -42,9 +56,9 @@ AS
                    'INDUSTRIAL REGION', 'INDUSTRIAL',
                    'WATERWORKS REGION', 'WW',
                    'HVAC REGION', 'HVAC',
-                    ps.DIVISION_NAME)
+                   PS.DIVISION_NAME)
               KOB,
-           DECODE (ihf.SALE_TYPE,
+           DECODE (IHF.SALE_TYPE,
                    '1', 'Our Truck',
                    '2', 'Counter',
                    '3', 'Direct',
@@ -56,37 +70,37 @@ AS
               TYPE_OF_SALE,
            --TO_CHAR((0) PRICE_CODE) PRICE_cODE,
            (0) invoice_lines,
-           SUM (NVL (ihf.AVG_COST_SUBTOTAL_AMOUNT, '0')) avg_cogs,
-           SUM (NVL (ihf.COST_SUBTOTAL_AMOUNT, '0')) actual_cogs,
-           SUM (ihf.SALES_SUBTOTAL_AMOUNT) ext_sales,
+           SUM (NVL (IHF.AVG_COST_SUBTOTAL_AMOUNT, '0')) avg_cogs,
+           SUM (NVL (IHF.COST_SUBTOTAL_AMOUNT, '0')) actual_cogs,
+           SUM (IHF.SALES_SUBTOTAL_AMOUNT) ext_sales,
            'Total' AS PRICE_CATEGORY,
            'Total' AS ROLLUP,
-           SUM (ihf.TOTAL_SALES_AMOUNT) sls_total,
-           SUM (NVL (ihf.SALES_SUBTOTAL_AMOUNT, '0')) sls_subtotal,
-           SUM (NVL (ihf.FREIGHT_SALES_AMOUNT, '0')) sls_freight,
-           SUM (NVL (ihf.MISC_SALES_AMOUNT, '0')) sls_misc,
-           SUM (NVL (ihf.RESTOCKING_SALES_AMOUNT, '0')) sls_restock,
-           SUM (NVL (ihf.AVG_COST_SUBTOTAL_AMOUNT, '0')) avg_cost_subtotal,
-           SUM (NVL (ihf.FREIGHT_COST_AMOUNT, '0')) avg_cost_freight,
-           SUM (NVL (ihf.MISC_COST_AMOUNT, '0')) avg_cost_misc
-      FROM DW_FEI.INVOICE_HEADER_FACT ihf,
-           DW_FEI.CUSTOMER_DIMENSION cust,
-           SALES_MART.SALES_WAREHOUSE_DIM ps
-           
-     WHERE ihf.CUSTOMER_ACCOUNT_GK = cust.CUSTOMER_GK
-           AND TO_CHAR (ihf.WAREHOUSE_NUMBER) = TO_CHAR (ps.WAREHOUSE_NUMBER_NK)           
-           AND ihf.IC_FLAG = 0
-           AND ihf.PO_WAREHOUSE_NUMBER IS NULL
-           AND NVL (ihf.CONSIGN_TYPE, 'N') <> 'R'
+           SUM (IHF.TOTAL_SALES_AMOUNT) sls_total,
+           SUM (NVL (IHF.SALES_SUBTOTAL_AMOUNT, '0')) sls_subtotal,
+           SUM (NVL (IHF.FREIGHT_SALES_AMOUNT, '0')) sls_freight,
+           SUM (NVL (IHF.MISC_SALES_AMOUNT, '0')) sls_misc,
+           SUM (NVL (IHF.RESTOCKING_SALES_AMOUNT, '0')) sls_restock,
+           SUM (NVL (IHF.AVG_COST_SUBTOTAL_AMOUNT, '0')) avg_cost_subtotal,
+           SUM (NVL (IHF.FREIGHT_COST_AMOUNT, '0')) avg_cost_freight,
+           SUM (NVL (IHF.MISC_COST_AMOUNT, '0')) avg_cost_misc
+      FROM DW_FEI.INVOICE_HEADER_FACT IHF,
+           DW_FEI.CUSTOMER_DIMENSION CUST,
+           SALES_MART.SALES_WAREHOUSE_DIM PS
+     WHERE     IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
+           AND TO_CHAR (IHF.WAREHOUSE_NUMBER) =
+                  TO_CHAR (PS.WAREHOUSE_NUMBER_NK)
+           AND IHF.IC_FLAG = 0
+           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
+           AND NVL (IHF.CONSIGN_TYPE, 'N') <> 'R'
            AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                         TRUNC (
-                                           SYSDATE
+                                             SYSDATE
                                            - NUMTOYMINTERVAL (12, 'MONTH'),
                                            'MONTH'),
                                         'YYYYMM')
                                  AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
                                               'YYYYMM')
-           AND DECODE (NVL (cust.ar_gl_number, '9999'),
+           AND DECODE (NVL (CUST.ar_gl_number, '9999'),
                        '1320', 0,
                        '1360', 0,
                        '1380', 0,
@@ -97,47 +111,59 @@ AS
                        '7100', 0,
                        '9999', 0,
                        1) <> 0
-    GROUP BY SUBSTR (ihf.YEARMONTH, 0, 4),
-             ihf.YEARMONTH,
-             ps.division_name,
-             ps.ACCOUNT_NUMBER_NK,
+    GROUP BY SUBSTR (IHF.YEARMONTH, 0, 4),
+             IHF.YEARMONTH,
+             PS.division_name,
+             PS.ACCOUNT_NUMBER_NK,
              PS.WAREHOUSE_NUMBER_NK,
              DECODE (
-          ihf.YEARMONTH,
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'), 'MONTH'),
+                IHF.YEARMONTH,
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q1',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (11, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (11, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q1',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (10, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (10, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q1',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (9, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (9, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q2',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (8, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (8, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q2',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (7, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (7, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q2',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (6, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (6, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q3',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (5, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (5, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q3',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (4, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (4, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q3',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (3, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (3, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q4',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (2, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (2, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q4',
-          TO_CHAR (TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'), 'MONTH'),
+                TO_CHAR (
+                   TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'), 'MONTH'),
                    'YYYYMM'), 'ROLL_Q4'),
-             DECODE (ps.DIVISION_NAME,
-                   'EAST REGION', 'BLENDED',
-                   'WEST REGION', 'BLENDED',
-                   'NORTH CENTRAL REGION', 'BLENDED',
-                   'SOUTH CENTRAL REGION', 'BLENDED',
-                   'INDUSTRIAL REGION', 'INDUSTRIAL',
-                   'WATERWORKS REGION', 'WW',
-                   'HVAC REGION', 'HVAC',
-                    ps.DIVISION_NAME),
-             DECODE (ihf.SALE_TYPE,
+             DECODE (PS.DIVISION_NAME,
+                     'EAST REGION', 'BLENDED',
+                     'WEST REGION', 'BLENDED',
+                     'NORTH CENTRAL REGION', 'BLENDED',
+                     'SOUTH CENTRAL REGION', 'BLENDED',
+                     'INDUSTRIAL REGION', 'INDUSTRIAL',
+                     'WATERWORKS REGION', 'WW',
+                     'HVAC REGION', 'HVAC',
+                     PS.DIVISION_NAME),
+             DECODE (IHF.SALE_TYPE,
                      '1', 'Our Truck',
                      '2', 'Counter',
                      '3', 'Direct',
@@ -145,5 +171,4 @@ AS
                      '5', 'Credit Memo',
                      '6', 'Showroom',
                      '7', 'Showroom Direct',
-                     '8', 'eBusiness'))
-					;
+                     '8', 'eBusiness'));

@@ -21,12 +21,12 @@ SELECT GP_DATA.YEARMONTH,
           GP_DATA.ACCOUNT_NUMBER,
           ACCT.ACCOUNT_NAME,
           NVL (GP_DATA.WRITER, '#N/A') WRITER_INIT,
-             CASE
-                WHEN ACCT.REGION_NAME IS NULL THEN ACCT.ACCOUNT_NAME
-                WHEN ACCT.REGION_NAME = 'EAST' THEN 'EASTERN'
-                WHEN ACCT.REGION_NAME = 'WEST' THEN 'WESTERN'
-                ELSE ACCT.REGION_NAME
-             END
+            CASE
+            WHEN ACCT.REGION_NAME IS NULL THEN ACCT.ACCOUNT_NAME
+            WHEN ACCT.REGION_NAME = 'EAST' THEN 'EASTERN'
+            WHEN ACCT.REGION_NAME = 'WEST' THEN 'WESTERN'
+            ELSE ACCT.REGION_NAME
+            END
           || '*'
           || GP_DATA.ACCOUNT_NUMBER
           || '*'

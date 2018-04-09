@@ -1,3 +1,5 @@
+-- from GP_TRACKER_WRITER
+
 SELECT GP_DATA.YEARMONTH,
        CASE
           WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
