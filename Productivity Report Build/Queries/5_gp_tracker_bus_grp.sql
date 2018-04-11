@@ -197,9 +197,6 @@ SELECT
                     END)
                   OUTBOUND_LINES
            FROM     SALES_MART.PRICE_MGMT_DATA_DET SLS
-					 
-					 
-					 
                   INNER JOIN
                     SALES_MART.TIME_PERIOD_DIMENSION TPD
                   ON SLS.YEARMONTH = TPD.YEARMONTH

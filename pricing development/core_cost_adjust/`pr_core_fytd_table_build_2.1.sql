@@ -122,6 +122,7 @@ AS
           --AND IHF.YEARMONTH = 201708
           --AND ILF.YEARMONTH = 201708
           --AND REPS.OUTSIDE_SALES_FLAG = 'Y'
+          --AND SWD.ACCOUNT_NAME = 'ATLANTA'
           AND IHF.WAREHOUSE_NUMBER = SWD.WAREHOUSE_NUMBER_NK
           AND SWD.DIVISION_NAME IN (
                                     'EAST REGION',
