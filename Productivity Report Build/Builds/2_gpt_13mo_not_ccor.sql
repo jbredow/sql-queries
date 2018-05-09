@@ -1,7 +1,8 @@
 TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR;
 DROP TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR;
 
-CREATE TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR NOLOGGING
+CREATE TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR
+NOLOGGING
 
 AS
    (SELECT SUBSTR (ihf.YEARMONTH, 0, 4) YYYY,
@@ -246,6 +247,7 @@ AS
                        'R', 0,
                        'Q', 0,
                        'N/A', 0,
+                       'N', 0,
                        1) <> 0
            AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                         TRUNC (

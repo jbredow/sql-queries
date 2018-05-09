@@ -874,4 +874,4 @@ FROM (SELECT SP_HIST.*, --process date changed to include invoice processing dat
                   AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                       NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))) sp_dtl;
 
---GRANT SELECT ON AAD9606.PR_VICT2_CUST_12MO TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;
