@@ -1,5 +1,4 @@
--- VICT2 sql with updated rounding logic aligned with pricing cube
--- Leigh North
+-- add writer initials line 550 
 
 /*
 DROP TABLE AAA6863.PR_VICT2_SKU_DETAIL;
@@ -18,14 +17,6 @@ SELECT DISTINCT
        sp_dtl.OML_ASSOC_INI,
        --sp_dtl.OML_FL_INI,
        sp_dtl.OML_ASSOC_NAME,*/
-			 CASE
-			 		WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1979042' THEN '2788'
-					WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1976234' THEN '2047'
-					WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1976249' THEN '254'
-					ELSE '2034'
-			 END
-			 		SHIP_WHSE,
-			 
        sp_dtl.WRITER,
        /*sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
@@ -37,8 +28,8 @@ SELECT DISTINCT
        sp_dtl.PRODUCT_NK,
        sp_dtl.ALT1_CODE,
        sp_dtl.PRODUCT_NAME,
-       sp_dtl.STATUS,
        --sp_dtl.SHIPPED_QTY,*/
+       sp_dtl.STATUS,
        SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
        SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) UX_AC,
        /*sp_dtl.REPLACEMENT_COST,
@@ -554,9 +545,12 @@ SELECT DISTINCT
                                      DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                                WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
 																		 AND ILF.PRODUCT_STATUS = 'SP'
-																		 AND IHF.ACCOUNT_NUMBER = '2000'
-																		 AND IHF.WAREHOUSE_NUMBER = '945'
-                                     /*AND IHF.ACCOUNT_NUMBER IN ('13',
+																		 AND IHF.WRITER IN (
+                                                -- add writer initials
+                                                        )
+                                     AND IHF.ACCOUNT_NUMBER = '1657'
+                                     /*AND IHF.WAREHOUSE_NUMBER = '945'
+                                     AND IHF.ACCOUNT_NUMBER IN ('13',
 																																'20',
 																																'26',
 																																'56',
@@ -599,11 +593,11 @@ SELECT DISTINCT
                                      --AND IHF.ORDER_CODE NOT IN 'IC'
                                      --Excludes shipments to other FEI locations.
                                      AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                                     /* 
-																		 AND  IHF.YEARMONTH = '201602'
-																		 AND  ILF.YEARMONTH = '201602'
-																		*/
-																		 AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
+                                      
+																		 AND  IHF.YEARMONTH BETWEEN '201804' AND '201806'
+																		 AND  ILF.YEARMONTH BETWEEN '201804' AND '201806'
+																		
+																		 /*AND ILF.YEARMONTH BETWEEN TO_CHAR ( TRUNC ( SYSDATE
                                                                                 - NUMTOYMINTERVAL ( 7,
                                                                                                    'MONTH'
                                                                                   ),
@@ -630,7 +624,7 @@ SELECT DISTINCT
                                                                          )
                                                                          - 1,
                                                                          'YYYYMM'
-                                                                ) 
+                                                                ) */
 																								) SP_HIST
                           LEFT OUTER JOIN
                             DW_FEI.DISCOUNT_GROUP_DIMENSION DG
@@ -715,14 +709,9 @@ GROUP BY
        sp_dtl.ACCOUNT_NAME,
        /*sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.INVOICE_NUMBER_NK,*/
-			 CASE
-			 		WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1979042' THEN '2788'
-					WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1976234' THEN '2047'
-					WHEN SP_DTL.SHIP_FROM_WAREHOUSE_GK = '1976249' THEN '254'
-					ELSE '2034'
-			 END,
        sp_dtl.TYPE_OF_SALE,
        sp_dtl.WRITER,
+       sp_dtl.STATUS,
        /*sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
        sp_dtl.DISCOUNT_GROUP_NK,
@@ -785,5 +774,3 @@ GROUP BY
        sp_dtl.CONTRACT_DESCRIPTION,
        sp_dtl.CONTRACT_NUMBER*/
 			 ;
-
---GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;
