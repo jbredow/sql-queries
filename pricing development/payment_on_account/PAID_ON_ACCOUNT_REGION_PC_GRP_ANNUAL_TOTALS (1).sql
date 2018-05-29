@@ -24,15 +24,19 @@ SELECT X.REGION,
                PC."PriceColGroup",
                CASE
                   WHEN TO_CHAR (POA.INSERT_TIMESTAMP, 'YYYYMM') BETWEEN 201408
-                                                                    AND 201507
-                  THEN
-                     'FY15'
-                  WHEN TO_CHAR (POA.INSERT_TIMESTAMP, 'YYYYMM') BETWEEN 201508
-                                                                    AND 201607
-                  THEN
-                     'FY16'
-                  ELSE
-                     'FY17'
+                                                                      AND 201507
+                    THEN
+                       'FY15'
+                    WHEN TO_CHAR (POA.INSERT_TIMESTAMP, 'YYYYMM') BETWEEN 201508
+                                                                      AND 201607
+                    THEN
+                       'FY16'
+                    WHEN TO_CHAR (POA.INSERT_TIMESTAMP, 'YYYYMM') BETWEEN 201608
+                                                                      AND 201707
+                    THEN
+                       'FY17'
+                    ELSE
+                       'FY18'
                END
                   FISCAL_YY,
                SUM (CASE
@@ -76,7 +80,7 @@ SELECT X.REGION,
                INNER JOIN SALES_MART.SALES_WAREHOUSE_DIM SWD
                   ON (POA.WAREHOUSE_NUMBER_NK = SWD.WAREHOUSE_NUMBER_NK)
          WHERE TO_CHAR (POA.INSERT_TIMESTAMP, 'YYYYMM') BETWEEN 201408
-                                                            AND 201707
+                                                            AND 201807
         /*AND POA.PAID_BY IN ('K',
                             'DI',
                             'MC',
@@ -97,8 +101,12 @@ SELECT X.REGION,
                                                                       AND 201607
                     THEN
                        'FY16'
-                    ELSE
+                    WHEN TO_CHAR (POA.INSERT_TIMESTAMP, 'YYYYMM') BETWEEN 201608
+                                                                      AND 201707
+                    THEN
                        'FY17'
+                    ELSE
+                       'FY18'
                  END) X
        INNER JOIN
        (SELECT SLS.ACCOUNT_NUMBER,
@@ -106,7 +114,8 @@ SELECT X.REGION,
                CASE
                   WHEN SLS.YEARMONTH BETWEEN 201408 AND 201507 THEN 'FY15'
                   WHEN SLS.YEARMONTH BETWEEN 201508 AND 201607 THEN 'FY16'
-                  ELSE 'FY17'
+                  WHEN SLS.YEARMONTH BETWEEN 201608 AND 201707 THEN 'FY17'
+                  ELSE 'FY18'
                END
                   FISCAL_YY,
                PC."PriceColGroup",
@@ -121,14 +130,15 @@ SELECT X.REGION,
          --   ON (SLS.YEARMONTH = TPD.YEARMONTH)
          WHERE                      -- TPD.ROLL12MONTHS = 'LAST TWELVE MONTHS'
                --TPD  .FISCAL_YEAR_TO_DATE = 'YEAR TO DATE'
-               SLS.YEARMONTH BETWEEN 201408 AND 201707 AND SLS.IC_FLAG = 0
-        --AND SLS.ACCOUNT_NUMBER IN ('20', '2000')
+               SLS.YEARMONTH BETWEEN 201408 AND 201807 AND SLS.IC_FLAG = 0
+          AND SLS.ACCOUNT_NUMBER IN ('20', '2000')
         GROUP BY SLS.ACCOUNT_NUMBER,
                  SLS.CUSTOMER_ACCOUNT_GK,
                  CASE
                     WHEN SLS.YEARMONTH BETWEEN 201408 AND 201507 THEN 'FY15'
                     WHEN SLS.YEARMONTH BETWEEN 201508 AND 201607 THEN 'FY16'
-                    ELSE 'FY17'
+                    WHEN SLS.YEARMONTH BETWEEN 201608 AND 201707 THEN 'FY17'
+                    ELSE 'FY18'
                  END,
                  PC."PriceColGroup") Y
           ON (    X."PriceColGroup" = Y."PriceColGroup"

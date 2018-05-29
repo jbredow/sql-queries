@@ -689,41 +689,45 @@ FROM (SELECT SP_HIST.*, --process date changed to include invoice processing dat
                  --AAD9606.PR_VICT2_MIDATLWW WW
             --DW_FEI.INVOICE_LINE_CORE_FACT ILCF
             WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
-                  AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
-                  AND SWD.WAREHOUSE_NUMBER_NK = IHF.WAREHOUSE_NUMBER
-                  AND IHF.INVOICE_NUMBER_GK = ICD.INVOICE_NUMBER_GK
-                  AND IHF.COPY_SOURCE_HIST = '1946426'
-                  --AND IHF.INVOICE_NUMBER_GK = ILCF.INVOICE_NUMBER_GK
-                  --AND ILCF.YEARMONTH = ILF.YEARMONTH
-                  --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
-                  --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
-                  --AND PROD.MANUFACTURER = '774'
-                  --AND ILF.
-                  AND IHF.ACCOUNT_NUMBER = 1800
-                  --AND IHF.WRITER = 'JPB'
-                  --AND CUST.CUSTOMER_NK = '19037'
-                  --AND IHF.REF_BID_NUMBER <> 'N/A'
-                  AND DECODE (NVL (cust.ar_gl_number, '9999'),
-                              '1320', 0,
-                              '1360', 0,
-                              '1380', 0,
-                              '1400', 0,
-                              '1401', 0,
-                              '1500', 0,
-                              '4000', 0,
-                              '7100', 0,
-                              '9999', 0,
-                              1) <>
-                      0
-                  AND NVL (IHF.CONSIGN_TYPE, 'N/A') NOT IN 'R'
-                  AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
-                  AND ILF.SPECIAL_PRODUCT_GK = SP_PROD.SPECIAL_PRODUCT_GK(+)
-                  AND IHF.IC_FLAG = 0
-                  AND ILF.SHIPPED_QTY <> 0
-                  --AND IHF.ORDER_CODE NOT IN 'IC'
-                  --Excludes shipments to other FEI locations.
-                  AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                  AND IHF.YEARMONTH > 201612
+                          AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
+                          AND SWD.WAREHOUSE_NUMBER_NK = IHF.WAREHOUSE_NUMBER
+                          AND IHF.INVOICE_NUMBER_GK = ICD.INVOICE_NUMBER_GK
+                          --AND IHF.INVOICE_NUMBER_GK = ILCF.INVOICE_NUMBER_GK
+                          --AND ILCF.YEARMONTH = ILF.YEARMONTH
+                          --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
+                          --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
+                          --AND PROD.MANUFACTURER = '774'
+                          --AND ILF.
+                          --AND IHF.ACCOUNT_NUMBER = 215
+                          --AND IHF.WRITER = 'JPB'
+                          --AND CUST.CUSTOMER_NK = '19037'
+                          --AND IHF.REF_BID_NUMBER <> 'N/A'
+                          AND DECODE (NVL (cust.ar_gl_number, '9999'),
+                                      '1320', 0,
+                                      '1360', 0,
+                                      '1380', 0,
+                                      '1400', 0,
+                                      '1401', 0,
+                                      '1500', 0,
+                                      '4000', 0,
+                                      '7100', 0,
+                                      '9999', 0,
+                                      1) <> 0
+                          AND NVL (IHF.CONSIGN_TYPE, 'N/A') NOT IN 'R'
+                          AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
+                          AND ILF.SPECIAL_PRODUCT_GK =
+                                 SP_PROD.SPECIAL_PRODUCT_GK(+)
+                          AND IHF.IC_FLAG = 0
+                          AND ILF.SHIPPED_QTY <> 0
+                          --AND IHF.ORDER_CODE NOT IN 'IC'
+                          --Excludes shipments to other FEI locations.
+                          AND IHF.PO_WAREHOUSE_NUMBER IS NULL
+                          AND ILF.YEARMONTH =
+                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                          'YYYYMM')
+                          AND IHF.YEARMONTH =
+                                 TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                          'YYYYMM')
                   ) SP_HIST
            LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
               ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK

@@ -60,7 +60,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                  GP_DATA.REGION,
                  GP_DATA.ACCOUNT_NUMBER,
                  ACCT.ACCOUNT_NAME,
-                 GP_DATA.REGION
+                    GP_DATA.REGION
                  || '*'
                  || GP_DATA.ACCOUNT_NUMBER
                  || '*'
@@ -88,23 +88,23 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                  SUM (GP_DATA.AVG_COST_FREIGHT) "Cost, Freight",
                  SUM (GP_DATA.AVG_COST_MISC) "Cost, Misc",
                  SUM (
-                    (  GP_DATA.SLS_SUBTOTAL
-                     + GP_DATA.SLS_FREIGHT
-                     + GP_DATA.SLS_MISC
-                     + GP_DATA.SLS_RESTOCK)
+                      (  GP_DATA.SLS_SUBTOTAL
+                       + GP_DATA.SLS_FREIGHT
+                       + GP_DATA.SLS_MISC
+                       + GP_DATA.SLS_RESTOCK)
                     - (  GP_DATA.AVG_COST_SUBTOTAL
                        + GP_DATA.AVG_COST_FREIGHT
                        + GP_DATA.AVG_COST_MISC))
                     "Total GP$",
                  ROUND (
-                    SUM (
-                       (  GP_DATA.SLS_SUBTOTAL
-                        + GP_DATA.SLS_FREIGHT
-                        + GP_DATA.SLS_MISC
-                        + GP_DATA.SLS_RESTOCK)
-                       - (  GP_DATA.AVG_COST_SUBTOTAL
-                          + GP_DATA.AVG_COST_FREIGHT
-                          + GP_DATA.AVG_COST_MISC))
+                      SUM (
+                           (  GP_DATA.SLS_SUBTOTAL
+                            + GP_DATA.SLS_FREIGHT
+                            + GP_DATA.SLS_MISC
+                            + GP_DATA.SLS_RESTOCK)
+                         - (  GP_DATA.AVG_COST_SUBTOTAL
+                            + GP_DATA.AVG_COST_FREIGHT
+                            + GP_DATA.AVG_COST_MISC))
                     / SUM (
                            GP_DATA.SLS_SUBTOTAL
                          + GP_DATA.SLS_FREIGHT
@@ -115,8 +115,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                  SUM (GP_DATA.INVOICE_LINES) "Total # Lines",
                  SUM (
                     CASE
-                       WHEN GP_DATA.PRICE_CATEGORY IN
-                               ('MATRIX', 'MATRIX_BID', 'NDP')
+                       WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                       'MATRIX_BID',
+                                                       'NDP')
                        THEN
                           (GP_DATA.EXT_SALES)
                        ELSE
@@ -125,8 +126,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     "Price Matrix Sales",
                  SUM (
                     CASE
-                       WHEN GP_DATA.PRICE_CATEGORY IN
-                               ('MATRIX', 'MATRIX_BID', 'NDP')
+                       WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                       'MATRIX_BID',
+                                                       'NDP')
                        THEN
                           (GP_DATA.AVG_COGS)
                        ELSE
@@ -135,8 +137,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     "Price Matrix Cost",
                  SUM (
                     CASE
-                       WHEN GP_DATA.PRICE_CATEGORY IN
-                               ('MATRIX', 'MATRIX_BID', 'NDP')
+                       WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                       'MATRIX_BID',
+                                                       'NDP')
                        THEN
                           (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                        ELSE
@@ -144,19 +147,21 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     END)
                     "Price Matrix GP$",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN
-                                  ('MATRIX', 'MATRIX_BID', 'NDP')
-                          THEN
-                             (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                            'MATRIX_BID',
+                                                            'NDP')
+                            THEN
+                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
-                            WHEN GP_DATA.PRICE_CATEGORY IN
-                                    ('MATRIX', 'MATRIX_BID', 'NDP')
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                            'MATRIX_BID',
+                                                            'NDP')
                             THEN
                                CASE
                                   WHEN GP_DATA.EXT_SALES > 0
@@ -171,15 +176,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Price Matrix GP%",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN
-                                  ('MATRIX', 'MATRIX_BID', 'NDP')
-                          THEN
-                             (GP_DATA.EXT_SALES)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                            'MATRIX_BID',
+                                                            'NDP')
+                            THEN
+                               (GP_DATA.EXT_SALES)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -191,15 +197,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Price Matrix Use%$",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN
-                                  ('MATRIX', 'MATRIX_BID', 'NDP')
-                          THEN
-                             (GP_DATA.INVOICE_LINES)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                            'MATRIX_BID',
+                                                            'NDP')
+                            THEN
+                               (GP_DATA.INVOICE_LINES)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.INVOICE_LINES > 0
@@ -211,15 +218,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Price Matrix Use%#",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN
-                                  ('MATRIX', 'MATRIX_BID', 'NDP')
-                          THEN
-                             (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                            'MATRIX_BID',
+                                                            'NDP')
+                            THEN
+                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.ROLLUP = 'Total'
@@ -239,8 +247,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     "Price Matrix Profit%$",
                  SUM (
                     CASE
-                       WHEN GP_DATA.PRICE_CATEGORY IN
-                               ('MATRIX', 'MATRIX_BID', 'NDP')
+                       WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                       'MATRIX_BID',
+                                                       'NDP')
                        THEN
                           (GP_DATA.INVOICE_LINES)
                        ELSE
@@ -275,14 +284,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     END)
                     "Contract GP$",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                          THEN
-                             (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                            THEN
+                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
@@ -300,14 +309,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Contract GP%",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                          THEN
-                             (GP_DATA.EXT_SALES)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                            THEN
+                               (GP_DATA.EXT_SALES)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -319,14 +328,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Contract Use%$",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                          THEN
-                             (GP_DATA.INVOICE_LINES)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                            THEN
+                               (GP_DATA.INVOICE_LINES)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.INVOICE_LINES > 0
@@ -338,14 +347,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Contract Use%#",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                          THEN
-                             (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                            THEN
+                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.ROLLUP = 'Total'
@@ -374,8 +383,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     "Contract # Lines",
                  SUM (
                     CASE
-                       WHEN GP_DATA.PRICE_CATEGORY IN
-                               ('MANUAL', 'TOOLS', 'QUOTE')
+                       WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                       'TOOLS',
+                                                       'QUOTE')
                        THEN
                           (GP_DATA.EXT_SALES)
                        ELSE
@@ -384,8 +394,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     "Manual Sales",
                  SUM (
                     CASE
-                       WHEN GP_DATA.PRICE_CATEGORY IN
-                               ('MANUAL', 'TOOLS', 'QUOTE')
+                       WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                       'TOOLS',
+                                                       'QUOTE')
                        THEN
                           (GP_DATA.AVG_COGS)
                        ELSE
@@ -394,8 +405,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     "Manual Cost",
                  SUM (
                     CASE
-                       WHEN GP_DATA.PRICE_CATEGORY IN
-                               ('MANUAL', 'TOOLS', 'QUOTE')
+                       WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                       'TOOLS',
+                                                       'QUOTE')
                        THEN
                           (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                        ELSE
@@ -403,19 +415,21 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     END)
                     "Manual GP$",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN
-                                  ('MANUAL', 'TOOLS', 'QUOTE')
-                          THEN
-                             (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                            'TOOLS',
+                                                            'QUOTE')
+                            THEN
+                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
-                            WHEN GP_DATA.PRICE_CATEGORY IN
-                                    ('MANUAL', 'TOOLS', 'QUOTE')
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                            'TOOLS',
+                                                            'QUOTE')
                             THEN
                                CASE
                                   WHEN GP_DATA.EXT_SALES > 0
@@ -430,15 +444,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Manual GP%",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN
-                                  ('MANUAL', 'TOOLS', 'QUOTE')
-                          THEN
-                             (GP_DATA.EXT_SALES)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                            'TOOLS',
+                                                            'QUOTE')
+                            THEN
+                               (GP_DATA.EXT_SALES)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -450,15 +465,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Manual Use%$",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN
-                                  ('MANUAL', 'TOOLS', 'QUOTE')
-                          THEN
-                             (GP_DATA.INVOICE_LINES)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                            'TOOLS',
+                                                            'QUOTE')
+                            THEN
+                               (GP_DATA.INVOICE_LINES)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.INVOICE_LINES > 0
@@ -470,15 +486,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Manual Use%#",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN
-                                  ('MANUAL', 'TOOLS', 'QUOTE')
-                          THEN
-                             (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                            'TOOLS',
+                                                            'QUOTE')
+                            THEN
+                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.ROLLUP = 'Total'
@@ -498,98 +515,91 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     "Manual Profit%$",
                  SUM (
                     CASE
-                       WHEN GP_DATA.PRICE_CATEGORY IN
-                               ('MANUAL', 'TOOLS', 'QUOTE')
+                       WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                       'TOOLS',
+                                                       'QUOTE')
                        THEN
                           (GP_DATA.INVOICE_LINES)
                        ELSE
                           0
                     END)
                     "Manual # Lines",
-                 SUM (
-                    CASE
-                       WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                               ('MATRIX',
-                                'OVERRIDE',
-                                'MANUAL',
-                                'CREDITS',
-                                'TOOLS',
-                                'NDP',
-                                'QUOTE',
-                                'MATRIX_BID',
-                                'Total')
-                       THEN
-                          (GP_DATA.EXT_SALES)
-                       ELSE
-                          0
-                    END)
+                 SUM (CASE
+                         WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                             'OVERRIDE',
+                                                             'MANUAL',
+                                                             'CREDITS',
+                                                             'TOOLS',
+                                                             'NDP',
+                                                             'QUOTE',
+                                                             'MATRIX_BID',
+                                                             'Total')
+                         THEN
+                            (GP_DATA.EXT_SALES)
+                         ELSE
+                            0
+                      END)
                     "Other Sales",
-                 SUM (
-                    CASE
-                       WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                               ('MATRIX',
-                                'OVERRIDE',
-                                'MANUAL',
-                                'CREDITS',
-                                'TOOLS',
-                                'NDP',
-                                'QUOTE',
-                                'MATRIX_BID',
-                                'Total')
-                       THEN
-                          (GP_DATA.AVG_COGS)
-                       ELSE
-                          0
-                    END)
+                 SUM (CASE
+                         WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                             'OVERRIDE',
+                                                             'MANUAL',
+                                                             'CREDITS',
+                                                             'TOOLS',
+                                                             'NDP',
+                                                             'QUOTE',
+                                                             'MATRIX_BID',
+                                                             'Total')
+                         THEN
+                            (GP_DATA.AVG_COGS)
+                         ELSE
+                            0
+                      END)
                     "Other Cost",
-                 SUM (
-                    CASE
-                       WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                               ('MATRIX',
-                                'OVERRIDE',
-                                'MANUAL',
-                                'CREDITS',
-                                'TOOLS',
-                                'NDP',
-                                'QUOTE',
-                                'MATRIX_BID',
-                                'Total')
-                       THEN
-                          (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                       ELSE
-                          0
-                    END)
+                 SUM (CASE
+                         WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                             'OVERRIDE',
+                                                             'MANUAL',
+                                                             'CREDITS',
+                                                             'TOOLS',
+                                                             'NDP',
+                                                             'QUOTE',
+                                                             'MATRIX_BID',
+                                                             'Total')
+                         THEN
+                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                         ELSE
+                            0
+                      END)
                     "Other GP$",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                  ('MATRIX',
-                                   'OVERRIDE',
-                                   'MANUAL',
-                                   'CREDITS',
-                                   'TOOLS',
-                                   'NDP',
-                                   'QUOTE',
-                                   'MATRIX_BID',
-                                   'Total')
-                          THEN
-                             (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                                'OVERRIDE',
+                                                                'MANUAL',
+                                                                'CREDITS',
+                                                                'TOOLS',
+                                                                'NDP',
+                                                                'QUOTE',
+                                                                'MATRIX_BID',
+                                                                'Total')
+                            THEN
+                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
-                            WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                    ('MATRIX',
-                                     'OVERRIDE',
-                                     'MANUAL',
-                                     'CREDITS',
-                                     'TOOLS',
-                                     'NDP',
-                                     'QUOTE',
-                                     'MATRIX_BID',
-                                     'Total')
+                            WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                                'OVERRIDE',
+                                                                'MANUAL',
+                                                                'CREDITS',
+                                                                'TOOLS',
+                                                                'NDP',
+                                                                'QUOTE',
+                                                                'MATRIX_BID',
+                                                                'Total')
                             THEN
                                CASE
                                   WHEN GP_DATA.EXT_SALES > 0
@@ -604,23 +614,22 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Other GP%",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                  ('MATRIX',
-                                   'OVERRIDE',
-                                   'MANUAL',
-                                   'CREDITS',
-                                   'TOOLS',
-                                   'NDP',
-                                   'QUOTE',
-                                   'MATRIX_BID',
-                                   'Total')
-                          THEN
-                             (GP_DATA.EXT_SALES)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                                'OVERRIDE',
+                                                                'MANUAL',
+                                                                'CREDITS',
+                                                                'TOOLS',
+                                                                'NDP',
+                                                                'QUOTE',
+                                                                'MATRIX_BID',
+                                                                'Total')
+                            THEN
+                               (GP_DATA.EXT_SALES)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -632,23 +641,22 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Other Use%$",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                  ('MATRIX',
-                                   'OVERRIDE',
-                                   'MANUAL',
-                                   'CREDITS',
-                                   'TOOLS',
-                                   'NDP',
-                                   'QUOTE',
-                                   'MATRIX_BID',
-                                   'Total')
-                          THEN
-                             (GP_DATA.INVOICE_LINES)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                                'OVERRIDE',
+                                                                'MANUAL',
+                                                                'CREDITS',
+                                                                'TOOLS',
+                                                                'NDP',
+                                                                'QUOTE',
+                                                                'MATRIX_BID',
+                                                                'Total')
+                            THEN
+                               (GP_DATA.INVOICE_LINES)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.INVOICE_LINES > 0
@@ -660,23 +668,22 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Other Use%#",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                  ('MATRIX',
-                                   'OVERRIDE',
-                                   'MANUAL',
-                                   'CREDITS',
-                                   'TOOLS',
-                                   'NDP',
-                                   'QUOTE',
-                                   'MATRIX_BID',
-                                   'Total')
-                          THEN
-                             (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                                'OVERRIDE',
+                                                                'MANUAL',
+                                                                'CREDITS',
+                                                                'TOOLS',
+                                                                'NDP',
+                                                                'QUOTE',
+                                                                'MATRIX_BID',
+                                                                'Total')
+                            THEN
+                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.ROLLUP = 'Total'
@@ -694,41 +701,40 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                          END),
                     6)
                     "Other Profit%$",
+                 SUM (CASE
+                         WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                             'OVERRIDE',
+                                                             'MANUAL',
+                                                             'CREDITS',
+                                                             'TOOLS',
+                                                             'NDP',
+                                                             'QUOTE',
+                                                             'MATRIX_BID',
+                                                             'Total')
+                         THEN
+                            (GP_DATA.INVOICE_LINES)
+                         ELSE
+                            0
+                      END)
+                    "Other # Lines",
                  SUM (
                     CASE
-                       WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                               ('MATRIX',
-                                'OVERRIDE',
-                                'MANUAL',
-                                'CREDITS',
-                                'TOOLS',
-                                'NDP',
-                                'QUOTE',
-                                'MATRIX_BID',
-                                'Total')
+                       WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
                        THEN
-                          (GP_DATA.INVOICE_LINES)
+                          (GP_DATA.EXT_SALES)
                        ELSE
                           0
                     END)
-                    "Other # Lines",
-                 SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
-                          THEN
-                             (GP_DATA.EXT_SALES)
-                          ELSE
-                             0
-                       END) "Credit Sales",
+                    "Credit Sales",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
-                          THEN
-                             (GP_DATA.EXT_SALES)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
+                            THEN
+                               (GP_DATA.EXT_SALES)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -740,14 +746,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     6)
                     "Credits Use%$",
                  ROUND (
-                    SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
-                          THEN
-                             (GP_DATA.INVOICE_LINES)
-                          ELSE
-                             0
-                       END)
+                      SUM (
+                         CASE
+                            WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
+                            THEN
+                               (GP_DATA.INVOICE_LINES)
+                            ELSE
+                               0
+                         END)
                     / SUM (
                          CASE
                             WHEN GP_DATA.INVOICE_LINES > 0
@@ -760,46 +766,44 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     "Credits Use%#",
                  SUM (GP_DATA.SLS_FREIGHT - GP_DATA.AVG_COST_FREIGHT)
                     "Freight Profit (Loss)",
-                SUM (
-          CASE
-             WHEN GP_DATA.PRICE_CATEGORY NOT IN ('CREDITS', 'Total')
-             THEN
-                (GP_DATA.EXT_SALES)
-             ELSE
-                0
-          END)
-          "Outbound Sales",
-             GP_DATA.TYPE_OF_SALE
-     FROM AAA6863.GP_TRACKER_13MO GP_DATA,
-                 (SELECT SWD.ACCOUNT_NAME, SWD.ACCOUNT_NUMBER_NK, SWD.WAREHOUSE_NUMBER_NK
-          FROM AAD9606.PR_SLS_WHSE_DIM SWD
-         GROUP BY SWD.ACCOUNT_NAME, 
-				 					SWD.ACCOUNT_NUMBER_NK, 
-									SWD.WAREHOUSE_NUMBER_NK) ACCT
-           WHERE GP_DATA.WAREHOUSE_NUMBER_NK = ACCT.WAREHOUSE_NUMBER_NK(+)
+                 SUM (
+                    CASE
+                       WHEN GP_DATA.PRICE_CATEGORY NOT IN ('CREDITS', 'Total')
+                       THEN
+                          (GP_DATA.EXT_SALES)
+                       ELSE
+                          0
+                    END)
+                    "Outbound Sales",
+                 GP_DATA.TYPE_OF_SALE
+            FROM AAA6863.GP_TRACKER_13MO GP_DATA,
+                 (SELECT SWD.ACCOUNT_NAME,
+                         SWD.ACCOUNT_NUMBER_NK,
+                         SWD.WAREHOUSE_NUMBER_NK
+                    FROM AAD9606.PR_SLS_WHSE_DIM SWD
+                  GROUP BY SWD.ACCOUNT_NAME,
+                           SWD.ACCOUNT_NUMBER_NK,
+                           SWD.WAREHOUSE_NUMBER_NK) ACCT
+           WHERE     GP_DATA.WAREHOUSE_NUMBER_NK =
+                        ACCT.WAREHOUSE_NUMBER_NK(+)
                  AND GP_DATA.YEARMONTH =
                         (SELECT MAX (GP_DATA.YEARMONTH)
                            FROM AAA6863.GP_TRACKER_13MO GP_DATA)
-                 
-                 --AND GP_DATA.TYPE_OF_SALE = 'Counter'
+          --AND GP_DATA.TYPE_OF_SALE = 'Counter'
           HAVING SUM (GP_DATA.SLS_SUBTOTAL) > 0
           GROUP BY GP_DATA.YEARMONTH,
                    GP_DATA.TYPE_OF_SALE,
-                   GP_DATA.REGION, 
+                   GP_DATA.REGION,
                    GP_DATA.ACCOUNT_NUMBER,
                    ACCT.ACCOUNT_NAME)
-        
-    UNION
-        
+        UNION
         (SELECT 'ROLLING_12MO' RPT_PERIOD,
                 TO_CHAR (COUNT (DISTINCT GP_DATA.YEARMONTH)) || '_MONTHS'
                    ACTUAL,
-               GP_DATA.REGION,
+                GP_DATA.REGION,
                 GP_DATA.ACCOUNT_NUMBER,
                 ACCT.ACCOUNT_NAME,
-                GP_DATA.REGION
-                || '*'
-                || GP_DATA.ACCOUNT_NUMBER
+                GP_DATA.REGION || '*' || GP_DATA.ACCOUNT_NUMBER
                    AS GPTRACK_KEY,
                 SUM (
                      GP_DATA.SLS_SUBTOTAL
@@ -820,23 +824,23 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                 SUM (GP_DATA.AVG_COST_FREIGHT) "Cost, Freight",
                 SUM (GP_DATA.AVG_COST_MISC) "Cost, Misc",
                 SUM (
-                   (  GP_DATA.SLS_SUBTOTAL
-                    + GP_DATA.SLS_FREIGHT
-                    + GP_DATA.SLS_MISC
-                    + GP_DATA.SLS_RESTOCK)
+                     (  GP_DATA.SLS_SUBTOTAL
+                      + GP_DATA.SLS_FREIGHT
+                      + GP_DATA.SLS_MISC
+                      + GP_DATA.SLS_RESTOCK)
                    - (  GP_DATA.AVG_COST_SUBTOTAL
                       + GP_DATA.AVG_COST_FREIGHT
                       + GP_DATA.AVG_COST_MISC))
                    "Total GP$",
                 ROUND (
-                   SUM (
-                      (  GP_DATA.SLS_SUBTOTAL
-                       + GP_DATA.SLS_FREIGHT
-                       + GP_DATA.SLS_MISC
-                       + GP_DATA.SLS_RESTOCK)
-                      - (  GP_DATA.AVG_COST_SUBTOTAL
-                         + GP_DATA.AVG_COST_FREIGHT
-                         + GP_DATA.AVG_COST_MISC))
+                     SUM (
+                          (  GP_DATA.SLS_SUBTOTAL
+                           + GP_DATA.SLS_FREIGHT
+                           + GP_DATA.SLS_MISC
+                           + GP_DATA.SLS_RESTOCK)
+                        - (  GP_DATA.AVG_COST_SUBTOTAL
+                           + GP_DATA.AVG_COST_FREIGHT
+                           + GP_DATA.AVG_COST_MISC))
                    / SUM (
                           GP_DATA.SLS_SUBTOTAL
                         + GP_DATA.SLS_FREIGHT
@@ -847,7 +851,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                 SUM (GP_DATA.INVOICE_LINES) "Total # Lines",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                      'MATRIX_BID',
+                                                      'NDP')
                       THEN
                          (GP_DATA.EXT_SALES)
                       ELSE
@@ -856,7 +862,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Price Matrix Sales",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                      'MATRIX_BID',
+                                                      'NDP')
                       THEN
                          (GP_DATA.AVG_COGS)
                       ELSE
@@ -865,7 +873,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Price Matrix Cost",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                      'MATRIX_BID',
+                                                      'NDP')
                       THEN
                          (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                       ELSE
@@ -873,19 +883,21 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    END)
                    "Price Matrix GP$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MATRIX', 'MATRIX_BID', 'NDP')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                           'MATRIX_BID',
+                                                           'NDP')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
-                           WHEN GP_DATA.PRICE_CATEGORY IN
-                                   ('MATRIX', 'MATRIX_BID', 'NDP')
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                           'MATRIX_BID',
+                                                           'NDP')
                            THEN
                               CASE
                                  WHEN GP_DATA.EXT_SALES > 0
@@ -900,15 +912,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Price Matrix GP%",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MATRIX', 'MATRIX_BID', 'NDP')
-                         THEN
-                            (GP_DATA.EXT_SALES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                           'MATRIX_BID',
+                                                           'NDP')
+                           THEN
+                              (GP_DATA.EXT_SALES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -920,15 +933,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Price Matrix Use%$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MATRIX', 'MATRIX_BID', 'NDP')
-                         THEN
-                            (GP_DATA.INVOICE_LINES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                           'MATRIX_BID',
+                                                           'NDP')
+                           THEN
+                              (GP_DATA.INVOICE_LINES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.INVOICE_LINES > 0
@@ -940,15 +954,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Price Matrix Use%#",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MATRIX', 'MATRIX_BID', 'NDP')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                           'MATRIX_BID',
+                                                           'NDP')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.ROLLUP = 'Total'
@@ -968,7 +983,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Price Matrix Profit%$",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                      'MATRIX_BID',
+                                                      'NDP')
                       THEN
                          (GP_DATA.INVOICE_LINES)
                       ELSE
@@ -1003,14 +1020,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    END)
                    "Contract GP$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
@@ -1028,14 +1045,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Contract GP%",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                         THEN
-                            (GP_DATA.EXT_SALES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                           THEN
+                              (GP_DATA.EXT_SALES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -1047,14 +1064,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Contract Use%$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                         THEN
-                            (GP_DATA.INVOICE_LINES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                           THEN
+                              (GP_DATA.INVOICE_LINES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.INVOICE_LINES > 0
@@ -1066,14 +1083,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Contract Use%#",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.ROLLUP = 'Total'
@@ -1102,8 +1119,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Contract # Lines",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN
-                              ('MANUAL', 'TOOLS', 'QUOTE')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                      'TOOLS',
+                                                      'QUOTE')
                       THEN
                          (GP_DATA.EXT_SALES)
                       ELSE
@@ -1112,8 +1130,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Manual Sales",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN
-                              ('MANUAL', 'TOOLS', 'QUOTE')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                      'TOOLS',
+                                                      'QUOTE')
                       THEN
                          (GP_DATA.AVG_COGS)
                       ELSE
@@ -1122,8 +1141,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Manual Cost",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN
-                              ('MANUAL', 'TOOLS', 'QUOTE')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                      'TOOLS',
+                                                      'QUOTE')
                       THEN
                          (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                       ELSE
@@ -1131,19 +1151,21 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    END)
                    "Manual GP$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MANUAL', 'TOOLS', 'QUOTE')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                           'TOOLS',
+                                                           'QUOTE')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
-                           WHEN GP_DATA.PRICE_CATEGORY IN
-                                   ('MANUAL', 'TOOLS', 'QUOTE')
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                           'TOOLS',
+                                                           'QUOTE')
                            THEN
                               CASE
                                  WHEN GP_DATA.EXT_SALES > 0
@@ -1158,15 +1180,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Manual GP%",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MANUAL', 'TOOLS', 'QUOTE')
-                         THEN
-                            (GP_DATA.EXT_SALES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                           'TOOLS',
+                                                           'QUOTE')
+                           THEN
+                              (GP_DATA.EXT_SALES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -1178,15 +1201,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Manual Use%$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MANUAL', 'TOOLS', 'QUOTE')
-                         THEN
-                            (GP_DATA.INVOICE_LINES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                           'TOOLS',
+                                                           'QUOTE')
+                           THEN
+                              (GP_DATA.INVOICE_LINES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.INVOICE_LINES > 0
@@ -1198,15 +1222,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Manual Use%#",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MANUAL', 'TOOLS', 'QUOTE')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                           'TOOLS',
+                                                           'QUOTE')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.ROLLUP = 'Total'
@@ -1226,98 +1251,91 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Manual Profit%$",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN
-                              ('MANUAL', 'TOOLS', 'QUOTE')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                      'TOOLS',
+                                                      'QUOTE')
                       THEN
                          (GP_DATA.INVOICE_LINES)
                       ELSE
                          0
                    END)
                    "Manual # Lines",
-                SUM (
-                   CASE
-                      WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                              ('MATRIX',
-                               'OVERRIDE',
-                               'MANUAL',
-                               'CREDITS',
-                               'TOOLS',
-                               'NDP',
-                               'QUOTE',
-                               'MATRIX_BID',
-                               'Total')
-                      THEN
-                         (GP_DATA.EXT_SALES)
-                      ELSE
-                         0
-                   END)
+                SUM (CASE
+                        WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                            'OVERRIDE',
+                                                            'MANUAL',
+                                                            'CREDITS',
+                                                            'TOOLS',
+                                                            'NDP',
+                                                            'QUOTE',
+                                                            'MATRIX_BID',
+                                                            'Total')
+                        THEN
+                           (GP_DATA.EXT_SALES)
+                        ELSE
+                           0
+                     END)
                    "Other Sales",
-                SUM (
-                   CASE
-                      WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                              ('MATRIX',
-                               'OVERRIDE',
-                               'MANUAL',
-                               'CREDITS',
-                               'TOOLS',
-                               'NDP',
-                               'QUOTE',
-                               'MATRIX_BID',
-                               'Total')
-                      THEN
-                         (GP_DATA.AVG_COGS)
-                      ELSE
-                         0
-                   END)
+                SUM (CASE
+                        WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                            'OVERRIDE',
+                                                            'MANUAL',
+                                                            'CREDITS',
+                                                            'TOOLS',
+                                                            'NDP',
+                                                            'QUOTE',
+                                                            'MATRIX_BID',
+                                                            'Total')
+                        THEN
+                           (GP_DATA.AVG_COGS)
+                        ELSE
+                           0
+                     END)
                    "Other Cost",
-                SUM (
-                   CASE
-                      WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                              ('MATRIX',
-                               'OVERRIDE',
-                               'MANUAL',
-                               'CREDITS',
-                               'TOOLS',
-                               'NDP',
-                               'QUOTE',
-                               'MATRIX_BID',
-                               'Total')
-                      THEN
-                         (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                      ELSE
-                         0
-                   END)
+                SUM (CASE
+                        WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                            'OVERRIDE',
+                                                            'MANUAL',
+                                                            'CREDITS',
+                                                            'TOOLS',
+                                                            'NDP',
+                                                            'QUOTE',
+                                                            'MATRIX_BID',
+                                                            'Total')
+                        THEN
+                           (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                        ELSE
+                           0
+                     END)
                    "Other GP$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                 ('MATRIX',
-                                  'OVERRIDE',
-                                  'MANUAL',
-                                  'CREDITS',
-                                  'TOOLS',
-                                  'NDP',
-                                  'QUOTE',
-                                  'MATRIX_BID',
-                                  'Total')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                               'OVERRIDE',
+                                                               'MANUAL',
+                                                               'CREDITS',
+                                                               'TOOLS',
+                                                               'NDP',
+                                                               'QUOTE',
+                                                               'MATRIX_BID',
+                                                               'Total')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
-                           WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                   ('MATRIX',
-                                    'OVERRIDE',
-                                    'MANUAL',
-                                    'CREDITS',
-                                    'TOOLS',
-                                    'NDP',
-                                    'QUOTE',
-                                    'MATRIX_BID',
-                                    'Total')
+                           WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                               'OVERRIDE',
+                                                               'MANUAL',
+                                                               'CREDITS',
+                                                               'TOOLS',
+                                                               'NDP',
+                                                               'QUOTE',
+                                                               'MATRIX_BID',
+                                                               'Total')
                            THEN
                               CASE
                                  WHEN GP_DATA.EXT_SALES > 0
@@ -1332,23 +1350,22 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Other GP%",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                 ('MATRIX',
-                                  'OVERRIDE',
-                                  'MANUAL',
-                                  'CREDITS',
-                                  'TOOLS',
-                                  'NDP',
-                                  'QUOTE',
-                                  'MATRIX_BID',
-                                  'Total')
-                         THEN
-                            (GP_DATA.EXT_SALES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                               'OVERRIDE',
+                                                               'MANUAL',
+                                                               'CREDITS',
+                                                               'TOOLS',
+                                                               'NDP',
+                                                               'QUOTE',
+                                                               'MATRIX_BID',
+                                                               'Total')
+                           THEN
+                              (GP_DATA.EXT_SALES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -1360,23 +1377,22 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Other Use%$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                 ('MATRIX',
-                                  'OVERRIDE',
-                                  'MANUAL',
-                                  'CREDITS',
-                                  'TOOLS',
-                                  'NDP',
-                                  'QUOTE',
-                                  'MATRIX_BID',
-                                  'Total')
-                         THEN
-                            (GP_DATA.INVOICE_LINES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                               'OVERRIDE',
+                                                               'MANUAL',
+                                                               'CREDITS',
+                                                               'TOOLS',
+                                                               'NDP',
+                                                               'QUOTE',
+                                                               'MATRIX_BID',
+                                                               'Total')
+                           THEN
+                              (GP_DATA.INVOICE_LINES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.INVOICE_LINES > 0
@@ -1388,23 +1404,22 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Other Use%#",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                 ('MATRIX',
-                                  'OVERRIDE',
-                                  'MANUAL',
-                                  'CREDITS',
-                                  'TOOLS',
-                                  'NDP',
-                                  'QUOTE',
-                                  'MATRIX_BID',
-                                  'Total')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                               'OVERRIDE',
+                                                               'MANUAL',
+                                                               'CREDITS',
+                                                               'TOOLS',
+                                                               'NDP',
+                                                               'QUOTE',
+                                                               'MATRIX_BID',
+                                                               'Total')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.ROLLUP = 'Total'
@@ -1422,41 +1437,40 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                         END),
                    6)
                    "Other Profit%$",
+                SUM (CASE
+                        WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                            'OVERRIDE',
+                                                            'MANUAL',
+                                                            'CREDITS',
+                                                            'TOOLS',
+                                                            'NDP',
+                                                            'QUOTE',
+                                                            'MATRIX_BID',
+                                                            'Total')
+                        THEN
+                           (GP_DATA.INVOICE_LINES)
+                        ELSE
+                           0
+                     END)
+                   "Other # Lines",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                              ('MATRIX',
-                               'OVERRIDE',
-                               'MANUAL',
-                               'CREDITS',
-                               'TOOLS',
-                               'NDP',
-                               'QUOTE',
-                               'MATRIX_BID',
-                               'Total')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
                       THEN
-                         (GP_DATA.INVOICE_LINES)
+                         (GP_DATA.EXT_SALES)
                       ELSE
                          0
                    END)
-                   "Other # Lines",
-                SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
-                          THEN
-                             (GP_DATA.EXT_SALES)
-                          ELSE
-                             0
-                       END) "Credit Sales",   
+                   "Credit Sales",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
-                         THEN
-                            (GP_DATA.EXT_SALES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
+                           THEN
+                              (GP_DATA.EXT_SALES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -1468,14 +1482,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Credits Use%$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
-                         THEN
-                            (GP_DATA.INVOICE_LINES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
+                           THEN
+                              (GP_DATA.INVOICE_LINES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.INVOICE_LINES > 0
@@ -1489,31 +1503,27 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                 SUM (GP_DATA.SLS_FREIGHT - GP_DATA.AVG_COST_FREIGHT)
                    "Freight Profit (Loss)",
                 SUM (
-          CASE
-             WHEN GP_DATA.PRICE_CATEGORY NOT IN ('CREDITS', 'Total')
-             THEN
-                (GP_DATA.EXT_SALES)
-             ELSE
-                0
-          END)
-          "Outbound Sales",   
+                   CASE
+                      WHEN GP_DATA.PRICE_CATEGORY NOT IN ('CREDITS', 'Total')
+                      THEN
+                         (GP_DATA.EXT_SALES)
+                      ELSE
+                         0
+                   END)
+                   "Outbound Sales",
                 GP_DATA.TYPE_OF_SALE
            FROM AAA6863.GP_TRACKER_13MO GP_DATA,
-           
-           (SELECT SWD.ACCOUNT_NAME, 
-                   SWD.ACCOUNT_NUMBER_NK, 
-                   SWD.WAREHOUSE_NUMBER_NK
-          
-             FROM AAD9606.PR_SLS_WHSE_DIM SWD
-         		 GROUP BY SWD.ACCOUNT_NAME, 
-				 					SWD.ACCOUNT_NUMBER_NK, 
-									SWD.WAREHOUSE_NUMBER_NK) ACCT
-                  
-          	WHERE GP_DATA.WAREHOUSE_NUMBER_NK = ACCT.WAREHOUSE_NUMBER_NK(+)
-            
+                (SELECT SWD.ACCOUNT_NAME,
+                        SWD.ACCOUNT_NUMBER_NK,
+                        SWD.WAREHOUSE_NUMBER_NK
+                   FROM AAD9606.PR_SLS_WHSE_DIM SWD
+                 GROUP BY SWD.ACCOUNT_NAME,
+                          SWD.ACCOUNT_NUMBER_NK,
+                          SWD.WAREHOUSE_NUMBER_NK) ACCT
+          WHERE     GP_DATA.WAREHOUSE_NUMBER_NK = ACCT.WAREHOUSE_NUMBER_NK(+)
                 AND GP_DATA.YEARMONTH BETWEEN TO_CHAR (
                                                  TRUNC (
-                                                    SYSDATE
+                                                      SYSDATE
                                                     - NUMTOYMINTERVAL (
                                                          12,
                                                          'MONTH'),
@@ -1522,10 +1532,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                           AND TO_CHAR (
                                                  TRUNC (SYSDATE, 'MM') - 1,
                                                  'YYYYMM')
-                --AND GP_DATA.TYPE_OF_SALE = 'Counter'
+         --AND GP_DATA.TYPE_OF_SALE = 'Counter'
          HAVING SUM (GP_DATA.SLS_SUBTOTAL) > 0
-         GROUP BY GP_DATA.TYPE_OF_SALE,                  
-                  GP_DATA.REGION, 
+         GROUP BY GP_DATA.TYPE_OF_SALE,
+                  GP_DATA.REGION,
                   GP_DATA.ACCOUNT_NUMBER,
                   ACCT.ACCOUNT_NAME)
         UNION
@@ -1534,7 +1544,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                 GP_DATA.REGION,
                 GP_DATA.ACCOUNT_NUMBER,
                 ACCT.ACCOUNT_NAME,
-                GP_DATA.REGION 
+                   GP_DATA.REGION
                 || '*'
                 || GP_DATA.ACCOUNT_NUMBER
                 || '*'
@@ -1562,23 +1572,23 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                 SUM (GP_DATA.AVG_COST_FREIGHT) "Cost, Freight",
                 SUM (GP_DATA.AVG_COST_MISC) "Cost, Misc",
                 SUM (
-                   (  GP_DATA.SLS_SUBTOTAL
-                    + GP_DATA.SLS_FREIGHT
-                    + GP_DATA.SLS_MISC
-                    + GP_DATA.SLS_RESTOCK)
+                     (  GP_DATA.SLS_SUBTOTAL
+                      + GP_DATA.SLS_FREIGHT
+                      + GP_DATA.SLS_MISC
+                      + GP_DATA.SLS_RESTOCK)
                    - (  GP_DATA.AVG_COST_SUBTOTAL
                       + GP_DATA.AVG_COST_FREIGHT
                       + GP_DATA.AVG_COST_MISC))
                    "Total GP$",
                 ROUND (
-                   SUM (
-                      (  GP_DATA.SLS_SUBTOTAL
-                       + GP_DATA.SLS_FREIGHT
-                       + GP_DATA.SLS_MISC
-                       + GP_DATA.SLS_RESTOCK)
-                      - (  GP_DATA.AVG_COST_SUBTOTAL
-                         + GP_DATA.AVG_COST_FREIGHT
-                         + GP_DATA.AVG_COST_MISC))
+                     SUM (
+                          (  GP_DATA.SLS_SUBTOTAL
+                           + GP_DATA.SLS_FREIGHT
+                           + GP_DATA.SLS_MISC
+                           + GP_DATA.SLS_RESTOCK)
+                        - (  GP_DATA.AVG_COST_SUBTOTAL
+                           + GP_DATA.AVG_COST_FREIGHT
+                           + GP_DATA.AVG_COST_MISC))
                    / SUM (
                           GP_DATA.SLS_SUBTOTAL
                         + GP_DATA.SLS_FREIGHT
@@ -1589,7 +1599,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                 SUM (GP_DATA.INVOICE_LINES) "Total # Lines",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                      'MATRIX_BID',
+                                                      'NDP')
                       THEN
                          (GP_DATA.EXT_SALES)
                       ELSE
@@ -1598,7 +1610,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Price Matrix Sales",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                      'MATRIX_BID',
+                                                      'NDP')
                       THEN
                          (GP_DATA.AVG_COGS)
                       ELSE
@@ -1607,7 +1621,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Price Matrix Cost",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                      'MATRIX_BID',
+                                                      'NDP')
                       THEN
                          (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                       ELSE
@@ -1615,19 +1631,21 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    END)
                    "Price Matrix GP$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MATRIX', 'MATRIX_BID', 'NDP')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                           'MATRIX_BID',
+                                                           'NDP')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
-                           WHEN GP_DATA.PRICE_CATEGORY IN
-                                   ('MATRIX', 'MATRIX_BID', 'NDP')
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                           'MATRIX_BID',
+                                                           'NDP')
                            THEN
                               CASE
                                  WHEN GP_DATA.EXT_SALES > 0
@@ -1642,15 +1660,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Price Matrix GP%",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MATRIX', 'MATRIX_BID', 'NDP')
-                         THEN
-                            (GP_DATA.EXT_SALES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                           'MATRIX_BID',
+                                                           'NDP')
+                           THEN
+                              (GP_DATA.EXT_SALES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -1662,15 +1681,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Price Matrix Use%$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MATRIX', 'MATRIX_BID', 'NDP')
-                         THEN
-                            (GP_DATA.INVOICE_LINES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                           'MATRIX_BID',
+                                                           'NDP')
+                           THEN
+                              (GP_DATA.INVOICE_LINES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.INVOICE_LINES > 0
@@ -1682,15 +1702,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Price Matrix Use%#",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MATRIX', 'MATRIX_BID', 'NDP')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                           'MATRIX_BID',
+                                                           'NDP')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.ROLLUP = 'Total'
@@ -1710,7 +1731,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Price Matrix Profit%$",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX',
+                                                      'MATRIX_BID',
+                                                      'NDP')
                       THEN
                          (GP_DATA.INVOICE_LINES)
                       ELSE
@@ -1745,14 +1768,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    END)
                    "Contract GP$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
@@ -1770,14 +1793,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Contract GP%",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                         THEN
-                            (GP_DATA.EXT_SALES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                           THEN
+                              (GP_DATA.EXT_SALES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -1789,14 +1812,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Contract Use%$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                         THEN
-                            (GP_DATA.INVOICE_LINES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                           THEN
+                              (GP_DATA.INVOICE_LINES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.INVOICE_LINES > 0
@@ -1808,14 +1831,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Contract Use%#",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.ROLLUP = 'Total'
@@ -1844,8 +1867,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Contract # Lines",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN
-                              ('MANUAL', 'TOOLS', 'QUOTE')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                      'TOOLS',
+                                                      'QUOTE')
                       THEN
                          (GP_DATA.EXT_SALES)
                       ELSE
@@ -1854,8 +1878,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Manual Sales",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN
-                              ('MANUAL', 'TOOLS', 'QUOTE')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                      'TOOLS',
+                                                      'QUOTE')
                       THEN
                          (GP_DATA.AVG_COGS)
                       ELSE
@@ -1864,8 +1889,9 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Manual Cost",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN
-                              ('MANUAL', 'TOOLS', 'QUOTE')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                      'TOOLS',
+                                                      'QUOTE')
                       THEN
                          (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
                       ELSE
@@ -1873,19 +1899,21 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    END)
                    "Manual GP$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MANUAL', 'TOOLS', 'QUOTE')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                           'TOOLS',
+                                                           'QUOTE')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
-                           WHEN GP_DATA.PRICE_CATEGORY IN
-                                   ('MANUAL', 'TOOLS', 'QUOTE')
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                           'TOOLS',
+                                                           'QUOTE')
                            THEN
                               CASE
                                  WHEN GP_DATA.EXT_SALES > 0
@@ -1900,15 +1928,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Manual GP%",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MANUAL', 'TOOLS', 'QUOTE')
-                         THEN
-                            (GP_DATA.EXT_SALES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                           'TOOLS',
+                                                           'QUOTE')
+                           THEN
+                              (GP_DATA.EXT_SALES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -1920,15 +1949,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Manual Use%$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MANUAL', 'TOOLS', 'QUOTE')
-                         THEN
-                            (GP_DATA.INVOICE_LINES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                           'TOOLS',
+                                                           'QUOTE')
+                           THEN
+                              (GP_DATA.INVOICE_LINES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.INVOICE_LINES > 0
@@ -1940,15 +1970,16 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Manual Use%#",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN
-                                 ('MANUAL', 'TOOLS', 'QUOTE')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                           'TOOLS',
+                                                           'QUOTE')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.ROLLUP = 'Total'
@@ -1968,98 +1999,91 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    "Manual Profit%$",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY IN
-                              ('MANUAL', 'TOOLS', 'QUOTE')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL',
+                                                      'TOOLS',
+                                                      'QUOTE')
                       THEN
                          (GP_DATA.INVOICE_LINES)
                       ELSE
                          0
                    END)
                    "Manual # Lines",
-                SUM (
-                   CASE
-                      WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                              ('MATRIX',
-                               'OVERRIDE',
-                               'MANUAL',
-                               'CREDITS',
-                               'TOOLS',
-                               'NDP',
-                               'QUOTE',
-                               'MATRIX_BID',
-                               'Total')
-                      THEN
-                         (GP_DATA.EXT_SALES)
-                      ELSE
-                         0
-                   END)
+                SUM (CASE
+                        WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                            'OVERRIDE',
+                                                            'MANUAL',
+                                                            'CREDITS',
+                                                            'TOOLS',
+                                                            'NDP',
+                                                            'QUOTE',
+                                                            'MATRIX_BID',
+                                                            'Total')
+                        THEN
+                           (GP_DATA.EXT_SALES)
+                        ELSE
+                           0
+                     END)
                    "Other Sales",
-                SUM (
-                   CASE
-                      WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                              ('MATRIX',
-                               'OVERRIDE',
-                               'MANUAL',
-                               'CREDITS',
-                               'TOOLS',
-                               'QUOTE',
-                               'NDP',
-                               'MATRIX_BID',
-                               'Total')
-                      THEN
-                         (GP_DATA.AVG_COGS)
-                      ELSE
-                         0
-                   END)
+                SUM (CASE
+                        WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                            'OVERRIDE',
+                                                            'MANUAL',
+                                                            'CREDITS',
+                                                            'TOOLS',
+                                                            'QUOTE',
+                                                            'NDP',
+                                                            'MATRIX_BID',
+                                                            'Total')
+                        THEN
+                           (GP_DATA.AVG_COGS)
+                        ELSE
+                           0
+                     END)
                    "Other Cost",
-                SUM (
-                   CASE
-                      WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                              ('MATRIX',
-                               'OVERRIDE',
-                               'MANUAL',
-                               'CREDITS',
-                               'TOOLS',
-                               'NDP',
-                               'QUOTE',
-                               'MATRIX_BID',
-                               'Total')
-                      THEN
-                         (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                      ELSE
-                         0
-                   END)
+                SUM (CASE
+                        WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                            'OVERRIDE',
+                                                            'MANUAL',
+                                                            'CREDITS',
+                                                            'TOOLS',
+                                                            'NDP',
+                                                            'QUOTE',
+                                                            'MATRIX_BID',
+                                                            'Total')
+                        THEN
+                           (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                        ELSE
+                           0
+                     END)
                    "Other GP$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                 ('MATRIX',
-                                  'OVERRIDE',
-                                  'MANUAL',
-                                  'CREDITS',
-                                  'TOOLS',
-                                  'QUOTE',
-                                  'NDP',
-                                  'MATRIX_BID',
-                                  'Total')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                               'OVERRIDE',
+                                                               'MANUAL',
+                                                               'CREDITS',
+                                                               'TOOLS',
+                                                               'QUOTE',
+                                                               'NDP',
+                                                               'MATRIX_BID',
+                                                               'Total')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
-                           WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                   ('MATRIX',
-                                    'OVERRIDE',
-                                    'MANUAL',
-                                    'CREDITS',
-                                    'TOOLS',
-                                    'NDP',
-                                    'QUOTE',
-                                    'MATRIX_BID',
-                                    'Total')
+                           WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                               'OVERRIDE',
+                                                               'MANUAL',
+                                                               'CREDITS',
+                                                               'TOOLS',
+                                                               'NDP',
+                                                               'QUOTE',
+                                                               'MATRIX_BID',
+                                                               'Total')
                            THEN
                               CASE
                                  WHEN GP_DATA.EXT_SALES > 0
@@ -2074,23 +2098,22 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Other GP%",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                 ('MATRIX',
-                                  'OVERRIDE',
-                                  'MANUAL',
-                                  'CREDITS',
-                                  'TOOLS',
-                                  'NDP',
-                                  'QUOTE',
-                                  'MATRIX_BID',
-                                  'Total')
-                         THEN
-                            (GP_DATA.EXT_SALES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                               'OVERRIDE',
+                                                               'MANUAL',
+                                                               'CREDITS',
+                                                               'TOOLS',
+                                                               'NDP',
+                                                               'QUOTE',
+                                                               'MATRIX_BID',
+                                                               'Total')
+                           THEN
+                              (GP_DATA.EXT_SALES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -2102,23 +2125,22 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Other Use%$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                 ('MATRIX',
-                                  'OVERRIDE',
-                                  'MANUAL',
-                                  'CREDITS',
-                                  'TOOLS',
-                                  'QUOTE',
-                                  'NDP',
-                                  'MATRIX_BID',
-                                  'Total')
-                         THEN
-                            (GP_DATA.INVOICE_LINES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                               'OVERRIDE',
+                                                               'MANUAL',
+                                                               'CREDITS',
+                                                               'TOOLS',
+                                                               'QUOTE',
+                                                               'NDP',
+                                                               'MATRIX_BID',
+                                                               'Total')
+                           THEN
+                              (GP_DATA.INVOICE_LINES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.INVOICE_LINES > 0
@@ -2130,23 +2152,22 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Other Use%#",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                                 ('MATRIX',
-                                  'OVERRIDE',
-                                  'MANUAL',
-                                  'CREDITS',
-                                  'TOOLS',
-                                  'NDP', 
-                                  'QUOTE',
-                                  'MATRIX_BID',
-                                  'Total')
-                         THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                               'OVERRIDE',
+                                                               'MANUAL',
+                                                               'CREDITS',
+                                                               'TOOLS',
+                                                               'NDP',
+                                                               'QUOTE',
+                                                               'MATRIX_BID',
+                                                               'Total')
+                           THEN
+                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.ROLLUP = 'Total'
@@ -2164,41 +2185,40 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                         END),
                    6)
                    "Other Profit%$",
+                SUM (CASE
+                        WHEN GP_DATA.PRICE_CATEGORY NOT IN ('MATRIX',
+                                                            'OVERRIDE',
+                                                            'MANUAL',
+                                                            'CREDITS',
+                                                            'TOOLS',
+                                                            'QUOTE',
+                                                            'NDP',
+                                                            'MATRIX_BID',
+                                                            'Total')
+                        THEN
+                           (GP_DATA.INVOICE_LINES)
+                        ELSE
+                           0
+                     END)
+                   "Other # Lines",
                 SUM (
                    CASE
-                      WHEN GP_DATA.PRICE_CATEGORY NOT IN
-                              ('MATRIX',
-                               'OVERRIDE',
-                               'MANUAL',
-                               'CREDITS',
-                               'TOOLS',
-                               'QUOTE',
-                               'NDP',
-                               'MATRIX_BID',
-                               'Total')
+                      WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
                       THEN
-                         (GP_DATA.INVOICE_LINES)
+                         (GP_DATA.EXT_SALES)
                       ELSE
                          0
                    END)
-                   "Other # Lines",
-                   SUM (
-                       CASE
-                          WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
-                          THEN
-                             (GP_DATA.EXT_SALES)
-                          ELSE
-                             0
-                       END) "Credit Sales",
+                   "Credit Sales",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
-                         THEN
-                            (GP_DATA.EXT_SALES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
+                           THEN
+                              (GP_DATA.EXT_SALES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.SLS_SUBTOTAL > 0
@@ -2210,14 +2230,14 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    6)
                    "Credits Use%$",
                 ROUND (
-                   SUM (
-                      CASE
-                         WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
-                         THEN
-                            (GP_DATA.INVOICE_LINES)
-                         ELSE
-                            0
-                      END)
+                     SUM (
+                        CASE
+                           WHEN GP_DATA.PRICE_CATEGORY IN ('CREDITS')
+                           THEN
+                              (GP_DATA.INVOICE_LINES)
+                           ELSE
+                              0
+                        END)
                    / SUM (
                         CASE
                            WHEN GP_DATA.INVOICE_LINES > 0
@@ -2231,27 +2251,29 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                 SUM (GP_DATA.SLS_FREIGHT - GP_DATA.AVG_COST_FREIGHT)
                    "Freight Profit (Loss)",
                 SUM (
-          CASE
-             WHEN GP_DATA.PRICE_CATEGORY NOT IN ('CREDITS', 'Total')
-             THEN
-                (GP_DATA.EXT_SALES)
-             ELSE
-                0
-          END)
-          "Outbound Sales",   
+                   CASE
+                      WHEN GP_DATA.PRICE_CATEGORY NOT IN ('CREDITS', 'Total')
+                      THEN
+                         (GP_DATA.EXT_SALES)
+                      ELSE
+                         0
+                   END)
+                   "Outbound Sales",
                 GP_DATA.TYPE_OF_SALE
            FROM AAA6863.GP_TRACKER_13MO GP_DATA,
-                (SELECT SWD.ACCOUNT_NAME, SWD.ACCOUNT_NUMBER_NK, SWD.WAREHOUSE_NUMBER_NK
-          FROM AAD9606.PR_SLS_WHSE_DIM SWD
-         GROUP BY SWD.ACCOUNT_NAME, 
-				 					SWD.ACCOUNT_NUMBER_NK, 
-									SWD.WAREHOUSE_NUMBER_NK) ACCT
-          WHERE GP_DATA.WAREHOUSE_NUMBER_NK = ACCT.WAREHOUSE_NUMBER_NK(+)
-								AND NOT ACCT.ACCOUNT_NAME IN ('PIPE', 'WPCC')
+                (SELECT SWD.ACCOUNT_NAME,
+                        SWD.ACCOUNT_NUMBER_NK,
+                        SWD.WAREHOUSE_NUMBER_NK
+                   FROM AAD9606.PR_SLS_WHSE_DIM SWD
+                 GROUP BY SWD.ACCOUNT_NAME,
+                          SWD.ACCOUNT_NUMBER_NK,
+                          SWD.WAREHOUSE_NUMBER_NK) ACCT
+          WHERE     GP_DATA.WAREHOUSE_NUMBER_NK = ACCT.WAREHOUSE_NUMBER_NK(+)
+                AND NOT ACCT.ACCOUNT_NAME IN ('PIPE', 'WPCC')
                 AND GP_DATA.YEARMONTH =
                        (SELECT MIN (GP_DATA.YEARMONTH)
                           FROM AAA6863.GP_TRACKER_13MO GP_DATA)
-         HAVING SUM (GP_DATA.SLS_SUBTOTAL) >0
+         HAVING SUM (GP_DATA.SLS_SUBTOTAL) > 0
          GROUP BY GP_DATA.YEARMONTH,
                   GP_DATA.TYPE_OF_SALE,
                   GP_DATA.REGION,

@@ -1,12 +1,12 @@
---TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_CCOR;
---DROP TABLE AAA6863.GP_TRACKER_13MO_CCOR;
+TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_CCOR_2016;
+DROP TABLE AAA6863.GP_TRACKER_13MO_CCOR_2016;
 
-CREATE TABLE AAA6863.GP_TRACKER_13MO_CCOR_2017
+CREATE TABLE AAA6863.GP_TRACKER_13MO_CCOR_2016
 
 AS
    SELECT LINE_HIST.YYYY,
           LINE_HIST.YEARMONTH,
-          LINE_HIST.ROLLING_QTR,
+          --LINE_HIST.ROLLING_QTR,
           LINE_HIST.REGION,
           LINE_HIST.ACCOUNT_NUMBER,
           LINE_HIST.WAREHOUSE_NUMBER,
@@ -114,7 +114,7 @@ AS
           (0) avg_cost_misc
      FROM (SELECT SUBSTR (ihf.YEARMONTH, 0, 4) YYYY,
                   IHF.YEARMONTH,
-                  DECODE (
+                  /*DECODE (
                      ihf.YEARMONTH,
                      TO_CHAR (
                         TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'),
@@ -164,7 +164,7 @@ AS
                         TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'),
                                'MONTH'),
                         'YYYYMM'), 'ROLL_Q4')
-                     ROLLING_QTR,
+                     ROLLING_QTR,*/
                   ps.division_name REGION,
                   ps.ACCOUNT_NUMBER_NK ACCOUNT_NUMBER,
                   ps.WAREHOUSE_NUMBER_nk WAREHOUSE_NUMBER,
@@ -324,8 +324,8 @@ AS
                                                            'Q',
                                                            'N/A',
                                                            'N')
-                  AND IHF.YEARMONTH BETWEEN '201701' AND '201712'
-                  AND ILF.YEARMONTH BETWEEN '201701' AND '201712'
+                  AND IHF.YEARMONTH BETWEEN '201601' AND '201612'
+                  AND ILF.YEARMONTH BETWEEN '201601' AND '201612'
                  
                   /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                               TRUNC (
@@ -490,7 +490,7 @@ AS
                         COALESCE (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))
    GROUP BY LINE_HIST.YYYY,
             LINE_HIST.YEARMONTH,
-            LINE_HIST.ROLLING_QTR,
+            --LINE_HIST.ROLLING_QTR,
             LINE_HIST.REGION,
             LINE_HIST.ACCOUNT_NUMBER,
             LINE_HIST.WAREHOUSE_NUMBER,
@@ -581,4 +581,4 @@ AS
                      ELSE
                         NULL
                   END
-            END
+            END;
