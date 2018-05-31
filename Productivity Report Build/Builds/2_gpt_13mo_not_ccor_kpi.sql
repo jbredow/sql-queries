@@ -1,51 +1,13 @@
-TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR_2016;
-DROP TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR_2016;
+TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR_FY16_17_KPI;
+DROP TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR_FY16_17_KPI;
 
-CREATE TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR_2016
+CREATE TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR_FY16_17_KPI
 NOLOGGING
 
 AS
    (SELECT SUBSTR (ihf.YEARMONTH, 0, 4) YYYY,
            ihf.YEARMONTH,
-           /*DECODE (
-              ihf.YEARMONTH,
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q1',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (11, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q1',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (10, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q1',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (9, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q2',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (8, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q2',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (7, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q2',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (6, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q3',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (5, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q3',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (4, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q3',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (3, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q4',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (2, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q4',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q4')
-              ROLLING_QTR,*/
+           ihf.YEARMONTH AS ROLLING_QTR
            ps.DIVISION_NAME REGION,
            ps.ACCOUNT_NUMBER_NK ACCOUNT_NUMBER,
            PS.WAREHOUSE_NUMBER_NK WAREHOUSE_NUMBER,
@@ -249,8 +211,8 @@ AS
                        'N/A', 0,
                        'N', 0,
                        1) <> 0
-           AND IHF.YEARMONTH BETWEEN '201601' AND '201612'
-           AND ILF.YEARMONTH BETWEEN '201601' AND '201612'
+           AND IHF.YEARMONTH BETWEEN '201508' AND '201804'
+           AND ILF.YEARMONTH BETWEEN '201508' AND '201804'
            
            /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                         TRUNC (
@@ -281,44 +243,6 @@ AS
                        1) <> 0
     GROUP BY SUBSTR (ihf.YEARMONTH, 0, 4),
              ihf.YEARMONTH,
-             /*DECODE (
-                ihf.YEARMONTH,
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q1',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (11, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q1',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (10, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q1',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (9, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q2',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (8, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q2',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (7, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q2',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (6, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q3',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (5, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q3',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (4, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q3',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (3, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q4',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (2, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q4',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q4'),*/
              ps.DIVISION_NAME,
              DECODE (ihf.SALE_TYPE,
                      '1', 'Our Truck',

@@ -671,11 +671,11 @@ FROM (
                 0
           END)
           "Subtotal GP$"
-  FROM AAA6863.GP_TRACKER_13MO GP_DATA,
+  FROM AAA6863.GP_TRACKER_13MO_2017 GP_DATA,
        SALES_MART.SALES_WAREHOUSE_DIM ACCT
  WHERE GP_DATA.WAREHOUSE_NUMBER_NK = ACCT.WAREHOUSE_NUMBER_NK
-       AND GP_DATA.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                              'YYYYMM')
+       /*AND GP_DATA.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                              'YYYYMM')*/
  HAVING SUM (GP_DATA.SLS_SUBTOTAL) <> 0
  GROUP BY GP_DATA.YEARMONTH,
           GP_DATA.REGION, 

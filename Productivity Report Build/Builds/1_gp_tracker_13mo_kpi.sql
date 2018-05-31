@@ -1,51 +1,13 @@
-TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_KPI;
-DROP TABLE AAA6863.GP_TRACKER_13MO_KPI;
+TRUNCATE TABLE AAA6863.GP_TRACKER_FY16_17_KPI;
+DROP TABLE AAA6863.GP_TRACKER_FY16_17_KPI;
 
-CREATE TABLE AAA6863.GP_TRACKER_13MO_KPI
+CREATE TABLE AAA6863.GP_TRACKER_FY16_17_KPI
 NOLOGGING
-
+--2016
 AS
    (SELECT SUBSTR (IHF.YEARMONTH, 0, 4) YYYY,
            IHF.YEARMONTH,
-           /*DECODE (
-              IHF.YEARMONTH,
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q1',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (11, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q1',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (10, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q1',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (9, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q2',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (8, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q2',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (7, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q2',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (6, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q3',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (5, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q3',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (4, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q3',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (3, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q4',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (2, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q4',
-              TO_CHAR (
-                 TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'), 'MONTH'),
-                 'YYYYMM'), 'ROLL_Q4')
-              ROLLING_QTR,*/
+           IHF.YEARMONTH ROLLING_QTR,
            PS.DIVISION_NAME REGION,
            PS.ACCOUNT_NUMBER_NK ACCOUNT_NUMBER,
            PS.WAREHOUSE_NUMBER_NK,
@@ -93,7 +55,7 @@ AS
            AND IHF.IC_FLAG = 0
            AND IHF.PO_WAREHOUSE_NUMBER IS NULL
            AND NVL (IHF.CONSIGN_TYPE, 'N') <> 'R'
-           AND IHF.YEARMONTH BETWEEN '201601' AND '201612'
+           AND IHF.YEARMONTH BETWEEN '201508' AND '201804'
            /*AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                         TRUNC (
                                              SYSDATE
@@ -115,47 +77,10 @@ AS
                        1) <> 0
     GROUP BY SUBSTR (IHF.YEARMONTH, 0, 4),
              IHF.YEARMONTH,
+             IHF.YEARMONTH,
              PS.division_name,
              PS.ACCOUNT_NUMBER_NK,
              PS.WAREHOUSE_NUMBER_NK,
-             /*DECODE (
-                IHF.YEARMONTH,
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q1',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (11, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q1',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (10, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q1',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (9, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q2',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (8, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q2',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (7, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q2',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (6, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q3',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (5, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q3',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (4, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q3',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (3, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q4',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (2, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q4',
-                TO_CHAR (
-                   TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'), 'MONTH'),
-                   'YYYYMM'), 'ROLL_Q4'),*/
              DECODE (PS.DIVISION_NAME,
                      'EAST REGION', 'BLENDED',
                      'WEST REGION', 'BLENDED',
@@ -174,3 +99,5 @@ AS
                      '6', 'Showroom',
                      '7', 'Showroom Direct',
                      '8', 'eBusiness'));
+                 
+GRANT SELECT ON AAA6863.GP_TRACKER_FY16_17_KPI TO PUBLIC;

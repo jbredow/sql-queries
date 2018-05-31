@@ -1,24 +1,24 @@
-TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_CCOR_2016;
+TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_CCOR_FY16_17_KPI;
 DROP TABLE AAA6863.GP_TRACKER_13MO_CCOR_2016;
 
-CREATE TABLE AAA6863.GP_TRACKER_13MO_CCOR_2016
+CREATE TABLE AAA6863.GP_TRACKER_13MO_CCOR_FY16_17_KPI
 
 AS
    SELECT LINE_HIST.YYYY,
           LINE_HIST.YEARMONTH,
-          --LINE_HIST.ROLLING_QTR,
+          LINE_HIST.YEARMONTH AS ROLLING_QTR,
           LINE_HIST.REGION,
           LINE_HIST.ACCOUNT_NUMBER,
           LINE_HIST.WAREHOUSE_NUMBER,
           LINE_HIST.KOB,
           LINE_HIST.TYPE_OF_SALE,
-          LINE_HIST.PRICE_CODE,
+          --LINE_HIST.PRICE_CODE,
           SUM (LINE_HIST.INVOICE_LINES) invoice_lines,
           SUM (LINE_HIST.EXT_AVG_COGS_AMOUNT) avg_cogs,
           SUM (LINE_HIST.EXT_ACTUAL_COGS_AMOUNT) actual_cogs,
           SUM (LINE_HIST.EXT_SALES_AMOUNT) ext_sales,
           LINE_HIST.PRICE_CATEGORY,
-          CASE
+          /*CASE
              WHEN LINE_HIST.PROCESS_DATE BETWEEN COALESCE (
                                                       PR_OVR_JOB.INSERT_TIMESTAMP
                                                     - 2,
@@ -102,7 +102,7 @@ AS
                       NULL
                 END
           END
-             PRICE_CATEGORY_OVR_GR,
+             PRICE_CATEGORY_OVR_GR,*/
           'Subtotal' AS ROLLUP,
           (0) sls_total,
           (0) sls_subtotal,
@@ -324,8 +324,8 @@ AS
                                                            'Q',
                                                            'N/A',
                                                            'N')
-                  AND IHF.YEARMONTH BETWEEN '201601' AND '201612'
-                  AND ILF.YEARMONTH BETWEEN '201601' AND '201612'
+                  AND IHF.YEARMONTH BETWEEN '201508' AND '201804'
+                  AND ILF.YEARMONTH BETWEEN '201508' AND '201804'
                  
                   /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                               TRUNC (
@@ -490,7 +490,7 @@ AS
                         COALESCE (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))
    GROUP BY LINE_HIST.YYYY,
             LINE_HIST.YEARMONTH,
-            --LINE_HIST.ROLLING_QTR,
+            LINE_HIST.YEARMONTH,
             LINE_HIST.REGION,
             LINE_HIST.ACCOUNT_NUMBER,
             LINE_HIST.WAREHOUSE_NUMBER,
