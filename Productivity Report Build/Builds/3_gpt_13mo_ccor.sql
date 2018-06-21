@@ -1,7 +1,7 @@
---TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_CCOR;
---DROP TABLE AAA6863.GP_TRACKER_13MO_CCOR;
+TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_CCOR;
+DROP TABLE AAA6863.GP_TRACKER_13MO_CCOR;
 
-CREATE TABLE AAA6863.GP_TRACKER_13MO_CCOR_2017
+CREATE TABLE AAA6863.GP_TRACKER_13MO_CCOR
 
 AS
    SELECT LINE_HIST.YYYY,
@@ -312,8 +312,8 @@ AS
                   DW_FEI.CUSTOMER_DIMENSION cust,
                   DW_FEI.PRODUCT_DIMENSION PROD,
                   SALES_MART.SALES_WAREHOUSE_DIM ps
-            WHERE     ihf.CUSTOMER_ACCOUNT_GK = cust.CUSTOMER_GK
-                  AND ilf.INVOICE_NUMBER_GK = ihf.INVOICE_NUMBER_GK
+            WHERE     ILF.CUSTOMER_ACCOUNT_GK = cust.CUSTOMER_GK
+                  AND ILF.INVOICE_NUMBER_GK = ihf.INVOICE_NUMBER_GK
                   AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
                   AND TO_CHAR (ihf.WAREHOUSE_NUMBER) =
                          TO_CHAR (ps.WAREHOUSE_NUMBER_NK)
@@ -324,10 +324,10 @@ AS
                                                            'Q',
                                                            'N/A',
                                                            'N')
-                  AND IHF.YEARMONTH BETWEEN '201701' AND '201712'
-                  AND ILF.YEARMONTH BETWEEN '201701' AND '201712'
+                  AND IHF.YEARMONTH BETWEEN '201801' AND '201805'
+                  AND ILF.YEARMONTH BETWEEN '201801' AND '201805'
                  
-                  /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
+                 /* AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                               TRUNC (
                                                    SYSDATE
                                                  - NUMTOYMINTERVAL (12, 'MONTH'),

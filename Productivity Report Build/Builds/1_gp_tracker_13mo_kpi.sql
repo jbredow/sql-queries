@@ -1,7 +1,7 @@
-TRUNCATE TABLE AAA6863.GP_TRACKER_FY16_17_KPI;
-DROP TABLE AAA6863.GP_TRACKER_FY16_17_KPI;
+TRUNCATE TABLE AAA6863.GP_TRACKER_KPI_12MO;
+DROP TABLE AAA6863.GP_TRACKER_KPI_12MO;
 
-CREATE TABLE AAA6863.GP_TRACKER_FY16_17_KPI
+CREATE TABLE AAA6863.GP_TRACKER_KPI_12MO
 NOLOGGING
 --2016
 AS
@@ -55,15 +55,15 @@ AS
            AND IHF.IC_FLAG = 0
            AND IHF.PO_WAREHOUSE_NUMBER IS NULL
            AND NVL (IHF.CONSIGN_TYPE, 'N') <> 'R'
-           AND IHF.YEARMONTH BETWEEN '201508' AND '201804'
-           /*AND IHF.YEARMONTH BETWEEN TO_CHAR (
+           --AND IHF.YEARMONTH BETWEEN '201508' AND '201804'
+           AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                         TRUNC (
                                              SYSDATE
-                                           - NUMTOYMINTERVAL (12, 'MONTH'),
+                                           - NUMTOYMINTERVAL (24, 'MONTH'),
                                            'MONTH'),
                                         'YYYYMM')
                                  AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                              'YYYYMM')*/
+                                              'YYYYMM')
            AND DECODE (NVL (CUST.ar_gl_number, '9999'),
                        '1320', 0,
                        '1360', 0,
@@ -100,4 +100,4 @@ AS
                      '7', 'Showroom Direct',
                      '8', 'eBusiness'));
                  
-GRANT SELECT ON AAA6863.GP_TRACKER_FY16_17_KPI TO PUBLIC;
+GRANT SELECT ON AAA6863.GP_TRACKER_KPI_12MO TO PUBLIC;

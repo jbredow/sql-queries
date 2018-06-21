@@ -1,7 +1,7 @@
-TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_CCOR_FY16_17_KPI;
-DROP TABLE AAA6863.GP_TRACKER_13MO_CCOR_2016;
+TRUNCATE TABLE AAA6863.GP_TRACKER_KPI_12MO_CCOR;
+DROP TABLE AAA6863.GP_TRACKER_KPI_12MO_CCOR;
 
-CREATE TABLE AAA6863.GP_TRACKER_13MO_CCOR_FY16_17_KPI
+CREATE TABLE AAA6863.GP_TRACKER_KPI_12MO_CCOR
 
 AS
    SELECT LINE_HIST.YYYY,
@@ -324,13 +324,13 @@ AS
                                                            'Q',
                                                            'N/A',
                                                            'N')
-                  AND IHF.YEARMONTH BETWEEN '201508' AND '201804'
-                  AND ILF.YEARMONTH BETWEEN '201508' AND '201804'
+                  /*AND IHF.YEARMONTH BETWEEN '201508' AND '201804'
+                  AND ILF.YEARMONTH BETWEEN '201508' AND '201804'*/
                  
-                  /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
+                  AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                               TRUNC (
                                                    SYSDATE
-                                                 - NUMTOYMINTERVAL (12, 'MONTH'),
+                                                 - NUMTOYMINTERVAL (24, 'MONTH'),
                                                  'MONTH'),
                                               'YYYYMM')
                                        AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
@@ -338,11 +338,11 @@ AS
                   AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                               TRUNC (
                                                    SYSDATE
-                                                 - NUMTOYMINTERVAL (12, 'MONTH'),
+                                                 - NUMTOYMINTERVAL (24, 'MONTH'),
                                                  'MONTH'),
                                               'YYYYMM')
                                        AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                                    'YYYYMM')*/
+                                                    'YYYYMM')
                   AND DECODE (COALESCE (cust.ar_gl_number, '9999'),
                               '1320', 0,
                               '1360', 0,

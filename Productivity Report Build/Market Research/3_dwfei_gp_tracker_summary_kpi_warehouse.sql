@@ -1,3 +1,4 @@
+--FROM.AAA6863.GP_TRACKER_WRITER_YTD
 SELECT YEARMONTH,
        CHANNEL,
        REGION,
@@ -533,7 +534,7 @@ SELECT GP_SUMS.YEARMONTH,
                  WHERE (WD.ACTIVE_FLAG = 1) AND (WD.DELETE_DATE IS NULL)
                 GROUP BY WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK) ACCT
          WHERE GP_DATA.ACCOUNT_NUMBER = ACCT.ACCOUNT_NUMBER_NK(+)
-        /*AND GP_DATA.YEARMONTH BETWEEN TO_CHAR (
+        AND GP_DATA.YEARMONTH BETWEEN TO_CHAR (
                                                TRUNC (
                                                   SYSDATE
                                                   - NUMTOYMINTERVAL (12, 'MONTH'),
@@ -543,7 +544,7 @@ SELECT GP_SUMS.YEARMONTH,
                                                      'YYYYMM')
               --AND GP_DATA.YEARMONTH = (SELECT MAX (GP_DATA.YEARMONTH)
               --                           FROM AAD9606.GP_TRACKER_12MO GP_DATA)
-       --AND GP_DATA.TYPE_OF_SALE='Counter'    */
+       --AND GP_DATA.TYPE_OF_SALE='Counter'
 
 
         GROUP BY --GP_DATA.YEARMONTH,

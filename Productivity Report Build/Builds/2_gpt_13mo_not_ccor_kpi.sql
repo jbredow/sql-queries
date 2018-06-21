@@ -1,13 +1,13 @@
-TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR_FY16_17_KPI;
-DROP TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR_FY16_17_KPI;
+TRUNCATE TABLE AAA6863.GP_TRACKER_KPI_12MO_NOT_CCOR;
+DROP TABLE AAA6863.GP_TRACKER_KPI_12MO_NOT_CCOR;
 
-CREATE TABLE AAA6863.GP_TRACKER_13MO_NOT_CCOR_FY16_17_KPI
+CREATE TABLE AAA6863.GP_TRACKER_KPI_12MO_NOT_CCOR
 NOLOGGING
 
 AS
    (SELECT SUBSTR (ihf.YEARMONTH, 0, 4) YYYY,
            ihf.YEARMONTH,
-           ihf.YEARMONTH AS ROLLING_QTR
+           ihf.YEARMONTH AS ROLLING_QTR,
            ps.DIVISION_NAME REGION,
            ps.ACCOUNT_NUMBER_NK ACCOUNT_NUMBER,
            PS.WAREHOUSE_NUMBER_NK WAREHOUSE_NUMBER,
@@ -211,13 +211,13 @@ AS
                        'N/A', 0,
                        'N', 0,
                        1) <> 0
-           AND IHF.YEARMONTH BETWEEN '201508' AND '201804'
-           AND ILF.YEARMONTH BETWEEN '201508' AND '201804'
+           /*AND IHF.YEARMONTH BETWEEN '201508' AND '201804'
+           AND ILF.YEARMONTH BETWEEN '201508' AND '201804'*/
            
-           /*AND ILF.YEARMONTH BETWEEN TO_CHAR (
+           AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                         TRUNC (
                                              SYSDATE
-                                           - NUMTOYMINTERVAL (12, 'MONTH'),
+                                           - NUMTOYMINTERVAL (24, 'MONTH'),
                                            'MONTH'),
                                         'YYYYMM')
                                  AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
@@ -225,11 +225,11 @@ AS
            AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                         TRUNC (
                                              SYSDATE
-                                           - NUMTOYMINTERVAL (12, 'MONTH'),
+                                           - NUMTOYMINTERVAL (24, 'MONTH'),
                                            'MONTH'),
                                         'YYYYMM')
                                  AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                              'YYYYMM')*/
+                                              'YYYYMM')
            AND DECODE (NVL (cust.ar_gl_number, '9999'),
                        '1320', 0,
                        '1360', 0,

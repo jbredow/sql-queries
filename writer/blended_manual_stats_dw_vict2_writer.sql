@@ -1,100 +1,16 @@
---  VICT2 sql with updated rounding logic aligned with pricing cube
---  10/7/2013, Leigh North
---  Old
-/*
-DROP TABLE AAA6863.PR_VICT2_SKU_DETAIL;
 
-CREATE TABLE AAA6863.PR_VICT2_SKU_DETAIL
-AS*/
- 
 SELECT DISTINCT
 			 sp_dtl.YEARMONTH,
-       /* CASE
-			 		WHEN sp_dtl.YEARMONTH BETWEEN TO_CHAR (
-                                                 TRUNC (
-                                                    SYSDATE
-                                                    - NUMTOYMINTERVAL (
-                                                         12,
-                                                         'MONTH'),
-                                                    'MONTH'),
-                                                 'YYYYMM')
-                                          AND
-                           TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                    'YYYYMM')
-					THEN
-							'CURRENT_12MO'
-					ELSE
-							'PREVIOUS_12MO'
-			 END
-			 		TPD,*/
        sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
-       /*sp_dtl.WAREHOUSE_NUMBER,
-       sp_dtl.INVOICE_NUMBER_NK,
-       sp_dtl.TYPE_OF_SALE,
-	     sp_dtl.SHIP_VIA_NAME,
-       sp_dtl.OML_ASSOC_INI,
-       sp_dtl.OML_FL_INI,
-       sp_dtl.OML_ASSOC_NAME,*/
+       sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.WRITER,
        sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
-       /*sp_dtl.DISCOUNT_GROUP_NK,
-       sp_Dtl.DISCOUNT_GROUP_NAME,
-       sp_Dtl.CHANNEL_TYPE,
-       sp_dtl.INVOICE_LINE_NUMBER,
-       sp_dtl.MANUFACTURER,
-       sp_dtl.PRODUCT_NK,
-       sp_dtl.ALT1_CODE,
-       sp_dtl.PRODUCT_NAME,
-       sp_dtl.STATUS,
-       sp_dtl.SHIPPED_QTY,*/
-       sp_dtl.PRICE_CODE,
-			 COUNT ( PRICE_CODE ) "COUNT",
+       sp_dtl.PRICE_CATEGORY,
        SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
-       SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC,
-	     /*sp_dtl.REPLACEMENT_COST,
-	     sp_dtl.UNIT_INV_COST,*/
-       
-       CASE
-			 		WHEN sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE' 
-					THEN 
-							'OVERRIDE'
-					ELSE
-							sp_dtl.PRICE_CATEGORY
-			 END
-			 		PRICE_CAT
-       /*sp_dtl.PRICE_FORMULA,
-       sp_dtl.UNIT_NET_PRICE_AMOUNT,
-       sp_dtl.UM,
-       sp_dtl.SELL_MULT,
-       sp_dtl.PACK_QTY,
-	     sp_dtl.LIST_PRICE,
-       sp_dtl.MATRIX_PRICE,
-       sp_dtl.MATRIX,
-       sp_dtl.OG_MATRIX,
-       CASE WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN 
-       sp_dtl.PR_OVR ELSE NULL END PR_OVR,
-       CASE WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN 
-       sp_dtl.PR_OVR_BASIS ELSE NULL END PR_OVR_BASIS,
-       CASE WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN 
-       sp_dtl.GR_OVR ELSE NULL END GR_OVR,
-       sp_dtl.TRIM_FORM,
-       sp_dtl.ORDER_CODE,
-       sp_dtl.SOURCE_SYSTEM,
-       sp_dtl.CONSIGN_TYPE,
-			 sp_dtl.MASTER_VENDOR_NK,
-       sp_dtl.MAIN_CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NAME,
-       sp_dtl.PRICE_COLUMN,
-       sp_dtl.CUSTOMER_TYPE,
-       sp_dtl.REF_BID_NUMBER,
-       sp_dtl.SOURCE_ORDER,
-	     sp_dtl.ORDER_ENTRY_DATE,
-       sp_dtl.COPY_SOURCE_HIST,
-       sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER*/
+       SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC  
+	     
   FROM    (SELECT SP_HIST.*,
                   CASE
                      WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
@@ -488,9 +404,8 @@ SELECT DISTINCT
                           DW_FEI.CUSTOMER_DIMENSION CUST,
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD
                     WHERE IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK 
-													-- AND ILF.PRODUCT_STATUS = 'SP'
-                          AND IHF.ACCOUNT_NUMBER IN ( '2000', '1657', '1550', 
-																							'1480', '20', '61', '215' )
+													AND ILF.PRODUCT_STATUS = 'SP'
+                          AND IHF.ACCOUNT_NUMBER = '1657' --IN ( '2000', '1657', '1550', '1480', '20', '61', '215' )
 													-- AND CUST.CROSS_CUSTOMER_NK = '332'
 													-- AND CUST.MSTR_CUSTNO = '332'
                           -- AND NVL (ILF.PRICE_CODE, 'N/A') IN
@@ -631,92 +546,13 @@ SELECT DISTINCT
 
 GROUP BY 
 			 sp_dtl.YEARMONTH,
-       /* CASE
-			 		WHEN sp_dtl.YEARMONTH BETWEEN TO_CHAR (
-                                                 TRUNC (
-                                                    SYSDATE
-                                                    - NUMTOYMINTERVAL (
-                                                         12,
-                                                         'MONTH'),
-                                                    'MONTH'),
-                                                 'YYYYMM')
-                                          AND
-                           TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                    'YYYYMM')
-					THEN
-							'CURRENT_12MO'
-					ELSE
-							'PREVIOUS_12MO'
-			 END
-			 		TPD,*/
        sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
-       /*sp_dtl.WAREHOUSE_NUMBER,
-       sp_dtl.INVOICE_NUMBER_NK,
-       sp_dtl.TYPE_OF_SALE,
-	     sp_dtl.SHIP_VIA_NAME,
-       sp_dtl.OML_ASSOC_INI,
-       sp_dtl.OML_FL_INI,
-       sp_dtl.OML_ASSOC_NAME,*/
+       sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.WRITER,
        sp_dtl.WR_FL_INI,
        sp_dtl.ASSOC_NAME,
-       /*sp_dtl.DISCOUNT_GROUP_NK,
-       sp_Dtl.DISCOUNT_GROUP_NAME,
-       sp_Dtl.CHANNEL_TYPE,
-       sp_dtl.INVOICE_LINE_NUMBER,
-       sp_dtl.MANUFACTURER,
-       sp_dtl.PRODUCT_NK,
-       sp_dtl.ALT1_CODE,
-       sp_dtl.PRODUCT_NAME,
-       sp_dtl.STATUS,
-       sp_dtl.SHIPPED_QTY,*/
-       sp_dtl.PRICE_CODE,
-			 /*COUNT ( PRICE_CODE ) "COUNT",
-       SUM ( sp_dtl.EXT_SALES_AMOUNT ) EX_SALES,
-       SUM ( sp_dtl.EXT_AVG_COGS_AMOUNT ) EX_AC,
-	     sp_dtl.REPLACEMENT_COST,
-	     sp_dtl.UNIT_INV_COST,*/
-       
-       CASE
-			 		WHEN sp_dtl.PRICE_CATEGORY_OVR = 'OVERRIDE' 
-					THEN 
-							'OVERRIDE'
-					ELSE
-							sp_dtl.PRICE_CATEGORY
-			 END /*
-			 		PRICE_CAT
-       sp_dtl.PRICE_FORMULA,
-       sp_dtl.UNIT_NET_PRICE_AMOUNT,
-       sp_dtl.UM,
-       sp_dtl.SELL_MULT,
-       sp_dtl.PACK_QTY,
-	     sp_dtl.LIST_PRICE,
-       sp_dtl.MATRIX_PRICE,
-       sp_dtl.MATRIX,
-       sp_dtl.OG_MATRIX,
-       CASE WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN 
-       sp_dtl.PR_OVR ELSE NULL END PR_OVR,
-       CASE WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN 
-       sp_dtl.PR_OVR_BASIS ELSE NULL END PR_OVR_BASIS,
-       CASE WHEN sp_dtl.PRICE_CATEGORY_OVR IS NOT NULL THEN 
-       sp_dtl.GR_OVR ELSE NULL END GR_OVR,
-       sp_dtl.TRIM_FORM,
-       sp_dtl.ORDER_CODE,
-       sp_dtl.SOURCE_SYSTEM,
-       sp_dtl.CONSIGN_TYPE,
-			 sp_dtl.MASTER_VENDOR_NK,
-       sp_dtl.MAIN_CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NK,
-       sp_dtl.CUSTOMER_NAME,
-       sp_dtl.PRICE_COLUMN,
-       sp_dtl.CUSTOMER_TYPE,
-       sp_dtl.REF_BID_NUMBER,
-       sp_dtl.SOURCE_ORDER,
-	     sp_dtl.ORDER_ENTRY_DATE,
-       sp_dtl.COPY_SOURCE_HIST,
-       sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER*/
+       sp_dtl.PRICE_CATEGORY
 	;
 
 -- GRANT SELECT ON AAA6863.PR_VICT2_SKU_DETAIL TO PUBLIC;

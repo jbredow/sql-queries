@@ -1,3 +1,4 @@
+--FROM AAA6863.GP_TRACKER_WRITER_YTD
 SELECT YEARMONTH,
        CHANNEL,
        REGION,
@@ -529,13 +530,10 @@ SELECT GP_SUMS.YEARMONTH,
                   CREDIT_LINES,
                SUM (GP_DATA.SLS_FREIGHT - GP_DATA.AVG_COST_FREIGHT)
                   AS FREIGHT_PROFIT_LOSS
-          FROM AAA6863.GP_TRACKER_WRITER_YTD GP_DATA/*,
-               (SELECT WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK
-                  FROM DW_FEI.WAREHOUSE_DIMENSION WD
-                 WHERE (WD.ACTIVE_FLAG = 1) AND (WD.DELETE_DATE IS NULL)
-                GROUP BY WD.ACCOUNT_NAME, WD.ACCOUNT_NUMBER_NK) ACCT*/
-         --WHERE --GP_DATA.ACCOUNT_NUMBER = ACCT.ACCOUNT_NUMBER_NK(+)
-        /*AND GP_DATA.YEARMONTH BETWEEN TO_CHAR (
+                  
+          FROM AAA6863.GP_TRACKER_WRITER_YTD GP_DATA
+          
+        WHERE GP_DATA.YEARMONTH BETWEEN TO_CHAR (
                                                TRUNC (
                                                   SYSDATE
                                                   - NUMTOYMINTERVAL (12, 'MONTH'),
@@ -544,9 +542,7 @@ SELECT GP_SUMS.YEARMONTH,
                                         AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
                                                      'YYYYMM')
               --AND GP_DATA.YEARMONTH = (SELECT MAX (GP_DATA.YEARMONTH)
-              --                           FROM AAD9606.GP_TRACKER_12MO GP_DATA)
-       --AND GP_DATA.TYPE_OF_SALE='Counter'    */
-
+              
 
         GROUP BY --GP_DATA.YEARMONTH,
                  CASE
