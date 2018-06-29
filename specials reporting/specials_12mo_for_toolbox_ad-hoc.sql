@@ -4,7 +4,7 @@
   dates below that
  */
 SELECT DISTINCT
-  SP.YEARMONTH,
+	SP.YEARMONTH,
 	SP.ACCOUNT_NAME,
 	SP.ACCOUNT_NUMBER BR_NK,
 	SP.WRITER WRITER,
@@ -762,7 +762,7 @@ FROM
                                   --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
                                   --AND PROD.MANUFACTURER = '774'
                                   --AND ILF.
-                                  AND IHF.ACCOUNT_NUMBER = '61'
+                                  AND IHF.ACCOUNT_NUMBER = '1657'
                                   --AND IHF.WRITER = 'JPB'
                                   --AND CUST.CUSTOMER_NK = '19037'
                                   --AND IHF.REF_BID_NUMBER <> 'N/A'
@@ -790,7 +790,7 @@ FROM
                                                                TRUNC (
                                                                   SYSDATE
                                                                   - NUMTOYMINTERVAL (
-                                                                       12,
+                                                                       3,
                                                                        'MONTH'),
                                                                   'MONTH'),
                                                                'YYYYMM')
@@ -801,7 +801,7 @@ FROM
                                                                TRUNC (
                                                                   SYSDATE
                                                                   - NUMTOYMINTERVAL (
-                                                                       12,
+                                                                       3,
                                                                        'MONTH'),
                                                                   'MONTH'),
                                                                'YYYYMM')
