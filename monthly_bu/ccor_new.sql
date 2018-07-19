@@ -19,8 +19,8 @@ SELECT DISTINCT SWD.DIVISION_NAME AS REGION,
                 CCOR.MULTIPLIER,
                 CCOR.LAST_UPDATE,
                 CCOR.EFFECTIVE_PROD,
-                CCOR.YEARMONTH
-
+                CCOR.YEARMONTH,
+                ROWNUM
 FROM (((PRICE_MGMT.BACKUP_CCOR CCOR
 
         INNER JOIN SALES_MART.SALES_WAREHOUSE_DIM SWD
@@ -47,4 +47,7 @@ WHERE CCOR.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,  'YYYYMM')
 			 	 'D14', 'D30', 'D31', 'D32', 
 			 	 'D50', 'D51', 'D53'
 				 ) )
+    AND ROWNUM <= '100'
+ORDER BY ROWNUM
+    
 ;

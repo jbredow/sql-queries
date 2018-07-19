@@ -194,6 +194,17 @@ ALTER TABLE employee
       ADD (id int)
 -------------------------------------------------
 
+ALTER TABLE PRICE_MGMT.PR_PRICE_CAT_HIST
+    ADD PRODUCT_GK	NUMBER;
+ALTER TABLE PRICE_MGMT.SPECIAL_PRODUCT_GK
+    ADD NUMBER;
+ALTER TABLE PRICE_MGMT.PRICE_CATEGORY_OVR_PR
+    ADD CHAR(8);
+ALTER TABLE PRICE_MGMT.PRICE_CATEGORY_OVR_GR
+    ADD CHAR(8);
+
+
+
 --Modify Column
 
 --The syntax to modify a column is:

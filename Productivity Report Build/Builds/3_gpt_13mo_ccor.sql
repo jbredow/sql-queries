@@ -324,10 +324,10 @@ AS
                                                            'Q',
                                                            'N/A',
                                                            'N')
-                  AND IHF.YEARMONTH BETWEEN '201801' AND '201805'
-                  AND ILF.YEARMONTH BETWEEN '201801' AND '201805'
+                  --AND IHF.YEARMONTH BETWEEN '201801' AND '201805'
+                  --AND ILF.YEARMONTH BETWEEN '201801' AND '201805'
                  
-                 /* AND ILF.YEARMONTH BETWEEN TO_CHAR (
+                 AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                               TRUNC (
                                                    SYSDATE
                                                  - NUMTOYMINTERVAL (12, 'MONTH'),
@@ -342,7 +342,7 @@ AS
                                                  'MONTH'),
                                               'YYYYMM')
                                        AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                                    'YYYYMM')*/
+                                                    'YYYYMM')
                   AND DECODE (COALESCE (cust.ar_gl_number, '9999'),
                               '1320', 0,
                               '1360', 0,

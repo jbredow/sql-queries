@@ -1,3 +1,7 @@
+/*
+    NOTE! the month columns were out of order - test before moving forward.
+*/
+
 SELECT CASE
           WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
           THEN

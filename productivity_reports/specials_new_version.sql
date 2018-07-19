@@ -94,9 +94,10 @@ WHERE SP.STATUS IN ('SP-', 'SP')
 
 	-- AND NOT UPPER(SP.ALT1_CODE) LIKE('SP-%')
 	AND ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN (
+        'D01', 'D02', 'D03', 'D04', 'D05', 
         'D10', 'D11', 'D12', 'D13',
         'D14', 'D30', 'D31', 'D32',
-        'D50', 'D51', 'D53'
+        'D41', 'D50', 'D51', 'D53'
       	)
 			)
 ORDER BY

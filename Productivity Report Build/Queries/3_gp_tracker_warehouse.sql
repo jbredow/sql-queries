@@ -1,8 +1,6 @@
 /* 
-	use for monthly reports in toolbox
-	AAE0376 - Jenn
-	AAD9606 - Leigh
- */
+	  from AAA6863.GP_TRACKER_13MO GP_DATA
+*/
  
 SELECT 
 	CASE	

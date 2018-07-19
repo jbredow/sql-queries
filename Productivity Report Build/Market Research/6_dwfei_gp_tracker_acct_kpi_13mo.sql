@@ -679,7 +679,7 @@ FROM (
        AND GP_DATA.YEARMONTH BETWEEN TO_CHAR (
                                                TRUNC (
                                                   SYSDATE
-                                                  - NUMTOYMINTERVAL (12, 'MONTH'),
+                                                  - NUMTOYMINTERVAL (24, 'MONTH'),
                                                   'MONTH'),
                                                'YYYYMM')
                                         AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,

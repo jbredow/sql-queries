@@ -1,0 +1,59 @@
+EASTAADR =
+   (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = eastaadr-db.sys.ds.wolseley.com)(PORT = 1531))
+    )
+    (CONNECT_DATA =
+      (UR=A)
+      (SERVICE_NAME = EASTAADR)
+    )
+  )
+CENTAADR =
+   (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = centaadr-db.sys.ds.wolseley.com)(PORT = 1531))
+    )
+    (CONNECT_DATA =
+      (UR=A)
+      (SERVICE_NAME = CENTAADR)
+    )
+  )
+WESTAADR =
+   (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = westaadr-db.sys.ds.wolseley.com)(PORT = 1531))
+    )
+    (CONNECT_DATA =
+      (UR=A)
+      (SERVICE_NAME = WESTAADR)
+    )
+  )
+BETAAADR =
+   (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = betaaadr-db.sys.ds.wolseley.com)(PORT = 1531))
+    )
+    (CONNECT_DATA =
+      (UR=A)
+      (SERVICE_NAME = BETAAADR)
+    )
+  )
+DCAADR =
+   (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = dcaadr-db.sys.ds.wolseley.com)(PORT = 1531))
+    )
+    (CONNECT_DATA =
+      (UR=A)
+      (SERVICE_NAME = DCAADR)
+    )
+  ) 
+DWFEI.HQ.FERG.COM=
+  (DESCRIPTION=
+    (ADDRESS= (PROTOCOL = TCP)(HOST = nnldwp01.sys.ds.wolseley.com)(PORT=1521))
+    (CONNECT_DATA =
+      (SERVER=dedicated)
+      (SERVICE_NAME=DWFEI)
+    )
+  ) 
+
