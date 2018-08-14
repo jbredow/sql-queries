@@ -11,7 +11,7 @@ SELECT YEARMONTH,
        --'YTD' YEARMONTH,
        ROUND ("Price Matrix Use%$" + "Contract Use%$", 4)
           "Managed Price Use%$",
-       "Price Matrix Use%$",
+          "Price Matrix Use%$",
        "Contract Use%$"
   FROM (
 SELECT GP_SUMS.YEARMONTH,
