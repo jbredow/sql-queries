@@ -1,0 +1,30 @@
+CREATE TABLE PRICE_MGMT.GP_TRACKER_13MO_NEW
+NOLOGGING
+
+AS (SELECT DISTINCT PR_CAT.YEARMONTH,
+                    ILF.INSERT_TIMESTAMP,
+                    PR_CAT.INVOICE_NUMBER_GK,
+                    PR_CAT.INVOICE_LINE_NUMBER,
+                    ILF.PRICE_FORMULA,
+                    PR_CAT.PRICE_CODE,
+                    PR_CAT.ORIG_PRICE_CODE,
+                    PR_CAT.PRODUCT_GK,
+                    PR_CAT.SPECIAL_PRODUCT_GK,
+                    PR_CAT.PRICE_CATEGORY,
+                    PR_CAT.PRICE_CATEGORY_OVR_PR,
+                    PR_CAT.PRICE_CATEGORY_OVR_GR,
+                    PR_CAT.PRICE_CATEGORY_FINAL,
+                    PR_CAT.EXT_SALES_AMOUNT,
+                    PR_CAT.CORE_ADJ_AVG_COST,
+                    PR_CAT.EXT_AVG_COGS_AMOUNT,
+                    PR_CAT.EXT_ACTUAL_COGS_AMOUNT
+    FROM PRICE_MGMT.PR_PRICE_CAT_HISTORY_X PR_CAT
+         INNER JOIN DW_FEI.INVOICE_LINE_FACT ILF
+            ON     (PR_CAT.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK)
+               AND (PR_CAT.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER))
+  ;
+  
+SELECT x.YEARMONTH,
+       count(x.YEARMONTH) 
+FROM PRICE_MGMT.GP_TRACKER_13MO_NEW x
+group by x.yearmonth;

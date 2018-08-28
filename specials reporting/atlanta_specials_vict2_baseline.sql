@@ -574,8 +574,8 @@ SELECT DISTINCT
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
 											 
-                       AND ILF.YEARMONTH BETWEEN '201708' AND '201801'
-                       AND IHF.YEARMONTH BETWEEN '201708' AND '201801'
+                       AND ILF.YEARMONTH BETWEEN '201708' AND '201807'
+                       AND IHF.YEARMONTH BETWEEN '201708' AND '201807'
 											 
                        --AND IHF.YEARMONTH IN ('201710', '201711')
                        --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')

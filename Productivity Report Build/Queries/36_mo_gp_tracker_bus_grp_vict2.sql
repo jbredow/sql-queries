@@ -2,7 +2,8 @@ SELECT SWD.DIVISION_NAME,
        SWD.REGION_NAME, 
        NULL AS EXTRA,
        BG_XREF.BUSINESS_GROUP,
-       TPD.ROLL12MONTHS TPD,
+       VICT2.YEARMONTH,
+       --TPD.ROLL12MONTHS TPD,
        --VICT2.CORE_ADJ_AVG_COGS,
        --VICT2.REP_COGS,
        --VICT2.PRICE_CATEGORY,
@@ -34,6 +35,15 @@ SELECT SWD.DIVISION_NAME,
           CASE
              WHEN VICT2.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
              THEN
+                VICT2.CORE_ADJ_AVG_COGS
+             ELSE
+                0
+          END)
+          MATRIX_CORE_ADJ_AVG_COGS,
+       SUM (
+          CASE
+             WHEN VICT2.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
+             THEN
                 VICT2.LINES
              ELSE
                 0
@@ -56,6 +66,15 @@ SELECT SWD.DIVISION_NAME,
                 0
           END)
           OVERRIDE_AVG_COGS,
+       SUM (
+          CASE
+             WHEN VICT2.PRICE_CATEGORY IN ('OVERRIDE')
+             THEN
+                VICT2.CORE_ADJ_AVG_COGS
+             ELSE
+                0
+          END)
+          OVERRIDE_CORE_ADJ_AVG_COGS,
        SUM (
           CASE
              WHEN VICT2.PRICE_CATEGORY IN ('OVERRIDE')
@@ -88,6 +107,15 @@ SELECT SWD.DIVISION_NAME,
           CASE
              WHEN VICT2.PRICE_CATEGORY IN ('MANUAL', 'QUOTE', 'TOOLS')
              THEN
+                VICT2.CORE_ADJ_AVG_COGS
+             ELSE
+                0
+          END)
+          MANUAL_CORE_ADJ_AVG_COGS,
+       SUM (
+          CASE
+             WHEN VICT2.PRICE_CATEGORY IN ('MANUAL', 'QUOTE', 'TOOLS')
+             THEN
                 VICT2.LINES
              ELSE
                 0
@@ -108,6 +136,12 @@ SELECT SWD.DIVISION_NAME,
              ELSE 0
           END)
           SPECIALS_AVG_COGS,
+       SUM (
+          CASE
+             WHEN VICT2.PRICE_CATEGORY IN ('SPECIALS') THEN VICT2.CORE_ADJ_AVG_COGS
+             ELSE 0
+          END)
+          SPECIALS_CORE_ADJ_AVG_COGS,
        SUM (
           CASE
              WHEN VICT2.PRICE_CATEGORY IN ('SPECIALS') THEN VICT2.LINES
@@ -131,11 +165,16 @@ SELECT SWD.DIVISION_NAME,
           CREDITS_AVG_COGS,
        SUM (
           CASE
+             WHEN VICT2.PRICE_CATEGORY IN ('CREDITS') THEN VICT2.CORE_ADJ_AVG_COGS
+             ELSE 0
+          END)
+          CREDITS_CORE_ADJ_AVG_COGS,
+       SUM (
+          CASE
              WHEN VICT2.PRICE_CATEGORY IN ('CREDITS') THEN VICT2.LINES
              ELSE 0
           END)
           CREDITS_LINES,
-       
        
        
        SUM (
@@ -155,9 +194,9 @@ SELECT SWD.DIVISION_NAME,
              WHEN VICT2.PRICE_CATEGORY <> 'CREDITS' THEN VICT2.LINES
              ELSE 0
           END)
-          OUTBOUND_CLINES
+          OUTBOUND_LINES
           
-  FROM (AAA6863.PR_VICT2_BG_12MO VICT2
+  FROM (AAA6863.PR_VICT2_BG_36MO VICT2
         INNER JOIN AAD9606.PR_SLS_WHSE_DIM SWD
            ON (VICT2.WAREHOUSE_NUMBER = SWD.WAREHOUSE_NUMBER_NK))
        INNER JOIN USER_SHARED.BG_CUSTTYPE_XREF BG_XREF
@@ -169,9 +208,14 @@ SELECT SWD.DIVISION_NAME,
  --WHERE VICT2.ACCOUNT_NUMBER = '20'
 
 
-GROUP BY SWD.DIVISION_NAME, SWD.REGION_NAME, BG_XREF.BUSINESS_GROUP, TPD.ROLL12MONTHS        --,
---VICT2.CORE_ADJ_AVG_COGS,
---VICT2.REP_COGS,
---VICT2.PRICE_CATEGORY,
---VICT2.ORIG_PRICE_CATEGORY,
---VICT2.CUSTOMER_TYPE
+GROUP BY  SWD.DIVISION_NAME, 
+          SWD.REGION_NAME, 
+          BG_XREF.BUSINESS_GROUP, 
+          VICT2.YEARMONTH        --,
+          --TPD.ROLL12MONTHS,
+          --VICT2.CORE_ADJ_AVG_COGS,
+          --VICT2.REP_COGS,
+          --VICT2.PRICE_CATEGORY,
+          --VICT2.ORIG_PRICE_CATEGORY,
+          --VICT2.CUSTOMER_TYPE
+  ;
