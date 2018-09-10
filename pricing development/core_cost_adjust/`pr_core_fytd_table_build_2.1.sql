@@ -187,4 +187,5 @@ AS
                 ELSE
                    ILF.EXT_AVG_COGS_AMOUNT
              END)
-             CORE_COST_SUBTOTAL*/;
+             CORE_COST_SUBTOTAL*/
+;

@@ -1,12 +1,17 @@
-TRUNCATE TABLE AAA6863.PR_VICT2_CUST_12MO;
-DROP TABLE AAA6863.PR_VICT2_CUST_12MO;
+/*
+      added orig price code logic
+*/
 
-CREATE TABLE AAA6863.PR_VICT2_CUST_12MO NOLOGGING
+TRUNCATE TABLE PRICE_MGMT.PR_PRICE_CAT_HISTORY_CCOR;
+DROP TABLE PRICE_MGMT.PR_PRICE_CAT_HISTORY_CCOR;
+
+CREATE TABLE PRICE_MGMT.PR_PRICE_CAT_HISTORY_CCOR
+
 AS
 
 SELECT DISTINCT
        sp_dtl.YEARMONTH,
-       sp_dtl.ACCOUNT_NUMBER,
+       /*sp_dtl.ACCOUNT_NUMBER,
        sp_dtl.ACCOUNT_NAME,
        sp_dtl.WAREHOUSE_NUMBER,
        sp_dtl.INVOICE_NUMBER_NK,
@@ -20,35 +25,46 @@ SELECT DISTINCT
        sp_dtl.ASSOC_NAME,
        sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
-       sp_Dtl.CHANNEL_TYPE,
+       sp_Dtl.CHANNEL_TYPE,*/
+       sp_dtl.INVOICE_NUMBER_GK,
+       sp_dtl.PRICE_CODE,
+       sp_dtl.ORIG_PRICE_CODE,
        sp_dtl.INVOICE_LINE_NUMBER,
-       sp_dtl.MANUFACTURER,
+       sp_dtl.PRODUCT_GK,
+       sp_dtl.SPECIAL_PRODUCT_GK,
+       sp_dtl.EXT_AVG_COGS_AMOUNT,
+       sp_dtl.CORE_ADJ_AVG_COST,
+       sp_dtl.EXT_ACTUAL_COGS_AMOUNT,
+       sp_dtl.EXT_SALES_AMOUNT,
+       COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
+                 sp_dtl.PRICE_CATEGORY_OVR_GR,
+                 sp_dtl.PRICE_CATEGORY)
+          PRICE_CATEGORY,
+       sp_dtl.OVR_PR,
+       sp_dtl.OVR_GR,
+       COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR_JOB,
+                 sp_dtl.ORIG_PRICE_CATEGORY)
+          ORIG_PRICE_CATEGORY,
+       
+  -- price category final
+  
+       sp_dtl.INSERT_TIMESTAMP,
+       sp_dtl.PROCESS_DATE,
+       sp_dtl.PRICE_FORMULA
+       
+       /*sp_dtl.MANUFACTURER,
        sp_dtl.PRODUCT_NK,
        sp_dtl.ALT1_CODE,
        sp_dtl.PRODUCT_NAME,
        sp_dtl.INVOICE_LINES,
        sp_dtl.STATUS,
        sp_dtl.SHIPPED_QTY,
-       sp_dtl.EXT_SALES_AMOUNT,
-       sp_dtl.EXT_AVG_COGS_AMOUNT,
-       sp_dtl.CORE_ADJ_AVG_COST,
+       
        sp_dtl.ORDER_CHANNEL,
        sp_dtl.DELIVERY_CHANNEL,
        sp_dtl.REPLACEMENT_COST,
        sp_dtl.UNIT_INV_COST,
-       sp_dtl.PRICE_CODE,
-       COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
-                 sp_dtl.PRICE_CATEGORY_OVR_GR,
-                 sp_dtl.PRICE_CATEGORY)
-          PRICE_CATEGORY,
-       sp_dtl.ORIG_PRICE_CODE,
-       COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR_JOB,
-                 sp_dtl.ORIG_PRICE_CATEGORY)
-          ORIG_PRICE_CATEGORY,
-       sp_dtl.GR_OVR,
-       sp_dtl.PR_OVR,
-       sp_dtl.PRICE_FORMULA,
-       sp_dtl.UNIT_NET_PRICE_AMOUNT,
+       
        sp_dtl.UM,
        sp_dtl.SELL_MULT,
        sp_dtl.PACK_QTY,
@@ -86,9 +102,10 @@ SELECT DISTINCT
        sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
-       sp_dtl.CONTRACT_NUMBER
+       sp_dtl.CONTRACT_NUMBER*/
 FROM (SELECT SP_HIST.*, --process date changed to include invoice processing date
              --price category change to include rounding and NDP
+             SP_HIST.INSERT_TIMESTAMP,
              CASE
                 WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q', 'N')
                 THEN
@@ -270,6 +287,9 @@ FROM (SELECT SP_HIST.*, --process date changed to include invoice processing dat
                    CUST.ACCOUNT_NAME,
                    IHF.WAREHOUSE_NUMBER,
                    IHF.INVOICE_NUMBER_NK,
+                   ihf.INSERT_TIMESTAMP,
+                   ILF.PRODUCT_GK,
+                   ILF.SPECIAL_PRODUCT_GK,
                    IHF.JOB_NAME,
                    IHF.CONTRACT_DESCRIPTION,
                    IHF.CONTRACT_NUMBER,
