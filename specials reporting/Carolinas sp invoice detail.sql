@@ -44,6 +44,14 @@ SELECT IHF.ACCOUNT_NUMBER,
        ILF.EXT_AVG_COGS_AMOUNT,
        ILF.CORE_ADJ_AVG_COST,
        ILF.EXT_SALES_AMOUNT,
+       ROUND (
+          CASE
+              WHEN ILF.EXT_SALES_AMOUNT > 0
+              THEN (ILF.EXT_SALES_AMOUNT-   
+                 ILF.CORE_ADJ_AVG_COST)/ILF.EXT_SALES_AMOUNT
+              ELSE 1
+          END, 3)
+           CORE_ADJ_GPP,
        ILF.PRICE_CODE,
        ILF.PRICE_FORMULA,
        ILF.UNIT_NET_PRICE_AMOUNT,

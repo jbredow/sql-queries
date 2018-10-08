@@ -75,9 +75,6 @@ SELECT HIST.*,
              END
                 PRICE_CATEGORY_FINAL
                 
-                
-                
-                
 FROM (
 
 SELECT DISTINCT

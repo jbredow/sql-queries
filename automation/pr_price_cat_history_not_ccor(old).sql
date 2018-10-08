@@ -5,7 +5,73 @@ CREATE TABLE AAA6863.PR_PRICE_CAT_HISTORY_NOT_CCOR
 NOLOGGING
 AS
 
-SELECT ihf.YEARMONTH,
+SELECT HIST.*,
+      CASE
+                WHEN     HIST.PRICE_CATEGORY IN
+                            ('MANUAL', 'QUOTE', 'MATRIX_BID')
+                     AND HIST.ORIG_PRICE_CODE IS NOT NULL
+                THEN
+                   CASE
+                      WHEN REGEXP_LIKE (HIST.orig_price_code,
+                                        '[0-9]?[0-9]?[0-9]')
+                      THEN
+                         'MATRIX'
+                      WHEN HIST.orig_price_code IN ('FC', 'PM', 'spec')
+                      THEN
+                         'MATRIX'
+                      WHEN HIST.orig_price_code LIKE 'M%'
+                      THEN
+                         'NDP'
+                      WHEN HIST.orig_price_code IN ('CPA', 'CPO')
+                      THEN
+                         'OVERRIDE'
+                      WHEN HIST.orig_price_code IN ('PR',
+                                                    'GR',
+                                                    'CB',
+                                                    'GJ',
+                                                    'PJ',
+                                                    '*G',
+                                                    '*P',
+                                                    'G*',
+                                                    'P*',
+                                                    'G',
+                                                    'GJ',
+                                                    'P')
+                      THEN
+                         'OVERRIDE'
+                      WHEN HIST.orig_price_code IN ('GI',
+                                                    'GPC',
+                                                    'HPF',
+                                                    'HPN',
+                                                    'NC')
+                      THEN
+                         'MANUAL'
+                      WHEN HIST.orig_price_code = '*E'
+                      THEN
+                         'OTH/ERROR'
+                      WHEN HIST.orig_price_code = 'SKC'
+                      THEN
+                         'OTH/ERROR'
+                      WHEN HIST.orig_price_code IN ('%',
+                                                    '$',
+                                                    'N',
+                                                    'F',
+                                                    'B',
+                                                    'PO')
+                      THEN
+                         'TOOLS'
+                      WHEN HIST.orig_price_code IS NULL
+                      THEN
+                         'MANUAL'
+                      ELSE
+                         'MANUAL'
+                   END
+                ELSE
+                   HIST.PRICE_CATEGORY
+             END
+                PRICE_CATEGORY_FINAL
+FROM
+   (SELECT ihf.YEARMONTH,
            ihf.INVOICE_NUMBER_GK,
            ilf.PRICE_CODE,
            ilf.ORIG_PRICE_CODE,
@@ -158,8 +224,6 @@ SELECT ihf.YEARMONTH,
                          AND ILF.PRICE_FORMULA LIKE 'L-0.%'
                     THEN
                        'NDP'
-                    WHEN LENGTH(ilf.PRICE_FORMULA) = '7'
-                    THEN 'MATRIX'
                     ELSE
                        'MANUAL'
                  END
@@ -170,20 +234,21 @@ SELECT ihf.YEARMONTH,
            
       FROM DW_FEI.INVOICE_LINE_FACT ilf,
            DW_FEI.INVOICE_HEADER_FACT ihf,
-           DW_FEI.CUSTOMER_DIMENSION cust
-           --SALES_MART.SALES_WAREHOUSE_DIM ps
+           DW_FEI.CUSTOMER_DIMENSION cust,
+           SALES_MART.SALES_WAREHOUSE_DIM ps
      WHERE     ihf.CUSTOMER_ACCOUNT_GK = cust.CUSTOMER_GK
-           AND ilf.INVOICE_NUMBER_GK = ihf.INVOICE_NUMBER_GK
-           --AND ihf.WAREHOUSE_NUMBER =ps.WAREHOUSE_NUMBER_NK
+           AND (ilf.INVOICE_NUMBER_GK = ihf.INVOICE_NUMBER_GK)
+           AND TO_CHAR (ihf.WAREHOUSE_NUMBER) =
+                  TO_CHAR (ps.WAREHOUSE_NUMBER_NK)
            AND ihf.IC_FLAG = 0
            AND ihf.PO_WAREHOUSE_NUMBER IS NULL
            AND NVL (ihf.CONSIGN_TYPE, 'N') <> 'R'
            AND DECODE (NVL (ilf.PRICE_CODE, 'N/A'),
-                       'R',   0,
-                       'Q',   0,
+                       'R', 0,
+                       'Q', 0,
                        'N/A', 0,
-                       'N',   0,
-                       1) <>  0
+                       'N', 0,
+                       1) <> 0
            AND ILF.YEARMONTH = TO_CHAR (
                                   TRUNC (SYSDATE, 'MM') - 1,
                                               'YYYYMM')
@@ -217,4 +282,5 @@ SELECT ihf.YEARMONTH,
                        '7100', 0,
                        '9999', 0,
                        1) <> 0
+    ) HIST
   ;

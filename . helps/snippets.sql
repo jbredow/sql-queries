@@ -1,3 +1,14 @@
+-- select previous work week
+SELECT TO_CHAR (SYSDATE, 'DAY')
+          TODAY,
+         SYSDATE
+       - (CASE WHEN TO_CHAR (SYSDATE, 'DAY') LIKE '%MONDAY%' THEN 3 ELSE 1 END)
+          DATE_PARAM,
+       (CASE WHEN TO_CHAR (SYSDATE, 'DAY') LIKE '%MONDAY%' THEN 3 ELSE 1 END)
+          SUBTRACTOR
+FROM DUAL
+
+
 --strip page# and alpha characters from invoice number
 REGEXP_SUBSTR ( 
             LTRIM ( sp_dtl.INVOICE_NUMBER_NK,
