@@ -34,7 +34,7 @@ AS
               TYPE_OF_SALE,
            --TO_CHAR((0) PRICE_CODE) PRICE_CODE,
            (0) INVOICE_LINES,
-           SUM (NVL (IHF.AVG_COST_SUBTOTAL_AMOUNT, '0'))
+           SUM (NVL (IHF.CORE_ADJ_AVG_COST, '0'))
               AVG_COGS,
            SUM (NVL (IHF.COST_SUBTOTAL_AMOUNT, '0'))
               ACTUAL_COGS,
@@ -54,7 +54,7 @@ AS
               SLS_MISC,
            SUM (NVL (IHF.RESTOCKING_SALES_AMOUNT, '0'))
               SLS_RESTOCK,
-           SUM (NVL (IHF.AVG_COST_SUBTOTAL_AMOUNT, '0'))
+           SUM (NVL (IHF.CORE_ADJ_AVG_COST, '0'))
               AVG_COST_SUBTOTAL,
            SUM (NVL (IHF.FREIGHT_COST_AMOUNT, '0'))
               AVG_COST_FREIGHT,

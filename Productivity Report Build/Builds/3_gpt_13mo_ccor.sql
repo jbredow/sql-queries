@@ -14,7 +14,7 @@ AS
           LINE_HIST.TYPE_OF_SALE,
           LINE_HIST.PRICE_CODE,
           SUM (LINE_HIST.INVOICE_LINES) invoice_lines,
-          SUM (LINE_HIST.EXT_AVG_COGS_AMOUNT) avg_cogs,
+          SUM (LINE_HIST.CORE_ADJ_AVG_COST) avg_cogs,
           SUM (LINE_HIST.EXT_ACTUAL_COGS_AMOUNT) actual_cogs,
           SUM (LINE_HIST.EXT_SALES_AMOUNT) ext_sales,
           LINE_HIST.PRICE_CATEGORY,
@@ -202,7 +202,7 @@ AS
                      TYPE_OF_SALE,
                   CASE WHEN ilf.SHIPPED_QTY > 0 THEN 1 ELSE 0 END
                      invoice_lines,
-                  ilf.EXT_AVG_COGS_AMOUNT,
+                  ilf.CORE_ADJ_AVG_COST,
                   ilf.EXT_ACTUAL_COGS_AMOUNT,
                   ilf.EXT_SALES_AMOUNT,
                   CASE

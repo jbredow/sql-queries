@@ -30,8 +30,8 @@ AS
           sp_dtl.STATUS,
           sp_dtl.SHIPPED_QTY,
           sp_dtl.EXT_SALES_AMOUNT,
-          sp_dtl.EXT_AVG_COGS_AMOUNT,
           sp_dtl.CORE_ADJ_AVG_COST,
+          sp_dtl.EXT_AVG_COGS_AMOUNT,
           sp_dtl.ORDER_CHANNEL,
           sp_dtl.DELIVERY_CHANNEL,
           sp_dtl.REPLACEMENT_COST,
@@ -400,8 +400,8 @@ AS
                           PROD.SELL_PACKAGE_QTY PACK_QTY,
                           ILF.SHIPPED_QTY,
                           ILF.EXT_AVG_COGS_AMOUNT,
-                          ILF.EXT_SALES_AMOUNT,
                           ILF.CORE_ADJ_AVG_COST,
+                          ILF.EXT_SALES_AMOUNT,
                           --price category definition to include
                           CASE
                              WHEN ihf.order_code = 'IC'

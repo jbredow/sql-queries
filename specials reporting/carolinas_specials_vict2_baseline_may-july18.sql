@@ -553,7 +553,7 @@ SELECT DISTINCT
                        --AND IHF.ORDER_CODE NOT IN 'IC'
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-											 AND ILF.YEARMONTH BETWEEN '201805' AND '201807'
+                       AND ILF.YEARMONTH BETWEEN '201805' AND '201807'
                        AND IHF.YEARMONTH BETWEEN '201805' AND '201807'
                        --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
                        --AND IHF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')

@@ -40,8 +40,8 @@ SELECT GP_DATA.YEARMONTH,
              END
              AS GPTRACK_KEY,
           SUM (GP_DATA.EXT_SALES_AMOUNT) "Total Sales",
-          SUM (EXT_AVG_COGS_AMOUNT) "Total Cost",
-          SUM (GP_DATA.EXT_SALES_AMOUNT - EXT_AVG_COGS_AMOUNT) "Total GP$",
+          SUM (CORE_ADJ_AVG_COST) "Total Cost",
+          SUM (GP_DATA.EXT_SALES_AMOUNT - CORE_ADJ_AVG_COST) "Total GP$",
           COUNT (GP_DATA.INVOICE_LINE_NUMBER) "Total # Lines",
           COUNT (DISTINCT CASE
                           WHEN GP_DATA.INVOICE_NUMBER_NK NOT IN ('CM%', '%-%')
@@ -63,7 +63,7 @@ SELECT GP_DATA.YEARMONTH,
              CASE
                 WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
                 THEN
-                   (GP_DATA.EXT_AVG_COGS_AMOUNT)
+                   (GP_DATA.CORE_ADJ_AVG_COST)
                 ELSE
                    0
              END)
@@ -72,7 +72,7 @@ SELECT GP_DATA.YEARMONTH,
              CASE
                 WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
                 THEN
-                   (GP_DATA.EXT_SALES_AMOUNT - GP_DATA.EXT_AVG_COGS_AMOUNT)
+                   (GP_DATA.EXT_SALES_AMOUNT - GP_DATA.CORE_ADJ_AVG_COST)
                 ELSE
                    0
              END)
@@ -109,7 +109,7 @@ SELECT GP_DATA.YEARMONTH,
              CASE
                 WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                 THEN
-                   (GP_DATA.EXT_AVG_COGS_AMOUNT)
+                   (GP_DATA.CORE_ADJ_AVG_COST)
                 ELSE
                    0
              END)
@@ -118,7 +118,7 @@ SELECT GP_DATA.YEARMONTH,
              CASE
                 WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                 THEN
-                   (GP_DATA.EXT_SALES_AMOUNT - GP_DATA.EXT_AVG_COGS_AMOUNT)
+                   (GP_DATA.EXT_SALES_AMOUNT - GP_DATA.CORE_ADJ_AVG_COST)
                 ELSE
                    0
              END)
@@ -155,7 +155,7 @@ SELECT GP_DATA.YEARMONTH,
              CASE
                 WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
                 THEN
-                   (GP_DATA.EXT_AVG_COGS_AMOUNT)
+                   (GP_DATA.CORE_ADJ_AVG_COST)
                 ELSE
                    0
              END)
@@ -164,7 +164,7 @@ SELECT GP_DATA.YEARMONTH,
              CASE
                 WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
                 THEN
-                   (GP_DATA.EXT_SALES_AMOUNT - GP_DATA.EXT_AVG_COGS_AMOUNT)
+                   (GP_DATA.EXT_SALES_AMOUNT - GP_DATA.CORE_ADJ_AVG_COST)
                 ELSE
                    0
              END)
@@ -215,7 +215,7 @@ SELECT GP_DATA.YEARMONTH,
                                                       'MATRIX_BID',
                                                       'Total')
                   THEN
-                     (GP_DATA.EXT_AVG_COGS_AMOUNT)
+                     (GP_DATA.CORE_ADJ_AVG_COST)
                   ELSE
                      0
                END)
@@ -230,7 +230,7 @@ SELECT GP_DATA.YEARMONTH,
                                                       'MATRIX_BID',
                                                       'Total')
                   THEN
-                     (GP_DATA.EXT_SALES_AMOUNT - GP_DATA.EXT_AVG_COGS_AMOUNT)
+                     (GP_DATA.EXT_SALES_AMOUNT - GP_DATA.CORE_ADJ_AVG_COST)
                   ELSE
                      0
                END)

@@ -263,8 +263,6 @@ SELECT SWD.DIVISION_NAME REGION,
        
        AND IHF.PROCESS_DATE BETWEEN TRUNC (TO_DATE ('01-FEB-18'), 'DDD')
                                 AND  TRUNC (SYSDATE - 1)
-
-       --AND IHF.PROCESS_DATE > TRUNC (TO_DATE ('31-JAN-18'), 'DDD')
-
-
-                                ;
+       AND IHF.PROCESS_DATE BETWEEN TRUNC (TO_DATE ('01-FEB-18'), 'DDD')
+                                AND  TRUNC (SYSDATE - 1)
+  ;

@@ -42,6 +42,8 @@ SELECT TPD.ROLL12MONTHS,
                                    '35726 - MURPHY PIPELINE CONTRACTOR INC',
                                    '28413 - OSCAR RENDA CONTRACTING INC',
                                    '31889 - PEPPER-LAWSON WATERWORKS LLC',
+                                   '50176 - PHILLIPS & JORDAN INCORPORATED',
+                                    '1237 - PHILLIPS & JORDAN INCORPORATED',
                                  '1078306 - R K MECHANICAL INC',
                                   '172064 - R K MECHANICAL INC',
                                    '51682 - REYNOLDS CONSTRUCTION LLC',
@@ -49,7 +51,7 @@ SELECT TPD.ROLL12MONTHS,
                                   '147595 - SOUTHEAST MECHANICAL SYSTEMS',
                                   '147595 - SOUTHEAST MECHANICAL SYSTEMS',
                                   '132038 - THE BRANDT COMPANIES LLC',
-                                   '85395 - TOWN OF OAK ISLAND'
+                                   '85395 - TOWN OF OAK ISLAND',
                                    '14439 - WHARTON-SMITH INC',
                                    '37624 - WHARTON-SMITH INC'
                                   )

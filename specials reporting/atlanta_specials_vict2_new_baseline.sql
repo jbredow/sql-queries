@@ -264,7 +264,8 @@ SELECT SWD.DIVISION_NAME REGION,
 
         AND IHF.PROCESS_DATE BETWEEN TRUNC (TO_DATE ('01-AUG-17'), 'DDD')
                                 AND  TRUNC (TO_DATE ('31-JUL-18'), 'DDD')
+        
+        AND IHF.PROCESS_DATE BETWEEN TRUNC (TO_DATE ('01-AUG-17'), 'DDD')
+                                AND  TRUNC (TO_DATE ('31-JUL-18'), 'DDD')
 
-       /*AND IHF.PROCESS_DATE BETWEEN TRUNC (TO_DATE ('01-FEB-18'), 'DDD')
-                                AND  TRUNC (SYSDATE - 1)*/
 ;

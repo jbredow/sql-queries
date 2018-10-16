@@ -553,8 +553,18 @@ SELECT DISTINCT
                        --AND IHF.ORDER_CODE NOT IN 'IC'
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-											 AND ILF.YEARMONTH BETWEEN '201808' AND '201812'
-                       AND IHF.YEARMONTH BETWEEN '201808' AND '201812'
+                       
+                       AND IHF.PROCESS_DATE BETWEEN '08/01/2018' AND '12/31/2018'
+                       AND ILF.PROCESS_DATE BETWEEN '08/01/2018' AND '12/31/2018'
+                       
+                       /*AND IHF.PROCESS_DATE BETWEEN TRUNC (TO_DATE ('01-FEB-18'), 'DDD')
+                                AND  TRUNC (SYSDATE - 1)
+                       AND IHF.PROCESS_DATE BETWEEN TRUNC (TO_DATE ('01-FEB-18'), 'DDD')
+                                AND  TRUNC (SYSDATE - 1)*/
+                       
+                       --AND IHF.YEARMONTH BETWEEN '201808' AND '201812'
+                       --AND ILF.YEARMONTH BETWEEN '201808' AND '201812'
+                       
                        --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
                        --AND IHF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
 										)
