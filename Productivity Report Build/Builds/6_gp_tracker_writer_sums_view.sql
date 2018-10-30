@@ -2,14 +2,15 @@ CREATE OR REPLACE FORCE VIEW "AAA6863"."GP_TRACKER_WRITER_SUMS"
 AS
 
 SELECT GP_DATA.YEARMONTH,
-          CASE
+          /*CASE
              WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
              THEN
                 'Showroom'
              ELSE
                 GP_DATA.TYPE_OF_SALE
           END
-             AS CHANNEL,
+             AS CHANNEL,*/
+          GP_DATA.ORDER_CHANNEL,
           DENSE_RANK () OVER (ORDER BY GP_DATA.YEARMONTH ASC) AS MM,
           CASE
              WHEN ACCT.REGION_NAME IS NULL THEN ACCT.ACCOUNT_NAME
@@ -297,6 +298,7 @@ SELECT GP_DATA.YEARMONTH,
              END)
              "Outbound Sales"
      FROM AAA6863.PR_VICT2_CUST_12MO GP_DATA,
+          SALES_MART.INVOICE_CHANNEL_DIMENSION ICD,
           (SELECT WD.REGION_NAME,
                   WD.ACCOUNT_NAME,
                   WD.ACCOUNT_NUMBER_NK,
@@ -308,6 +310,7 @@ SELECT GP_DATA.YEARMONTH,
                     WD.WAREHOUSE_NUMBER_NK) ACCT                            --
     WHERE     GP_DATA.WAREHOUSE_NUMBER = ACCT.WAREHOUSE_NUMBER_NK(+)
           AND GP_DATA.WRITER IS NOT NULL
+          AND GP_DATA.INVOICE_NUMBER_GK = ICD.INVOICE_NUMBER_GK
    GROUP BY GP_DATA.YEARMONTH,
             CASE
                WHEN ACCT.REGION_NAME IS NULL THEN ACCT.ACCOUNT_NAME
@@ -319,13 +322,15 @@ SELECT GP_DATA.YEARMONTH,
             ACCT.ACCOUNT_NAME,
             ACCT.REGION_NAME,
             GP_DATA.WRITER,
-            CASE
-               WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
-               THEN
-                  'Showroom'
-               ELSE
-                  GP_DATA.TYPE_OF_SALE
-            END
+            /*CASE
+             WHEN GP_DATA.TYPE_OF_SALE IN ('Showroom', 'Showroom Direct')
+             THEN
+                'Showroom'
+             ELSE
+                GP_DATA.TYPE_OF_SALE
+          END
+             AS CHANNEL,*/
+          GP_DATA.ORDER_CHANNEL  --,
    ORDER BY    CASE
                   WHEN ACCT.REGION_NAME IS NULL THEN ACCT.ACCOUNT_NAME
                   WHEN ACCT.REGION_NAME = '%EAST%' THEN 'EASTERN'

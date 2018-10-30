@@ -71,7 +71,7 @@ AS
               TYPE_OF_SALE,
            --TO_CHAR((0) PRICE_CODE) PRICE_cODE,
            (0) invoice_lines,
-           SUM (NVL (IHF.AVG_COST_SUBTOTAL_AMOUNT, '0')) avg_cogs,
+           SUM (NVL (IHF.CORE_ADJ_AVG_COST, '0')) avg_cogs,
            SUM (NVL (IHF.COST_SUBTOTAL_AMOUNT, '0')) actual_cogs,
            SUM (IHF.SALES_SUBTOTAL_AMOUNT) ext_sales,
            'Total' AS PRICE_CATEGORY,
