@@ -885,6 +885,9 @@ FROM (SELECT SP_HIST.*, --process date changed to include invoice processing dat
                   AND SP_HIST.ACCOUNT_NUMBER = PR_OVR_BASE.BRANCH_NUMBER_NK
                   AND SP_HIST.MAIN_CUSTOMER_NK = PR_OVR_BASE.CUSTOMER_NK
                   AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
-                      NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))) sp_dtl;
+                      NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))) sp_dtl
+                      
+      WHERE sp_dtl.TYPE_OF_SALE = 'Counter'
+;
 
 GRANT SELECT ON AAA6863.PR_VICT2_CUST_12MO TO PUBLIC;

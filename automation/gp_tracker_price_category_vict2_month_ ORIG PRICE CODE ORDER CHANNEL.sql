@@ -1,7 +1,7 @@
-TRUNCATE TABLE AAA6863.PR_VICT2_CUST_201805;
-DROP TABLE AAA6863.PR_VICT2_CUST_201805;
+TRUNCATE TABLE AAA6863.PR_VICT2_CUST_201810;
+DROP TABLE AAA6863.PR_VICT2_CUST_201810;
 
-CREATE TABLE AAA6863.PR_VICT2_CUST_201805 NOLOGGING
+CREATE TABLE AAA6863.PR_VICT2_CUST_201810 NOLOGGING
 
 AS
    SELECT DISTINCT
@@ -24,20 +24,27 @@ AS
           sp_Dtl.CHANNEL_TYPE,
           sp_dtl.INVOICE_LINE_NUMBER,
           sp_dtl.MANUFACTURER,
+          sp_dtl.PRODUCT_GK,
+          sp_dtl.SPECIAL_PRODUCT_GK,
           sp_dtl.PRODUCT_NK,
           sp_dtl.ALT1_CODE,
           sp_dtl.PRODUCT_NAME,
           sp_dtl.INVOICE_LINES,
+          sp_dtl.PROCESS_DATE,
           sp_dtl.STATUS,
           sp_dtl.SHIPPED_QTY,
           sp_dtl.EXT_SALES_AMOUNT,
+          sp_dtl.EXT_ACTUAL_COGS_AMOUNT,
           sp_dtl.CORE_ADJ_AVG_COST,
           sp_dtl.EXT_AVG_COGS_AMOUNT,
           sp_dtl.ORDER_CHANNEL,
           sp_dtl.DELIVERY_CHANNEL,
           sp_dtl.REPLACEMENT_COST,
           sp_dtl.UNIT_INV_COST,
+          sp_dtl.INSERT_TIMESTAMP,
           sp_dtl.PRICE_CODE,
+          sp_dtl.PRICE_CATEGORY_OVR_PR,
+          sp_dtl.PRICE_CATEGORY_OVR_GR,
           COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
                     sp_dtl.PRICE_CATEGORY_OVR_GR,
                     sp_dtl.PRICE_CATEGORY)
@@ -285,7 +292,11 @@ AS
                           IHF.WAREHOUSE_NUMBER,
                           IHF.INVOICE_NUMBER_NK,
                           IHF.INVOICE_NUMBER_GK,
+                          ILF.EXT_ACTUAL_COGS_AMOUNT,
+                          IHF.INSERT_TIMESTAMP,
                           IHF.JOB_NAME,
+                          ILF.PRODUCT_GK,
+                          ILF.SPECIAL_PRODUCT_GK,
                           IHF.CONTRACT_DESCRIPTION,
                           IHF.CONTRACT_NUMBER,
                           IHF.OML_ASSOC_NAME,
@@ -760,8 +771,8 @@ AS
                           --AND IHF.ORDER_CODE NOT IN 'IC'
                           --Excludes shipments to other FEI locations.
                           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                          AND ILF.YEARMONTH = '201809'
-                          AND IHF.YEARMONTH = '201809'
+                          AND ILF.YEARMONTH = '201810'
+                          AND IHF.YEARMONTH = '201810'
                           /*AND ILF.YEARMONTH =
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
                                           'YYYYMM')
@@ -928,4 +939,4 @@ AS
                                 NVL (PR_OVR_BASE.CONTRACT_ID,
                                      'DEFAULT_MATCH'))) sp_dtl;
 
-GRANT SELECT ON AAA6863.PR_VICT2_CUST_201805 TO PUBLIC;
+GRANT SELECT ON AAA6863.PR_VICT2_CUST_201810 TO PUBLIC;
