@@ -303,7 +303,7 @@ SELECT GP_DATA.YEARMONTH,
                   WD.ACCOUNT_NAME,
                   WD.ACCOUNT_NUMBER_NK,
                   WD.WAREHOUSE_NUMBER_NK
-             FROM AAD9606.PR_SLS_WHSE_DIM WD
+             FROM PRICE_MGMT.PR_SLS_WHSE_DIM WD
            GROUP BY WD.REGION_NAME,
                     WD.ACCOUNT_NAME,
                     WD.ACCOUNT_NUMBER_NK,

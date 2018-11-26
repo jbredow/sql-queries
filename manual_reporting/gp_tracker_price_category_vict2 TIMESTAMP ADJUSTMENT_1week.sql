@@ -32,6 +32,7 @@ SELECT DISTINCT
        sp_dtl.SHIPPED_QTY,
        sp_dtl.EXT_SALES_AMOUNT,
        sp_dtl.EXT_AVG_COGS_AMOUNT,
+       sp_dtl.CORE_ADJ_AVG_COST
        sp_dtl.REPLACEMENT_COST,
        sp_dtl.UNIT_INV_COST,
        sp_dtl.PRICE_CODE,
@@ -325,6 +326,7 @@ SELECT DISTINCT
                        PROD.SELL_PACKAGE_QTY PACK_QTY,
                        ILF.SHIPPED_QTY,
                        ILF.EXT_AVG_COGS_AMOUNT,
+                       ILF.CORE_ADJ_AVG_COST
                        ILF.EXT_SALES_AMOUNT,
                        CASE
                           WHEN ihf.order_code = 'IC'

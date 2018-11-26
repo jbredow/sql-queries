@@ -31,7 +31,7 @@ SELECT DISTINCT
           SUM(sp_dtl.INVOICE_LINES) LINES,
           SUM(sp_dtl.SHIPPED_QTY) SHIPPED,
           SUM(sp_dtl.EXT_SALES_AMOUNT) EXT_SALES,
-          SUM(sp_dtl.CORE_ADJ_AVG_COST) EXT_AVG_COGS,
+         -- SUM(sp_dtl.CORE_ADJ_AVG_COST) EXT_AVG_COGS,
           SUM(sp_dtl.CORE_ADJ_AVG_COST) CORE_ADJ_AVG_COGS,
           /*sp_dtl.ORDER_CHANNEL,
           sp_dtl.DELIVERY_CHANNEL,*/

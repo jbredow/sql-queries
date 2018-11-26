@@ -578,13 +578,14 @@ FROM (SELECT TPD.ROLLING_MONTH
       /*   LEFT OUTER JOIN DW_FEI.PRODUCT_DIMENSION PROD
             ON HIST.PRODUCT_GK = PROD.PRODUCT_GK */
       WHERE TPD.ROLLING_MONTH IS NOT NULL
-        AND ( SUBSTR ( SWD.REGION_NAME, 1, 3 ) IN ( 'D20',
+        AND ( SUBSTR ( SWD.REGION_NAME, 1, 3 ) = 'D24'
+        /*AND ( SUBSTR ( SWD.REGION_NAME, 1, 3 ) IN ( 'D20',
                                                     'D21',
                                                     'D22',
                                                     'D23',
                                                     'D24',
                                                     'D25',
-                                                    'D26' ) )
+                                                    'D26' ) )*/
 
       -- FILTER TO INCLUDE ONLY O/S REPS
       /*  AND (   EMPL.TITLE_DESC LIKE '%O/S%'

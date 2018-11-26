@@ -1,3 +1,4 @@
+--changed AC to CORE Adj AC
 --VICT2 sql with updated rounding logic aligned with pricing cube
 --10/7/2013, Leigh North
 -- Old
@@ -33,7 +34,8 @@ SELECT DISTINCT
 			SP_DTL.STATUS,
 			SP_DTL.SHIPPED_QTY,*/
 			SUM ( SP_DTL.EXT_SALES_AMOUNT ) EX_SALES,
-			SUM ( SP_DTL.EXT_AVG_COGS_AMOUNT ) EX_AC,
+			--SUM ( SP_DTL.EXT_AVG_COGS_AMOUNT ) EX_AC,
+      SUM ( SP_DTL.CORE_ADJ_AVG_COST ) CORE_COGS,
 			/*SP_DTL.REPLACEMENT_COST,
 			SP_DTL.UNIT_INV_COST,
 			SP_DTL.PRICE_CODE,*/
@@ -284,6 +286,7 @@ SELECT DISTINCT
                           ILF.SHIPPED_QTY,
                           ILF.EXT_AVG_COGS_AMOUNT,
                           ILF.EXT_SALES_AMOUNT,
+                          ILF.CORE_ADJ_AVG_COST,
                           --ILF.MATRIX_PRICE,
                           CASE
                              WHEN ihf.order_code = 'IC'

@@ -784,7 +784,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                  (SELECT SWD.ACCOUNT_NAME,
                          SWD.ACCOUNT_NUMBER_NK,
                          SWD.WAREHOUSE_NUMBER_NK
-                    FROM AAD9606.PR_SLS_WHSE_DIM SWD
+                    FROM PRICE_MGMT.PR_SLS_WHSE_DIM SWD
                   GROUP BY SWD.ACCOUNT_NAME,
                            SWD.ACCOUNT_NUMBER_NK,
                            SWD.WAREHOUSE_NUMBER_NK) ACCT
@@ -1520,7 +1520,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                 (SELECT SWD.ACCOUNT_NAME,
                         SWD.ACCOUNT_NUMBER_NK,
                         SWD.WAREHOUSE_NUMBER_NK
-                   FROM AAD9606.PR_SLS_WHSE_DIM SWD
+                   FROM PRICE_MGMT.PR_SLS_WHSE_DIM SWD
                  GROUP BY SWD.ACCOUNT_NAME,
                           SWD.ACCOUNT_NUMBER_NK,
                           SWD.WAREHOUSE_NUMBER_NK) ACCT
@@ -2268,7 +2268,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                 (SELECT SWD.ACCOUNT_NAME,
                         SWD.ACCOUNT_NUMBER_NK,
                         SWD.WAREHOUSE_NUMBER_NK
-                   FROM AAD9606.PR_SLS_WHSE_DIM SWD
+                   FROM PRICE_MGMT.PR_SLS_WHSE_DIM SWD
                  GROUP BY SWD.ACCOUNT_NAME,
                           SWD.ACCOUNT_NUMBER_NK,
                           SWD.WAREHOUSE_NUMBER_NK) ACCT

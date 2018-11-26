@@ -1,21 +1,20 @@
-SELECT REGION,
-       DISTRICT,
-       ACCOUNT_NAME,
-       -- WHSE,
-       -- CUST_BUS_GRP,
-       -- ORDER_CHANNEL,
-        WRITER,
-       -- REP_INIT,
-       -- SALESREP_NAME
-       -- CUST_BUS_GRP,
-       -- ORDER_CHANNEL,
-       -- DISC_GRP,
-       -- REP_INIT,
-       -- SALESREP_NAME,
+SELECT SLS.REGION,
+       SLS.DISTRICT,
+       SLS.ACCOUNT_NAME,
+       -- SLS.WHSE,
+       -- SLS.CUST_BUS_GRP,
+       SLS.WRITER,
+       -- SLS.REP_INIT,
+       -- SLS.SALESREP_NAME
+       -- SLS.CUST_BUS_GRP,
+       SLS.ORDER_CHANNEL,
+       -- SLS.DISC_GRP,
+       -- SLS.REP_INIT,
+       -- SLS.SALESREP_NAME,
        NVL (
           SUM (
              CASE
-                WHEN ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+                WHEN SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
                 THEN
                    SLS.EXT_SALES_AMOUNT
                 ELSE
@@ -26,7 +25,7 @@ SELECT REGION,
        NVL (
           SUM (
              CASE
-                WHEN ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+                WHEN SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
                 THEN
                    SLS.EXT_AVG_COGS_AMOUNT
                 ELSE
@@ -37,7 +36,7 @@ SELECT REGION,
        NVL (
           SUM (
              CASE
-                WHEN ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+                WHEN SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
                 THEN
                    SLS.TOTAL_LINES
                 ELSE
@@ -48,8 +47,9 @@ SELECT REGION,
        /* MATRIX */
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MATRIX', 'MATRIX_BID', 'NDP')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MATRIX', 'MATRIX_BID', 'NDP')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -58,8 +58,9 @@ SELECT REGION,
           MATRIX_SALES,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MATRIX', 'MATRIX_BID', 'NDP')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MATRIX', 'MATRIX_BID', 'NDP')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -68,8 +69,9 @@ SELECT REGION,
           MATRIX_COGS,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MATRIX', 'MATRIX_BID', 'NDP')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MATRIX', 'MATRIX_BID', 'NDP')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -79,8 +81,8 @@ SELECT REGION,
        /* CONTRACT */
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL = 'OVERRIDE'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'OVERRIDE'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -89,8 +91,8 @@ SELECT REGION,
           OVERRIDE_SALES,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL = 'OVERRIDE'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'OVERRIDE'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -99,8 +101,8 @@ SELECT REGION,
           OVERRIDE_COGS,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('OVERRIDE')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN ('OVERRIDE')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -110,8 +112,9 @@ SELECT REGION,
        /* MANUAL */
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MANUAL', 'QUOTE', 'TOOLS')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MANUAL', 'QUOTE', 'TOOLS')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -120,8 +123,9 @@ SELECT REGION,
           MANUAL_SALES,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MANUAL', 'QUOTE', 'TOOLS')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MANUAL', 'QUOTE', 'TOOLS')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -130,8 +134,9 @@ SELECT REGION,
           MANUAL_COGS,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MANUAL', 'QUOTE', 'TOOLS')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MANUAL', 'QUOTE', 'TOOLS')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -141,8 +146,8 @@ SELECT REGION,
        /* SPECIALS */
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL = 'SPECIALS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'SPECIALS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -151,8 +156,8 @@ SELECT REGION,
           SP_SALES,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL = 'SPECIALS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'SPECIALS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -161,8 +166,8 @@ SELECT REGION,
           SP_COGS,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('SPECIALS')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN ('SPECIALS')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -172,8 +177,8 @@ SELECT REGION,
        /* CREDITS */
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL = 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -182,8 +187,8 @@ SELECT REGION,
           CREDITS_SALES,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL = 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -192,8 +197,8 @@ SELECT REGION,
           CREDITS_COGS,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL = 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -203,8 +208,8 @@ SELECT REGION,
        /* OUTBOUND */
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL <> 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL <> 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -213,8 +218,8 @@ SELECT REGION,
           OUTBOUND_SALES,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL <> 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL <> 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -223,8 +228,8 @@ SELECT REGION,
           OUTBOUND_COGS,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL <> 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS'
+             WHEN     SLS.PRICE_CATEGORY_FINAL <> 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -234,7 +239,7 @@ SELECT REGION,
        NVL (
           SUM (
              CASE
-                WHEN ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+                WHEN SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
                 THEN
                    SLS.EXT_SALES_AMOUNT
                 ELSE
@@ -245,7 +250,7 @@ SELECT REGION,
        NVL (
           SUM (
              CASE
-                WHEN ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+                WHEN SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
                 THEN
                    SLS.EXT_AVG_COGS_AMOUNT
                 ELSE
@@ -256,7 +261,7 @@ SELECT REGION,
        NVL (
           SUM (
              CASE
-                WHEN ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+                WHEN SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
                 THEN
                    SLS.TOTAL_LINES
                 ELSE
@@ -267,8 +272,9 @@ SELECT REGION,
        /* MATRIX */
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MATRIX', 'MATRIX_BID', 'NDP')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MATRIX', 'MATRIX_BID', 'NDP')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -277,8 +283,9 @@ SELECT REGION,
           LY_MATRIX_SALES,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MATRIX', 'MATRIX_BID', 'NDP')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MATRIX', 'MATRIX_BID', 'NDP')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -287,8 +294,9 @@ SELECT REGION,
           LY_MATRIX_COGS,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MATRIX', 'MATRIX_BID', 'NDP')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MATRIX', 'MATRIX_BID', 'NDP')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -298,8 +306,8 @@ SELECT REGION,
        /* CONTRACT */
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL = 'OVERRIDE'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'OVERRIDE'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -308,8 +316,8 @@ SELECT REGION,
           LY_OVERRIDE_SALES,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL = 'OVERRIDE'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'OVERRIDE'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -318,8 +326,8 @@ SELECT REGION,
           LY_OVERRIDE_COGS,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('OVERRIDE')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN ('OVERRIDE')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -329,8 +337,9 @@ SELECT REGION,
        /* MANUAL */
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MANUAL', 'QUOTE', 'TOOLS')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MANUAL', 'QUOTE', 'TOOLS')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -339,8 +348,9 @@ SELECT REGION,
           LY_MANUAL_SALES,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MANUAL', 'QUOTE', 'TOOLS')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MANUAL', 'QUOTE', 'TOOLS')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -349,8 +359,9 @@ SELECT REGION,
           LY_MANUAL_COGS,
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL IN ('MANUAL', 'QUOTE', 'TOOLS')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN
+                         ('MANUAL', 'QUOTE', 'TOOLS')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -360,8 +371,8 @@ SELECT REGION,
        /* SPECIALS */
        SUM (
           CASE
-             WHEN     PRICE_CATEGORY_FINAL = 'SPECIALS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'SPECIALS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -370,8 +381,8 @@ SELECT REGION,
           LY_SP_SALES,
        SUM (
           CASE
-             WHEN    PRICE_CATEGORY_FINAL = 'SPECIALS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'SPECIALS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -380,8 +391,8 @@ SELECT REGION,
           LY_SP_COGS,
        SUM (
           CASE
-             WHEN    PRICE_CATEGORY_FINAL IN ('SPECIALS')
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL IN ('SPECIALS')
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -391,8 +402,8 @@ SELECT REGION,
        /* CREDITS */
        SUM (
           CASE
-             WHEN    PRICE_CATEGORY_FINAL = 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -401,8 +412,8 @@ SELECT REGION,
           LY_CREDITS_SALES,
        SUM (
           CASE
-             WHEN    PRICE_CATEGORY_FINAL = 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -411,8 +422,8 @@ SELECT REGION,
           LY_CREDITS_COGS,
        SUM (
           CASE
-             WHEN    PRICE_CATEGORY_FINAL = 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL = 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -422,8 +433,8 @@ SELECT REGION,
        /* OUTBOUND */
        SUM (
           CASE
-             WHEN    PRICE_CATEGORY_FINAL <> 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL <> 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -432,8 +443,8 @@ SELECT REGION,
           LY_OUTBOUND_SALES,
        SUM (
           CASE
-             WHEN    PRICE_CATEGORY_FINAL <> 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL <> 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -442,8 +453,8 @@ SELECT REGION,
           LY_OUTBOUND_COGS,
        SUM (
           CASE
-             WHEN    PRICE_CATEGORY_FINAL <> 'CREDITS'
-                  AND ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
+             WHEN     SLS.PRICE_CATEGORY_FINAL <> 'CREDITS'
+                  AND SLS.ROLL12MONTHS IN 'LAST TWELVE MONTHS LAST YEAR'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -459,7 +470,7 @@ FROM (SELECT TPD.ROLL12MONTHS,
              IHF.WRITER,
              --IHF.WAREHOUSE_NUMBER WHSE,
              -- NVL(BG.BUSINESS_GROUP,'OTHER') CUST_BUS_GRP,
-             -- CHAN.ORDER_CHANNEL,
+             CHAN.ORDER_CHANNEL,
              -- NVL (PROD.DISCOUNT_GROUP_NK, 'SP-') DISC_GRP,
              -- CUST.SALESMAN_CODE REP_INIT,
              -- NVL(REPS.SALESREP_NAME, 'UNKNOWN') SALESREP_NAME,
@@ -471,9 +482,9 @@ FROM (SELECT TPD.ROLL12MONTHS,
                      AND HIST.ORIG_PRICE_CODE IS NOT NULL
                 THEN
                    CASE
-                      WHEN REGEXP_LIKE (HIST.orig_price_code,
-                                        '[0-9]?[0-9]?[0-9]')
-                                        AND LENGTH (HIST.PRICE_FORMULA) = 7 
+                      WHEN     REGEXP_LIKE (HIST.orig_price_code,
+                                            '[0-9]?[0-9]?[0-9]')
+                           AND LENGTH (HIST.PRICE_FORMULA) = 7
                       THEN
                          'MATRIX'
                       WHEN HIST.orig_price_code IN ('FC', 'PM', 'spec')
@@ -549,25 +560,26 @@ FROM (SELECT TPD.ROLL12MONTHS,
            -- USE FOR ROLL12MONTH AND FYTD GROUPINGS
            INNER JOIN SALES_MART.TIME_PERIOD_DIMENSION TPD
               ON HIST.YEARMONTH = TPD.YEARMONTH
-      -- USE FOR CUSTOMER BUS GRP SALESREP REPORTING
-      /*   INNER JOIN DW_FEI.CUSTOMER_DIMENSION CUST
-            ON IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
-           LEFT OUTER JOIN USER_SHARED.BG_CUSTTYPE_XREF BG
-            ON CUST.CUSTOMER_TYPE = BG.CUSTOMER_TYPE
-           LEFT OUTER JOIN PRICE_MGMT.CURRENT_SALESREP REPS
-            ON CUST.ACCCOUNT_NAME = REPS.ACCOUNT_NAME
-              AND CUST.SALESMAN_CODE = REPS.SALESREP_NK
-            */
-      -- USE FOR CHANNEL TYPE ANALYSIS
-      /*   INNER JOIN SALES_MART.INVOICE_CHANNEL_DIMENSION CHAN
-            ON IHF.INVOICE_NUMBER_GK = CHAN.INVOICE_NUMBER_GK */
+           -- USE FOR CUSTOMER BUS GRP SALESREP REPORTING
+           /*   INNER JOIN DW_FEI.CUSTOMER_DIMENSION CUST
+                 ON IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
+                LEFT OUTER JOIN USER_SHARED.BG_CUSTTYPE_XREF BG
+                 ON CUST.CUSTOMER_TYPE = BG.CUSTOMER_TYPE
+                LEFT OUTER JOIN PRICE_MGMT.CURRENT_SALESREP REPS
+                 ON CUST.ACCCOUNT_NAME = REPS.ACCOUNT_NAME
+                   AND CUST.SALESMAN_CODE = REPS.SALESREP_NK
+                 */
+           -- USE FOR CHANNEL TYPE ANALYSIS
+           INNER JOIN SALES_MART.INVOICE_CHANNEL_DIMENSION CHAN
+              ON IHF.INVOICE_NUMBER_GK = CHAN.INVOICE_NUMBER_GK
       -- USE FOR PRODUCT AND DISCOUNT GROUP
-        -- INNER JOIN DW_FEI.PRODUCT_DIMENSION PROD
-        --    ON HIST.PRODUCT_GK = PROD.PRODUCT_GK 
+      -- INNER JOIN DW_FEI.PRODUCT_DIMENSION PROD
+      --    ON HIST.PRODUCT_GK = PROD.PRODUCT_GK
       WHERE     TPD.ROLL12MONTHS IS NOT NULL
-      AND SWD.ACCOUNT_NAME = 'LYNN'
-         --   AND SUBSTR (SWD.DIVISION_NAME, 0, 4) IN ('NORT', 'SOUT')
-         --   AND ILF.PRODUCT_NK IN ('3916528', '7345096', '1203376', '1394851', '1899154', '392227', '4087354', '1395295', '4845558', '7606039', '7218785', '7233816', '4421856', '7608980', '3866980', '3755523', '4811170', '4427169', '7574543', '7062812', '7523517', '6206447', '7190521', '7559530', '3910383', '4828363', '5084195', '2437460', '4570551', '7316654', '4937194', '1855808', '7586061', '4570580', '4570558', '7505772', '4915154', '4160134', '2484038', '7043680', '1260111', '1898659', '3809995', '5164422', '4806721', '7628684', '5082066', '7601488', '4272910', '7238821', '7586081', '7252602', '7607120', '7588514', '7545448', '7546030', '7171559', '7541200', '7541208', '7541265', '7115636', '7638645', '4592952')
+            AND SWD.ACCOUNT_NAME = 'OHVAL'
+            AND IHF.YEARMONTH = '201810'
+            --   AND SUBSTR (SWD.DIVISION_NAME, 0, 4) IN ('NORT', 'SOUT')
+            --   AND ILF.PRODUCT_NK IN ('3916528', '7345096', '1203376', '1394851', '1899154', '392227', '4087354', '1395295', '4845558', '7606039', '7218785', '7233816', '4421856', '7608980', '3866980', '3755523', '4811170', '4427169', '7574543', '7062812', '7523517', '6206447', '7190521', '7559530', '3910383', '4828363', '5084195', '2437460', '4570551', '7316654', '4937194', '1855808', '7586061', '4570580', '4570558', '7505772', '4915154', '4160134', '2484038', '7043680', '1260111', '1898659', '3809995', '5164422', '4806721', '7628684', '5082066', '7601488', '4272910', '7238821', '7586081', '7252602', '7607120', '7588514', '7545448', '7546030', '7171559', '7541200', '7541208', '7541265', '7115636', '7638645', '4592952')
       GROUP BY TPD.ROLL12MONTHS,
                SWD.REGION_NAME,
                SWD.DIVISION_NAME,
@@ -575,7 +587,7 @@ FROM (SELECT TPD.ROLL12MONTHS,
                IHF.WRITER,
                --IHF.WAREHOUSE_NUMBER,
                -- NVL(BG.BUSINESS_GROUP,'OTHER'),
-               -- CHAN.ORDER_CHANNEL,
+               CHAN.ORDER_CHANNEL,
                -- NVL (PROD.DISCOUNT_GROUP_NK, 'SP-'),
                -- CUST.SALESMAN_CODE,
                -- NVL(REPS.SALESREP_NAME, 'UNKNOWN'),
@@ -587,9 +599,9 @@ FROM (SELECT TPD.ROLL12MONTHS,
                        AND HIST.ORIG_PRICE_CODE IS NOT NULL
                   THEN
                      CASE
-                        WHEN REGEXP_LIKE (HIST.orig_price_code,
-                                          '[0-9]?[0-9]?[0-9]')
-                                          AND LENGTH (HIST.PRICE_FORMULA) = 7 
+                        WHEN     REGEXP_LIKE (HIST.orig_price_code,
+                                              '[0-9]?[0-9]?[0-9]')
+                             AND LENGTH (HIST.PRICE_FORMULA) = 7
                         THEN
                            'MATRIX'
                         WHEN HIST.orig_price_code IN ('FC', 'PM', 'spec')
@@ -647,10 +659,13 @@ FROM (SELECT TPD.ROLL12MONTHS,
                                HIST.PRICE_CATEGORY_OVR_GR,
                                HIST.PRICE_CATEGORY)
                END) SLS
-GROUP BY REGION, DISTRICT, ACCOUNT_NAME,
--- WHSE,
--- CUST_BUS_GRP,
--- ORDER_CHANNEL,
- WRITER
--- REP_INIT,
--- SALESREP_NAME
+GROUP BY REGION,
+         SLS.DISTRICT,
+         SLS.ACCOUNT_NAME,
+         -- SLS.WHSE,
+         -- SLS.CUST_BUS_GRP,
+         SLS.ORDER_CHANNEL,
+         SLS.WRITER
+-- SLS.REP_INIT,
+-- SLS.SALESREP_NAME
+;
