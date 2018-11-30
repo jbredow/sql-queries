@@ -1,3 +1,5 @@
+/* used to build out months for pr_price_cat_hist table*/
+
 TRUNCATE TABLE AAA6863.PR_VICT2_CUST_201810;
 DROP TABLE AAA6863.PR_VICT2_CUST_201810;
 
@@ -5,13 +7,14 @@ CREATE TABLE AAA6863.PR_VICT2_CUST_201810 NOLOGGING
 
 AS
    SELECT DISTINCT
-          sp_dtl.YEARMONTH,
-          sp_dtl.ACCOUNT_NUMBER,
+       sp_dtl.YEARMONTH,
+       sp_dtl.EOM_YEARMONTH,
+          /*sp_dtl.ACCOUNT_NUMBER,
           sp_dtl.ACCOUNT_NAME,
           sp_dtl.WAREHOUSE_NUMBER,
-          sp_dtl.INVOICE_NUMBER_NK,
-          sp_dtl.INVOICE_NUMBER_GK,
-          sp_dtl.TYPE_OF_SALE,
+          sp_dtl.INVOICE_NUMBER_NK,*/
+       sp_dtl.INVOICE_NUMBER_GK,
+          /*sp_dtl.TYPE_OF_SALE,
           sp_dtl.SHIP_VIA_NAME,
           sp_dtl.OML_ASSOC_INI,
           sp_dtl.OML_FL_INI,
@@ -21,42 +24,42 @@ AS
           sp_dtl.ASSOC_NAME,
           sp_dtl.DISCOUNT_GROUP_NK,
           sp_Dtl.DISCOUNT_GROUP_NAME,
-          sp_Dtl.CHANNEL_TYPE,
-          sp_dtl.INVOICE_LINE_NUMBER,
-          sp_dtl.MANUFACTURER,
-          sp_dtl.PRODUCT_GK,
-          sp_dtl.SPECIAL_PRODUCT_GK,
-          sp_dtl.PRODUCT_NK,
+          sp_Dtl.CHANNEL_TYPE,*/
+       sp_dtl.INVOICE_LINE_NUMBER,
+          --sp_dtl.MANUFACTURER,
+       sp_dtl.PRODUCT_GK,
+       sp_dtl.SPECIAL_PRODUCT_GK,
+          /*sp_dtl.PRODUCT_NK,
           sp_dtl.ALT1_CODE,
           sp_dtl.PRODUCT_NAME,
-          sp_dtl.INVOICE_LINES,
-          sp_dtl.PROCESS_DATE,
-          sp_dtl.STATUS,
-          sp_dtl.SHIPPED_QTY,
-          sp_dtl.EXT_SALES_AMOUNT,
-          sp_dtl.EXT_ACTUAL_COGS_AMOUNT,
-          sp_dtl.CORE_ADJ_AVG_COST,
-          sp_dtl.EXT_AVG_COGS_AMOUNT,
-          sp_dtl.ORDER_CHANNEL,
+          sp_dtl.INVOICE_LINES,*/
+       sp_dtl.PROCESS_DATE,
+          --sp_dtl.STATUS,
+          --sp_dtl.SHIPPED_QTY,
+       sp_dtl.EXT_SALES_AMOUNT,
+       sp_dtl.EXT_ACTUAL_COGS_AMOUNT,
+       sp_dtl.CORE_ADJ_AVG_COST,
+       sp_dtl.EXT_AVG_COGS_AMOUNT,
+          /*sp_dtl.ORDER_CHANNEL,
           sp_dtl.DELIVERY_CHANNEL,
           sp_dtl.REPLACEMENT_COST,
-          sp_dtl.UNIT_INV_COST,
-          sp_dtl.INSERT_TIMESTAMP,
-          sp_dtl.PRICE_CODE,
-          sp_dtl.PRICE_CATEGORY_OVR_PR,
-          sp_dtl.PRICE_CATEGORY_OVR_GR,
-          COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
+          sp_dtl.UNIT_INV_COST,*/
+       sp_dtl.INSERT_TIMESTAMP,
+       sp_dtl.PRICE_CODE,
+       sp_dtl.PRICE_CATEGORY_OVR_PR,
+       sp_dtl.PRICE_CATEGORY_OVR_GR,
+       COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
                     sp_dtl.PRICE_CATEGORY_OVR_GR,
                     sp_dtl.PRICE_CATEGORY)
              PRICE_CATEGORY,
-          sp_dtl.ORIG_PRICE_CODE,
+       sp_dtl.ORIG_PRICE_CODE,
           COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR_JOB,
                     sp_dtl.ORIG_PRICE_CATEGORY)
              ORIG_PRICE_CATEGORY,
-          sp_dtl.GR_OVR,
-          sp_dtl.PR_OVR,
-          sp_dtl.PRICE_FORMULA,
-          sp_dtl.UNIT_NET_PRICE_AMOUNT,
+          --sp_dtl.GR_OVR,
+          --sp_dtl.PR_OVR,
+       sp_dtl.PRICE_FORMULA     --,
+          /*sp_dtl.UNIT_NET_PRICE_AMOUNT,
           sp_dtl.UM,
           sp_dtl.SELL_MULT,
           sp_dtl.PACK_QTY,
@@ -94,7 +97,7 @@ AS
           sp_dtl.ORDER_ENTRY_DATE,
           sp_dtl.COPY_SOURCE_HIST,
           sp_dtl.CONTRACT_DESCRIPTION,
-          sp_dtl.CONTRACT_NUMBER
+          sp_dtl.CONTRACT_NUMBER*/
      FROM (SELECT SP_HIST.*, --process date changed to include invoice processing date
                   --price category change to include rounding and NDP
                   CASE
@@ -288,6 +291,7 @@ AS
                   MV.MASTER_VENDOR_NAME
              FROM (SELECT IHF.ACCOUNT_NUMBER,
                           IHF.YEARMONTH,
+                          IHF.EOM_YEARMONTH,
                           CUST.ACCOUNT_NAME,
                           IHF.WAREHOUSE_NUMBER,
                           IHF.INVOICE_NUMBER_NK,
@@ -736,7 +740,7 @@ AS
                           DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD,
                           SALES_MART.SALES_WAREHOUSE_DIM SWD,
                           SALES_MART.INVOICE_CHANNEL_DIMENSION ICD
-                    --DW_FEI.INVOICE_LINE_CORE_FACT ILCF
+                          --DW_FEI.INVOICE_LINE_CORE_FACT ILCF
                     WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
                           AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
                           AND SWD.WAREHOUSE_NUMBER_NK = IHF.WAREHOUSE_NUMBER
@@ -928,8 +932,8 @@ AS
                           AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                           AND COD.DELETE_DATE IS NULL
                           AND CUST.JOB_YN = 'N'
-                          AND NVL (COD.EXPIRE_DATE, SYSDATE) >=
-                                 (SYSDATE - 62)) PR_OVR_BASE
+                          AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62)) PR_OVR_BASE
+                                 
                      ON (    SP_HIST.PRODUCT_NK = PR_OVR_BASE.MASTER_PRODUCT
                          AND SP_HIST.ACCOUNT_NUMBER =
                                 PR_OVR_BASE.BRANCH_NUMBER_NK
