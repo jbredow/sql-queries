@@ -1,0 +1,45 @@
+/*
+      specials report - new source
+*/
+
+SELECT V2.ACCOUNT_NAME,
+       V2.ACCOUNT_NUMBER,
+       V2.WRITER,
+       V2.OML_ASSOC_NAME,
+       V2.WAREHOUSE_NUMBER,
+       V2.INVOICE_NUMBER_NK,
+       V2.ALT1_CODE,
+       V2.PRODUCT_NAME,
+       V2.STATUS,
+       V2.UM,
+       V2.DISCOUNT_GROUP_NK,
+       V2.DISCOUNT_GROUP_NAME,
+       V2.SHIPPED_QTY AS SUM_SHIPPED_QTY,
+       V2.EXT_SALES_AMOUNT AS SUM_EXT_SALES_AMOUNT,
+       V2.CORE_ADJ_AVG_COST AS SUM_CORE_ADJ_AVG_COST,
+       V2.TYPE_OF_SALE,
+       V2.ORDER_CODE,
+       V2.CUSTOMER_NK,
+       V2.CUSTOMER_NAME,
+       V2.PRICE_FORMULA,
+       V2.PRICE_CODE,
+       KOB.CATEGORY,
+       V2.CUSTOMER_TYPE
+FROM (PRICE_MGMT.PR_VICT2_CUST_R2MO V2
+      INNER JOIN SALES_MART.SALES_WAREHOUSE_DIM SWD
+         ON (V2.WAREHOUSE_NUMBER = SWD.WAREHOUSE_NUMBER_NK))
+     INNER JOIN AAM1365.DG_BY_KOB KOB ON (V2.DISCOUNT_GROUP_NK = KOB.DG_NK)
+WHERE     (V2.STATUS IN ('SP', 'SP-'))
+      AND (V2.EXT_SALES_AMOUNT > 0)
+      AND ( SUBSTR ( SWD.DIVISION_NAME, 1, 4 ) IN ( 
+			 	    'EAST', 'NORT', 'SOUT', 'WEST'
+  				 ) )
+
+--      AND ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN (
+--                'D01', 'D02', 'D03', 'D04', 'D05', 
+--                'D10', 'D11', 'D12', 'D13',
+--                'D14', 'D30', 'D31', 'D32',
+--                'D41', 'D50', 'D51', 'D53'
+--              	)
+--        			)
+ORDER BY V2.ACCOUNT_NUMBER ASC, V2.DISCOUNT_GROUP_NK ASC, V2.ALT1_CODE ASC;
