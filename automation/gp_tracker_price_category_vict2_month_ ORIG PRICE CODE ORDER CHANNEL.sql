@@ -753,7 +753,7 @@ AS
                      AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
                      AND ILF.SPECIAL_PRODUCT_GK =
                          SP_PROD.SPECIAL_PRODUCT_GK(+)
-                     AND IHF.IC_FLAG = 0
+                     AND NVL(IHF.INTERCOMPANY_FLAG,IHF.IC_FLAG) = 0
                      AND ILF.SHIPPED_QTY <> 0
                      --AND IHF.ORDER_CODE NOT IN 'IC'
                      --Excludes shipments to other FEI locations.

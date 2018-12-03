@@ -1,0 +1,34 @@
+INSERT INTO PRICE_MGMT.BACKUP_PM 
+
+SELECT SWD.DIVISION_NAME AS REGION,
+       SWD.REGION_NAME AS DISTRICT,
+       SWD.ACCOUNT_NAME,
+       PR.BRANCH_NUMBER_NK,
+       PR.PRICE_ID,
+       PR.PRICE_COLUMN,
+       PR.PRICE_TYPE,
+       PR.DISC_GROUP DISC_GRP,
+       PR.MASTER_PRODUCT_NK,
+       --PROD.ALT1_CODE, -- NEW
+       PR.PRODUCT_TEMPLATE,
+       PR.BASIS,
+       PR.OPERATOR_USED,
+       PR.MULTIPLIER,
+       PR.LAST_UPDATE,
+       TO_CHAR(SYSDATE,'YYYYMM') YEARMONTH,
+       TRUNC(SYSDATE) BACKUP_DATE,
+       PR.INSERT_TIMESTAMP DW_INSERT -- NEW
+FROM DW_FEI.PRICE_DIMENSION PR
+     INNER JOIN EBUSINESS.SALES_DIVISIONS SWD
+        ON (PR.BRANCH_NUMBER_NK = SWD.ACCOUNT_NUMBER_NK)
+     --LEFT OUTER JOIN DW_FEI.PRODUCT_DIMENSION PROD
+        --ON (PR.MASTER_PRODUCT_NK = PROD.PRODUCT_NK)
+WHERE     PR.BRANCH_NUMBER_NK NOT IN ('39', '5400')
+      AND PR.PRICE_COLUMN NOT IN ('180',
+                                  '181',
+                                  '182',
+                                  '183',
+                                  '184',
+                                  '185',
+                                  '186')
+      AND PR.DELETE_DATE IS NULL
