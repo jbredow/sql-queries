@@ -14,7 +14,7 @@ AS
           LINE_HIST.TYPE_OF_SALE,
           --LINE_HIST.PRICE_CODE,
           SUM (LINE_HIST.INVOICE_LINES) invoice_lines,
-          SUM (LINE_HIST.CORE_ADJ_AVG_COST) avg_cogs,
+          SUM (LINE_HIST.CORE_ADJ_AVG_COST) core_avg_cogs,
           SUM (LINE_HIST.EXT_ACTUAL_COGS_AMOUNT) actual_cogs,
           SUM (LINE_HIST.EXT_SALES_AMOUNT) ext_sales,
           LINE_HIST.PRICE_CATEGORY,

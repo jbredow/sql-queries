@@ -35,7 +35,7 @@ AS
            --TO_CHAR((0) PRICE_CODE) PRICE_CODE,
            (0) INVOICE_LINES,
            SUM (NVL (IHF.CORE_ADJ_AVG_COST, '0'))
-              AVG_COGS,
+              CORE_AVG_COGS,
            SUM (NVL (IHF.COST_SUBTOTAL_AMOUNT, '0'))
               ACTUAL_COGS,
            SUM (IHF.SALES_SUBTOTAL_AMOUNT)

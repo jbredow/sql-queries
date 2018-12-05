@@ -32,7 +32,7 @@ SELECT DISTINCT
        sp_dtl.SHIPPED_QTY,
        sp_dtl.EXT_SALES_AMOUNT,
        sp_dtl.EXT_AVG_COGS_AMOUNT,
-       sp_dtl.CORE_ADJ_AVG_COST,
+       sp_dtl.CORE_ADJ_AVG_COST, 
        sp_dtl.REPLACEMENT_COST,
        sp_dtl.UNIT_INV_COST,
        sp_dtl.PRICE_CODE,

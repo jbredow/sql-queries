@@ -9,7 +9,7 @@ SELECT SWD.DIVISION_NAME,
        --VICT2.ORIG_PRICE_CATEGORY,
        --VICT2.CUSTOMER_TYPE,
        SUM (VICT2.EXT_SALES) EXT_SALES,
-       SUM (VICT2.EXT_AVG_COGS) EX_AVG_COGS,
+       SUM (VICT2.CORE_ADJ_AVG_COGS) EX_AVG_COGS,
        SUM (VICT2.CORE_ADJ_AVG_COGS) CORE_COGS,
        SUM (VICT2.LINES),
        SUM (
@@ -25,7 +25,7 @@ SELECT SWD.DIVISION_NAME,
           CASE
              WHEN VICT2.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID')
              THEN
-                VICT2.EXT_AVG_COGS
+                VICT2.CORE_ADJ_AVG_COGS
              ELSE
                 0
           END)
@@ -51,7 +51,7 @@ SELECT SWD.DIVISION_NAME,
           CASE
              WHEN VICT2.PRICE_CATEGORY IN ('OVERRIDE')
              THEN
-                VICT2.EXT_AVG_COGS
+                VICT2.CORE_ADJ_AVG_COGS
              ELSE
                 0
           END)
@@ -79,7 +79,7 @@ SELECT SWD.DIVISION_NAME,
           CASE
              WHEN VICT2.PRICE_CATEGORY IN ('MANUAL', 'QUOTE', 'TOOLS')
              THEN
-                VICT2.EXT_AVG_COGS
+                VICT2.CORE_ADJ_AVG_COGS
              ELSE
                 0
           END)
@@ -95,7 +95,6 @@ SELECT SWD.DIVISION_NAME,
           MANUAL_LINES,
        
        
-       
        SUM (
           CASE
              WHEN VICT2.PRICE_CATEGORY IN ('SPECIALS') THEN VICT2.EXT_SALES
@@ -104,7 +103,7 @@ SELECT SWD.DIVISION_NAME,
           SPECIALS_SALES,
        SUM (
           CASE
-             WHEN VICT2.PRICE_CATEGORY IN ('SPECIALS') THEN VICT2.EXT_AVG_COGS
+             WHEN VICT2.PRICE_CATEGORY IN ('SPECIALS') THEN VICT2.CORE_ADJ_AVG_COGS
              ELSE 0
           END)
           SPECIALS_AVG_COGS,
@@ -116,7 +115,6 @@ SELECT SWD.DIVISION_NAME,
           SPECIALS_LINES,
        
        
-       
        SUM (
           CASE
              WHEN VICT2.PRICE_CATEGORY IN ('CREDITS') THEN VICT2.EXT_SALES
@@ -125,7 +123,7 @@ SELECT SWD.DIVISION_NAME,
           CREDITS_SALES,
        SUM (
           CASE
-             WHEN VICT2.PRICE_CATEGORY IN ('CREDITS') THEN VICT2.EXT_AVG_COGS
+             WHEN VICT2.PRICE_CATEGORY IN ('CREDITS') THEN VICT2.CORE_ADJ_AVG_COGS
              ELSE 0
           END)
           CREDITS_AVG_COGS,
@@ -137,7 +135,6 @@ SELECT SWD.DIVISION_NAME,
           CREDITS_LINES,
        
        
-       
        SUM (
           CASE
              WHEN VICT2.PRICE_CATEGORY <> 'CREDITS' THEN VICT2.EXT_SALES
@@ -146,7 +143,7 @@ SELECT SWD.DIVISION_NAME,
           OUTBOUND_SALES,
        SUM (
           CASE
-             WHEN VICT2.PRICE_CATEGORY <> 'CREDITS' THEN VICT2.EXT_AVG_COGS
+             WHEN VICT2.PRICE_CATEGORY <> 'CREDITS' THEN VICT2.CORE_ADJ_AVG_COGS
              ELSE 0
           END)
           OUTBOUND_COGS,

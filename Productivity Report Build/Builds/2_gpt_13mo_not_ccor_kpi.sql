@@ -33,7 +33,7 @@ AS
               TYPE_OF_SALE,
            SUM (CASE WHEN ilf.SHIPPED_QTY > 0 THEN 1 ELSE 0 END)
               invoice_lines,
-           SUM (ILF.CORE_ADJ_AVG_COST) avg_cogs,
+           SUM (ILF.CORE_ADJ_AVG_COST) core_avg_cogs,
            SUM (ilf.EXT_ACTUAL_COGS_AMOUNT) actual_cogs,
            SUM (ilf.EXT_SALES_AMOUNT) ext_sales,
            CASE

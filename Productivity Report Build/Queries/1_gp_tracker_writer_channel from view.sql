@@ -11,7 +11,7 @@ SELECT "YEARMONTH",
        "WRITER_INIT",
        "GPTRACK_KEY",
        "Total Sales",
-       "Total Cost",
+       "Total Cost" "CORE Adj COGS",
        "Total GP$",
        ROUND (
           (CASE
@@ -24,7 +24,7 @@ SELECT "YEARMONTH",
        "Total Invoice Count",
        "Outbound Sales",
        "Price Matrix Sales",
-       "Price Matrix Cost",
+       "Price Matrix Cost" "PM CORE Adj Cost",
        "Price Matrix GP$",
        ROUND (
           (CASE
@@ -66,7 +66,7 @@ SELECT "YEARMONTH",
        "Price Matrix # Lines",
        "Price Matrix Invoice Cnt",
        "Contract Sales",
-       "Contract Cost",
+       "Contract Cost" "CCOR CORE Adj Cost",
        "Contract GP$",
        ROUND (
           (CASE
@@ -108,7 +108,7 @@ SELECT "YEARMONTH",
        "Contract # Lines",
        "Contract Invoice Cnt",
        "Manual Sales",
-       "Manual Cost",
+       "Manual Cost"  "Man CORE Adj Cost",
        "Manual GP$",
        ROUND (
           (CASE
@@ -147,7 +147,7 @@ SELECT "YEARMONTH",
        "Manual # Lines",
        "Manual Invoice Cnt",
        "Other Sales",
-       "Other Cost",
+       "Other Cost"  "SP- CORE Adj Cost",
        "Other GP$",
        ROUND (
           (CASE

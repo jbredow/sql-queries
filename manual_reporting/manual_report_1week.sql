@@ -1,8 +1,8 @@
 /* 
 	use for weekly manual reports #toolbox
-	AAE0376 - Jenn
-	AAD9606 - Leigh
-	AAA6863 - Joe
+   updated w/  CORE_ADJ_AVG_COST
+      added    MAN.PRICE_CATEGORY_OVR_PR,
+               MAN.PRICE_CATEGORY_OVR_GR
  */
 
 SELECT MAN.ACCOUNT_NAME,
@@ -51,6 +51,7 @@ SELECT MAN.ACCOUNT_NAME,
        MAN.PRICE_FORMULA "FORM",
        MAN.PRICE_CODE "PRCD",
        --MAN.PRICE_CATEGORY_OVR "PR CAT OVERRIDE",
+
        MAN.TYPE_OF_SALE "SALE TYPE",
        MAN.REF_BID_NUMBER "BID #",
        MAN.SOURCE_SYSTEM "SOURCE",
@@ -63,9 +64,11 @@ SELECT MAN.ACCOUNT_NAME,
        MAN.INVOICE_DATE,
        MAN.SALESREP_NK SLSM,
        MAN.SALESREP_NAME "REP. NAME",
-			 MAN.CUSTOMER_TYPE,
-			 BG_CT.BUSINESS_GROUP,
-			 BG_CT.CUSTOMER_GROUP
+       MAN.CUSTOMER_TYPE,
+       BG_CT.BUSINESS_GROUP,
+       BG_CT.CUSTOMER_GROUP,
+       MAN.PR_OVR,
+       MAN.GR_OVR
   FROM AAA6863.PR_VICT2_MANUAL_1WK MAN
        INNER JOIN SALES_MART.SALES_WAREHOUSE_DIM SWD
           ON MAN.WAREHOUSE_NUMBER = SWD.WAREHOUSE_NUMBER_NK
@@ -81,7 +84,7 @@ SELECT MAN.ACCOUNT_NAME,
                                              'MANUAL',
                                              'QUOTE',
                                              'OTH/ERROR')
-       --AND MAN.ACCOUNT_NUMBER IN ('480', '190', '61', '1550')
+       AND MAN.ACCOUNT_NUMBER = '2000'  --IN ('480', '190', '61', '1550')
        AND LENGTH (MAN.PRICE_FORMULA) <> 7
        AND MAN.PRICE_CODE <> 'C'
        AND UPPER (MAN.PRICE_FORMULA) <> 'SPEC'
@@ -96,7 +99,11 @@ SELECT MAN.ACCOUNT_NAME,
 																				 '9009',
 																				 '2920',
 																				 '2934')
-
+       AND (MAN.ACCOUNT_NAME NOT LIKE ('INT%'))
+       AND (MAN.ACCOUNT_NAME NOT IN ('TRINIDAD',
+                                        'BARBADOS',
+                                        'PANAMA',
+                                        'CARIBBEAN'))
        /*AND (MAN.WAREHOUSE_NUMBER = '5350' 
 			 			OR (SUBSTR (SWD.REGION_NAME, 1, 3) IN ('D10',
 																								   'D11',

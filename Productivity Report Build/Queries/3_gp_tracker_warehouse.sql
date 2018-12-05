@@ -82,14 +82,14 @@ SELECT
 	SUM (
 		CASE
 			WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
-			THEN (GP_DATA.AVG_COGS)
+			THEN (GP_DATA.core_avg_cogs)
 			ELSE 0
 		END)
 			"Price Matrix Cost",
 	SUM (
 		CASE
 			WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
-			THEN(GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+			THEN(GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 			ELSE 0
 		END)
 			"Price Matrix GP$",
@@ -97,7 +97,7 @@ SELECT
 		SUM (
 			CASE
 				WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
-				THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+				THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 				ELSE 0
 			END)
 		/ SUM (
@@ -147,7 +147,7 @@ SELECT
 		SUM (
 			CASE
 				WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
-				THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+				THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 				ELSE 0
 			END)
 		/ SUM (
@@ -155,8 +155,8 @@ SELECT
 				WHEN GP_DATA.ROLLUP = 'Total'
 				THEN
 					CASE
-						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) > 0
-						THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+						WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) > 0
+						THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 						ELSE 1
 					END
 				ELSE 1
@@ -180,14 +180,14 @@ SELECT
 	SUM (
 		CASE
 			WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-			THEN (GP_DATA.AVG_COGS)
+			THEN (GP_DATA.core_avg_cogs)
 			ELSE 0
 		END)
 			"Contract Cost",
 	SUM (
 		CASE
 			WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-			THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+			THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 			ELSE 0
 		END)
 			"Contract GP$",
@@ -195,7 +195,7 @@ SELECT
 		SUM (
 			CASE
 				WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-				THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+				THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 				ELSE 0
 			END)
 		/ SUM (
@@ -244,7 +244,7 @@ SELECT
 		SUM (
 			CASE
 				WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
-				THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+				THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 				ELSE 0
 			END)
 		/ SUM (
@@ -252,8 +252,8 @@ SELECT
 				WHEN GP_DATA.ROLLUP = 'Total'
 				THEN
 					CASE
-						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) > 0
-						THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+						WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) > 0
+						THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 						ELSE 1
 					END
 				ELSE 1
@@ -277,14 +277,14 @@ SELECT
 	SUM (
 		CASE
 			WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
-			THEN (GP_DATA.AVG_COGS)
+			THEN (GP_DATA.core_avg_cogs)
 			ELSE 0
 		END)
 			"Manual Cost",
 	SUM (
 		CASE
 			WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
-			THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+			THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 			ELSE 0
 		END)
 			"Manual GP$",
@@ -292,7 +292,7 @@ SELECT
 		SUM (
 			CASE
 				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
-				THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+				THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 				ELSE 0
 			END)
 		/ SUM (
@@ -342,7 +342,7 @@ SELECT
 		SUM (
 			CASE
 				WHEN GP_DATA.PRICE_CATEGORY IN ('MANUAL', 'TOOLS', 'QUOTE')
-				THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+				THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 				ELSE 0
 			END)
 		/ SUM (
@@ -350,8 +350,8 @@ SELECT
 				WHEN GP_DATA.ROLLUP = 'Total'
 				THEN
 					CASE
-						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) > 0
-						THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+						WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) > 0
+						THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 						ELSE 1
 					END
 				ELSE 1
@@ -393,7 +393,7 @@ SELECT
 				'QUOTE',
 				'MATRIX_BID',
 				'Total')
-			THEN (GP_DATA.AVG_COGS)
+			THEN (GP_DATA.core_avg_cogs)
 			ELSE 0
 		END)
 			"OtherCost",
@@ -409,7 +409,7 @@ SELECT
 				'QUOTE',
 				'MATRIX_BID',
 				'Total')
-			THEN (GP_DATA.EXT_SALES-GP_DATA.AVG_COGS)
+			THEN (GP_DATA.EXT_SALES-GP_DATA.core_avg_cogs)
 			ELSE 0
 		END)
 			"OtherGP$",
@@ -426,7 +426,7 @@ SELECT
 					'QUOTE',
 					'MATRIX_BID',
 					'Total')
-				THEN (GP_DATA.EXT_SALES-GP_DATA.AVG_COGS)
+				THEN (GP_DATA.EXT_SALES-GP_DATA.core_avg_cogs)
 				ELSE 0
 			END)
 		/SUM(
@@ -512,7 +512,7 @@ SELECT
 					 'QUOTE',
 					 'MATRIX_BID',
 					 'Total')
-			THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+			THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 			ELSE 0
 		END)
 		/ SUM (
@@ -520,8 +520,8 @@ SELECT
 				WHEN GP_DATA.ROLLUP = 'Total'
 				THEN
 					CASE
-						WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) > 0
-						THEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+						WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) > 0
+						THEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
 						ELSE 1
 					END
 				ELSE 1

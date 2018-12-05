@@ -134,7 +134,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                        'MATRIX_BID',
                                                        'NDP')
                        THEN
-                          (GP_DATA.AVG_COGS)
+                          (GP_DATA.core_avg_cogs)
                        ELSE
                           0
                     END)
@@ -145,7 +145,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                        'MATRIX_BID',
                                                        'NDP')
                        THEN
-                          (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                          (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                        ELSE
                           0
                     END)
@@ -157,7 +157,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                             'MATRIX_BID',
                                                             'NDP')
                             THEN
-                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                               (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                             ELSE
                                0
                          END)
@@ -228,7 +228,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                             'MATRIX_BID',
                                                             'NDP')
                             THEN
-                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                               (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                             ELSE
                                0
                          END)
@@ -237,10 +237,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                             WHEN GP_DATA.ROLLUP = 'Total'
                             THEN
                                CASE
-                                  WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                  WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                           0
                                   THEN
-                                     (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                     (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                   ELSE
                                      1
                                END
@@ -273,7 +273,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     CASE
                        WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                        THEN
-                          (GP_DATA.AVG_COGS)
+                          (GP_DATA.core_avg_cogs)
                        ELSE
                           0
                     END)
@@ -282,7 +282,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                     CASE
                        WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                        THEN
-                          (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                          (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                        ELSE
                           0
                     END)
@@ -292,7 +292,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                          CASE
                             WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                             THEN
-                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                               (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                             ELSE
                                0
                          END)
@@ -355,7 +355,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                          CASE
                             WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                             THEN
-                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                               (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                             ELSE
                                0
                          END)
@@ -364,10 +364,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                             WHEN GP_DATA.ROLLUP = 'Total'
                             THEN
                                CASE
-                                  WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                  WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                           0
                                   THEN
-                                     (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                     (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                   ELSE
                                      1
                                END
@@ -402,7 +402,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                        'TOOLS',
                                                        'QUOTE')
                        THEN
-                          (GP_DATA.AVG_COGS)
+                          (GP_DATA.core_avg_cogs)
                        ELSE
                           0
                     END)
@@ -413,7 +413,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                        'TOOLS',
                                                        'QUOTE')
                        THEN
-                          (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                          (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                        ELSE
                           0
                     END)
@@ -425,7 +425,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                             'TOOLS',
                                                             'QUOTE')
                             THEN
-                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                               (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                             ELSE
                                0
                          END)
@@ -496,7 +496,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                             'TOOLS',
                                                             'QUOTE')
                             THEN
-                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                               (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                             ELSE
                                0
                          END)
@@ -505,10 +505,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                             WHEN GP_DATA.ROLLUP = 'Total'
                             THEN
                                CASE
-                                  WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                  WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                           0
                                   THEN
-                                     (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                     (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                   ELSE
                                      1
                                END
@@ -555,7 +555,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                              'MATRIX_BID',
                                                              'Total')
                          THEN
-                            (GP_DATA.AVG_COGS)
+                            (GP_DATA.core_avg_cogs)
                          ELSE
                             0
                       END)
@@ -571,7 +571,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                              'MATRIX_BID',
                                                              'Total')
                          THEN
-                            (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                            (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                          ELSE
                             0
                       END)
@@ -589,7 +589,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                                 'MATRIX_BID',
                                                                 'Total')
                             THEN
-                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                               (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                             ELSE
                                0
                          END)
@@ -684,7 +684,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                                 'MATRIX_BID',
                                                                 'Total')
                             THEN
-                               (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                               (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                             ELSE
                                0
                          END)
@@ -693,10 +693,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                             WHEN GP_DATA.ROLLUP = 'Total'
                             THEN
                                CASE
-                                  WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                  WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                           0
                                   THEN
-                                     (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                     (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                   ELSE
                                      1
                                END
@@ -870,7 +870,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                       'MATRIX_BID',
                                                       'NDP')
                       THEN
-                         (GP_DATA.AVG_COGS)
+                         (GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -881,7 +881,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                       'MATRIX_BID',
                                                       'NDP')
                       THEN
-                         (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                         (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -893,7 +893,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                            'MATRIX_BID',
                                                            'NDP')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -964,7 +964,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                            'MATRIX_BID',
                                                            'NDP')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -973,10 +973,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                            WHEN GP_DATA.ROLLUP = 'Total'
                            THEN
                               CASE
-                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                          0
                                  THEN
-                                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                    (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                  ELSE
                                     1
                               END
@@ -1009,7 +1009,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    CASE
                       WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                       THEN
-                         (GP_DATA.AVG_COGS)
+                         (GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -1018,7 +1018,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    CASE
                       WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                       THEN
-                         (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                         (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -1028,7 +1028,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                         CASE
                            WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1091,7 +1091,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                         CASE
                            WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1100,10 +1100,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                            WHEN GP_DATA.ROLLUP = 'Total'
                            THEN
                               CASE
-                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                          0
                                  THEN
-                                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                    (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                  ELSE
                                     1
                               END
@@ -1138,7 +1138,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                       'TOOLS',
                                                       'QUOTE')
                       THEN
-                         (GP_DATA.AVG_COGS)
+                         (GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -1149,7 +1149,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                       'TOOLS',
                                                       'QUOTE')
                       THEN
-                         (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                         (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -1161,7 +1161,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                            'TOOLS',
                                                            'QUOTE')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1232,7 +1232,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                            'TOOLS',
                                                            'QUOTE')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1241,10 +1241,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                            WHEN GP_DATA.ROLLUP = 'Total'
                            THEN
                               CASE
-                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                          0
                                  THEN
-                                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                    (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                  ELSE
                                     1
                               END
@@ -1291,7 +1291,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                             'MATRIX_BID',
                                                             'Total')
                         THEN
-                           (GP_DATA.AVG_COGS)
+                           (GP_DATA.core_avg_cogs)
                         ELSE
                            0
                      END)
@@ -1307,7 +1307,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                             'MATRIX_BID',
                                                             'Total')
                         THEN
-                           (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                         ELSE
                            0
                      END)
@@ -1325,7 +1325,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                                'MATRIX_BID',
                                                                'Total')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1420,7 +1420,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                                'MATRIX_BID',
                                                                'Total')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1429,10 +1429,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                            WHEN GP_DATA.ROLLUP = 'Total'
                            THEN
                               CASE
-                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                          0
                                  THEN
-                                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                    (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                  ELSE
                                     1
                               END
@@ -1618,7 +1618,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                       'MATRIX_BID',
                                                       'NDP')
                       THEN
-                         (GP_DATA.AVG_COGS)
+                         (GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -1629,7 +1629,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                       'MATRIX_BID',
                                                       'NDP')
                       THEN
-                         (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                         (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -1641,7 +1641,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                            'MATRIX_BID',
                                                            'NDP')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1712,7 +1712,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                            'MATRIX_BID',
                                                            'NDP')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1721,10 +1721,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                            WHEN GP_DATA.ROLLUP = 'Total'
                            THEN
                               CASE
-                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                          0
                                  THEN
-                                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                    (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                  ELSE
                                     1
                               END
@@ -1757,7 +1757,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    CASE
                       WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                       THEN
-                         (GP_DATA.AVG_COGS)
+                         (GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -1766,7 +1766,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    CASE
                       WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                       THEN
-                         (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                         (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -1776,7 +1776,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                         CASE
                            WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1839,7 +1839,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                         CASE
                            WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1848,10 +1848,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                            WHEN GP_DATA.ROLLUP = 'Total'
                            THEN
                               CASE
-                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                          0
                                  THEN
-                                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                    (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                  ELSE
                                     1
                               END
@@ -1886,7 +1886,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                       'TOOLS',
                                                       'QUOTE')
                       THEN
-                         (GP_DATA.AVG_COGS)
+                         (GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -1897,7 +1897,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                       'TOOLS',
                                                       'QUOTE')
                       THEN
-                         (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                         (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                       ELSE
                          0
                    END)
@@ -1909,7 +1909,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                            'TOOLS',
                                                            'QUOTE')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1980,7 +1980,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                            'TOOLS',
                                                            'QUOTE')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -1989,10 +1989,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                            WHEN GP_DATA.ROLLUP = 'Total'
                            THEN
                               CASE
-                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                          0
                                  THEN
-                                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                    (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                  ELSE
                                     1
                               END
@@ -2039,7 +2039,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                             'MATRIX_BID',
                                                             'Total')
                         THEN
-                           (GP_DATA.AVG_COGS)
+                           (GP_DATA.core_avg_cogs)
                         ELSE
                            0
                      END)
@@ -2055,7 +2055,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                             'MATRIX_BID',
                                                             'Total')
                         THEN
-                           (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                           (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                         ELSE
                            0
                      END)
@@ -2073,7 +2073,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                                'MATRIX_BID',
                                                                'Total')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -2168,7 +2168,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                                                                'MATRIX_BID',
                                                                'Total')
                            THEN
-                              (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                              (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                            ELSE
                               0
                         END)
@@ -2177,10 +2177,10 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                            WHEN GP_DATA.ROLLUP = 'Total'
                            THEN
                               CASE
-                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS) <>
+                                 WHEN (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs) <>
                                          0
                                  THEN
-                                    (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                                    (GP_DATA.EXT_SALES - GP_DATA.core_avg_cogs)
                                  ELSE
                                     1
                               END
