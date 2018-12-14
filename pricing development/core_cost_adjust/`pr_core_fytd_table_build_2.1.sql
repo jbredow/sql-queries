@@ -131,10 +131,9 @@ AS
          AND IHF.WAREHOUSE_NUMBER = SWD.WAREHOUSE_NUMBER_NK
          AND SWD.DIVISION_NAME IN ('EAST REGION',
                                    'HVAC REGION',
-                                   'NORTH CENTRAL REGION',
-                                   'SOUTH CENTRAL REGION',
-                                   'WEST REGION'                           --,
-                                                --'WATERWORKS REGION'
+                                   'CENTRAL REGION',
+                                   'WEST REGION' --,
+                                                 --'WATERWORKS REGION'
                                                 )
    GROUP BY TPD.FISCAL_YEAR_TO_DATE,
             SWD.DIVISION_NAME,

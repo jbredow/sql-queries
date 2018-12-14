@@ -27,7 +27,42 @@ SELECT TPD.ROLL12MONTHS,
        ON (PM_DET.YEARMONTH = TPD.YEARMONTH)
  WHERE (CUST.DELETE_DATE IS NULL) 
  	AND (TPD.ROLL12MONTHS IS NOT NULL)
-	AND    CUST.CUSTOMER_NK
+    AND CUST.MSTR_CUSTNO IN ( '102007',
+                              '113151',
+                              '126875',
+                              '127781',
+                              '143312',
+                              '158663',
+                              '161534',
+                              '163935',
+                              '168036',
+                              '169158',
+                              '171670',
+                              '173988',
+                              '176817',
+                              '294404',
+                              '423888',
+                              '466563',
+                              '468335',
+                              '470409',
+                              '518089',
+                              '525240',
+                              '568578',
+                              '568580',
+                              '579080',
+                              '587819',
+                              '587820',
+                              '587822',
+                              '587823',
+                              '595069',
+                              '596210',
+                              '596483',
+                              '603140',
+                              '612894',
+                              '621222',
+                              '624075'
+                              )
+	/*AND    CUST.CUSTOMER_NK
         || ' - '
         || CUST.CUSTOMER_NAME IN ( '32153 - ARCHER WESTERN CONTRACTORS LTD',
                                   '204617 - BLOX LLC',
@@ -52,7 +87,7 @@ SELECT TPD.ROLL12MONTHS,
                                    '85395 - TOWN OF OAK ISLAND',
                                    '14439 - WHARTON-SMITH INC',
                                    '37624 - WHARTON-SMITH INC'
-                                  )
+                                  )*/
 GROUP BY CUST.DELETE_DATE,
          TPD.ROLL12MONTHS,
          SWD.REGION_NAME,

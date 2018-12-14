@@ -2,9 +2,7 @@ TRUNCATE TABLE AAA6863.PR_VICT2_BG_12MO;
 DROP TABLE AAA6863.PR_VICT2_BG_12MO;
 
 CREATE TABLE AAA6863.PR_VICT2_BG_12MO NOLOGGING
-
 AS
- 
 SELECT DISTINCT
           sp_dtl.YEARMONTH,
           sp_dtl.ACCOUNT_NUMBER,
@@ -31,7 +29,7 @@ SELECT DISTINCT
           SUM(sp_dtl.INVOICE_LINES) LINES,
           SUM(sp_dtl.SHIPPED_QTY) SHIPPED,
           SUM(sp_dtl.EXT_SALES_AMOUNT) EXT_SALES,
-         -- SUM(sp_dtl.CORE_ADJ_AVG_COST) EXT_AVG_COGS,
+          SUM(sp_dtl.EXT_AVG_COGS_AMOUNT) EXT_AVG_COGS,
           SUM(sp_dtl.CORE_ADJ_AVG_COST) CORE_ADJ_AVG_COGS,
           /*sp_dtl.ORDER_CHANNEL,
           sp_dtl.DELIVERY_CHANNEL,*/
@@ -400,7 +398,7 @@ SELECT DISTINCT
                           PROD.SELL_MULT,
                           PROD.SELL_PACKAGE_QTY PACK_QTY,
                           ILF.SHIPPED_QTY,
-                          ILF.CORE_ADJ_AVG_COST,
+                          ILF.EXT_AVG_COGS_AMOUNT,
                           ILF.EXT_SALES_AMOUNT,
                           ILF.CORE_ADJ_AVG_COST,
                           --price category definition to include

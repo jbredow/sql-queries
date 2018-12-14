@@ -84,7 +84,7 @@ SELECT MAN.ACCOUNT_NAME,
                                              'MANUAL',
                                              'QUOTE',
                                              'OTH/ERROR')
-       AND MAN.ACCOUNT_NUMBER = '2000'  --IN ('480', '190', '61', '1550')
+       --AND MAN.ACCOUNT_NUMBER = '2000'  --IN ('480', '190', '61', '1550')
        AND LENGTH (MAN.PRICE_FORMULA) <> 7
        AND MAN.PRICE_CODE <> 'C'
        AND UPPER (MAN.PRICE_FORMULA) <> 'SPEC'
