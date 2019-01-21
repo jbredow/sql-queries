@@ -1,120 +1,54 @@
-/* updated table build - 12/13/18
-  added PRICE_CATEGORY_FINAL, IHF.WAREHOUSE_NUMBER, IHF.CUSTOMER_ACCOUNT_GK
+/*
+    creates the two month VICT2 table in price_mgmt 
+    added the EXT_WEIGHT_LB field
+    
 */
-CREATE TABLE PRICE_MGMT.PR_PCH_201812
+DROP TABLE PRICE_MGMT.PR_VICT2_CUST_R2MO;
+CREATE TABLE PRICE_MGMT.PR_VICT2_CUST_R2MO
 NOLOGGING
 AS
-   SELECT V2.YEARMONTH,
-           V2.EOM_YEARMONTH,
-           V2.INVOICE_NUMBER_GK,
-           V2.INVOICE_LINE_NUMBER,
-           V2.PRODUCT_GK,
-           V2.SPECIAL_PRODUCT_GK,
-           V2.PROCESS_DATE,
-           V2.SHIPPED_QTY,
-           V2.EXT_SALES_AMOUNT,
-           V2.EXT_ACTUAL_COGS_AMOUNT,
-           V2.CORE_ADJ_AVG_COST,
-           V2.EXT_AVG_COGS_AMOUNT,
-           V2.INSERT_TIMESTAMP,
-           V2.PRICE_CODE,
-           V2.PRICE_CATEGORY_OVR_PR,
-           V2.PRICE_CATEGORY_OVR_GR,
-           V2.PRICE_CATEGORY,
-           V2.ORIG_PRICE_CODE,
-           V2.ORIG_PRICE_CATEGORY,
-           V2.PRICE_FORMULA,
-           CASE
-              WHEN     COALESCE (V2.PRICE_CATEGORY_OVR_PR,
-                                 V2.PRICE_CATEGORY_OVR_GR,
-                                 V2.PRICE_CATEGORY) IN
-                          ('MANUAL', 'QUOTE', 'MATRIX_BID')
-                   AND V2.ORIG_PRICE_CODE IS NOT NULL
-              THEN
-                 CASE
-                    WHEN REGEXP_LIKE (V2.ORIG_PRICE_CODE,
-                                      '[0-9]?[0-9]?[0-9]')
-                    THEN
-                       'MATRIX'
-                    WHEN V2.ORIG_PRICE_CODE IN ('FC', 'PM', 'SPEC')
-                    THEN
-                       'MATRIX'
-                    WHEN V2.ORIG_PRICE_CODE LIKE 'M%'
-                    THEN
-                       'NDP'
-                    WHEN V2.ORIG_PRICE_CODE IN ('CPA', 'CPO')
-                    THEN
-                       'OVERRIDE'
-                    WHEN V2.ORIG_PRICE_CODE IN ('PR',
-                                                'GR',
-                                                'CB',
-                                                'GJ',
-                                                'PJ',
-                                                '*G',
-                                                '*P',
-                                                'G*',
-                                                'P*',
-                                                'G',
-                                                'GJ',
-                                                'P')
-                    THEN
-                       'OVERRIDE'
-                    WHEN V2.ORIG_PRICE_CODE IN ('GI',
-                                                'GPC',
-                                                'HPF',
-                                                'HPN',
-                                                'NC')
-                    THEN
-                       'MANUAL'
-                    WHEN V2.ORIG_PRICE_CODE = '*E'
-                    THEN
-                       'OTH/ERROR'
-                    WHEN V2.ORIG_PRICE_CODE = 'SKC'
-                    THEN
-                       'OTH/ERROR'
-                    WHEN V2.ORIG_PRICE_CODE IN ('%',
-                                                '$',
-                                                'N',
-                                                'F',
-                                                'B',
-                                                'PO')
-                    THEN
-                       'TOOLS'
-                    WHEN V2.ORIG_PRICE_CODE IS NULL
-                    THEN
-                       'MANUAL'
-                    ELSE
-                       'MANUAL'
-                 END
-              ELSE
-                 COALESCE (V2.PRICE_CATEGORY_OVR_PR,
-                           V2.PRICE_CATEGORY_OVR_GR,
-                           V2.PRICE_CATEGORY)
-           END
-              PRICE_CATEGORY_FINAL
-    
-    
-    
-    
-    FROM (SELECT DISTINCT
+   SELECT DISTINCT
           sp_dtl.YEARMONTH,
           sp_dtl.EOM_YEARMONTH,
-          sp_dtl.CUSTOMER_ACCOUNT_GK,
+          sp_dtl.ACCOUNT_NUMBER,
+          sp_dtl.ACCOUNT_NAME,
           sp_dtl.WAREHOUSE_NUMBER,
+          sp_dtl.INVOICE_NUMBER_NK,
           sp_dtl.INVOICE_NUMBER_GK,
+          sp_dtl.TYPE_OF_SALE,
+          sp_dtl.SHIP_VIA_NAME,
+          sp_dtl.OML_ASSOC_INI,
+          sp_dtl.OML_FL_INI,
+          sp_dtl.OML_ASSOC_NAME,
+          sp_dtl.WRITER,
+          sp_dtl.WR_FL_INI,
+          sp_dtl.ASSOC_NAME,
+          sp_dtl.DISCOUNT_GROUP_NK,
+          sp_Dtl.DISCOUNT_GROUP_NAME,
+          sp_Dtl.CHANNEL_TYPE,
           sp_dtl.INVOICE_LINE_NUMBER,
+          sp_dtl.MANUFACTURER,
+          sp_dtl.PRODUCT_NK,
+          sp_dtl.ALT1_CODE,
+          sp_dtl.PRODUCT_NAME,
+          sp_dtl.INVOICE_LINES,
+          sp_dtl.STATUS,
+          sp_dtl.SHIPPED_QTY,
+          sp_dtl.EXT_WEIGHT_LB,
+          sp_dtl.EXT_SALES_AMOUNT,
           sp_dtl.PRODUCT_GK,
           sp_dtl.SPECIAL_PRODUCT_GK,
+          sp_dtl.INSERT_TIMESTAMP_ILF,
+          sp_dtl.INSERT_TIMESTAMP_IHF,
           sp_dtl.PROCESS_DATE,
-          sp_dtl.SHIPPED_QTY,
-          sp_dtl.EXT_SALES_AMOUNT,
+          sp_dtl.EXT_AVG_COGS_AMOUNT,
           sp_dtl.EXT_ACTUAL_COGS_AMOUNT,
           sp_dtl.CORE_ADJ_AVG_COST,
-          sp_dtl.EXT_AVG_COGS_AMOUNT,
-          sp_dtl.INSERT_TIMESTAMP,
+          sp_dtl.ORDER_CHANNEL,
+          sp_dtl.DELIVERY_CHANNEL,
+          sp_dtl.REPLACEMENT_COST,
+          sp_dtl.UNIT_INV_COST,
           sp_dtl.PRICE_CODE,
-          sp_dtl.PRICE_CATEGORY_OVR_PR,
-          sp_dtl.PRICE_CATEGORY_OVR_GR,
           COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
                     sp_dtl.PRICE_CATEGORY_OVR_GR,
                     sp_dtl.PRICE_CATEGORY)
@@ -123,8 +57,51 @@ AS
           COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR_JOB,
                     sp_dtl.ORIG_PRICE_CATEGORY)
              ORIG_PRICE_CATEGORY,
-          sp_dtl.PRICE_FORMULA                                             --,
-
+          sp_dtl.PRICE_CATEGORY_OVR_PR,
+          sp_dtl.PRICE_CATEGORY_OVR_GR,
+          sp_dtl.GR_OVR,
+          sp_dtl.PR_OVR,
+          sp_dtl.PRICE_FORMULA,
+          sp_dtl.UNIT_NET_PRICE_AMOUNT,
+          sp_dtl.UM,
+          sp_dtl.SELL_MULT,
+          sp_dtl.PACK_QTY,
+          sp_dtl.LIST_PRICE,
+          sp_dtl.MATRIX_PRICE,
+          sp_dtl.MATRIX,
+          CASE
+             WHEN sp_dtl.PRICE_CATEGORY_OVR_PR IS NOT NULL THEN sp_dtl.PR_OVR
+             ELSE NULL
+          END
+             PR_TRIM_FORM,
+          CASE
+             WHEN sp_dtl.PRICE_CATEGORY_OVR_PR IS NOT NULL
+             THEN
+                sp_dtl.PR_OVR_BASIS
+             ELSE
+                NULL
+          END
+             PR_OVR_BASIS,
+          CASE
+             WHEN sp_dtl.PRICE_CATEGORY_OVR_GR IS NOT NULL THEN sp_dtl.GR_OVR
+             ELSE NULL
+          END
+             GR_TRIM_FORM,
+          sp_dtl.ORDER_CODE,
+          sp_dtl.SOURCE_SYSTEM,
+          sp_dtl.CONSIGN_TYPE,
+          sp_dtl.MAIN_CUSTOMER_NK,
+          sp_dtl.CUSTOMER_ACCOUNT_GK,
+          sp_dtl.CUSTOMER_NK,
+          sp_dtl.CUSTOMER_NAME,
+          sp_dtl.PRICE_COLUMN,
+          sp_dtl.CUSTOMER_TYPE,
+          sp_dtl.REF_BID_NUMBER,
+          sp_dtl.SOURCE_ORDER,
+          sp_dtl.ORDER_ENTRY_DATE,
+          sp_dtl.COPY_SOURCE_HIST,
+          sp_dtl.CONTRACT_DESCRIPTION,
+          sp_dtl.CONTRACT_NUMBER
    FROM (SELECT SP_HIST.*, --process date changed to include invoice processing date
                 --price category change to include rounding and NDP
                 CASE
@@ -307,6 +284,7 @@ AS
                           GR_OVR_BASE.EXPIRE_DATE)
                    CCOR_EXPIRE,
                 LB.LINEBUY_NAME,
+                
                 DG.DISCOUNT_GROUP_NAME,
                 MV.MASTER_VENDOR_NAME
          FROM (SELECT IHF.ACCOUNT_NUMBER,
@@ -315,15 +293,11 @@ AS
                       CUST.ACCOUNT_NAME,
                       IHF.WAREHOUSE_NUMBER,
                       IHF.INVOICE_NUMBER_NK,
-                      IHF.INVOICE_NUMBER_GK,
-                      ILF.EXT_ACTUAL_COGS_AMOUNT,
-                      IHF.INSERT_TIMESTAMP,
                       IHF.JOB_NAME,
-                      ILF.PRODUCT_GK,
-                      ILF.SPECIAL_PRODUCT_GK,
                       IHF.CONTRACT_DESCRIPTION,
                       IHF.CONTRACT_NUMBER,
                       IHF.OML_ASSOC_NAME,
+                      ILF.EXT_WEIGHT_LB,
                       CASE WHEN ILF.SHIPPED_QTY > 0 THEN 1 ELSE 0 END
                          INVOICE_LINES,
                       DECODE (ihf.SALE_TYPE,
@@ -427,8 +401,9 @@ AS
                          PACK_QTY,
                       ILF.SHIPPED_QTY,
                       ILF.EXT_AVG_COGS_AMOUNT,
-                      ILF.CORE_ADJ_AVG_COST,
                       ILF.EXT_SALES_AMOUNT,
+                      ILF.CORE_ADJ_AVG_COST,
+                      ILF.EXT_ACTUAL_COGS_AMOUNT,
                       --price category definition to include
                       CASE
                          WHEN ihf.order_code = 'IC'
@@ -718,6 +693,10 @@ AS
                       ILF.PO_DATE,
                       ILF.PO_NUMBER_NK,
                       ILF.PROCESS_DATE,
+                      ILF.INSERT_TIMESTAMP
+                         INSERT_TIMESTAMP_ILF,
+                      IHF.INSERT_TIMESTAMP
+                         INSERT_TIMESTAMP_IHF,
                       ILF.PRODUCT_STATUS,
                       ILF.MATRIX,
                       ILF.MATRIX_PRICE
@@ -741,18 +720,24 @@ AS
                       CUST.CUSTOMER_NK,
                       CUST.CUSTOMER_NAME,
                       CUST.PRICE_COLUMN,
-                      CUST.CUSTOMER_TYPE
+                      CUST.CUSTOMER_TYPE,
+                      ILF.PRODUCT_GK,
+                      ILF.SPECIAL_PRODUCT_GK,
+                      IHF.INVOICE_NUMBER_GK
                FROM DW_FEI.INVOICE_HEADER_FACT IHF,
                     DW_FEI.INVOICE_LINE_FACT ILF,
                     DW_FEI.PRODUCT_DIMENSION PROD,
                     DW_FEI.CUSTOMER_DIMENSION CUST,
                     DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD,
                     SALES_MART.SALES_WAREHOUSE_DIM SWD,
-                    SALES_MART.INVOICE_CHANNEL_DIMENSION ICD
+                    SALES_MART.INVOICE_CHANNEL_DIMENSION ICD,
+                    PRICE_MGMT.PR_LAST_RUN PLR
+               --DW_FEI.INVOICE_LINE_CORE_FACT ILCF
                WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
                      AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
                      AND SWD.WAREHOUSE_NUMBER_NK = IHF.WAREHOUSE_NUMBER
                      AND IHF.INVOICE_NUMBER_GK = ICD.INVOICE_NUMBER_GK
+                     --AND ILF.INSERT_TIMESTAMP > PLR.MAX_ILF_TS
                      --AND IHF.INVOICE_NUMBER_GK = ILCF.INVOICE_NUMBER_GK
                      --AND ILCF.YEARMONTH = ILF.YEARMONTH
                      --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
@@ -779,14 +764,49 @@ AS
                      AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
                      AND ILF.SPECIAL_PRODUCT_GK =
                          SP_PROD.SPECIAL_PRODUCT_GK(+)
-                     AND NVL(IHF.INTERCOMPANY_FLAG,IHF.IC_FLAG) = 0
-                     --AND ILF.SHIPPED_QTY <> 0
+                     AND IHF.IC_FLAG = 0
+                     -- AND ILF.SHIPPED_QTY <> 0
                      --AND IHF.ORDER_CODE NOT IN 'IC'
-                   --Excludes shipments to other FEI locations.
+                     --Excludes shipments to other FEI locations.
                      AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                     AND ILF.YEARMONTH = '201812'  --BETWEEN '201612' AND '201708'
-                     AND IHF.YEARMONTH = '201812'  --BETWEEN '201612' AND '201708'
-                                            ) SP_HIST
+                     AND IHF.EOM_YEARMONTH = '201812' --BETWEEN '201812' AND '201901'
+                     AND ILF.EOM_YEARMONTH = '201812' --BETWEEN '201812' AND '201901'
+                     /*  AND ILF.YEARMONTH =
+                              TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                       'YYYYMM')
+                       AND IHF.YEARMONTH =
+                              TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
+                                       'YYYYMM')*/
+
+                     --AND IHF.YEARMONTH BETWEEN 201808 AND 201809
+                     --  AND SWD.REGION_NAME LIKE '%BLENDED%'
+                     /* AND SWD.REGION_NAME IN
+                             ('D01 W BLENDED SOCAL',
+                              'D02 W BLENDED SOUTHWEST',
+                               'D03 W BLENDED NORCAL',
+                               'D04 W BLENDED NORTHWEST',
+                              'D05 W BLENDED ROCKIES',
+                               'D10 NC BLENDED UPPER MIDWEST',
+                              'D11 NC BLENDED CENTRAL MIDWEST',
+                               'D12 NC BLENDED OHIO VALLEY',
+                               'D14 NC BLENDED GREAT LAKES',
+                              'D20 E BLENDED FLORIDA',
+                              'D21 E BLENDED CAROLINAS',
+                              'D22 E BLENDED SOUTHEAST',
+                               'D23 E BLENDED DC METRO',
+                              'D24 E BLENDED SO VIRGINIA',
+                              'D25 E BLENDED NORTHEAST',
+                                'D26 E BLENDED NEW ENGLAND',
+                              'D30 SC BLENDED MID SOUTH',
+                              'D31 SC BLENDED TEXAS',
+                               'D32 SC BLENDED SOUTHERN PLAINS')*/
+                     -- AND SWD.ACCOUNT_NAME NOT IN ('TRINIDAD','BARBADOS','HONOLULU','PANAMA','BOYNTON')
+                     AND SWD.ALIAS_NAME NOT LIKE '%INTERNATIONAL%'
+                     AND SWD.REGION_NAME NOT IN
+                            ('D62 INTEGRATED SERVICES',
+                             'O99 OTHER BUSINESSES') --AND PROD.DISCOUNT_GROUP_NK = '1072'
+                                             -- AND PROD.MANUFACTURER = '1832'
+              ) SP_HIST
               LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                  ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
               LEFT OUTER JOIN DW_FEI.LINE_BUY_DIMENSION LB
@@ -816,8 +836,7 @@ AS
                      AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                      AND COD.DELETE_DATE IS NULL
                      AND CUST.JOB_YN = 'Y'
-                     --AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62)
-                     )
+                     AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62))
               GR_OVR_JOB
                  ON (    SP_HIST.DISCOUNT_GROUP_NK =
                          (LTRIM (GR_OVR_JOB.DISC_GROUP, '0'))
@@ -848,8 +867,7 @@ AS
                      AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                      AND COD.DELETE_DATE IS NULL
                      AND CUST.JOB_YN = 'N'
-                     --AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62)
-                     )
+                     AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62))
               GR_OVR_BASE
                  ON (    SP_HIST.DISCOUNT_GROUP_NK =
                          (LTRIM (GR_OVR_BASE.DISC_GROUP, '0'))
@@ -891,8 +909,7 @@ AS
                      AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                      AND COD.DELETE_DATE IS NULL
                      AND CUST.JOB_YN = 'Y'
-                     --AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62)
-                     )
+                     AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62))
               PR_OVR_JOB
                  ON (    SP_HIST.PRODUCT_NK = PR_OVR_JOB.MASTER_PRODUCT
                      AND SP_HIST.ACCOUNT_NUMBER = PR_OVR_JOB.BRANCH_NUMBER_NK
@@ -932,8 +949,7 @@ AS
                      AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                      AND COD.DELETE_DATE IS NULL
                      AND CUST.JOB_YN = 'N'
-                     --AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62)
-                     )
+                     AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62))
               PR_OVR_BASE
                  ON (    SP_HIST.PRODUCT_NK = PR_OVR_BASE.MASTER_PRODUCT
                      AND SP_HIST.ACCOUNT_NUMBER =
@@ -941,10 +957,6 @@ AS
                      AND SP_HIST.MAIN_CUSTOMER_NK = PR_OVR_BASE.CUSTOMER_NK
                      AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                          NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
-        sp_dtl
-   WHERE     (sp_dtl.ACCOUNT_NAME NOT LIKE ('INT%'))
-         AND (sp_dtl.ACCOUNT_NAME NOT IN ('TRINIDAD',
-                                          'BARBADOS',
-                                          'PANAMA',
-                                          'CARIBBEAN'))) V2
-    ;
+        sp_dtl;
+
+GRANT SELECT ON PRICE_MGMT.PR_VICT2_CUST_R2MO TO PUBLIC;

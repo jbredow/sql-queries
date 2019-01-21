@@ -51,7 +51,12 @@ SELECT *
                  AND CCORG.DELETE_DATE IS NULL
                  AND CUST.CUSTOMER_GK = CCORG.CUSTOMER_GK
                  AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
-                            ('D10',
+                            ('D01',
+                             'D02',
+                             'D03',
+                             'D04',
+                             'D05',
+                             'D10',
                              'D11',
                              'D12',
                              'D13',
@@ -59,9 +64,11 @@ SELECT *
                              'D30',
                              'D31',
                              'D32',
+                             'D41',
                              'D50',
                              'D51',
-                             'D53'))
+                             'D53',
+                             'D60'))
                  --AND CCORG.DISC_GROUP IN ('999','1003','1005','1007','1011')
                  --AND TO_CHAR (CCORG.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201508')
                  --                                              AND  TO_CHAR('201511')
@@ -146,18 +153,24 @@ SELECT *
                 AND CCORP.DELETE_DATE IS NULL
                 AND CUST2.CUSTOMER_GK = CCORP.CUSTOMER_GK
                 AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
-                           ('D10',
-                            'D11',
-                            'D12',
-                            'D13',
-                            'D14',
-                            'D30',
-                            'D31',
-                            'D32',
-                            'D50',
-                            'D51',
-                            'D53',
-														'D59'))
+                           ('D01',
+                             'D02',
+                             'D03',
+                             'D04',
+                             'D05',
+                             'D10',
+                             'D11',
+                             'D12',
+                             'D13',
+                             'D14',
+                             'D30',
+                             'D31',
+                             'D32',
+                             'D41',
+                             'D50',
+                             'D51',
+                             'D53',
+                             'D60'))
                 --AND CCORP.DISC_GROUP IN ('999','1003','1005','1007','1011')
                 --AND TO_CHAR (CCORP.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201508')
                 --                                              AND  TO_CHAR('201511')

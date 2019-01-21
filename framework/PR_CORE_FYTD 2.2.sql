@@ -1,9 +1,6 @@
-TRUNCATE TABLE AAA6863.PR_CORE_YOY2;
+--DROP TABLE AAD9606.PR_CORE_YOY2_TX;
 
-DROP TABLE AAA6863.PR_CORE_YOY2;
-
-CREATE TABLE AAA6863.PR_CORE_YOY2
-NOLOGGING
+CREATE TABLE AAD9606.PR_CORE_YOY2_TX
 AS
    SELECT TPD.FISCAL_YEAR_TO_DATE
              TPD,
@@ -59,10 +56,14 @@ AS
                    ILF.CORE_ADJ_AVG_COST
                 WHEN     CORE.SUBLINE_COST IS NOT NULL
                      AND CORE.SUBLINE_QTY IS NULL
+                     AND CORE.COST_CODE_IND = 'C'
                 THEN
                      CORE.SUBLINE_COST
                    * ILF.SHIPPED_QTY
                    / NVL (PROD.SELL_PACKAGE_QTY, 1)
+                WHEN CORE.COST_CODE_IND IN ('P', 'M')
+                THEN
+                   ILF.EXT_ACTUAL_COGS_AMOUNT
                 ELSE
                    ILF.EXT_AVG_COGS_AMOUNT
              END)
@@ -121,20 +122,21 @@ AS
          AND NVL (IHF.CONSIGN_TYPE, 'N/A') NOT IN 'R'
          AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
          AND IHF.IC_FLAG = 0
-         AND ILF.SHIPPED_QTY <> 0
+         --AND ILF.SHIPPED_QTY <> 0
          AND IHF.PO_WAREHOUSE_NUMBER IS NULL
          AND IHF.YEARMONTH = ILF.YEARMONTH
          --AND IHF.YEARMONTH = CORE.YEARMONTH
          --AND ILF.YEARMONTH = CORE.YEARMONTH
+         --AND IHF.YEARMONTH = 201708
+         --AND ILF.YEARMONTH = 201708
          --AND REPS.OUTSIDE_SALES_FLAG = 'Y'
-         --AND SWD.ACCOUNT_NAME = 'ATLANTA'
          AND IHF.WAREHOUSE_NUMBER = SWD.WAREHOUSE_NUMBER_NK
          AND SWD.DIVISION_NAME IN ('EAST REGION',
                                    'HVAC REGION',
-                                   'CENTRAL REGION',
-                                   'WEST REGION' --,
-                                   --'WATERWORKS REGION'
-                                                )
+                                   'NORTH CENTRAL REGION',
+                                   'SOUTH CENTRAL REGION',
+                                   --'WATERWORKS REGION',
+                                   'WEST REGION')
    GROUP BY TPD.FISCAL_YEAR_TO_DATE,
             SWD.DIVISION_NAME,
             SWD.REGION_NAME,
@@ -186,5 +188,4 @@ AS
                 ELSE
                    ILF.EXT_AVG_COGS_AMOUNT
              END)
-             CORE_COST_SUBTOTAL*/
-;
+             CORE_COST_SUBTOTAL*/;

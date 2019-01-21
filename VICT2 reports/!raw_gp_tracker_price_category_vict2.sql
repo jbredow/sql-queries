@@ -728,12 +728,12 @@ FROM (SELECT SP_HIST.*, --process date changed to include invoice processing dat
                           --AND ILF.YEARMONTH BETWEEN '201708' AND '201810'
                           --AND IHF.YEARMONTH BETWEEN '201708' AND '201810'
                           
-                          /*AND ILF.YEARMONTH =
+                          AND ILF.YEARMONTH =
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
                                           'YYYYMM')
                           AND IHF.YEARMONTH =
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                          'YYYYMM')*/
+                                          'YYYYMM')
                   ) SP_HIST
            LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
               ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK

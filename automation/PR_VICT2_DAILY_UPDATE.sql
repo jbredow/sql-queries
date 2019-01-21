@@ -8,12 +8,14 @@ SET MAX_ILF_TS =
        (SELECT MAX (PR_VICT2_CUST_R2MO.INSERT_TIMESTAMP_ILF)
         FROM PRICE_MGMT.PR_VICT2_CUST_R2MO);
 
---TRUNCATE TABLE PRICE_MGMT.PR_VICT2_DAILY;
+TRUNCATE TABLE PRICE_MGMT.PR_VICT2_DAILY;
+
+DROP TABLE PRICE_MGMT.PR_VICT2_DAILY;
 
 CREATE TABLE PRICE_MGMT.PR_VICT2_DAILY
 NOLOGGING
 AS
-           SELECT DISTINCT
+   SELECT DISTINCT
           sp_dtl.YEARMONTH,
           sp_dtl.EOM_YEARMONTH,
           sp_dtl.ACCOUNT_NUMBER,
@@ -40,6 +42,7 @@ AS
           sp_dtl.INVOICE_LINES,
           sp_dtl.STATUS,
           sp_dtl.SHIPPED_QTY,
+          sp_dtl.EXT_WEIGHT_LB,
           sp_dtl.EXT_SALES_AMOUNT,
           sp_dtl.PRODUCT_GK,
           sp_dtl.SPECIAL_PRODUCT_GK,
@@ -125,55 +128,53 @@ AS
                          THEN
                             CASE
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                       COALESCE (PR_OVR_JOB.MULTIPLIER,
-                                                 PR_OVR_BASE.MULTIPLIER)
+                                    COALESCE (PR_OVR_JOB.MULTIPLIER,
+                                              PR_OVR_BASE.MULTIPLIER)
                                THEN
                                   'OVERRIDE'
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                       (  TRUNC (
-                                             COALESCE (
-                                                PR_OVR_JOB.MULTIPLIER,
-                                                PR_OVR_BASE.MULTIPLIER),
-                                             2)
-                                        + .01)
+                                    (  TRUNC (
+                                          COALESCE (PR_OVR_JOB.MULTIPLIER,
+                                                    PR_OVR_BASE.MULTIPLIER),
+                                          2)
+                                     + .01)
                                THEN
                                   'OVERRIDE'
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                       (ROUND (
-                                           COALESCE (PR_OVR_JOB.MULTIPLIER,
-                                                     PR_OVR_BASE.MULTIPLIER),
-                                           2))
+                                    (ROUND (
+                                        COALESCE (PR_OVR_JOB.MULTIPLIER,
+                                                  PR_OVR_BASE.MULTIPLIER),
+                                        2))
                                THEN
                                   'OVERRIDE'
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                       (  TRUNC (
-                                             COALESCE (
-                                                PR_OVR_JOB.MULTIPLIER,
-                                                PR_OVR_BASE.MULTIPLIER),
-                                             1)
-                                        + .1)
+                                    (  TRUNC (
+                                          COALESCE (PR_OVR_JOB.MULTIPLIER,
+                                                    PR_OVR_BASE.MULTIPLIER),
+                                          1)
+                                     + .1)
                                THEN
                                   'OVERRIDE'
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                         FLOOR (
-                                            COALESCE (PR_OVR_JOB.MULTIPLIER,
-                                                      PR_OVR_BASE.MULTIPLIER))
-                                       + 1
+                                      FLOOR (
+                                         COALESCE (PR_OVR_JOB.MULTIPLIER,
+                                                   PR_OVR_BASE.MULTIPLIER))
+                                    + 1
                                THEN
                                   'OVERRIDE'
                                WHEN TO_CHAR (SP_HIST.UNIT_NET_PRICE_AMOUNT) =
-                                       COALESCE (PR_OVR_JOB.FORMULA,
-                                                 PR_OVR_BASE.FORMULA)
+                                    COALESCE (PR_OVR_JOB.FORMULA,
+                                              PR_OVR_BASE.FORMULA)
                                THEN
                                   'OVERRIDE'
                                WHEN REPLACE (SP_HIST.PRICE_FORMULA,
                                              '0.',
                                              '.') =
-                                       REPLACE (
-                                          COALESCE (PR_OVR_JOB.FORMULA,
-                                                    PR_OVR_BASE.FORMULA),
-                                          '0.',
-                                          '.')
+                                    REPLACE (
+                                       COALESCE (PR_OVR_JOB.FORMULA,
+                                                 PR_OVR_BASE.FORMULA),
+                                       '0.',
+                                       '.')
                                THEN
                                   'OVERRIDE'
                             END
@@ -190,36 +191,33 @@ AS
                          THEN
                             CASE
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                       PR_OVR_JOB.MULTIPLIER
+                                    PR_OVR_JOB.MULTIPLIER
                                THEN
                                   'OVERRIDE'
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                       (  TRUNC (PR_OVR_JOB.MULTIPLIER, 2)
-                                        + .01)
+                                    (TRUNC (PR_OVR_JOB.MULTIPLIER, 2) + .01)
                                THEN
                                   'OVERRIDE'
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                       (ROUND (PR_OVR_JOB.MULTIPLIER, 2))
+                                    (ROUND (PR_OVR_JOB.MULTIPLIER, 2))
                                THEN
                                   'OVERRIDE'
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (PR_OVR_JOB.MULTIPLIER, 1) + .1)
+                                    (TRUNC (PR_OVR_JOB.MULTIPLIER, 1) + .1)
                                THEN
                                   'OVERRIDE'
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                       FLOOR (PR_OVR_JOB.MULTIPLIER) + 1
+                                    FLOOR (PR_OVR_JOB.MULTIPLIER) + 1
                                THEN
                                   'OVERRIDE'
                                WHEN TO_CHAR (SP_HIST.UNIT_NET_PRICE_AMOUNT) =
-                                       (PR_OVR_JOB.FORMULA)
+                                    (PR_OVR_JOB.FORMULA)
                                THEN
                                   'OVERRIDE'
                                WHEN REPLACE (SP_HIST.PRICE_FORMULA,
                                              '0.',
                                              '.') =
-                                       REPLACE (PR_OVR_JOB.FORMULA,
-                                                '0.',
-                                                '.')
+                                    REPLACE (PR_OVR_JOB.FORMULA, '0.', '.')
                                THEN
                                   'OVERRIDE'
                             END
@@ -246,11 +244,11 @@ AS
                                WHEN REPLACE (SP_HIST.PRICE_FORMULA,
                                              '0.',
                                              '.') =
-                                       REPLACE (
-                                          COALESCE (GR_OVR_JOB.FORMULA,
-                                                    GR_OVR_BASE.FORMULA),
-                                          '0.',
-                                          '.')
+                                    REPLACE (
+                                       COALESCE (GR_OVR_JOB.FORMULA,
+                                                 GR_OVR_BASE.FORMULA),
+                                       '0.',
+                                       '.')
                                THEN
                                   'OVERRIDE'
                                ELSE
@@ -259,13 +257,16 @@ AS
                       END
                 END
                    PRICE_CATEGORY_OVR_GR,
-                COALESCE (PR_OVR_JOB.FORMULA, PR_OVR_BASE.FORMULA) PR_OVR,
+                COALESCE (PR_OVR_JOB.FORMULA, PR_OVR_BASE.FORMULA)
+                   PR_OVR,
                 REPLACE (COALESCE (PR_OVR_JOB.FORMULA, PR_OVR_BASE.FORMULA),
                          '0.',
                          '.')
                    PR_TRIM_FORM,
-                COALESCE (PR_OVR_JOB.BASIS, PR_OVR_BASE.BASIS) PR_OVR_BASIS,
-                COALESCE (GR_OVR_JOB.FORMULA, GR_OVR_BASE.FORMULA) GR_OVR,
+                COALESCE (PR_OVR_JOB.BASIS, PR_OVR_BASE.BASIS)
+                   PR_OVR_BASIS,
+                COALESCE (GR_OVR_JOB.FORMULA, GR_OVR_BASE.FORMULA)
+                   GR_OVR,
                 REPLACE (COALESCE (GR_OVR_JOB.FORMULA, GR_OVR_BASE.FORMULA),
                          '0.',
                          '.')
@@ -319,7 +320,8 @@ AS
                       IHF.SHIP_VIA_NAME,
                       ICD.ORDER_CHANNEL,
                       ICD.DELIVERY_CHANNEL,
-                      NVL (IHF.WRITER, IHF.OML_ASSOC_INI) WRITER,
+                      NVL (IHF.WRITER, IHF.OML_ASSOC_INI)
+                         WRITER,
                          SUBSTR (NVL (IHF.WRITER, IHF.OML_ASSOC_INI), 0, 1)
                       || SUBSTR (NVL (IHF.WRITER, IHF.OML_ASSOC_INI), -1)
                          WR_FL_INI,
@@ -329,7 +331,7 @@ AS
                          OML_FL_INI,
                       CASE
                          WHEN NVL (IHF.WRITER, IHF.OML_ASSOC_INI) =
-                                 IHF.OML_ASSOC_INI
+                              IHF.OML_ASSOC_INI
                          THEN
                             IHF.OML_ASSOC_NAME
                          WHEN    SUBSTR (NVL (IHF.WRITER, IHF.OML_ASSOC_INI),
@@ -337,8 +339,8 @@ AS
                                          1)
                               || SUBSTR (NVL (IHF.WRITER, IHF.OML_ASSOC_INI),
                                          -1) =
-                                    SUBSTR (IHF.OML_ASSOC_INI, 0, 1)
-                                 || SUBSTR (IHF.OML_ASSOC_INI, -1)
+                                 SUBSTR (IHF.OML_ASSOC_INI, 0, 1)
+                              || SUBSTR (IHF.OML_ASSOC_INI, -1)
                          THEN
                             IHF.OML_ASSOC_NAME
                          ELSE
@@ -398,10 +400,13 @@ AS
                          ELSE 'N'
                       END
                          "<1500",
-                      PROD.UNIT_OF_MEASURE UM,
+                      PROD.UNIT_OF_MEASURE
+                         UM,
                       PROD.SELL_MULT,
-                      PROD.SELL_PACKAGE_QTY PACK_QTY,
+                      PROD.SELL_PACKAGE_QTY
+                         PACK_QTY,
                       ILF.SHIPPED_QTY,
+                      ILF.EXT_WEIGHT_LB,
                       ILF.EXT_AVG_COGS_AMOUNT,
                       ILF.EXT_SALES_AMOUNT,
                       ILF.CORE_ADJ_AVG_COST,
@@ -418,42 +423,42 @@ AS
                          THEN
                             CASE
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       ilf.MATRIX_PRICE
+                                    ilf.MATRIX_PRICE
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT = ilf.MATRIX
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
+                                    (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX, 2) + .01)
+                                    (TRUNC (ilf.MATRIX, 2) + .01)
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (ROUND (ilf.MATRIX_PRICE, 2))
+                                    (ROUND (ilf.MATRIX_PRICE, 2))
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (ROUND (ilf.MATRIX, 2))
+                                    (ROUND (ilf.MATRIX, 2))
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
+                                    (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX, 1) + .1)
+                                    (TRUNC (ilf.MATRIX, 1) + .1)
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       FLOOR (ilf.MATRIX_PRICE) + 1
+                                    FLOOR (ilf.MATRIX_PRICE) + 1
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       FLOOR (ilf.MATRIX) + 1
+                                    FLOOR (ilf.MATRIX) + 1
                                THEN
                                   'MATRIX_BID'
                                ELSE
@@ -514,42 +519,42 @@ AS
                          THEN
                             CASE
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       ilf.MATRIX_PRICE
+                                    ilf.MATRIX_PRICE
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT = ilf.MATRIX
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
+                                    (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX, 2) + .01)
+                                    (TRUNC (ilf.MATRIX, 2) + .01)
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (ROUND (ilf.MATRIX_PRICE, 2))
+                                    (ROUND (ilf.MATRIX_PRICE, 2))
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (ROUND (ilf.MATRIX, 2))
+                                    (ROUND (ilf.MATRIX, 2))
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
+                                    (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX, 1) + .1)
+                                    (TRUNC (ilf.MATRIX, 1) + .1)
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       FLOOR (ilf.MATRIX_PRICE) + 1
+                                    FLOOR (ilf.MATRIX_PRICE) + 1
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       FLOOR (ilf.MATRIX) + 1
+                                    FLOOR (ilf.MATRIX) + 1
                                THEN
                                   'MATRIX_BID'
                                --price category defined for NDP
@@ -576,42 +581,42 @@ AS
                          THEN
                             CASE
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       ilf.MATRIX_PRICE
+                                    ilf.MATRIX_PRICE
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT = ilf.MATRIX
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
+                                    (TRUNC (ilf.MATRIX_PRICE, 2) + .01)
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX, 2) + .01)
+                                    (TRUNC (ilf.MATRIX, 2) + .01)
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (ROUND (ilf.MATRIX_PRICE, 2))
+                                    (ROUND (ilf.MATRIX_PRICE, 2))
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (ROUND (ilf.MATRIX, 2))
+                                    (ROUND (ilf.MATRIX, 2))
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
+                                    (TRUNC (ilf.MATRIX_PRICE, 1) + .1)
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       (TRUNC (ilf.MATRIX, 1) + .1)
+                                    (TRUNC (ilf.MATRIX, 1) + .1)
                                THEN
                                   'MATRIX_BID'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       FLOOR (ilf.MATRIX_PRICE) + 1
+                                    FLOOR (ilf.MATRIX_PRICE) + 1
                                THEN
                                   'MATRIX'
                                WHEN ilf.UNIT_NET_PRICE_AMOUNT =
-                                       FLOOR (ilf.MATRIX) + 1
+                                    FLOOR (ilf.MATRIX) + 1
                                THEN
                                   'MATRIX_BID'
                                ELSE
@@ -658,11 +663,11 @@ AS
                          THEN
                             'MANUAL'
                          WHEN NVL (ilf.orig_price_code, ilf.price_code) =
-                                 '*E'
+                              '*E'
                          THEN
                             'OTH/ERROR'
                          WHEN NVL (ilf.orig_price_code, ilf.price_code) =
-                                 'SKC'
+                              'SKC'
                          THEN
                             'OTH/ERROR'
                          WHEN NVL (ilf.orig_price_code, ilf.price_code) IN
@@ -695,12 +700,16 @@ AS
                       ILF.PO_DATE,
                       ILF.PO_NUMBER_NK,
                       ILF.PROCESS_DATE,
-                      ILF.INSERT_TIMESTAMP INSERT_TIMESTAMP_ILF,
-                      IHF.INSERT_TIMESTAMP INSERT_TIMESTAMP_IHF,
+                      ILF.INSERT_TIMESTAMP
+                         INSERT_TIMESTAMP_ILF,
+                      IHF.INSERT_TIMESTAMP
+                         INSERT_TIMESTAMP_IHF,
                       ILF.PRODUCT_STATUS,
                       ILF.MATRIX,
-                      ILF.MATRIX_PRICE OG_MATRIX,
-                      NVL (ILF.MATRIX_PRICE, ILF.MATRIX) MATRIX_PRICE,
+                      ILF.MATRIX_PRICE
+                         OG_MATRIX,
+                      NVL (ILF.MATRIX_PRICE, ILF.MATRIX)
+                         MATRIX_PRICE,
                       IHF.CONSIGN_TYPE,
                       IHF.ORDER_CODE,
                       IHF.CREDIT_CODE,
@@ -756,11 +765,12 @@ AS
                                  '4000', 0,
                                  '7100', 0,
                                  '9999', 0,
-                                 1) <> 0
+                                 1) <>
+                         0
                      AND NVL (IHF.CONSIGN_TYPE, 'N/A') NOT IN 'R'
                      AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
                      AND ILF.SPECIAL_PRODUCT_GK =
-                            SP_PROD.SPECIAL_PRODUCT_GK(+)
+                         SP_PROD.SPECIAL_PRODUCT_GK(+)
                      AND IHF.IC_FLAG = 0
                      -- AND ILF.SHIPPED_QTY <> 0
                      --AND IHF.ORDER_CODE NOT IN 'IC'
@@ -799,9 +809,9 @@ AS
                      AND SWD.ALIAS_NAME NOT LIKE '%INTERNATIONAL%'
                      AND SWD.REGION_NAME NOT IN
                             ('D62 INTEGRATED SERVICES',
-                             'O99 OTHER BUSINESSES')--AND PROD.DISCOUNT_GROUP_NK = '1072'
-                                                    -- AND PROD.MANUFACTURER = '1832'
-                                                    ) SP_HIST
+                             'O99 OTHER BUSINESSES') --AND PROD.DISCOUNT_GROUP_NK = '1072'
+                                             -- AND PROD.MANUFACTURER = '1832'
+              ) SP_HIST
               LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                  ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
               LEFT OUTER JOIN DW_FEI.LINE_BUY_DIMENSION LB
@@ -816,7 +826,8 @@ AS
                       COD.CUSTOMER_NK,
                       COD.DISC_GROUP,
                       COD.INSERT_TIMESTAMP,
-                      NVL (COD.EXPIRE_DATE, SYSDATE) EXPIRE_DATE,
+                      NVL (COD.EXPIRE_DATE, SYSDATE)
+                         EXPIRE_DATE,
                       COD.MASTER_PRODUCT,
                       COD.MULTIPLIER,
                       COD.OPERATOR_USED,
@@ -833,11 +844,11 @@ AS
                      AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62))
               GR_OVR_JOB
                  ON (    SP_HIST.DISCOUNT_GROUP_NK =
-                            (LTRIM (GR_OVR_JOB.DISC_GROUP, '0'))
+                         (LTRIM (GR_OVR_JOB.DISC_GROUP, '0'))
                      AND SP_HIST.ACCOUNT_NUMBER = GR_OVR_JOB.BRANCH_NUMBER_NK
                      AND SP_HIST.CUSTOMER_ACCOUNT_GK = GR_OVR_JOB.CUSTOMER_GK
                      AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
-                            NVL (GR_OVR_JOB.CONTRACT_ID, 'DEFAULT_MATCH'))
+                         NVL (GR_OVR_JOB.CONTRACT_ID, 'DEFAULT_MATCH'))
               LEFT OUTER JOIN
               (SELECT COD.BASIS,
                       COD.BRANCH_NUMBER_NK,
@@ -846,7 +857,8 @@ AS
                       COD.CUSTOMER_NK,
                       COD.DISC_GROUP,
                       COD.INSERT_TIMESTAMP,
-                      NVL (COD.EXPIRE_DATE, SYSDATE) EXPIRE_DATE,
+                      NVL (COD.EXPIRE_DATE, SYSDATE)
+                         EXPIRE_DATE,
                       COD.MASTER_PRODUCT,
                       COD.MULTIPLIER,
                       COD.OPERATOR_USED,
@@ -863,12 +875,12 @@ AS
                      AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 62))
               GR_OVR_BASE
                  ON (    SP_HIST.DISCOUNT_GROUP_NK =
-                            (LTRIM (GR_OVR_BASE.DISC_GROUP, '0'))
+                         (LTRIM (GR_OVR_BASE.DISC_GROUP, '0'))
                      AND SP_HIST.ACCOUNT_NUMBER =
-                            GR_OVR_BASE.BRANCH_NUMBER_NK
+                         GR_OVR_BASE.BRANCH_NUMBER_NK
                      AND SP_HIST.MAIN_CUSTOMER_NK = GR_OVR_BASE.CUSTOMER_NK
                      AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
-                            NVL (GR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))
+                         NVL (GR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))
               LEFT OUTER JOIN
               (SELECT COD.BASIS,
                       COD.BRANCH_NUMBER_NK,
@@ -877,9 +889,11 @@ AS
                       COD.CUSTOMER_NK,
                       COD.DISC_GROUP,
                       COD.INSERT_TIMESTAMP,
-                      NVL (COD.EXPIRE_DATE, SYSDATE) EXPIRE_DATE,
+                      NVL (COD.EXPIRE_DATE, SYSDATE)
+                         EXPIRE_DATE,
                       COD.MASTER_PRODUCT,
-                      TO_NUMBER (COD.MULTIPLIER) MULTIPLIER,
+                      TO_NUMBER (COD.MULTIPLIER)
+                         MULTIPLIER,
                       COD.OPERATOR_USED,
                       COD.OVERRIDE_ID_NK,
                       COD.OVERRIDE_TYPE,
@@ -906,7 +920,7 @@ AS
                      AND SP_HIST.ACCOUNT_NUMBER = PR_OVR_JOB.BRANCH_NUMBER_NK
                      AND SP_HIST.CUSTOMER_ACCOUNT_GK = PR_OVR_JOB.CUSTOMER_GK
                      AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
-                            NVL (PR_OVR_JOB.CONTRACT_ID, 'DEFAULT_MATCH'))
+                         NVL (PR_OVR_JOB.CONTRACT_ID, 'DEFAULT_MATCH'))
               LEFT OUTER JOIN
               (SELECT COD.BASIS,
                       COD.BRANCH_NUMBER_NK,
@@ -915,9 +929,11 @@ AS
                       COD.CUSTOMER_NK,
                       COD.DISC_GROUP,
                       COD.INSERT_TIMESTAMP,
-                      NVL (COD.EXPIRE_DATE, SYSDATE) EXPIRE_DATE,
+                      NVL (COD.EXPIRE_DATE, SYSDATE)
+                         EXPIRE_DATE,
                       COD.MASTER_PRODUCT,
-                      TO_NUMBER (COD.MULTIPLIER) MULTIPLIER,
+                      TO_NUMBER (COD.MULTIPLIER)
+                         MULTIPLIER,
                       COD.OPERATOR_USED,
                       COD.OVERRIDE_ID_NK,
                       COD.OVERRIDE_TYPE,
@@ -942,12 +958,15 @@ AS
               PR_OVR_BASE
                  ON (    SP_HIST.PRODUCT_NK = PR_OVR_BASE.MASTER_PRODUCT
                      AND SP_HIST.ACCOUNT_NUMBER =
-                            PR_OVR_BASE.BRANCH_NUMBER_NK
+                         PR_OVR_BASE.BRANCH_NUMBER_NK
                      AND SP_HIST.MAIN_CUSTOMER_NK = PR_OVR_BASE.CUSTOMER_NK
                      AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
-                            NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
+                         NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH')))
         sp_dtl;
 
+ALTER TABLE PRICE_MGMT.PR_VICT2_CUST_R2MO MODIFY (PRICE_CATEGORY VARCHAR2(15 CHAR));
+ALTER TABLE PRICE_MGMT.PR_VICT2_CUST_R2MO MODIFY (PRICE_CATEGORY_OVR_PR VARCHAR2(15 CHAR));
+ALTER TABLE PRICE_MGMT.PR_VICT2_CUST_R2MO MODIFY (PRICE_CATEGORY_OVR_GR VARCHAR2(15 CHAR));
 
 INSERT INTO PRICE_MGMT.PR_VICT2_CUST_R2MO
    SELECT * FROM PRICE_MGMT.PR_VICT2_DAILY;
@@ -956,21 +975,23 @@ INSERT INTO PRICE_MGMT.PR_PRICE_CAT_HIST
    SELECT YEARMONTH,
           EOM_YEARMONTH,
           INVOICE_NUMBER_GK,
-          PRICE_CODE,
-          ORIG_PRICE_CODE,
           INVOICE_LINE_NUMBER,
           PRODUCT_GK,
           SPECIAL_PRODUCT_GK,
           PROCESS_DATE,
+          SHIPPED_QTY,
           EXT_SALES_AMOUNT,
           EXT_ACTUAL_COGS_AMOUNT,
           CORE_ADJ_AVG_COST,
           EXT_AVG_COGS_AMOUNT,
+          --INSERT_TIMESTAMP,
           INSERT_TIMESTAMP_ILF,
-          PRICE_CODE,
           PRICE_CATEGORY_OVR_PR,
           PRICE_CATEGORY_OVR_GR,
           PRICE_CATEGORY,
+          PRICE_CODE,
+          ORIG_PRICE_CODE,
+          ORIG_PRICE_CATEGORY,
           PRICE_FORMULA,
           CASE
              WHEN     COALESCE (PRICE_CATEGORY_OVR_PR,

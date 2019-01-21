@@ -63,7 +63,7 @@ SELECT DISTINCT
        sp_dtl.CUSTOMER_TYPE,
        sp_dtl.REF_BID_NUMBER,
        sp_dtl.SOURCE_ORDER,
-	     sp_dtl.ORDER_ENTRY_DATE,
+       sp_dtl.ORDER_ENTRY_DATE,
        sp_dtl.COPY_SOURCE_HIST,
        sp_dtl.CONTRACT_DESCRIPTION,
        sp_dtl.CONTRACT_NUMBER
@@ -140,7 +140,7 @@ SELECT DISTINCT
                   DG.DISCOUNT_GROUP_NAME,
                   MV.MASTER_VENDOR_NAME
              FROM (SELECT IHF.ACCOUNT_NUMBER,
-             IHF.YEARMONTH,
+                          IHF.YEARMONTH,
                           CUST.ACCOUNT_NAME,
                           IHF.WAREHOUSE_NUMBER,
                           IHF.INVOICE_NUMBER_NK,

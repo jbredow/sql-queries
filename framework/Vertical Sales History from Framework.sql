@@ -99,7 +99,7 @@ AS
           SUM (HIST.CORE_ADJ_AVG_COST)
              EXT_AVG_COGS_AMOUNT,
           COUNT (DISTINCT IHF.CUSTOMER_ACCOUNT_GK) CUSTOMERS   
-   FROM PRICE_MGMT.PR_PRICE_CAT_HIST_TEMP HIST
+   FROM PRICE_MGMT.PR_PRICE_CAT_HIST HIST
         INNER JOIN DW_FEI.INVOICE_HEADER_FACT IHF
            ON (    HIST.INVOICE_NUMBER_GK = IHF.INVOICE_NUMBER_GK
                AND HIST.YEARMONTH = IHF.YEARMONTH)
@@ -130,7 +130,7 @@ AS
         INNER JOIN AAD9606.XREF_ITEMS_SPLYCOM S
            ON PROD.PRODUCT_NK = S.PRODUCT_NK
    WHERE     TPD.ROLL12MONTHS = 'LAST TWELVE MONTHS'
-         --AND           MEGA.REG_ACCT_NAME IN ('TALLAHASSEE','JAX','ORLANDO')
+         --AND MEGA.REG_ACCT_NAME IN ('TALLAHASSEE','JAX','ORLANDO')
          AND SUBSTR (SWD.DIVISION_NAME, 0, 4) IN ('NORT',
                                                   'SOUT',
                                                   'EAST',
@@ -218,4 +218,4 @@ AS
                   COALESCE (HIST.PRICE_CATEGORY_OVR_PR,
                             HIST.PRICE_CATEGORY_OVR_GR,
                             HIST.PRICE_CATEGORY)
-            END
+            END;

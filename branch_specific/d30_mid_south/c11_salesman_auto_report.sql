@@ -472,7 +472,7 @@ from (
                           --AND CUST.ACCOUNT_NAME = 'KC'
                           --AND IHF.INVOICE_NUMBER_NK in ('2658674','2683795')
                           --AND ILF.PRICE_CODE in ('R','N/A','Q')
-													AND IHF.WAREHOUSE_NUMBER = '1717' --IN ('93','213','479','566','291')
+													AND IHF.WAREHOUSE_NUMBER = '150' --IN ('93','213','479','566','291')
                           --AND IHF.REF_BID_NUMBER='B225888'
                           --AND CUST.CUSTOMER_NK = '127896'
                           --AND PROD.LINEBUY_NK='200'
@@ -501,7 +501,7 @@ from (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               24,
+                                                               4,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')
@@ -512,7 +512,7 @@ from (
                                                        TRUNC (
                                                           SYSDATE
                                                           - NUMTOYMINTERVAL (
-                                                               24,
+                                                               4,
                                                                'MONTH'),
                                                           'MONTH'),
                                                        'YYYYMM')

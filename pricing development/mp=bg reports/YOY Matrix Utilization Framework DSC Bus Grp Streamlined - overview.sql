@@ -36,7 +36,7 @@ SELECT SLS.REGION,
        SLS.DISTRICT,
        SUBSTR (SLS.DISTRICT, 1, 3)
           D_NK,
-       --FISCAL_YEAR_TO_DATE,
+       FISCAL_YEAR_TO_DATE,
        SLS.YEARMONTH,
        SLS.BUDG_BUS_GRP,
        CASE
@@ -72,31 +72,21 @@ SELECT SLS.REGION,
        END
           AS BG,
        NVL (
-          SUM (
-             CASE
-                WHEN FYTD IN 'YEAR TO DATE' THEN SLS.EXT_SALES_AMOUNT
-                ELSE 0
-             END),
+          SUM (SLS.EXT_SALES_AMOUNT),
           0)
           EX_SALES,
        NVL (
-          SUM (
-             CASE
-                WHEN FYTD IN 'YEAR TO DATE' THEN SLS.EXT_AVG_COGS_AMOUNT
-                ELSE 0
-             END),
+          SUM (SLS.EXT_AVG_COGS_AMOUNT),
           0)
           EX_COGS,
        NVL (
-          SUM (
-             CASE WHEN FYTD IN 'YEAR TO DATE' THEN SLS.TOTAL_LINES ELSE 0 END),
+          SUM (SLS.TOTAL_LINES),
           0)
           EX_LINES,
        /* MATRIX */
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL IN ('MATRIX', 'MATRIX_BID', 'NDP')
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -106,7 +96,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL IN ('MATRIX', 'MATRIX_BID', 'NDP')
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -116,7 +105,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL IN ('MATRIX', 'MATRIX_BID', 'NDP')
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -127,7 +115,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL = 'OVERRIDE'
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -137,7 +124,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL = 'OVERRIDE'
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -147,7 +133,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL IN ('OVERRIDE')
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -158,7 +143,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL IN ('MANUAL', 'QUOTE', 'TOOLS')
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -168,7 +152,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL IN ('MANUAL', 'QUOTE', 'TOOLS')
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -178,7 +161,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL IN ('MANUAL', 'QUOTE', 'TOOLS')
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -189,7 +171,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL = 'SPECIALS'
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -199,7 +180,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL = 'SPECIALS'
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -209,7 +189,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL IN ('SPECIALS')
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -219,7 +198,7 @@ SELECT SLS.REGION,
        /* CREDITS */
        SUM (
           CASE
-             WHEN PRICE_CATEGORY_FINAL = 'CREDITS' AND FYTD IN 'YEAR TO DATE'
+             WHEN PRICE_CATEGORY_FINAL = 'CREDITS' 
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -228,7 +207,7 @@ SELECT SLS.REGION,
           CREDITS_SALES,
        SUM (
           CASE
-             WHEN PRICE_CATEGORY_FINAL = 'CREDITS' AND FYTD IN 'YEAR TO DATE'
+             WHEN PRICE_CATEGORY_FINAL = 'CREDITS' 
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -237,7 +216,7 @@ SELECT SLS.REGION,
           CREDITS_COGS,
        SUM (
           CASE
-             WHEN PRICE_CATEGORY_FINAL = 'CREDITS' AND FYTD IN 'YEAR TO DATE'
+             WHEN PRICE_CATEGORY_FINAL = 'CREDITS' 
              THEN
                 SLS.TOTAL_LINES
              ELSE
@@ -248,7 +227,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL <> 'CREDITS'
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.EXT_SALES_AMOUNT
              ELSE
@@ -258,7 +236,6 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL <> 'CREDITS'
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.EXT_AVG_COGS_AMOUNT
              ELSE
@@ -268,15 +245,13 @@ SELECT SLS.REGION,
        SUM (
           CASE
              WHEN     PRICE_CATEGORY_FINAL <> 'CREDITS'
-                  AND FYTD IN 'YEAR TO DATE'
              THEN
                 SLS.TOTAL_LINES
              ELSE
                 0
           END)
           OUTBOUND_LINES
-FROM (SELECT TPD.FISCAL_YEAR_TO_DATE
-                FYTD,
+FROM (SELECT TPD.FISCAL_YEAR_TO_DATE,
              SWD.DIVISION_NAME
                 REGION,
              SWD.REGION_NAME
@@ -312,7 +287,7 @@ FROM (SELECT TPD.FISCAL_YEAR_TO_DATE
                 AVG_COGS,
              SUM (HIST.CORE_ADJ_AVG_COST)
                 EXT_AVG_COGS_AMOUNT
-      FROM PRICE_MGMT.PR_PRICE_CAT_HIST_2 HIST
+      FROM PRICE_MGMT.PR_PRICE_CAT_HIST HIST
            /*   INNER JOIN DW_FEI.INVOICE_HEADER_FACT IHF
                  ON (    HIST.INVOICE_NUMBER_GK = IHF.INVOICE_NUMBER_GK
                      AND HIST.YEARMONTH = IHF.YEARMONTH)*/
@@ -347,9 +322,9 @@ FROM (SELECT TPD.FISCAL_YEAR_TO_DATE
       -- USE FOR PRODUCT AND DISCOUNT GROUP
       /* LEFT OUTER JOIN DW_FEI.PRODUCT_DIMENSION PROD
           ON HIST.PRODUCT_GK = PROD.PRODUCT_GK*/
-      WHERE TPD.FISCAL_YEAR_TO_DATE = 'YEAR TO DATE'             --IS NOT NULL
+      WHERE TPD.FISCAL_YEAR_TO_DATE IS NOT NULL
       --AND TPD.FISCAL_YEAR_TO_DATE = 'LAST YEAR TO DATE', 'YEAR TO DATE'
-      --AND SWD.ACCOUNT_NAME = 'LAKEWOOD'
+      AND SWD.ACCOUNT_NAME = 'OHIOHVAC'
       --AND SUBSTR (SWD.DIVISION_NAME, 0, 4) IN ('NORT', 'SOUT')
       --AND ILF.PRODUCT_NK IN ('3916528', '7345096', '1203376', '1394851', '1899154', '392227', '4087354', '1395295', '4845558', '7606039', '7218785', '7233816', '4421856', '7608980', '3866980', '3755523', '4811170', '4427169', '7574543', '7062812', '7523517', '6206447', '7190521', '7559530', '3910383', '4828363', '5084195', '2437460', '4570551', '7316654', '4937194', '1855808', '7586061', '4570580', '4570558', '7505772', '4915154', '4160134', '2484038', '7043680', '1260111', '1898659', '3809995', '5164422', '4806721', '7628684', '5082066', '7601488', '4272910', '7238821', '7586081', '7252602', '7607120', '7588514', '7545448', '7546030', '7171559', '7541200', '7541208', '7541265', '7115636', '7638645', '4592952')
       GROUP BY TPD.FISCAL_YEAR_TO_DATE,
@@ -410,7 +385,7 @@ GROUP BY SLS.REGION,
             END,
          SLS.DISTRICT,
          SUBSTR (SLS.DISTRICT, 1, 3),
-         --FISCAL_YEAR_TO_DATE,
+         FISCAL_YEAR_TO_DATE,
          SLS.YEARMONTH,
          SLS.BUDG_BUS_GRP,
          CASE
