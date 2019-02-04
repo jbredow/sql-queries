@@ -101,13 +101,13 @@ SELECT DISTINCT
                   WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
                   THEN
                      CASE
-                        WHEN SP_HIST.PROCESS_DATE BETWEEN COALESCE (
+                        WHEN SP_HIST.ORDER_ENTRY_DATE BETWEEN COALESCE (
                                                                  PR_OVR_JOB.INSERT_TIMESTAMP-1,
                                                                  PR_OVR_BASE.INSERT_TIMESTAMP-1)
                                                           AND COALESCE (
                                                                  PR_OVR_JOB.EXPIRE_DATE,
                                                                  PR_OVR_BASE.EXPIRE_DATE,
-                                                                 SP_HIST.PROCESS_DATE)
+                                                                 SP_HIST.ORDER_ENTRY_DATE)
                         THEN
                            CASE
                               WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
@@ -166,13 +166,13 @@ SELECT DISTINCT
                   WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
                   THEN
                      CASE
-                        WHEN SP_HIST.PROCESS_DATE BETWEEN COALESCE (
+                        WHEN SP_HIST.ORDER_ENTRY_DATE BETWEEN COALESCE (
                                                                  GR_OVR_JOB.INSERT_TIMESTAMP-1,
                                                                  GR_OVR_BASE.INSERT_TIMESTAMP-1)
                                                           AND COALESCE (
                                                                  GR_OVR_JOB.EXPIRE_DATE,
                                                                  GR_OVR_BASE.EXPIRE_DATE,
-                                                                 SP_HIST.PROCESS_DATE)
+                                                                 SP_HIST.ORDER_ENTRY_DATE)
                         THEN
                            CASE
                               WHEN REPLACE (SP_HIST.PRICE_FORMULA, '0.', '.') =
