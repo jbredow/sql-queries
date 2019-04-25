@@ -161,9 +161,7 @@ SELECT SWD.DIVISION_NAME,
                 0
           END)
           MANUAL_LINES,
-       
-       
-       
+
        SUM (
           CASE
              WHEN VICT2.PRICE_CATEGORY IN ('SPECIALS') THEN VICT2.EXT_SALES

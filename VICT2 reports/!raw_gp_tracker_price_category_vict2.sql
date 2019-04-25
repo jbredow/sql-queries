@@ -698,10 +698,10 @@ FROM (SELECT SP_HIST.*, --process date changed to include invoice processing dat
                           --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
                           --AND PROD.MANUFACTURER = '774'
 
-                          AND ILF.INVOICE_NUMBER_NK LIKE 'CM817603%' 
+                          --AND ILF.INVOICE_NUMBER_NK LIKE 'CM817603%' 
                          
-                          AND IHF.ACCOUNT_NUMBER = '1001'
-                          --AND IHF.WRITER = 'JPB'
+                          AND IHF.ACCOUNT_NUMBER = '34'
+                          AND IHF.WRITER IN ('DBW', 'AXM')
                           --AND CUST.CUSTOMER_NK = '19037'
                           --AND IHF.REF_BID_NUMBER <> 'N/A'
                           AND DECODE (NVL (cust.ar_gl_number, '9999'),

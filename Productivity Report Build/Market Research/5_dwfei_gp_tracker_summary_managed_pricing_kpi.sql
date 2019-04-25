@@ -337,7 +337,7 @@ SELECT GP_SUMS.YEARMONTH,
                   CASE
                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
                      THEN
-                        (GP_DATA.AVG_COGS)
+                        (GP_DATA.CORE_AVG_COGS)
                      ELSE
                         0
                   END)
@@ -346,7 +346,7 @@ SELECT GP_SUMS.YEARMONTH,
                   CASE
                      WHEN GP_DATA.PRICE_CATEGORY IN ('MATRIX', 'MATRIX_BID', 'NDP')
                      THEN
-                        (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                        (GP_DATA.EXT_SALES - GP_DATA.CORE_AVG_COGS)
                      ELSE
                         0
                   END)
@@ -373,7 +373,7 @@ SELECT GP_SUMS.YEARMONTH,
                   CASE
                      WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                      THEN
-                        (GP_DATA.AVG_COGS)
+                        (GP_DATA.CORE_AVG_COGS)
                      ELSE
                         0
                   END)
@@ -382,7 +382,7 @@ SELECT GP_SUMS.YEARMONTH,
                   CASE
                      WHEN GP_DATA.PRICE_CATEGORY IN 'OVERRIDE'
                      THEN
-                        (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                        (GP_DATA.EXT_SALES - GP_DATA.CORE_AVG_COGS)
                      ELSE
                         0
                   END)
@@ -411,7 +411,7 @@ SELECT GP_SUMS.YEARMONTH,
                      WHEN GP_DATA.PRICE_CATEGORY IN
                              ('MANUAL', 'TOOLS', 'QUOTE')
                      THEN
-                        (GP_DATA.AVG_COGS)
+                        (GP_DATA.CORE_AVG_COGS)
                      ELSE
                         0
                   END)
@@ -421,7 +421,7 @@ SELECT GP_SUMS.YEARMONTH,
                      WHEN GP_DATA.PRICE_CATEGORY IN
                              ('MANUAL', 'TOOLS', 'QUOTE')
                      THEN
-                        (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                        (GP_DATA.EXT_SALES - GP_DATA.CORE_AVG_COGS)
                      ELSE
                         0
                   END)
@@ -467,7 +467,7 @@ SELECT GP_SUMS.YEARMONTH,
                               'MATRIX_BID',
                               'Total')
                      THEN
-                        (GP_DATA.AVG_COGS)
+                        (GP_DATA.CORE_AVG_COGS)
                      ELSE
                         0
                   END)
@@ -485,7 +485,7 @@ SELECT GP_SUMS.YEARMONTH,
                               'MATRIX_BID',
                               'Total')
                      THEN
-                        (GP_DATA.EXT_SALES - GP_DATA.AVG_COGS)
+                        (GP_DATA.EXT_SALES - GP_DATA.CORE_AVG_COGS)
                      ELSE
                         0
                   END)

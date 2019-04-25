@@ -2,11 +2,6 @@
   added PRICE_CATEGORY_FINAL, IHF.WAREHOUSE_NUMBER, IHF.CUSTOMER_ACCOUNT_GK
 */
 
-grant select on AAA6863.PR_PRICE_CAT_HIST_TEST_1 to public;
-grant select on AAA6863.PR_PRICE_CAT_HIST_TEST_2 to public;
-grant select on AAA6863.PR_PRICE_CAT_HIST_TEST_3 to public;
-
-
 CREATE TABLE AAA6863.PR_PRICE_CAT_HIST_TEST_2
 NOLOGGING
 AS
@@ -792,8 +787,8 @@ AS
                      --AND IHF.ORDER_CODE NOT IN 'IC'
                    --Excludes shipments to other FEI locations.
                      AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                     AND ILF.YEARMONTH = '201812'  --BETWEEN '201709' AND '201804'
-                     AND IHF.YEARMONTH = '201812'  --BETWEEN '201709' AND '201804'
+                     AND ILF.YEARMONTH = '201901'
+                     AND IHF.YEARMONTH = '201901'
                                             ) SP_HIST
               LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                  ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK

@@ -1,0 +1,62 @@
+SELECT P.PRODUCT_ACCT,
+       MP.DISC_GROUP_ID,
+       DG.DISCOUNT_GROUP_NAME,
+      -- P.PRODUCT_KEY,
+      -- P.PRODUCT_ID,
+       LEFT (P.PRODUCT_ID, (CHARINDEX ('*', P.PRODUCT_ID)) - 1)
+          --right(P.PRODUCT_ID,len(P.PRODUCT_ID)- CHARINDEX('*',P.PRODUCT_ID))
+          MPID,
+      -- RIGHT (P.PRODUCT_ID,
+       --       LEN (P.PRODUCT_ID) - CHARINDEX ('*', P.PRODUCT_ID))
+       --   WHSE,
+       MP.V_ALT_CODE1,
+       MP.VENDOR_PROD_CODE,
+       MP.PRODUCT_DESC,
+       MAX (ROUND (P.RPLC_COST_AMT, 2))
+          RPLC_COST_AMT,
+       MAX (V_RPLC_CHG_DATE)
+          V_RPLC_CHG_DATE,
+       MAX (ROUND (P.AVG_COST_AMT, 2))
+          AVG_COST_AMT,
+       SUM (ROUND (P.ON_HAND_BAL, 0))
+          ON_HAND_BAL,
+       MAX (ROUND (P.AVG_DEMAND_AMT, 2))
+          DEMAND,
+       MAX (ROUND (P.V_BASIS_L, 2))
+          BR_LIST,
+       MAX (P.V_LAST_PRICE_CHG_DATE)
+          V_LAST_PRICE_CHG_DATE,
+       MAX (ROUND (P.V_BASIS_2, 2))
+          BASIS_2,
+       MAX(ROUND (P.V_BASIS_4, 2))
+          BASIS_4,
+       MAX(ROUND (P.V_LAST_RPLC_COST_AMT, 2))
+          LAST_RPLC_COST_AMT,
+       MAX(V_LAST_RPLC_CHG_DATE) V_LAST_RPLC_CHG_DATE
+FROM [ODS_STG].[PRODUCT] P
+     INNER JOIN [ODS_STG].[MASTER_PRODUCT] MP
+        ON LEFT (P.PRODUCT_ID, CHARINDEX ('*', P.PRODUCT_ID) - 1) =
+           -- right(P.PRODUCT_ID,len(P.PRODUCT_ID)- CHARINDEX('*',P.PRODUCT_ID)) =
+           MP.MASTER_PRODUCT_ID
+     INNER JOIN [DWFEI_STG].[DISCOUNT_GROUP_DIMENSION] DG
+        ON MP.DISC_GROUP_ID = DG.DISCOUNT_GROUP_NK
+WHERE                                                   --   P.ON_HAND_BAL > 0
+          P.AVG_COST_AMT IS NOT NULL
+      AND LTRIM (MP.DISC_GROUP_ID) IN ('1072', '1076')
+      AND CHARINDEX ('*', P.PRODUCT_ID) > 2
+      AND P.PRODUCT_ID NOT LIKE '%NS%'
+      AND PRODUCT_ACCT IN ('ORL')
+GROUP BY P.PRODUCT_ACCT,
+         MP.DISC_GROUP_ID,
+         DG.DISCOUNT_GROUP_NAME,
+        -- P.PRODUCT_KEY,
+        -- P.PRODUCT_ID,
+         LEFT (P.PRODUCT_ID, (CHARINDEX ('*', P.PRODUCT_ID)) - 1),
+        -- RIGHT (P.PRODUCT_ID,
+       --         LEN (P.PRODUCT_ID) - CHARINDEX ('*', P.PRODUCT_ID)),
+         MP.V_ALT_CODE1,
+         MP.VENDOR_PROD_CODE,
+         MP.PRODUCT_DESC
+
+
+

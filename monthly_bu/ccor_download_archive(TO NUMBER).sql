@@ -1,7 +1,7 @@
 /*
 	monthly backup of contracts for cent*/
 
-CREATE TABLE AAM1365.A_CCOR_CENT_201904 NOLOGGING
+CREATE TABLE AAM1365.A_CCOR_CENT_201902 NOLOGGING
 	AS 
 
 SELECT * 
@@ -9,14 +9,14 @@ SELECT *
                  SUBSTR ( SWD.REGION_NAME, 1, 3 ) DIST,
                  SWD.ACCOUNT_NUMBER_NK BRANCH_NO,
                  SWD.ALIAS_NAME BRANCH_NAME,
-                 CCORG.CUSTOMER_NK CUST_NO,
+                 TO_NUMBER (CCORG.CUSTOMER_NK) CUST_NO,
                  CASE
-                    WHEN CUST.MAIN_CUSTOMER_NK =
-                            CCORG.CUSTOMER_NK
+                    WHEN TO_NUMBER (CUST.MAIN_CUSTOMER_NK) =
+                            TO_NUMBER (CCORG.CUSTOMER_NK)
                     THEN
                        NULL
                     ELSE
-                       CUST.MAIN_CUSTOMER_NK
+                       TO_NUMBER (CUST.MAIN_CUSTOMER_NK)
                  END
                     MAIN_NO,
                  CUST.CUSTOMER_NAME,
@@ -69,14 +69,14 @@ SELECT *
                    SUBSTR ( SWD.REGION_NAME, 1, 3 ),
                    SWD.ACCOUNT_NUMBER_NK,
                    SWD.ALIAS_NAME,
-                   CCORG.CUSTOMER_NK,
+                   TO_NUMBER (CCORG.CUSTOMER_NK),
                    CASE
-                      WHEN CUST.MAIN_CUSTOMER_NK =
-                              CCORG.CUSTOMER_NK
+                      WHEN TO_NUMBER (CUST.MAIN_CUSTOMER_NK) =
+                              TO_NUMBER (CCORG.CUSTOMER_NK)
                       THEN
                          NULL
                       ELSE
-                         CUST.MAIN_CUSTOMER_NK
+                         TO_NUMBER (CUST.MAIN_CUSTOMER_NK)
                    END,
                    CUST.CUSTOMER_NAME,
                    CASE
@@ -101,14 +101,14 @@ SELECT *
                 SUBSTR ( SWD.REGION_NAME, 1, 3 ) DIST,
                 SWD.ACCOUNT_NUMBER_NK BRANCH_NO,
                 SWD.ALIAS_NAME BRANCH_NAME,
-                CCORP.CUSTOMER_NK CUST_NO,
+                TO_NUMBER (CCORP.CUSTOMER_NK) CUST_NO,
                 CASE
-                   WHEN CUST2.MAIN_CUSTOMER_NK =
-                           CCORP.CUSTOMER_NK
+                   WHEN TO_NUMBER (CUST2.MAIN_CUSTOMER_NK) =
+                           TO_NUMBER (CCORP.CUSTOMER_NK)
                    THEN
                       NULL
                    ELSE
-                      CUST2.MAIN_CUSTOMER_NK
+                      TO_NUMBER (CUST2.MAIN_CUSTOMER_NK)
                 END
                    MAIN_NO,
                 CUST2.CUSTOMER_NAME,
@@ -164,14 +164,14 @@ SELECT *
                   SUBSTR ( SWD.REGION_NAME, 1, 3 ),
                   SWD.ACCOUNT_NUMBER_NK,
                   SWD.ALIAS_NAME,
-                  CCORP.CUSTOMER_NK,
+                  TO_NUMBER (CCORP.CUSTOMER_NK),
                   CASE
-                     WHEN CUST2.MAIN_CUSTOMER_NK =
-                             CCORP.CUSTOMER_NK
+                     WHEN TO_NUMBER (CUST2.MAIN_CUSTOMER_NK) =
+                             TO_NUMBER (CCORP.CUSTOMER_NK)
                      THEN
                         NULL
                      ELSE
-                        CUST2.MAIN_CUSTOMER_NK
+                        TO_NUMBER (CUST2.MAIN_CUSTOMER_NK)
                   END,
                   CUST2.CUSTOMER_NAME,
                   CASE
@@ -202,49 +202,49 @@ ORDER BY XX.REGION, XX.DIST, XX.BRANCH_NO, XX.MAIN_NO, XX.CUST_NO
 ;
 
 
-GRANT SELECT ON AAM1365.A_CCOR_CENT_201904 TO PUBLIC;
+GRANT SELECT ON AAM1365.A_CCOR_CENT_201902 TO PUBLIC;
 
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D10';
 
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D11';
  
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D12';
  
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D14';
 
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D30';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D31';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D32';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) IN ('D50', 'D51', 'D53');
  
 /*
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D50';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D51';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201904 CCOR
+  FROM AAM1365.A_CCOR_CENT_201902 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D53';*/

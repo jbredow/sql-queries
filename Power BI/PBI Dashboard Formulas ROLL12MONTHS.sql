@@ -6,6 +6,19 @@ Total Sales LY = CALCULATE(
     SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
         tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR")
 
+Total Lines TY = CALCULATE(SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+    tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS")
+
+Total Lines LY = CALCULATE(SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+    tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR")
+
+Outbound Sales LY = CALCULATE([Total Sales LY]-[Credits Sales LY])
+
+Outbound Sales TY = CALCULATE([Total Sales TY]-[Credits Sales TY])
+
+Outbound Lines TY = CALCULATE([Total Lines TY]-[Credits Lines TY])
+
+Outbound Lines LY = CALCULATE([Total Lines LY]-[Credits Lines LY])
 ---------------------------------------------------------------------------------
 -- CORE Adjusted Cost
 
@@ -97,6 +110,24 @@ Matrix Sales LY = CALCULATE(
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MATRIX")
 
+Matrix Lines TY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MATRIX")
+
+Matrix Lines LY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MATRIX")
+
+Matrix Sales Util. LY = DIVIDE([Matrix Sales LY],[Outbound Sales LY],0)
+
+Matrix Sales Util. TY = DIVIDE([Matrix Sales TY],[Outbound Sales TY],0)
+
+Matrix Lines Util. LY = DIVIDE([Matrix Lines LY],[Outbound Lines LY],0)
+
+Matrix Lines Util. TY = DIVIDE([Matrix Lines TY],[Outbound Lines TY],0)
+
 ---------------------------------------------------------------------------------
 -- Matrix Average Cost
 
@@ -127,6 +158,10 @@ Matrix Avg GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
 Matrix Avg GP% TY = DIVIDE([Matrix Avg GP$ TY],[Matrix Sales TY],0)
 
 Matrix Avg GP% LY = DIVIDE([Matrix Avg GP$ LY],[Matrix Sales LY],0)
+
+Matrix Sales Util. LY = DIVIDE([Matrix Sales TY],[Total Sales LY],0)
+
+Matrix Sales Util. TY = DIVIDE([Matrix Sales TY],[Total Sales TY],0)
 
 ---------------------------------------------------------------------------------
 -- Matrix CORE Adjusted Average Cost
@@ -203,6 +238,24 @@ CCOR Sales LY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CCOR")
+
+CCOR Lines TY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CCOR")
+
+CCOR Lines LY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CCOR")
+
+CCOR Sales Util. LY = DIVIDE([CCOR Sales LY],[Outbound Sales LY],0)
+
+CCOR Sales Util. TY = DIVIDE([CCOR Sales TY],[Outbound Sales TY],0)
+
+CCOR Lines Util. LY = DIVIDE([CCOR Lines LY],[Outbound Lines LY],0)
+
+CCOR Lines Util. TY = DIVIDE([CCOR Lines TY],[Outbound Lines TY],0)
 
 ---------------------------------------------------------------------------------
 -- CCOR Average Cost
@@ -301,34 +354,54 @@ CCOR Inv. GP% LY = DIVIDE([CCOR Inv. GP$ LY],[CCOR Sales LY],0)
 ---------------------------------------------------------------------------------
 -- MANUAL Sales Cat
 
-MANUAL Sales TY = CALCULATE(
+Manual Sales TY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
-MANUAL Sales LY = CALCULATE(
+Manual Sales LY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
+Manual Lines LY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
+                tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
+                tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
+
+Manual Lines TY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
+                tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
+                tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
+
+Manual Sales Util. LY = DIVIDE([MANUAL Sales LY],[Outbound Sales LY],0)
+
+Manual Sales Util. TY = DIVIDE([MANUAL Sales TY],[Outbound Sales TY],0)
+
+Manual Lines Util. LY = DIVIDE([Manual Lines LY],[Outbound Lines LY],0)
+
+Manual Lines Util. TY = DIVIDE([Manual Lines TY],[Outbound Lines TY],0)
+
 ---------------------------------------------------------------------------------
 -- MANUAL Average Cost
 
-MANUAL Avg COGS TY = CALCULATE(
+Manual Avg COGS TY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[AVG_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
-MANUAL Avg COGS LY = CALCULATE(
+Manual Avg COGS LY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[AVG_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
             
-MANUAL Avg GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Manual Avg GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
@@ -337,7 +410,7 @@ MANUAL Avg GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
-MANUAL Avg GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Manual Avg GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
@@ -346,26 +419,26 @@ MANUAL Avg GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
-MANUAL Avg GP% TY = DIVIDE([MANUAL Avg GP$ TY],[MANUAL Sales TY],0)
+Manual Avg GP% TY = DIVIDE([MANUAL Avg GP$ TY],[MANUAL Sales TY],0)
 
-MANUAL Avg GP% LY = DIVIDE([MANUAL Avg GP$ LY],[MANUAL Sales LY],0)
+Manual Avg GP% LY = DIVIDE([MANUAL Avg GP$ LY],[MANUAL Sales LY],0)
 
 ---------------------------------------------------------------------------------
 -- MANUAL CORE Adjusted Average Cost
 
-MANUAL CORE COGS TY = CALCULATE(
+Manual CORE COGS TY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[CORE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
-MANUAL CORE COGS LY = CALCULATE(
+Manual CORE COGS LY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[CORE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
             
-MANUAL CORE GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Manual CORE GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
@@ -374,7 +447,7 @@ MANUAL CORE GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
-MANUAL CORE GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Manual CORE GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
@@ -383,26 +456,26 @@ MANUAL CORE GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
-MANUAL CORE GP% TY = DIVIDE([MANUAL CORE GP$ TY],[MANUAL Sales TY],0)
+Manual CORE GP% TY = DIVIDE([MANUAL CORE GP$ TY],[MANUAL Sales TY],0)
 
-MANUAL CORE GP% LY = DIVIDE([MANUAL CORE GP$ LY],[MANUAL Sales LY],0)
+Manual CORE GP% LY = DIVIDE([MANUAL CORE GP$ LY],[MANUAL Sales LY],0)
 
 ---------------------------------------------------------------------------------
 -- MANUAL Invoice Cost
 
-MANUAL Inv. TY = CALCULATE(
+Manual Inv. TY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[INVOICE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
-MANUAL Inv. COGS LY = CALCULATE(
+Manual Inv. COGS LY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[INVOICE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
             
-MANUAL Inv. GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Manual Inv. GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
@@ -411,7 +484,7 @@ MANUAL Inv. GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
-MANUAL Inv. GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Manual Inv. GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
@@ -420,9 +493,42 @@ MANUAL Inv. GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "MANUAL" ||
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "OTH/ERROR")
 
-MANUAL Inv. GP% TY = DIVIDE([MANUAL Inv. GP$ TY],[MANUAL Sales TY],0)
+Manual Inv. GP% TY = DIVIDE([MANUAL Inv. GP$ TY],[MANUAL Sales TY],0)
 
-MANUAL Inv. GP% LY = DIVIDE([MANUAL Inv. GP$ LY],[MANUAL Sales LY],0)
+Manual Inv. GP% LY = DIVIDE([MANUAL Inv. GP$ LY],[MANUAL Sales LY],0)
+
+
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+-- SP- Sales Cat
+
+SP- Sales TY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "SP-")
+
+SP- Sales LY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "SP-")
+
+SP- Lines TY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "SP-")
+
+SP- Lines LY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "SP-")
+
+SP- Sales Util. LY = DIVIDE([SP- Lines LY],[Outbound Sales LY],0)
+
+SP- Sales Util. TY = DIVIDE([SP- Lines TY],[Outbound Sales TY],0)
+
+SP- Lines Util. LY = DIVIDE([SP- Lines LY],[Outbound Lines LY],0)
+
+SP- Lines Util. TY = DIVIDE([SP- Lines TY],[Outbound Lines TY],0)
 
 ---------------------------------------------------------------------------------
 -- SP- Average Cost
@@ -489,7 +595,7 @@ SP- CORE GP% LY = DIVIDE([SP- CORE GP$ LY],[SP- Sales LY],0)
 ---------------------------------------------------------------------------------
 -- SP- Invoice Cost
 
-SP- Inv. TY = CALCULATE(
+SP- Inv. COGS TY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[INVOICE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "SP-")
@@ -518,94 +624,126 @@ SP- Inv. GP% TY = DIVIDE([SP- Inv. GP$ TY],[SP- Sales TY],0)
 SP- Inv. GP% LY = DIVIDE([SP- Inv. GP$ LY],[SP- Sales LY],0)
 
 ---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+-- CREDITS Sales Cat
+
+Credits Sales TY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
+
+Credits Sales LY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
+
+Credits Lines TY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
+
+Credits Lines LY = CALCULATE(
+        SUM(tbl_pbi_price_category_sums[INVOICE_LINES]),
+            tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
+            tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
+
+Credits Sales Util. LY = DIVIDE([CREDITS Sales LY],[Outbound Sales LY],0)
+
+Credits Sales Util. TY = DIVIDE([CREDITS Sales TY],[Outbound Sales TY],0)
+
+Credits Lines Util. LY = DIVIDE([Credits Lines LY],[Outbound Lines LY],0)
+
+Credits Lines Util. TY = DIVIDE([Credits Lines TY],[Outbound Lines TY],0)
+
+---------------------------------------------------------------------------------
 -- CREDITS Average Cost
 
-CREDITS Avg COGS TY = CALCULATE(
+Credits Avg COGS TY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[AVG_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
 
-CREDITS Avg COGS LY = CALCULATE(
+Credits Avg COGS LY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[AVG_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
             
-CREDITS Avg GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Credits Avg GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
         -   CALCULATE(SUM(tbl_pbi_price_category_sums[AVG_COGS_AMT]),
                 tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
 
-CREDITS Avg GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Credits Avg GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
     -   CALCULATE(SUM(tbl_pbi_price_category_sums[AVG_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
 
-CREDITS Avg GP% TY = DIVIDE([CREDITS Avg GP$ TY],[CREDITS Sales TY],0)
+Credits Avg GP% TY = DIVIDE([CREDITS Avg GP$ TY],[CREDITS Sales TY],0)
 
-CREDITS Avg GP% LY = DIVIDE([CREDITS Avg GP$ LY],[CREDITS Sales LY],0)
+Credits Avg GP% LY = DIVIDE([CREDITS Avg GP$ LY],[CREDITS Sales LY],0)
 
 ---------------------------------------------------------------------------------
 -- CREDITS CORE Adjusted Average Cost
 
-CREDITS CORE COGS TY = CALCULATE(
+Credits CORE COGS TY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[CORE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
 
-CREDITS CORE COGS LY = CALCULATE(
+Credits CORE COGS LY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[CORE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
             
-CREDITS CORE GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Credits CORE GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
         -   CALCULATE(SUM(tbl_pbi_price_category_sums[CORE_COGS_AMT]),
                 tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
 
-CREDITS CORE GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Credits CORE GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
     -   CALCULATE(SUM(tbl_pbi_price_category_sums[CORE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
 
-CREDITS CORE GP% TY = DIVIDE([CREDITS CORE GP$ TY],[CREDITS Sales TY],0)
+Credits CORE GP% TY = DIVIDE([CREDITS CORE GP$ TY],[CREDITS Sales TY],0)
 
-CREDITS CORE GP% LY = DIVIDE([CREDITS CORE GP$ LY],[CREDITS Sales LY],0)
+Credits CORE GP% LY = DIVIDE([CREDITS CORE GP$ LY],[CREDITS Sales LY],0)
 
 ---------------------------------------------------------------------------------
 -- CREDITS Invoice Cost
 
-CREDITS Inv. TY = CALCULATE(
+Credits Inv. TY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[INVOICE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
 
-CREDITS Inv. COGS LY = CALCULATE(
+Credits Inv. COGS LY = CALCULATE(
         SUM(tbl_pbi_price_category_sums[INVOICE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
             
-CREDITS Inv. GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Credits Inv. GP$ TY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
                 tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
         -   CALCULATE(SUM(tbl_pbi_price_category_sums[INVOICE_COGS_AMT]),
                 tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS",
                 tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
 
-CREDITS Inv. GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
+Credits Inv. GP$ LY = CALCULATE(SUM(tbl_pbi_price_category_sums[EXT_SALES_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
     -   CALCULATE(SUM(tbl_pbi_price_category_sums[INVOICE_COGS_AMT]),
             tbl_pbi_time_dim[ROLL12MONTHS] = "LAST TWELVE MONTHS LAST YEAR",
             tbl_pbi_price_category_sums[PRICE_CATEGORY] = "CREDITS")
 
-CREDITS Inv. GP% TY = DIVIDE([CREDITS Inv. GP$ TY],[CREDITS Sales TY],0)
+Credits Inv. GP% TY = DIVIDE([CREDITS Inv. GP$ TY],[CREDITS Sales TY],0)
 
-CREDITS Inv. GP% LY = DIVIDE([CREDITS Inv. GP$ LY],[CREDITS Sales LY],0)
+Credits Inv. GP% LY = DIVIDE([CREDITS Inv. GP$ LY],[CREDITS Sales LY],0)

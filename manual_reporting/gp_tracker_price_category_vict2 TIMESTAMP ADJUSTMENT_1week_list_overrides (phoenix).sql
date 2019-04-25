@@ -1,7 +1,7 @@
 TRUNCATE TABLE AAA6863.PR_VICT2_MANUAL_1WK_CCORS;
-DROP TABLE AAA6863.PR_VICT2_MANUAL_1WK_CCORS;
+DROP TABLE AAA6863.PR_,.VICT2_MANUAL_1WK_CCORS;
 
-CREATE TABLE AAA6863.PR_VICT2_MANUAL_1WK_CCORS NOLOGGING
+CREATE TABLE AAM1365.PR_VICT2_MANUAL_1WK_CCORS NOLOGGING
 AS
 
 SELECT DISTINCT
@@ -547,7 +547,7 @@ SELECT DISTINCT
                        --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
                        --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
                        --AND PROD.MANUFACTURER = '774'
-                       --AND ILF.
+                       AND IHF.WAREHOUSE_NUMBER IN ('659', '675', '1023', '1280', '1840')
                        --AND IHF.ACCOUNT_NUMBER = '2000'
                        --AND IHF.WRITER = 'JPB'
                        --AND CUST.CUSTOMER_NK = '19037'
@@ -573,14 +573,15 @@ SELECT DISTINCT
                        --AND IHF.ORDER_CODE NOT IN 'IC'
                        --Excludes shipments to other FEI locations.
                        AND IHF.PO_WAREHOUSE_NUMBER IS NULL
-                       --AND ILF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM')
-                       --AND IHF.YEARMONTH = TO_CHAR (TRUNC (SYSDATE, 'MM') - 1, 'YYYYMM'))
-                       AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
+                       AND ILF.YEARMONTH BETWEEN '201709' AND '201902'
+                       AND IHF.YEARMONTH BETWEEN '201709' AND '201902'
+                       /*/AND (TRUNC (IHF.INVOICE_DATE) BETWEEN TRUNC (
                                                                      SYSDATE
-                                                                   - 10)
+                                                                   - 7)
                                                             AND TRUNC (
                                                                      SYSDATE
-                                                                   - 4)))
+                                                                   - 1))*/
+                                                                   )
                SP_HIST
                LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                   ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
@@ -613,7 +614,7 @@ SELECT DISTINCT
                        AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                        AND COD.DELETE_DATE IS NULL
                        AND CUST.JOB_YN = 'Y'
-                       AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 11))
+                       AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 8))
                GR_OVR_JOB
                   ON (    SP_HIST.DISCOUNT_GROUP_NK =
                              (LTRIM (GR_OVR_JOB.DISC_GROUP, '0'))
@@ -648,7 +649,7 @@ SELECT DISTINCT
                        AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                        AND COD.DELETE_DATE IS NULL
                        AND CUST.JOB_YN = 'N'
-                       AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 11))
+                       AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 8))
                GR_OVR_BASE
                   ON (    SP_HIST.DISCOUNT_GROUP_NK =
                              (LTRIM (GR_OVR_BASE.DISC_GROUP, '0'))
@@ -688,7 +689,7 @@ SELECT DISTINCT
                        AND COD.CUSTOMER_GK = CUST.CUSTOMER_GK
                        AND COD.DELETE_DATE IS NULL
                        AND CUST.JOB_YN = 'Y'
-                       AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 11))
+                       AND NVL (COD.EXPIRE_DATE, SYSDATE) >= (SYSDATE - 8))
                PR_OVR_JOB
                   ON (    SP_HIST.PRODUCT_NK = PR_OVR_JOB.MASTER_PRODUCT
                       AND SP_HIST.ACCOUNT_NUMBER =

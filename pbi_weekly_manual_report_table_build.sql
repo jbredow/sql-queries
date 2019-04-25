@@ -22,6 +22,7 @@ SELECT DISTINCT
        sp_dtl.ASSOC_NAME,
        sp_dtl.DISCOUNT_GROUP_NK,
        sp_Dtl.DISCOUNT_GROUP_NAME,
+       sp_Dtl.ORDER_CHANNEL,
        sp_Dtl.CHANNEL_TYPE,
        sp_dtl.INVOICE_LINE_NUMBER,
        sp_dtl.MANUFACTURER,
@@ -234,6 +235,7 @@ SELECT DISTINCT
                        IHF.CONTRACT_DESCRIPTION,
                        IHF.CONTRACT_NUMBER,
                        IHF.OML_ASSOC_NAME,
+                       CHAN.ORDER_CHANNEL,
                        DECODE (ihf.SALE_TYPE,
                                '1', 'Our Truck',
                                '2', 'Counter',
@@ -244,6 +246,7 @@ SELECT DISTINCT
                                '7', 'Showroom Direct',
                                '8', 'eBusiness')
                           TYPE_OF_SALE,
+                       IHF.ORDER_CHANNEL,
                        IHF.CHANNEL_TYPE,
                        IHF.SHIP_VIA_NAME,
                        NVL (IHF.WRITER, IHF.OML_ASSOC_INI) WRITER,
@@ -536,12 +539,14 @@ SELECT DISTINCT
                        DW_FEI.CUSTOMER_DIMENSION CUST,
                        DW_FEI.SPECIAL_PRODUCT_DIMENSION SP_PROD,
                        SALES_MART.SALES_WAREHOUSE_DIM SWD,
-                       DW_FEI.SALESREP_DIMENSION REPS
+                       DW_FEI.SALESREP_DIMENSION REPS,
+                       SALES_MART.INVOICE_CHANNEL_DIMENSION CHAN
                        --DW_FEI.INVOICE_LINE_CORE_FACT ILCF
                  WHERE     IHF.INVOICE_NUMBER_GK = ILF.INVOICE_NUMBER_GK
                        AND IHF.CUSTOMER_ACCOUNT_GK = CUST.CUSTOMER_GK
                        AND SWD.WAREHOUSE_NUMBER_NK = IHF.WAREHOUSE_NUMBER
                        AND IHF.SALESREP_GK = REPS.SALESREP_GK
+                       AND IHF.INVOICE_NUMBER_GK = CHAN.INVOICE_NUMBER_GK
                        --AND IHF.INVOICE_NUMBER_GK = ILCF.INVOICE_NUMBER_GK
                        --AND ILCF.YEARMONTH = ILF.YEARMONTH
                        --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
