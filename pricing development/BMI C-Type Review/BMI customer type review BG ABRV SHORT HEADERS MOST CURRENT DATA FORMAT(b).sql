@@ -1,4 +1,6 @@
-SELECT CASE
+/*
+   updated for FYE 19  run date 5/22/19
+*/SELECT CASE
           WHEN (JOB_YN = 'Y' AND JOB_STATUS = 'CLOSED')
           THEN
              'CLOSED JOBS'
@@ -193,16 +195,16 @@ SELECT CASE
                AND g.EMPLOYEE_NUMBER_NK = k.EMPLOYEE_TRILOGIE_NK(+)
                --AND A.PRICE_COLUMN = 'C'
                --AND a.ACCOUNT_NAME = 'NASH'
-               AND SUBSTR (j.DIVISION_NAME, 0, 4) = 'WEST'
+               --AND SUBSTR (j.DIVISION_NAME, 0, 4) = 'WEST'
                /*AND SUBSTR (j.DIVISION_NAME, 0, 4) IN ('NORT',
                                                       'SOUT',
                                                       'EAST',
                                                       'WEST')*/
-               AND (   (    a.account_setup_date < '1/1/2015'
+               AND (   (    a.account_setup_date < '1/1/2017'
                         AND a.last_sale > '1/1/2015')
-                    OR (    a.account_setup_date > '1/1/2015'
+                    OR (    a.account_setup_date > '1/1/2017'
                         AND a.last_sale IS NOT NULL)
-                    OR a.account_setup_date > '8/1/2016')
+                    OR a.account_setup_date > '8/1/2018')
                AND a.delete_date IS NULL) CUST
 GROUP BY CASE
             WHEN (JOB_YN = 'Y' AND JOB_STATUS = 'CLOSED')

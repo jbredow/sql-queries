@@ -2,26 +2,26 @@
 
 SELECT YEARMONTH,
        CHANNEL,
-       --REGION,
-       --ACCOUNT_NAME,
-       --ACCOUNT_NUMBER,
-       --WAREHOUSE_NUMBER WHSE,
-       --WRITER_INIT WRITER,
-       --MM,
-       --'YTD' YEARMONTH,
+       /*REGION,
+       ACCOUNT_NAME,
+       ACCOUNT_NUMBER,
+       WAREHOUSE_NUMBER WHSE,
+       WRITER_INIT WRITER,
+       MM,
+       'YTD' YEARMONTH,*/
        ROUND ("Price Matrix Use%$" + "Contract Use%$", 4)
           "Managed Price Use%$",
        "Price Matrix Use%$",
        "Contract Use%$"
 FROM (SELECT GP_SUMS.YEARMONTH,
-             --GP_SUMS.MM,
-             --GP_SUMS.REGION,
-             --GP_SUMS.ACCOUNT_NUMBER,
-             --GP_SUMS.ACCOUNT_NAME,
+             /*GP_SUMS.MM,
+             GP_SUMS.REGION,
+             GP_SUMS.ACCOUNT_NUMBER,
+             GP_SUMS.ACCOUNT_NAME,*/
              GP_SUMS.CHANNEL,
-             --GP_SUMS.WRITER_INIT,
-             --GP_SUMS.WAREHOUSE_NUMBER,
-             --GP_SUMS.GPTRACK_KEY,
+             /*GP_SUMS.WRITER_INIT,
+             GP_SUMS.WAREHOUSE_NUMBER,
+             GP_SUMS.GPTRACK_KEY,*/
              GP_SUMS.TOTAL_SALES
                 "Total Sales",
              GP_SUMS.SLS_SUBTOTAL

@@ -1,24 +1,24 @@
-TRUNCATE TABLE AAA6863.GP_TRACKER_13MO_CCOR;
-DROP TABLE AAA6863.GP_TRACKER_13MO_CCOR;
+TRUNCATE TABLE AAA6863.GP_TRACKER_KPI_12MO_CCOR;
+DROP TABLE AAA6863.GP_TRACKER_KPI_12MO_CCOR;
 
-CREATE TABLE AAA6863.GP_TRACKER_13MO_CCOR
+CREATE TABLE AAA6863.GP_TRACKER_KPI_12MO_CCOR
 
 AS
    SELECT LINE_HIST.YYYY,
           LINE_HIST.YEARMONTH,
-          LINE_HIST.ROLLING_QTR,
+          LINE_HIST.YEARMONTH AS ROLLING_QTR,
           LINE_HIST.REGION,
           LINE_HIST.ACCOUNT_NUMBER,
           LINE_HIST.WAREHOUSE_NUMBER,
           LINE_HIST.KOB,
           LINE_HIST.TYPE_OF_SALE,
-          LINE_HIST.PRICE_CODE,
+          --LINE_HIST.PRICE_CODE,
           SUM (LINE_HIST.INVOICE_LINES) invoice_lines,
           SUM (LINE_HIST.CORE_ADJ_AVG_COST) core_avg_cogs,
           SUM (LINE_HIST.EXT_ACTUAL_COGS_AMOUNT) actual_cogs,
           SUM (LINE_HIST.EXT_SALES_AMOUNT) ext_sales,
           LINE_HIST.PRICE_CATEGORY,
-          CASE
+          /*CASE
              WHEN LINE_HIST.PROCESS_DATE BETWEEN COALESCE (
                                                       PR_OVR_JOB.INSERT_TIMESTAMP
                                                     - 2,
@@ -102,7 +102,7 @@ AS
                       NULL
                 END
           END
-             PRICE_CATEGORY_OVR_GR,
+             PRICE_CATEGORY_OVR_GR,*/
           'Subtotal' AS ROLLUP,
           (0) sls_total,
           (0) sls_subtotal,
@@ -114,7 +114,7 @@ AS
           (0) avg_cost_misc
      FROM (SELECT SUBSTR (ihf.YEARMONTH, 0, 4) YYYY,
                   IHF.YEARMONTH,
-                  DECODE (
+                  /*DECODE (
                      ihf.YEARMONTH,
                      TO_CHAR (
                         TRUNC (SYSDATE - NUMTOYMINTERVAL (12, 'MONTH'),
@@ -164,7 +164,7 @@ AS
                         TRUNC (SYSDATE - NUMTOYMINTERVAL (1, 'MONTH'),
                                'MONTH'),
                         'YYYYMM'), 'ROLL_Q4')
-                     ROLLING_QTR,
+                     ROLLING_QTR,*/
                   ps.division_name REGION,
                   ps.ACCOUNT_NUMBER_NK ACCOUNT_NUMBER,
                   ps.WAREHOUSE_NUMBER_nk WAREHOUSE_NUMBER,
@@ -312,8 +312,8 @@ AS
                   DW_FEI.CUSTOMER_DIMENSION cust,
                   DW_FEI.PRODUCT_DIMENSION PROD,
                   SALES_MART.SALES_WAREHOUSE_DIM ps
-            WHERE     ILF.CUSTOMER_ACCOUNT_GK = cust.CUSTOMER_GK
-                  AND ILF.INVOICE_NUMBER_GK = ihf.INVOICE_NUMBER_GK
+            WHERE     ihf.CUSTOMER_ACCOUNT_GK = cust.CUSTOMER_GK
+                  AND ilf.INVOICE_NUMBER_GK = ihf.INVOICE_NUMBER_GK
                   AND ILF.PRODUCT_GK = PROD.PRODUCT_GK(+)
                   AND TO_CHAR (ihf.WAREHOUSE_NUMBER) =
                          TO_CHAR (ps.WAREHOUSE_NUMBER_NK)
@@ -324,13 +324,13 @@ AS
                                                            'Q',
                                                            'N/A',
                                                            'N')
-                  --AND IHF.YEARMONTH BETWEEN '201801' AND '201805'
-                  --AND ILF.YEARMONTH BETWEEN '201801' AND '201805'
+                  /*AND IHF.YEARMONTH BETWEEN '201508' AND '201804'
+                  AND ILF.YEARMONTH BETWEEN '201508' AND '201804'*/
                  
-                 AND ILF.YEARMONTH BETWEEN TO_CHAR (
+                  AND ILF.YEARMONTH BETWEEN TO_CHAR (
                                               TRUNC (
                                                    SYSDATE
-                                                 - NUMTOYMINTERVAL (12, 'MONTH'),
+                                                 - NUMTOYMINTERVAL (24, 'MONTH'),
                                                  'MONTH'),
                                               'YYYYMM')
                                        AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
@@ -338,7 +338,7 @@ AS
                   AND IHF.YEARMONTH BETWEEN TO_CHAR (
                                               TRUNC (
                                                    SYSDATE
-                                                 - NUMTOYMINTERVAL (12, 'MONTH'),
+                                                 - NUMTOYMINTERVAL (24, 'MONTH'),
                                                  'MONTH'),
                                               'YYYYMM')
                                        AND TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
@@ -490,7 +490,7 @@ AS
                         COALESCE (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))
    GROUP BY LINE_HIST.YYYY,
             LINE_HIST.YEARMONTH,
-            LINE_HIST.ROLLING_QTR,
+            LINE_HIST.YEARMONTH,
             LINE_HIST.REGION,
             LINE_HIST.ACCOUNT_NUMBER,
             LINE_HIST.WAREHOUSE_NUMBER,

@@ -1,3 +1,6 @@
+/*
+  24 mo. data
+*/
 SELECT SLS.REGION,
           SUBSTR (SLS.DISTRICT, 1, 3)
        || '^'
