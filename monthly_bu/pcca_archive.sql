@@ -39,7 +39,7 @@ AS
          INNER JOIN
            EBUSINESS.SALES_DIVISIONS SWD
          ON ( CUST.ACCOUNT_NUMBER_NK = SWD.ACCOUNT_NUMBER_NK )
-   WHERE ( SUBSTR ( SWD.REGION_NAME,
+   /*WHERE ( SUBSTR ( SWD.REGION_NAME,
 																														1,
 																														3
 																										) ) IN
@@ -53,7 +53,7 @@ AS
 																												'D32',
 																												'D50',
 																												'D51',
-																												'D53' )
+																												'D53' )*/
 			AND CUST.DELETE_DATE IS NULL
 			-- AND CUST.PRICE_COLUMN BETWEEN '170' AND '193'
 			-- AND CUST.PRICE_COLUMN  <> '175'
@@ -87,7 +87,7 @@ AS
 
 GRANT SELECT ON AAM1365.A_PCCA_CENT_201905 TO PUBLIC;
 
-SELECT *
+/*SELECT *
   FROM AAM1365.A_PCCA_CENT_201905 PCCA
  WHERE PCCA.DIST = 'D10';
  
@@ -118,7 +118,7 @@ SELECT *
  SELECT *
   FROM AAM1365.A_PCCA_CENT_201905 PCCA
  WHERE PCCA.DIST IN ('D50', 'D51', 'D53');
- 
+ */
 /* SELECT *
   FROM AAM1365.A_PCCA_CENT_201905 PCCA
  WHERE PCCA.DIST = 'D51';
