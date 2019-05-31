@@ -215,21 +215,18 @@ FROM (SELECT DISTINCT
             AND a.ACCOUNT_NAME = j.ACCOUNT_NAME
             AND g.EMPLOYEE_NUMBER_NK = k.EMPLOYEE_TRILOGIE_NK(+)
             --AND A.PRICE_COLUMN = 'C'
-            AND a.ACCOUNT_NAME = 'NASH'
+            --AND a.ACCOUNT_NAME = 'NASH'
             --AND SUBSTR (j.DIVISION_NAME, 0, 4) = 'WEST'
             /*AND SUBSTR (j.DIVISION_NAME, 0, 4) IN ('NORT',
                                                    'SOUT',
                                                    'EAST',
                                                    'WEST')*/
-            AND (   (    TO_DATE (a.account_setup_date, 'MM/DD/YY') <
-                         TO_DATE ('01/01/17', 'MM/DD/YY')
-                     AND TO_DATE (a.last_sale, 'MM/DD/YY') >
-                         TO_DATE ('01/01/17', 'MM/DD/YY'))
-                 OR (    TO_DATE (a.account_setup_date, 'MM/DD/YY') >
-                         TO_DATE ('01/01/17', 'MM/DD/YY')
-                     AND a.last_sale IS NOT NULL)
-                 OR TO_DATE (a.account_setup_date, 'MM/DD/YY') >
-                    TO_DATE ('08/01/18', 'MM/DD/YY'))
+            AND (   (    a.account_setup_date < to_date('01/01/2017','MM/DD/YYYY')
+                        AND a.last_sale > to_date('01/01/2017','MM/DD/YYYY'))
+                    OR (    a.account_setup_date > to_date('01/01/2017','MM/DD/YYYY')
+                        AND a.last_sale IS NOT NULL)
+                    OR a.account_setup_date > to_date('08/01/2018','MM/DD/YYYY'))
+
             AND a.delete_date IS NULL) CUST
 GROUP BY CASE
             WHEN (JOB_YN = 'Y' AND JOB_STATUS = 'CLOSED')

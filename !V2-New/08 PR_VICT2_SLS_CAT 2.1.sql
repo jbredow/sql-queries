@@ -1,7 +1,7 @@
-TRUNCATE TABLE PRICE_MGMT.PR_VICT2_SALES_MSTR_MAN;
-DROP TABLE PRICE_MGMT.PR_VICT2_SALES_MSTR_MAN;
+TRUNCATE TABLE PRICE_MGMT.PR_VICT2_SLS_CAT_MAN;
+DROP TABLE PRICE_MGMT.PR_VICT2_SLS_CAT_MAN;
 
-CREATE TABLE PRICE_MGMT.PR_VICT2_SALES_MSTR_MAN
+CREATE TABLE PRICE_MGMT.PR_VICT2_SLS_CAT_MAN
 NOLOGGING
 AS
    SELECT DISTINCT
@@ -23,6 +23,8 @@ AS
           V.DISCOUNT_GROUP_NK,
           V.DISCOUNT_GROUP_NAME,
           V.CHANNEL_TYPE,
+          V.ORDER_CHANNEL,
+          V.DELIVERY_CHANNEL,
           V.INVOICE_LINE_NUMBER,
           V.MANUFACTURER,
           V.PRODUCT_GK,
@@ -38,9 +40,84 @@ AS
           V.UNIT_INV_COST,
           V.PRICE_CODE,
           --V.COST_CODE_IND,
-          V.PRICE_CATEGORY,
-          V.PRICE_CATEGORY_OVR_PR,
-          V.PRICE_CATEGORY_OVR_GR,
+
+          COALESCE (V.PRICE_CATEGORY_OVR_PR,
+                    V.PRICE_CATEGORY_OVR_GR,
+                    V.PRICE_CATEGORY)
+             PRICE_CATEGORY,
+          CASE
+
+             WHEN     COALESCE (V.PRICE_CATEGORY_OVR_PR,
+                                V.PRICE_CATEGORY_OVR_GR,
+                                V.PRICE_CATEGORY) IN
+                         ('MANUAL', 'QUOTE', 'MATRIX_BID')
+                  AND V.ORIG_PRICE_CODE IS NOT NULL
+          
+             
+             
+             
+             
+             THEN
+                CASE
+                   WHEN REGEXP_LIKE (V.orig_price_code, '[0-9]?[0-9]?[0-9]')
+                   THEN
+                      'MATRIX'
+                   WHEN V.orig_price_code IN ('FC', 'PM', 'spec')
+                   THEN
+                      'MATRIX'
+                   WHEN V.orig_price_code LIKE 'M%'
+                   THEN
+                      'NDP'
+                   WHEN V.orig_price_code IN ('CPA', 'CPO')
+                   THEN
+                      'OVERRIDE'
+                   WHEN V.orig_price_code IN ('PR',
+                                              'GR',
+                                              'CB',
+                                              'GJ',
+                                              'PJ',
+                                              '*G',
+                                              '*P',
+                                              'G*',
+                                              'P*',
+                                              'G',
+                                              'GJ',
+                                              'P')
+                   THEN
+                      'OVERRIDE'
+                   WHEN V.orig_price_code IN ('GI',
+                                              'GPC',
+                                              'HPF',
+                                              'HPN',
+                                              'NC')
+                   THEN
+                      'MANUAL'
+                   WHEN V.orig_price_code = '*E'
+                   THEN
+                      'OTH/ERROR'
+                   WHEN V.orig_price_code = 'SKC'
+                   THEN
+                      'OTH/ERROR'
+                   WHEN V.orig_price_code IN ('%',
+                                              '$',
+                                              'N',
+                                              'F',
+                                              'B',
+                                              'PO')
+                   THEN
+                      'TOOLS'
+                   WHEN V.orig_price_code IS NULL
+                   THEN
+                      'MANUAL'
+                   ELSE
+                      'MANUAL'
+                END
+             ELSE
+                COALESCE (V.PRICE_CATEGORY_OVR_PR,
+                          V.PRICE_CATEGORY_OVR_GR,
+                          V.PRICE_CATEGORY)
+          END
+             PRICE_CATEGORY_FINAL,
           V.GR_OVR,
           V.PR_OVR,
           V.PRICE_FORMULA,
@@ -57,11 +134,8 @@ AS
           END
              PR_TRIM_FORM,
           CASE
-             WHEN V.PRICE_CATEGORY_OVR_PR IS NOT NULL 
-             THEN 
-               V.PR_OVR_BASIS
-             ELSE 
-               NULL
+             WHEN V.PRICE_CATEGORY_OVR_PR IS NOT NULL THEN V.PR_OVR_BASIS
+             ELSE NULL
           END
              PR_OVR_BASIS,
           CASE
@@ -90,7 +164,14 @@ AS
           V.JOB_GROUP_FORM,
           V.BASE_PROD_FORM,
           V.JOB_PROD_FORM,
-          V.INVOICE_NUMBER_GK
+          V.INVOICE_NUMBER_GK,
+          V.COST_CODE_IND,
+          V.VENDOR_NAME,
+          V.VENDOR_AGREEMENT,
+          V.CONTRACT_NAME,
+          V.SUBLINE_QTY,
+          V.SUBLINE_COST,
+          V.CLAIM_AMOUNT
    FROM (SELECT SP_HIST.*,
                 GR_OVR_BASE.FORMULA
                    BASE_GROUP_FORM,
@@ -104,7 +185,16 @@ AS
                    WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
                    THEN
                       CASE
-                         WHEN SP_HIST.ORDER_ENTRY_DATE BETWEEN COALESCE (
+                         WHEN (   SP_HIST.ORDER_ENTRY_DATE BETWEEN COALESCE (
+                                                                        PR_OVR_JOB.INSERT_TIMESTAMP
+                                                                      - 1,
+                                                                        PR_OVR_BASE.INSERT_TIMESTAMP
+                                                                      - 1)
+                                                               AND COALESCE (
+                                                                      PR_OVR_JOB.EXPIRE_DATE,
+                                                                      PR_OVR_BASE.EXPIRE_DATE,
+                                                                      SP_HIST.ORDER_ENTRY_DATE)
+                               OR SP_HIST.PROCESS_DATE BETWEEN COALESCE (
                                                                     PR_OVR_JOB.INSERT_TIMESTAMP
                                                                   - 1,
                                                                     PR_OVR_BASE.INSERT_TIMESTAMP
@@ -112,7 +202,7 @@ AS
                                                            AND COALESCE (
                                                                   PR_OVR_JOB.EXPIRE_DATE,
                                                                   PR_OVR_BASE.EXPIRE_DATE,
-                                                                  SP_HIST.ORDER_ENTRY_DATE)
+                                                                  SP_HIST.ORDER_ENTRY_DATE))
                          THEN
                             CASE
                                WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
@@ -173,7 +263,16 @@ AS
                    WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
                    THEN
                       CASE
-                         WHEN SP_HIST.ORDER_ENTRY_DATE BETWEEN COALESCE (
+                         WHEN (   SP_HIST.ORDER_ENTRY_DATE BETWEEN COALESCE (
+                                                                        GR_OVR_JOB.INSERT_TIMESTAMP
+                                                                      - 1,
+                                                                        GR_OVR_BASE.INSERT_TIMESTAMP
+                                                                      - 1)
+                                                               AND COALESCE (
+                                                                      GR_OVR_JOB.EXPIRE_DATE,
+                                                                      GR_OVR_BASE.EXPIRE_DATE,
+                                                                      SP_HIST.ORDER_ENTRY_DATE)
+                               OR SP_HIST.PROCESS_DATE BETWEEN COALESCE (
                                                                     GR_OVR_JOB.INSERT_TIMESTAMP
                                                                   - 1,
                                                                     GR_OVR_BASE.INSERT_TIMESTAMP
@@ -181,7 +280,7 @@ AS
                                                            AND COALESCE (
                                                                   GR_OVR_JOB.EXPIRE_DATE,
                                                                   GR_OVR_BASE.EXPIRE_DATE,
-                                                                  SP_HIST.ORDER_ENTRY_DATE)
+                                                                  SP_HIST.ORDER_ENTRY_DATE))
                          THEN
                             CASE
                                WHEN REPLACE (SP_HIST.PRICE_FORMULA,
@@ -234,7 +333,7 @@ AS
                           PR_OVR_BASE.EXPIRE_DATE,
                           GR_OVR_BASE.EXPIRE_DATE)
                    CCOR_EXPIRE,
-                LB.LINEBUY_NAME,
+                --LB.LINEBUY_NAME,
                 DG.DISCOUNT_GROUP_NAME,
                 MV.MASTER_VENDOR_NAME,
                 CORE.COST_CODE_IND,
@@ -247,20 +346,18 @@ AS
          FROM PRICE_MGMT.PR_VICT2_SALES_MAN SP_HIST
               LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                  ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
-              LEFT OUTER JOIN DW_FEI.LINE_BUY_DIMENSION LB
-                 ON SP_HIST.LINEBUY_NK = LB.LINEBUY_NK
+              --LEFT OUTER JOIN DW_FEI.LINE_BUY_DIMENSION LB
+              --   ON SP_HIST.LINEBUY_NK = LB.LINEBUY_NK
               LEFT OUTER JOIN DW_FEI.MASTER_VENDOR_DIMENSION MV
                  ON SP_HIST.MANUFACTURER = MV.MASTER_VENDOR_NK
               LEFT OUTER JOIN PRICE_MGMT.GR_OVR_JOB
-                 ON (    SP_HIST.DISCOUNT_GROUP_NK =
-                         (LTRIM (GR_OVR_JOB.DISC_GROUP, '0'))
+                 ON (    SP_HIST.DISCOUNT_GROUP_NK = GR_OVR_JOB.DISC_GROUP
                      AND SP_HIST.ACCOUNT_NUMBER = GR_OVR_JOB.BRANCH_NUMBER_NK
                      AND SP_HIST.CUSTOMER_ACCOUNT_GK = GR_OVR_JOB.CUSTOMER_GK
                      AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                          NVL (GR_OVR_JOB.CONTRACT_ID, 'DEFAULT_MATCH'))
               LEFT OUTER JOIN PRICE_MGMT.GR_OVR_BASE
-                 ON (    SP_HIST.DISCOUNT_GROUP_NK =
-                         (LTRIM (GR_OVR_BASE.DISC_GROUP, '0'))
+                 ON (    SP_HIST.DISCOUNT_GROUP_NK = GR_OVR_BASE.DISC_GROUP
                      AND SP_HIST.ACCOUNT_NUMBER =
                          GR_OVR_BASE.BRANCH_NUMBER_NK
                      AND SP_HIST.MAIN_CUSTOMER_NK = GR_OVR_BASE.CUSTOMER_NK
@@ -279,9 +376,7 @@ AS
                      AND SP_HIST.MAIN_CUSTOMER_NK = PR_OVR_BASE.CUSTOMER_NK
                      AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
                          NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))
-        LEFT OUTER JOIN PRICE_MGMT.CORE_CLAIM_VDR CORE
-           ON     SP_HIST.INVOICE_NUMBER_GK = CORE.INVOICE_NUMBER_GK
-              AND SP_HIST.INVOICE_LINE_NUMBER = CORE.INVOICE_LINE_NUMBER)
-        V--;
-
---GRANT SELECT ON PRICE_MGMT.PR_VICT2_SALES_MSTR TO PUBLIC;
+              LEFT OUTER JOIN PRICE_MGMT.CORE_CLAIM_VDR CORE
+                 ON     SP_HIST.INVOICE_NUMBER_GK = CORE.INVOICE_NUMBER_GK
+                    AND SP_HIST.INVOICE_LINE_NUMBER =
+                        CORE.INVOICE_LINE_NUMBER) V
