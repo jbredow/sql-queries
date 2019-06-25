@@ -195,4 +195,4 @@ SELECT "YEARMONTH",
           3)
           "Credits Use%#",
        "Credits Lines"
-  FROM AAA6863.GP_TRACKER_WRITER_SUMS;
+  FROM PRICE_MGMT.GP_TRACKER_WRITER_SUMS;

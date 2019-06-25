@@ -2264,7 +2264,7 @@ SELECT AT_A_GLANCE.TYPE_OF_SALE,
                    END)
                    "Outbound Sales",
                 GP_DATA.TYPE_OF_SALE
-           FROM AAA6863.GP_TRACKER_13MO GP_DATA,
+           FROM PRICE_MGMT.GP_TRACKER_13MO GP_DATA,
                 (SELECT SWD.ACCOUNT_NAME,
                         SWD.ACCOUNT_NUMBER_NK,
                         SWD.WAREHOUSE_NUMBER_NK

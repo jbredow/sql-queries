@@ -1,18 +1,18 @@
-TRUNCATE TABLE PRICE_MGMT.PR_VICT2_SLS_CAT_MAN;
-DROP TABLE PRICE_MGMT.PR_VICT2_SLS_CAT_MAN;
+TRUNCATE TABLE PRICE_MGMT.PR_VICT2_SLS_CAT;
+DROP TABLE PRICE_MGMT.PR_VICT2_SLS_CAT;
 
-CREATE TABLE PRICE_MGMT.PR_VICT2_SLS_CAT_MAN
+CREATE TABLE PRICE_MGMT.PR_VICT2_SLS_CAT
 NOLOGGING
 AS
    SELECT DISTINCT
           V.YEARMONTH,
+          V.EOM_YEARMONTH,
           V.ACCOUNT_NUMBER,
           V.ACCOUNT_NAME,
           V.WAREHOUSE_NUMBER,
           V.INVOICE_NUMBER_NK,
+          V.INVOICE_NUMBER_GK,
           V.TYPE_OF_SALE,
-          V.SALESREP_NK,
-          V.SALESREP_NAME,
           V.SHIP_VIA_NAME,
           V.OML_ASSOC_INI,
           V.OML_FL_INI,
@@ -23,40 +23,81 @@ AS
           V.DISCOUNT_GROUP_NK,
           V.DISCOUNT_GROUP_NAME,
           V.CHANNEL_TYPE,
-          V.ORDER_CHANNEL,
-          V.DELIVERY_CHANNEL,
           V.INVOICE_LINE_NUMBER,
           V.MANUFACTURER,
-          V.PRODUCT_GK,
           V.PRODUCT_NK,
           V.ALT1_CODE,
           V.PRODUCT_NAME,
           V.STATUS,
           V.SHIPPED_QTY,
+          V.EXT_WEIGHT_LB,
           V.EXT_SALES_AMOUNT,
+          V.PRODUCT_GK,
+          V.SPECIAL_PRODUCT_GK,
+          V.INSERT_TIMESTAMP INSERT_TIMESTAMP_IHF,
+          V.PROCESS_DATE,
           V.EXT_AVG_COGS_AMOUNT,
+          V.EXT_ACTUAL_COGS_AMOUNT,
           V.CORE_ADJ_AVG_COST,
+          V.ORDER_CHANNEL,
+          V.DELIVERY_CHANNEL,
           V.REPLACEMENT_COST,
           V.UNIT_INV_COST,
           V.PRICE_CODE,
-          --V.COST_CODE_IND,
-
           COALESCE (V.PRICE_CATEGORY_OVR_PR,
                     V.PRICE_CATEGORY_OVR_GR,
                     V.PRICE_CATEGORY)
              PRICE_CATEGORY,
+          V.ORIG_PRICE_CODE,
+          V.GR_OVR,
+          V.PR_OVR,
+          V.PRICE_FORMULA,
+          V.UNIT_NET_PRICE_AMOUNT,
+          V.UM,
+          V.SELL_MULT,
+          V.PACK_QTY,
+          V.LIST_PRICE,
+          V.MATRIX_PRICE,
+          V.MATRIX,
           CASE
-
+             WHEN V.PRICE_CATEGORY_OVR_PR IS NOT NULL THEN V.PR_OVR
+             ELSE NULL
+          END
+             PR_TRIM_FORM,
+          CASE
+             WHEN V.PRICE_CATEGORY_OVR_PR IS NOT NULL THEN V.PR_OVR_BASIS
+             ELSE NULL
+          END
+             PR_OVR_BASIS,
+          CASE
+             WHEN V.PRICE_CATEGORY_OVR_GR IS NOT NULL THEN V.GR_OVR
+             ELSE NULL
+          END
+             GR_TRIM_FORM,
+          V.ORDER_CODE,
+          V.SOURCE_SYSTEM,
+          V.CONSIGN_TYPE,
+          V.MAIN_CUSTOMER_NK,
+          V.CUSTOMER_ACCOUNT_GK,
+          V.CUSTOMER_NK,
+          V.CUSTOMER_NAME,
+          V.PRICE_COLUMN,
+          V.CUSTOMER_TYPE,
+          V.REF_BID_NUMBER,
+          V.SOURCE_ORDER,
+          V.ORDER_ENTRY_DATE,
+          V.COPY_SOURCE_HIST,
+          V.CONTRACT_DESCRIPTION,
+          V.CONTRACT_NUMBER,
+          V.SALESREP_NK,
+          V.SALESREP_NAME,
+          CASE
              WHEN     COALESCE (V.PRICE_CATEGORY_OVR_PR,
                                 V.PRICE_CATEGORY_OVR_GR,
                                 V.PRICE_CATEGORY) IN
                          ('MANUAL', 'QUOTE', 'MATRIX_BID')
                   AND V.ORIG_PRICE_CODE IS NOT NULL
-          
-             
-             
-             
-             
+                  AND NVL (V.REF_BID_NUMBER, 'N/A') <> 'N/A'
              THEN
                 CASE
                    WHEN REGEXP_LIKE (V.orig_price_code, '[0-9]?[0-9]?[0-9]')
@@ -118,53 +159,12 @@ AS
                           V.PRICE_CATEGORY)
           END
              PRICE_CATEGORY_FINAL,
-          V.GR_OVR,
-          V.PR_OVR,
-          V.PRICE_FORMULA,
-          V.UNIT_NET_PRICE_AMOUNT,
-          V.UM,
-          V.SELL_MULT,
-          V.PACK_QTY,
-          V.LIST_PRICE,
-          V.MATRIX_PRICE,
-          V.MATRIX,
-          CASE
-             WHEN V.PRICE_CATEGORY_OVR_PR IS NOT NULL THEN V.PR_OVR
-             ELSE NULL
-          END
-             PR_TRIM_FORM,
-          CASE
-             WHEN V.PRICE_CATEGORY_OVR_PR IS NOT NULL THEN V.PR_OVR_BASIS
-             ELSE NULL
-          END
-             PR_OVR_BASIS,
-          CASE
-             WHEN V.PRICE_CATEGORY_OVR_GR IS NOT NULL THEN V.GR_OVR
-             ELSE NULL
-          END
-             GR_TRIM_FORM,
-          V.ORDER_CODE,
-          V.SOURCE_SYSTEM,
-          V.CONSIGN_TYPE,
-          V.CUSTOMER_ACCOUNT_GK,
-          V.MAIN_CUSTOMER_NK,
-          V.CUSTOMER_NK,
-          V.CUSTOMER_NAME,
-          V.PRICE_COLUMN,
-          V.CUSTOMER_TYPE,
-          V.REF_BID_NUMBER,
-          V.SOURCE_ORDER,
-          V.ORDER_ENTRY_DATE,
-          V.COPY_SOURCE_HIST,
-          V.CONTRACT_DESCRIPTION,
-          V.CONTRACT_NUMBER,
           V.INVOICE_DATE,
           V.MASTER_VENDOR_NAME,
           V.BASE_GROUP_FORM,
           V.JOB_GROUP_FORM,
           V.BASE_PROD_FORM,
           V.JOB_PROD_FORM,
-          V.INVOICE_NUMBER_GK,
           V.COST_CODE_IND,
           V.VENDOR_NAME,
           V.VENDOR_AGREEMENT,
@@ -343,7 +343,7 @@ AS
                 CORE.SUBLINE_QTY,
                 CORE.SUBLINE_COST,
                 CORE.CLAIM_AMOUNT
-         FROM PRICE_MGMT.PR_VICT2_SALES_MAN SP_HIST
+         FROM PRICE_MGMT.PR_VICT2_SLS SP_HIST
               LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
                  ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK
               --LEFT OUTER JOIN DW_FEI.LINE_BUY_DIMENSION LB

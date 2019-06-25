@@ -44,8 +44,20 @@ SELECT MAN.ACCOUNT_NAME,
           "SHPD",
        MAN.UNIT_NET_PRICE_AMOUNT
           "UNIT NET",
-       ROUND (MAN.EXT_AVG_COGS_AMOUNT / MAN.SHIPPED_QTY, 2)
+      
+       CASE
+        WHEN MAN.EXT_AVG_COGS_AMOUNT = 0
+        THEN
+            0
+        WHEN MAN.SHIPPED_QTY = 0
+        THEN
+            0
+        ELSE
+            ROUND (
+                MAN.EXT_AVG_COGS_AMOUNT / MAN.SHIPPED_QTY, 2)
+        END
           "UNIT AC",
+         
        CASE
           WHEN MAN.EXT_AVG_COGS_AMOUNT = 0
           THEN
@@ -113,16 +125,15 @@ SELECT MAN.ACCOUNT_NAME,
        MAN.BASE_PROD_FORM,
        MAN.JOB_PROD_FORM
 FROM (SELECT DISTINCT V2_SLS.*
-      FROM PRICE_MGMT.PR_VICT2_SLS_CAT V2_SLS
+      FROM PRICE_MGMT.PR_VICT2_MANUAL_1WK_CCORS V2_SLS
       WHERE     (TRUNC (V2_SLS.INVOICE_DATE) BETWEEN TRUNC (SYSDATE - 8)
                                                  AND TRUNC (SYSDATE - 1))
-            AND (COALESCE (V2_SLS.PRICE_CATEGORY_OVR_PR,
-                           V2_SLS.PRICE_CATEGORY_OVR_GR,
-                           V2_SLS.PRICE_CATEGORY) IN
-                    ('TOOLS',
-                     'MANUAL',
-                     'QUOTE',
-                     'OTH/ERROR'))) MAN
+--            AND (V2_SLS.PRICE_CATEGORY IN
+--                    ('TOOLS',
+--                     'MANUAL',
+--                     'QUOTE',
+--                     'OTH/ERROR'))
+                  ) MAN
      INNER JOIN SALES_MART.SALES_WAREHOUSE_DIM SWD
         ON MAN.WAREHOUSE_NUMBER = SWD.WAREHOUSE_NUMBER_NK
      LEFT OUTER JOIN USER_SHARED.BG_CUSTTYPE_XREF BG_CT

@@ -1,5 +1,6 @@
 /*
    updated for FYE 19  run date 5/22/19
+   again on 5/30
 */
 
 SELECT CASE
@@ -215,11 +216,11 @@ FROM (SELECT DISTINCT
             AND a.ACCOUNT_NAME = j.ACCOUNT_NAME
             AND g.EMPLOYEE_NUMBER_NK = k.EMPLOYEE_TRILOGIE_NK(+)
             --AND A.PRICE_COLUMN = 'C'
-            --AND a.ACCOUNT_NAME = 'NASH'
-            --AND SUBSTR (j.DIVISION_NAME, 0, 4) = 'WEST'
+            --AND a.ACCOUNT_NAME = 'LAKEWOOD'
+            AND SUBSTR (j.DIVISION_NAME, 0, 4) = 'CENT'
             /*AND SUBSTR (j.DIVISION_NAME, 0, 4) IN ('NORT',
                                                    'SOUT',
-                                                   'EAST',
+                                                   'CENT',
                                                    'WEST')*/
             AND (   (    a.account_setup_date < to_date('01/01/2017','MM/DD/YYYY')
                         AND a.last_sale > to_date('01/01/2017','MM/DD/YYYY'))

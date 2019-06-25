@@ -1,8 +1,8 @@
 /*
-	monthly backup of contracts for cent*/
+	monthly backup of contracts for cent
 
-CREATE TABLE AAM1365.A_CCOR_CENT_201905 NOLOGGING
-	AS 
+CREATE TABLE AAM1365.A_CCOR_CENT_201906 NOLOGGING
+	AS */
 
 SELECT * 
   FROM ( (SELECT SWD.DIVISION_NAME REGION,
@@ -51,17 +51,19 @@ SELECT *
                  AND CCORG.DELETE_DATE IS NULL
                  AND CUST.CUSTOMER_GK = CCORG.CUSTOMER_GK
                  AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
-                            ('D10',
-                             'D11',
-                             'D12',
-                             'D13',
-                             'D14',
-                             'D30',
-                             'D31',
-                             'D32',
-                             'D50',
-                             'D51',
-                             'D53'))
+                            (
+                            -- 'D10'
+                            -- 'D11'
+                            -- 'D12'
+                            -- 'D13',
+                             'D14'
+                            -- 'D30',
+                            -- 'D31',
+                            -- 'D32',
+                            -- 'D50',
+                            -- 'D51',
+                            -- 'D53'
+                            ))
                  --AND TO_CHAR (CCORG.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201508')
                  --                                              AND  TO_CHAR('201511')
           --AND SWD.ACCOUNT_NUMBER_NK IN ( '480', '190', '61', '1869', '116', '454' )
@@ -145,18 +147,20 @@ SELECT *
                 AND CCORP.DELETE_DATE IS NULL
                 AND CUST2.CUSTOMER_GK = CCORP.CUSTOMER_GK
                 AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
-                           ('D10',
-                            'D11',
-                            'D12',
-                            'D13',
-                            'D14',
-                            'D30',
-                            'D31',
-                            'D32',
-                            'D50',
-                            'D51',
-                            'D53',
-														'D59'))
+                           (
+                          --  'D10'
+                          --  'D11'
+                          --  'D12'
+                          --  'D13',
+                            'D14'
+                          --  'D30',
+                          --  'D31',
+                          --  'D32',
+                          --  'D50',
+                          --  'D51',
+                          --  'D53',
+													--	'D59'
+                            ))
                 --AND TO_CHAR (CCORP.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201508')
                 --                                              AND  TO_CHAR('201511')
          				--AND SWD.ACCOUNT_NUMBER_NK IN ( '480', '190', '61', '1869', '116', '454' )
@@ -202,49 +206,49 @@ ORDER BY XX.REGION, XX.DIST, XX.BRANCH_NO, XX.MAIN_NO, XX.CUST_NO
 ;
 
 
-GRANT SELECT ON AAM1365.A_CCOR_CENT_201905 TO PUBLIC;
+GRANT SELECT ON AAM1365.A_CCOR_CENT_201906 TO PUBLIC;
 
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D10';
 
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D11';
  
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D12';
  
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D14';
 
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D30';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D31';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D32';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) IN ('D50', 'D51', 'D53');
  
 /*
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D50';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D51';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201905 CCOR
+  FROM AAM1365.A_CCOR_CENT_201906 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D53';*/

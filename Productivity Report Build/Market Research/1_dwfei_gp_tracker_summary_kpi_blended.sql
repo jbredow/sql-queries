@@ -568,7 +568,7 @@ FROM (SELECT GP_SUMS.YEARMONTH,
                       CREDIT_LINES,
                    SUM (GP_DATA.SLS_FREIGHT - GP_DATA.AVG_COST_FREIGHT)
                       AS FREIGHT_PROFIT_LOSS
-            FROM AAA6863.GP_TRACKER_WRITER_YTD GP_DATA
+            FROM PRICE_MGMT.GP_TRACKER_WRITER_YTD GP_DATA
             WHERE     SUBSTR (GP_DATA.REGION, 0, 4) IN ('NORT',
                                                         'WEST',
                                                         'EAST',

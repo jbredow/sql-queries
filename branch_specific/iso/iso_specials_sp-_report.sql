@@ -21,7 +21,7 @@ SELECT DISTINCT
 	SP.ext_sales_amount "Ext Net",	
 	SP.ext_avg_cogs_amount "Ext AC",
 	SP.YEARMONTH
-FROM	AAA6863.PR_VICT2_CUST_12MO SP
+FROM	PRICE_MGMT.PR_VICT2_CUST_12MO SP
 	LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION dg
 		ON SP.discount_group_nk = dg.discount_group_nk
 	INNER JOIN

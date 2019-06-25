@@ -1,0 +1,8 @@
+These queries modify the daily process in order to backfill missing invoices.
+
+The first step (missing invoices.sql) was executed this morning to create the missing invoices table.
+
+The we replace the first 2 steps of the daily process with the 01 PR_VICT2_SLS_P 2.2 BACKFILL.sql and 02 PR_VICT2_SLS_SP 2.2 BACKFILL.sql queries 
+	and run the remaining steps to create the data for the invoices that need to be backfilled.
+
+We can filter out anything from D62 Integrated.

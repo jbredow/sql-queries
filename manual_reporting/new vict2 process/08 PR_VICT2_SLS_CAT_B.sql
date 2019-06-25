@@ -89,81 +89,81 @@ SELECT DISTINCT
        V.BASE_PROD_FORM,
        V.JOB_PROD_FORM,
        V.INVOICE_NUMBER_GK,
-       V.COST_CODE_IND,
-       V.VENDOR_NAME,
-       V.VENDOR_AGREEMENT,
+       --V.COST_CODE_IND,
+       --V.VENDOR_NAME,
+       --V.VENDOR_AGREEMENT,
        V.CONTRACT_NAME,
        V.SUBLINE_QTY,
        V.SUBLINE_COST,
        V.CLAIM_AMOUNT
 FROM (SELECT SP_HIST.*,
-             GR_OVR_BASE.FORMULA
+             GR_OVR_BASE_MAN.FORMULA
                 BASE_GROUP_FORM,
-             GR_OVR_JOB.FORMULA
+             GR_OVR_JOB_MAN.FORMULA
                 JOB_GROUP_FORM,
-             PR_OVR_BASE.FORMULA
+             PR_OVR_BASE_MAN.FORMULA
                 BASE_PROD_FORM,
-             PR_OVR_JOB.FORMULA
+             PR_OVR_JOB_MAN.FORMULA
                 JOB_PROD_FORM,
              CASE
                 WHEN SP_HIST.PRICE_CODE IN ('R', 'N/A', 'Q')
                 THEN
                    CASE
                       WHEN SP_HIST.ORDER_ENTRY_DATE BETWEEN COALESCE (
-                                                                 PR_OVR_JOB.INSERT_TIMESTAMP
+                                                                 PR_OVR_JOB_MAN.INSERT_TIMESTAMP
                                                                - 1,
-                                                                 PR_OVR_BASE.INSERT_TIMESTAMP
+                                                                 PR_OVR_BASE_MAN.INSERT_TIMESTAMP
                                                                - 1)
                                                         AND COALESCE (
-                                                               PR_OVR_JOB.EXPIRE_DATE,
-                                                               PR_OVR_BASE.EXPIRE_DATE,
+                                                               PR_OVR_JOB_MAN.EXPIRE_DATE,
+                                                               PR_OVR_BASE_MAN.EXPIRE_DATE,
                                                                SP_HIST.ORDER_ENTRY_DATE)
                       THEN
                          CASE
                             WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
-                                 COALESCE (PR_OVR_JOB.MULTIPLIER,
-                                           PR_OVR_BASE.MULTIPLIER)
+                                 COALESCE (PR_OVR_JOB_MAN.MULTIPLIER,
+                                           PR_OVR_BASE_MAN.MULTIPLIER)
                             THEN
                                'OVERRIDE'
                             WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
                                  (  TRUNC (
-                                       COALESCE (PR_OVR_JOB.MULTIPLIER,
-                                                 PR_OVR_BASE.MULTIPLIER),
+                                       COALESCE (PR_OVR_JOB_MAN.MULTIPLIER,
+                                                 PR_OVR_BASE_MAN.MULTIPLIER),
                                        2)
                                   + .01)
                             THEN
                                'OVERRIDE'
                             WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
                                  (ROUND (
-                                     COALESCE (PR_OVR_JOB.MULTIPLIER,
-                                               PR_OVR_BASE.MULTIPLIER),
+                                     COALESCE (PR_OVR_JOB_MAN.MULTIPLIER,
+                                               PR_OVR_BASE_MAN.MULTIPLIER),
                                      2))
                             THEN
                                'OVERRIDE'
                             WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
                                  (  TRUNC (
-                                       COALESCE (PR_OVR_JOB.MULTIPLIER,
-                                                 PR_OVR_BASE.MULTIPLIER),
+                                       COALESCE (PR_OVR_JOB_MAN.MULTIPLIER,
+                                                 PR_OVR_BASE_MAN.MULTIPLIER),
                                        1)
                                   + .1)
                             THEN
                                'OVERRIDE'
                             WHEN SP_HIST.UNIT_NET_PRICE_AMOUNT =
                                    FLOOR (
-                                      COALESCE (PR_OVR_JOB.MULTIPLIER,
-                                                PR_OVR_BASE.MULTIPLIER))
+                                      COALESCE (PR_OVR_JOB_MAN.MULTIPLIER,
+                                                PR_OVR_BASE_MAN.MULTIPLIER))
                                  + 1
                             THEN
                                'OVERRIDE'
                             WHEN TO_CHAR (SP_HIST.UNIT_NET_PRICE_AMOUNT) =
-                                 COALESCE (PR_OVR_JOB.FORMULA,
-                                           PR_OVR_BASE.FORMULA)
+                                 COALESCE (PR_OVR_JOB_MAN.FORMULA,
+                                           PR_OVR_BASE_MAN.FORMULA)
                             THEN
                                'OVERRIDE'
                             WHEN REPLACE (SP_HIST.PRICE_FORMULA, '0.', '.') =
                                  REPLACE (
-                                    COALESCE (PR_OVR_JOB.FORMULA,
-                                              PR_OVR_BASE.FORMULA),
+                                    COALESCE (PR_OVR_JOB_MAN.FORMULA,
+                                              PR_OVR_BASE_MAN.FORMULA),
                                     '0.',
                                     '.')
                             THEN
@@ -177,20 +177,20 @@ FROM (SELECT SP_HIST.*,
                 THEN
                    CASE
                       WHEN SP_HIST.ORDER_ENTRY_DATE BETWEEN COALESCE (
-                                                                 GR_OVR_JOB.INSERT_TIMESTAMP
+                                                                 GR_OVR_JOB_MAN.INSERT_TIMESTAMP
                                                                - 1,
-                                                                 GR_OVR_BASE.INSERT_TIMESTAMP
+                                                                 GR_OVR_BASE_MAN.INSERT_TIMESTAMP
                                                                - 1)
                                                         AND COALESCE (
-                                                               GR_OVR_JOB.EXPIRE_DATE,
-                                                               GR_OVR_BASE.EXPIRE_DATE,
+                                                               GR_OVR_JOB_MAN.EXPIRE_DATE,
+                                                               GR_OVR_BASE_MAN.EXPIRE_DATE,
                                                                SP_HIST.ORDER_ENTRY_DATE)
                       THEN
                          CASE
                             WHEN REPLACE (SP_HIST.PRICE_FORMULA, '0.', '.') =
                                  REPLACE (
-                                    COALESCE (GR_OVR_JOB.FORMULA,
-                                              GR_OVR_BASE.FORMULA),
+                                    COALESCE (GR_OVR_JOB_MAN.FORMULA,
+                                              GR_OVR_BASE_MAN.FORMULA),
                                     '0.',
                                     '.')
                             THEN
@@ -201,39 +201,39 @@ FROM (SELECT SP_HIST.*,
                    END
              END
                 PRICE_CATEGORY_OVR_GR,
-             COALESCE (PR_OVR_JOB.FORMULA, PR_OVR_BASE.FORMULA)
+             COALESCE (PR_OVR_JOB_MAN.FORMULA, PR_OVR_BASE_MAN.FORMULA)
                 PR_OVR,
-             REPLACE (COALESCE (PR_OVR_JOB.FORMULA, PR_OVR_BASE.FORMULA),
+             REPLACE (COALESCE (PR_OVR_JOB_MAN.FORMULA, PR_OVR_BASE_MAN.FORMULA),
                       '0.',
                       '.')
                 PR_TRIM_FORM,
-             COALESCE (PR_OVR_JOB.BASIS, PR_OVR_BASE.BASIS)
+             COALESCE (PR_OVR_JOB_MAN.BASIS, PR_OVR_BASE_MAN.BASIS)
                 PR_OVR_BASIS,
-             COALESCE (GR_OVR_JOB.FORMULA, GR_OVR_BASE.FORMULA)
+             COALESCE (GR_OVR_JOB_MAN.FORMULA, GR_OVR_BASE_MAN.FORMULA)
                 GR_OVR,
-             REPLACE (COALESCE (GR_OVR_JOB.FORMULA, GR_OVR_BASE.FORMULA),
+             REPLACE (COALESCE (GR_OVR_JOB_MAN.FORMULA, GR_OVR_BASE_MAN.FORMULA),
                       '0.',
                       '.')
                 GR_TRIM_FORM,
-             COALESCE (PR_OVR_JOB.INSERT_TIMESTAMP,
-                       PR_OVR_BASE.INSERT_TIMESTAMP)
+             COALESCE (PR_OVR_JOB_MAN.INSERT_TIMESTAMP,
+                       PR_OVR_BASE_MAN.INSERT_TIMESTAMP)
                 PR_CCOR_CREATE,
-             COALESCE (PR_OVR_JOB.EXPIRE_DATE, PR_OVR_BASE.EXPIRE_DATE)
+             COALESCE (PR_OVR_JOB_MAN.EXPIRE_DATE, PR_OVR_BASE_MAN.EXPIRE_DATE)
                 PR_CCOR_EXPIRE,
-             COALESCE (GR_OVR_JOB.INSERT_TIMESTAMP,
-                       GR_OVR_BASE.INSERT_TIMESTAMP)
+             COALESCE (GR_OVR_JOB_MAN.INSERT_TIMESTAMP,
+                       GR_OVR_BASE_MAN.INSERT_TIMESTAMP)
                 GR_CCOR_CREATE,
-             COALESCE (GR_OVR_JOB.EXPIRE_DATE, GR_OVR_BASE.EXPIRE_DATE)
+             COALESCE (GR_OVR_JOB_MAN.EXPIRE_DATE, GR_OVR_BASE_MAN.EXPIRE_DATE)
                 GR_CCOR_EXPIRE,
-             COALESCE (PR_OVR_JOB.INSERT_TIMESTAMP,
-                       GR_OVR_JOB.INSERT_TIMESTAMP,
-                       PR_OVR_BASE.INSERT_TIMESTAMP,
-                       GR_OVR_BASE.INSERT_TIMESTAMP)
+             COALESCE (PR_OVR_JOB_MAN.INSERT_TIMESTAMP,
+                       GR_OVR_JOB_MAN.INSERT_TIMESTAMP,
+                       PR_OVR_BASE_MAN.INSERT_TIMESTAMP,
+                       GR_OVR_BASE_MAN.INSERT_TIMESTAMP)
                 CCOR_CREATE,
-             COALESCE (PR_OVR_JOB.EXPIRE_DATE,
-                       GR_OVR_JOB.EXPIRE_DATE,
-                       PR_OVR_BASE.EXPIRE_DATE,
-                       GR_OVR_BASE.EXPIRE_DATE)
+             COALESCE (PR_OVR_JOB_MAN.EXPIRE_DATE,
+                       GR_OVR_JOB_MAN.EXPIRE_DATE,
+                       PR_OVR_BASE_MAN.EXPIRE_DATE,
+                       GR_OVR_BASE_MAN.EXPIRE_DATE)
                 CCOR_EXPIRE,
              --LB.LINEBUY_NAME,
              DG.DISCOUNT_GROUP_NAME,
@@ -241,7 +241,7 @@ FROM (SELECT SP_HIST.*,
              CORE.COST_CODE_IND,
              CORE.VENDOR_NAME,
              CORE.VENDOR_AGREEMENT,
-             CORE.CONTRACT_NAME,
+             --CORE.CONTRACT_NAME,
              CORE.SUBLINE_QTY,
              CORE.SUBLINE_COST,
              CORE.CLAIM_AMOUNT
@@ -252,33 +252,38 @@ FROM (SELECT SP_HIST.*,
            --   ON SP_HIST.LINEBUY_NK = LB.LINEBUY_NK
            LEFT OUTER JOIN DW_FEI.MASTER_VENDOR_DIMENSION MV
               ON SP_HIST.MANUFACTURER = MV.MASTER_VENDOR_NK
-           LEFT OUTER JOIN PRICE_MGMT.GR_OVR_JOB
+           
+           LEFT OUTER JOIN PRICE_MGMT.GR_OVR_JOB_MAN
               ON (    SP_HIST.DISCOUNT_GROUP_NK =
-                      GR_OVR_JOB.DISC_GROUP
-                  AND SP_HIST.ACCOUNT_NUMBER = GR_OVR_JOB.BRANCH_NUMBER_NK
-                  AND SP_HIST.CUSTOMER_ACCOUNT_GK = GR_OVR_JOB.CUSTOMER_GK
+                      GR_OVR_JOB_MAN.DISC_GROUP
+                  AND SP_HIST.ACCOUNT_NUMBER = GR_OVR_JOB_MAN.BRANCH_NUMBER_NK
+                  AND SP_HIST.CUSTOMER_ACCOUNT_GK = GR_OVR_JOB_MAN.CUSTOMER_GK
                   AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
-                      NVL (GR_OVR_JOB.CONTRACT_ID, 'DEFAULT_MATCH'))
-           LEFT OUTER JOIN PRICE_MGMT.GR_OVR_BASE
+                      NVL (GR_OVR_JOB_MAN.CONTRACT_ID, 'DEFAULT_MATCH'))
+           
+           LEFT OUTER JOIN PRICE_MGMT.GR_OVR_BASE_MAN
               ON (    SP_HIST.DISCOUNT_GROUP_NK =
-                      GR_OVR_BASE.DISC_GROUP
-                  AND SP_HIST.ACCOUNT_NUMBER = GR_OVR_BASE.BRANCH_NUMBER_NK
-                  AND SP_HIST.MAIN_CUSTOMER_NK = GR_OVR_BASE.CUSTOMER_NK
+                      GR_OVR_BASE_MAN.DISC_GROUP
+                  AND SP_HIST.ACCOUNT_NUMBER = GR_OVR_BASE_MAN.BRANCH_NUMBER_NK
+                  AND SP_HIST.MAIN_CUSTOMER_NK = GR_OVR_BASE_MAN.CUSTOMER_NK
                   AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
-                      NVL (GR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))
-           LEFT OUTER JOIN PRICE_MGMT.PR_OVR_JOB
-              ON (    SP_HIST.PRODUCT_NK = PR_OVR_JOB.MASTER_PRODUCT
-                  AND SP_HIST.ACCOUNT_NUMBER = PR_OVR_JOB.BRANCH_NUMBER_NK
-                  AND SP_HIST.CUSTOMER_ACCOUNT_GK = PR_OVR_JOB.CUSTOMER_GK
+                      NVL (GR_OVR_BASE_MAN.CONTRACT_ID, 'DEFAULT_MATCH'))
+           
+           LEFT OUTER JOIN PRICE_MGMT.PR_OVR_JOB_MAN
+              ON (    SP_HIST.PRODUCT_NK = PR_OVR_JOB_MAN.MASTER_PRODUCT
+                  AND SP_HIST.ACCOUNT_NUMBER = PR_OVR_JOB_MAN.BRANCH_NUMBER_NK
+                  AND SP_HIST.CUSTOMER_ACCOUNT_GK = PR_OVR_JOB_MAN.CUSTOMER_GK
                   AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
-                      NVL (PR_OVR_JOB.CONTRACT_ID, 'DEFAULT_MATCH'))
-           LEFT OUTER JOIN PRICE_MGMT.PR_OVR_BASE
-              ON (    SP_HIST.PRODUCT_NK = PR_OVR_BASE.MASTER_PRODUCT
-                  AND SP_HIST.ACCOUNT_NUMBER = PR_OVR_BASE.BRANCH_NUMBER_NK
-                  AND SP_HIST.MAIN_CUSTOMER_NK = PR_OVR_BASE.CUSTOMER_NK
+                      NVL (PR_OVR_JOB_MAN.CONTRACT_ID, 'DEFAULT_MATCH'))
+                      
+           LEFT OUTER JOIN PRICE_MGMT.PR_OVR_BASE_MAN
+              ON (    SP_HIST.PRODUCT_NK = PR_OVR_BASE_MAN.MASTER_PRODUCT
+                  AND SP_HIST.ACCOUNT_NUMBER = PR_OVR_BASE_MAN.BRANCH_NUMBER_NK
+                  AND SP_HIST.MAIN_CUSTOMER_NK = PR_OVR_BASE_MAN.CUSTOMER_NK
                   AND NVL (SP_HIST.CONTRACT_NUMBER, 'DEFAULT_MATCH') =
-                      NVL (PR_OVR_BASE.CONTRACT_ID, 'DEFAULT_MATCH'))
-           LEFT OUTER JOIN PRICE_MGMT.CORE_CLAIM_VDR CORE
+                      NVL (PR_OVR_BASE_MAN.CONTRACT_ID, 'DEFAULT_MATCH'))
+                      
+           LEFT OUTER JOIN PRICE_MGMT.CORE_CLAIM_VDR_MAN CORE
               ON     SP_HIST.INVOICE_NUMBER_GK = CORE.INVOICE_NUMBER_GK
                  AND SP_HIST.INVOICE_LINE_NUMBER = CORE.INVOICE_LINE_NUMBER)
      V;
