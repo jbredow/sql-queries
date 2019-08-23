@@ -1,3 +1,8 @@
+/*
+    for the mp=gp standard report
+*/
+
+
 SELECT SLS.REGION,
           SUBSTR (SLS.DISTRICT, 1, 3)
        || '^'

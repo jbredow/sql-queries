@@ -1,5 +1,6 @@
 /*
   queries > from AAA6863.GP_TRACKER_WRITER_SUMS 
+  from 6_gp_tracker_writer_sums_upd.sql
 */
 
 SELECT "YEARMONTH",

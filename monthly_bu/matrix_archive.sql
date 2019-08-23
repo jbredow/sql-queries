@@ -1,11 +1,11 @@
 /*
 	monthly matrix back-up not including hfm/g
-*/
+
 DROP TABLE AAM1365.A_MATRIX_CENT_201906;
 
 CREATE TABLE AAM1365.A_MATRIX_CENT_201906 NOLOGGING
 	AS 
-	(
+	(*/
 	SELECT * FROM (
 		SELECT SWD.DIVISION_NAME AS REG,
       SUBSTR ( SWD.REGION_NAME, 1 ,3 ) AS DIST,
@@ -39,11 +39,16 @@ CREATE TABLE AAM1365.A_MATRIX_CENT_201906 NOLOGGING
 											190, 191, 192, 193))
 	AND ( PRICE.DELETE_DATE IS NULL )
 	AND ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
-					--'D10', 'D11', 'D12', 'D14' 
-					--'D30', 'D31', 'D32'
-					'D50', 'D51', 'D53'
-					))
-	)
+							--'D10'
+              --'D11'
+              --'D12'
+              --'D14'
+							--'D30'
+              --'D31'
+              --'D32'
+							'D50', 'D51', 'D53'
+							)) 
+	  )
 UNION (
 	SELECT SWD.DIVISION_NAME AS REG,
 			SUBSTR ( SWD.REGION_NAME, 1 ,3 ) AS DIST,
@@ -80,12 +85,17 @@ UNION (
 											190, 191, 192, 193))
       AND ( PRICE.DELETE_DATE IS NULL )
 			AND ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
-							--'D10', 'D11', 'D12', 'D14'
-							--'D30', 'D31', 'D32'
+							--'D10'
+              --'D11'
+              --'D12'
+              --'D14'
+							--'D30'
+              --'D31'
+              --'D32'
 							'D50', 'D51', 'D53'
 							)) 
 			  ) 
-		) 
+		 
 ;
 
 GRANT SELECT ON  AAM1365.A_MATRIX_CENT_201906 TO PUBLIC;

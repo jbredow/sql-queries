@@ -1,4 +1,5 @@
 /*
+  for the mp=gp overview report
   24 mo. data
 */
 SELECT SLS.REGION,

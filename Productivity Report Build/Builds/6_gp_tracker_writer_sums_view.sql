@@ -297,7 +297,7 @@ SELECT GP_DATA.YEARMONTH,
                    0
              END)
              "Outbound Sales"
-     FROM AAA6863.PR_VICT2_CUST_12MO GP_DATA,
+     FROM PRICE_MGMT.PR_VICT2_CUST_12MO GP_DATA,
           SALES_MART.INVOICE_CHANNEL_DIMENSION ICD,
           (SELECT WD.REGION_NAME,
                   WD.ACCOUNT_NAME,

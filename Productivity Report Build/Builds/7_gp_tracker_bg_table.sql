@@ -31,8 +31,8 @@ SELECT DISTINCT
           SUM(sp_dtl.EXT_SALES_AMOUNT) EXT_SALES,
           SUM(sp_dtl.EXT_AVG_COGS_AMOUNT) EXT_AVG_COGS,
           SUM(sp_dtl.CORE_ADJ_AVG_COST) CORE_ADJ_AVG_COGS,
-          /*sp_dtl.ORDER_CHANNEL,
-          sp_dtl.DELIVERY_CHANNEL,*/
+          sp_dtl.ORDER_CHANNEL,
+          sp_dtl.DELIVERY_CHANNEL,
           SUM(sp_dtl.REPLACEMENT_COST) REP_COGS,
           /*sp_dtl.UNIT_INV_COST,
           sp_dtl.PRICE_CODE,*/
@@ -955,6 +955,8 @@ SELECT DISTINCT
           sp_dtl.ACCOUNT_NAME,
           sp_dtl.WAREHOUSE_NUMBER,
           --sp_dtl.INVOICE_NUMBER_NK,
+          sp_dtl.ORDER_CHANNEL,
+          sp_dtl.DELIVERY_CHANNEL,
           sp_dtl.TYPE_OF_SALE,
           COALESCE (sp_dtl.PRICE_CATEGORY_OVR_PR,
                     sp_dtl.PRICE_CATEGORY_OVR_GR,

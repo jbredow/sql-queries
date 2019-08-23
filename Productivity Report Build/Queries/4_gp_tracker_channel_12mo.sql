@@ -18,7 +18,7 @@ SELECT CASE
        ACCT.ACCOUNT_NAME BU_NAME,
        GP_DATA.WAREHOUSE_NUMBER_NK,
        GP_DATA.REGION|| '*'|| GP_DATA.ACCOUNT_NUMBER||
-            '*' 
+            '*'
        || 'MM'
        || TO_CHAR (DENSE_RANK () OVER (ORDER BY GP_DATA.ROLLING_QTR ASC),
                    'FM00')
