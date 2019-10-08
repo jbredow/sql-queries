@@ -697,12 +697,12 @@ FROM (SELECT SP_HIST.*, --process date changed to include invoice processing dat
                           --AND ILCF.INVOICE_LINE_NUMBER = ILF.INVOICE_LINE_NUMBER
                           --AND ILCF.SELL_WAREHOUSE_NUMBER_NK = ILF.SELL_WAREHOUSE_NUMBER_NK
                           --AND PROD.MANUFACTURER = '774'
-
                           --AND ILF.INVOICE_NUMBER_NK LIKE 'CM817603%' 
-                         
-                          AND IHF.ACCOUNT_NUMBER = '34'
-                          AND IHF.WRITER IN ('DBW', 'AXM')
-                          --AND CUST.CUSTOMER_NK = '19037'
+                          AND IHF.ACCOUNT_NUMBER = '125'
+                          --AND IHF.WRITER IN ('DBW', 'AXM')
+                          AND CUST.CUSTOMER_NK = '58468' 
+                          --AND CUST.MAIN_CUSTOMER_NK = '58468'
+                          --AND CUST.MSTR_CUSTNO = '58638'
                           --AND IHF.REF_BID_NUMBER <> 'N/A'
                           AND DECODE (NVL (cust.ar_gl_number, '9999'),
                                       '1320', 0,
@@ -725,15 +725,15 @@ FROM (SELECT SP_HIST.*, --process date changed to include invoice processing dat
                           --Excludes shipments to other FEI locations.
                           AND IHF.PO_WAREHOUSE_NUMBER IS NULL
                           
-                          --AND ILF.YEARMONTH BETWEEN '201708' AND '201810'
-                          --AND IHF.YEARMONTH BETWEEN '201708' AND '201810'
+                          AND ILF.YEARMONTH BETWEEN '201901' AND '201909'
+                          AND IHF.YEARMONTH BETWEEN '201901' AND '201909'
                           
-                          AND ILF.YEARMONTH =
+                          /*AND ILF.YEARMONTH =
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
                                           'YYYYMM')
                           AND IHF.YEARMONTH =
                                  TO_CHAR (TRUNC (SYSDATE, 'MM') - 1,
-                                          'YYYYMM')
+                                          'YYYYMM')*/
                   ) SP_HIST
            LEFT OUTER JOIN DW_FEI.DISCOUNT_GROUP_DIMENSION DG
               ON SP_HIST.DISCOUNT_GROUP_NK = DG.DISCOUNT_GROUP_NK

@@ -1,3 +1,7 @@
+/*
+  used for standard prod-rep report
+*/
+
 CREATE OR REPLACE FORCE VIEW "PRICE_MGMT"."GP_TRACKER_WRITER_SUMS" 
 AS
 

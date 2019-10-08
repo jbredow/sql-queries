@@ -1,5 +1,6 @@
 /*
    current table build
+   step 1
 */
 
 DROP TABLE PRICE_MGMT.PR_CORE_YOY_NEW;
