@@ -1,6 +1,7 @@
 /*
 	Water Heater dataflow query
 	updated 10/1/19
+   
 */
 SELECT p_cat.YEARMONTH,
        tpd.ROLL12MONTHS,
