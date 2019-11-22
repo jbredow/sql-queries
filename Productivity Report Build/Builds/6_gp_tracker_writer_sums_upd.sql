@@ -1,5 +1,5 @@
 /*
-  used for standard prod-rep report
+  used for standard & kpi prod-rep report
 */
 
 CREATE OR REPLACE FORCE VIEW "PRICE_MGMT"."GP_TRACKER_WRITER_SUMS" 
@@ -305,7 +305,7 @@ SELECT GP_DATA.YEARMONTH,
                   WD.ACCOUNT_NAME,
                   WD.ACCOUNT_NUMBER_NK,
                   WD.WAREHOUSE_NUMBER_NK
-             FROM AAD9606.PR_SLS_WHSE_DIM WD
+             FROM PRICE_MGMT.PR_SLS_WHSE_DIM WD
            GROUP BY WD.REGION_NAME,
                     WD.ACCOUNT_NAME,
                     WD.ACCOUNT_NUMBER_NK,
@@ -346,4 +346,4 @@ SELECT GP_DATA.YEARMONTH,
                      'Showroom'
                   ELSE
                      GP_DATA.TYPE_OF_SALE
-               END
+               END;

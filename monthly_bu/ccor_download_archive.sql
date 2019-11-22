@@ -52,17 +52,16 @@ SELECT *
                  AND CUST.CUSTOMER_GK = CCORG.CUSTOMER_GK
                  AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
                             (
-                            -- 'D10'
+                             'D10'
                             -- 'D11'
                             -- 'D12'
-                            -- 'D13',
                             -- 'D14'
                             -- 'D30'
                             -- 'D31'
                             -- 'D32'
                             -- 'D50'
-                             'D51',
-                             'D53'
+                            -- 'D51'
+                            -- 'D53'
                             ))
                  --AND TO_CHAR (CCORG.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201508')
                  --                                              AND  TO_CHAR('201511')
@@ -148,17 +147,16 @@ SELECT *
                 AND CUST2.CUSTOMER_GK = CCORP.CUSTOMER_GK
                 AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
                            (
-                          --  'D10'
+                            'D10'
                           --  'D11'
                           --  'D12'
-                          --  'D13',
-                          --  'D14'
+                          -- 'D14'
                           --  'D30'
                           --  'D31'
                           --  'D32'
                           --  'D50'
-                            'D51',
-                            'D53'
+                          --  'D51'
+                          --  'D53'
 													--	'D59'
                             ))
                 --AND TO_CHAR (CCORP.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201508')

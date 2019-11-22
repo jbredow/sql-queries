@@ -1,25 +1,24 @@
 /*
 	Water Heater dataflow query
 	updated 10/1/19
-   
 */
 SELECT p_cat.YEARMONTH,
        tpd.ROLL12MONTHS,
-	    tpd.FISCAL_YEAR_TO_DATE,
-	    tpd.YEAR_TO_DATE,
-	    tpd.FISCAL_YEAR,
-	    tpd.ROLLING_QTR,
+	   tpd.FISCAL_YEAR_TO_DATE,
+	   tpd.YEAR_TO_DATE,
+	   tpd.FISCAL_YEAR,
+	   tpd.ROLLING_QTR,
        tpd.ROLLING_MONTH,
+	   icd.ORDER_CHANNEL, 
+	   icd.DELIVERY_CHANNEL,
        wh.REGION_NAME,
-       SUBSTRING (wh.DISTRICT, 1, 3)
-          DIST,
+       SUBSTRING (wh.DISTRICT, 1, 3) AS DIST,
        wh.ACCOUNT_NAME,
        h.HILEV,
        h.DET1,
        h.DET2,
        h.DET6,
-       CONCAT (h.DISCOUNT_GROUP_NK, ' - ', h.DESCRIPTION)
-          DG_NUM_NAME,
+       CONCAT (h.DISCOUNT_GROUP_NK, ' - ', h.DESCRIPTION) AS DG_NUM_NAME,
        h.DISCOUNT_GROUP_NK,
        h.DESCRIPTION,
        CASE
@@ -29,13 +28,10 @@ SELECT p_cat.YEARMONTH,
           WHEN h.DET2 LIKE 'RES%' THEN 'RES'
           ELSE 'OTHER'
        END
-          HIER_CAT,
-       SUM (p_cat.EXT_SALES_AMOUNT)
-          AS SUM_EXT_SALES_AMOUNT,
-       SUM (p_cat.CORE_ADJ_AVG_COST)
-          AS SUM_CORE_ADJ_AVG_COST,
-       SUM (p_cat.SHIPPED_QTY)
-          AS SUM_SHIPPED_QTY
+          AS HIER_CAT,
+       SUM (p_cat.EXT_SALES_AMOUNT) AS SUM_EXT_SALES_AMOUNT,
+       SUM (p_cat.CORE_ADJ_AVG_COST) AS SUM_CORE_ADJ_AVG_COST,
+       SUM (p_cat.SHIPPED_QTY) AS SUM_SHIPPED_QTY
 FROM [DWFEI_STG].[TIME_PERIOD_DIMENSION] tpd
   INNER JOIN [DWFEI_STG].[PR_PRICE_CAT_HIST] p_cat
     ON (tpd.YEARMONTH = p_cat.YEARMONTH)
@@ -45,17 +41,20 @@ FROM [DWFEI_STG].[TIME_PERIOD_DIMENSION] tpd
     ON (p_cat.PRODUCT_GK = prod.PRODUCT_GK)
   INNER JOIN [DWFEI_STG].[BUSGRP_PROD_HIERARCHY] h
     ON (prod.DISCOUNT_GROUP_GK = h.DISCOUNT_GROUP_GK)
-
+  INNER JOIN[DWFEI_STG].[INVOICE_CHANNEL_DIMENSION]  icd
+        ON (p_cat.INVOICE_NUMBER_GK = icd.INVOICE_NUMBER_GK)
 WHERE h.DET1 = 'WATER HEATERS'
   AND h.DET6 <> 'OTHER MANUFACTURERS'
   AND (SUBSTRING (wh.REGION_NAME, 1, 4) IN ('EAST', 'CENT', 'WEST'))
 GROUP BY p_cat.YEARMONTH,
        tpd.ROLL12MONTHS,
-	    tpd.FISCAL_YEAR_TO_DATE,
-	    tpd.YEAR_TO_DATE,
-	    tpd.FISCAL_YEAR,
-	    tpd.ROLLING_QTR,
+	   tpd.FISCAL_YEAR_TO_DATE,
+	   tpd.YEAR_TO_DATE,
+	   tpd.FISCAL_YEAR,
+	   tpd.ROLLING_QTR,
        tpd.ROLLING_MONTH,
+	   icd.ORDER_CHANNEL, 
+	   icd.DELIVERY_CHANNEL,
        wh.REGION_NAME,
        SUBSTRING (wh.DISTRICT, 1, 3),
        wh.ACCOUNT_NAME,
