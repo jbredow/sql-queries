@@ -1,22 +1,22 @@
 /*
 	monthly backup of contracts for cent
 
-CREATE TABLE AAM1365.A_CCOR_CENT_201906 NOLOGGING
+CREATE TABLE AAA6863.A_CCOR_CENT_201512
 	AS */
 
 SELECT * 
   FROM ( (SELECT SWD.DIVISION_NAME REGION,
-                 SUBSTR ( SWD.REGION_NAME, 1, 3 ) DIST,
+                 SWD.REGION_NAME DIST,
                  SWD.ACCOUNT_NUMBER_NK BRANCH_NO,
                  SWD.ALIAS_NAME BRANCH_NAME,
-                 CCORG.CUSTOMER_NK CUST_NO,
+                 TO_NUMBER (CCORG.CUSTOMER_NK) CUST_NO,
                  CASE
-                    WHEN CUST.MAIN_CUSTOMER_NK =
-                            CCORG.CUSTOMER_NK
+                    WHEN TO_NUMBER (CUST.MAIN_CUSTOMER_NK) =
+                            TO_NUMBER (CCORG.CUSTOMER_NK)
                     THEN
                        NULL
                     ELSE
-                       CUST.MAIN_CUSTOMER_NK
+                       TO_NUMBER (CUST.MAIN_CUSTOMER_NK)
                  END
                     MAIN_NO,
                  CUST.CUSTOMER_NAME,
@@ -44,40 +44,40 @@ SELECT *
                  DW_FEI.DISCOUNT_GROUP_DIMENSION DG,
                  DW_FEI.CUSTOMER_DIMENSION CUST,
                  EBUSINESS.SALES_DIVISIONS SWD
-           WHERE   CCORG.DISC_GROUP = DG.DISCOUNT_GROUP_NK
+           WHERE     CCORG.DISC_GROUP = DG.DISCOUNT_GROUP_NK
                  AND CCORG.OVERRIDE_TYPE = 'G'
                  --AND CCORG.EXPIRE_DATE      > SYSDATE
                  AND (CCORG.BRANCH_NUMBER_NK = SWD.ACCOUNT_NUMBER_NK)
                  AND CCORG.DELETE_DATE IS NULL
                  AND CUST.CUSTOMER_GK = CCORG.CUSTOMER_GK
                  AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
-                            (
-                            -- 'D10'
-                            -- 'D11'
-                            -- 'D12'
-                            -- 'D14'
-                            -- 'D30'
-                            -- 'D31'
-                            -- 'D32'
-                            -- 'D50'
-                            -- 'D51'
-                             'D53'
-                            ))
+                            ('D10',
+                             'D11',
+                             'D12',
+                             'D13',
+                             'D14',
+                             'D30',
+                             'D31',
+                             'D32',
+                             'D50',
+                             'D51',
+                             'D53'))
+                 --AND CCORG.DISC_GROUP IN ('999','1003','1005','1007','1011')
                  --AND TO_CHAR (CCORG.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201508')
                  --                                              AND  TO_CHAR('201511')
           --AND SWD.ACCOUNT_NUMBER_NK IN ( '480', '190', '61', '1869', '116', '454' )
           GROUP BY SWD.DIVISION_NAME,
-                   SUBSTR ( SWD.REGION_NAME, 1, 3 ),
+                   SWD.REGION_NAME,
                    SWD.ACCOUNT_NUMBER_NK,
                    SWD.ALIAS_NAME,
-                   CCORG.CUSTOMER_NK,
+                   TO_NUMBER (CCORG.CUSTOMER_NK),
                    CASE
-                      WHEN CUST.MAIN_CUSTOMER_NK =
-                              CCORG.CUSTOMER_NK
+                      WHEN TO_NUMBER (CUST.MAIN_CUSTOMER_NK) =
+                              TO_NUMBER (CCORG.CUSTOMER_NK)
                       THEN
                          NULL
                       ELSE
-                         CUST.MAIN_CUSTOMER_NK
+                         TO_NUMBER (CUST.MAIN_CUSTOMER_NK)
                    END,
                    CUST.CUSTOMER_NAME,
                    CASE
@@ -99,17 +99,17 @@ SELECT *
                    CCORG.EFFECTIVE_PROD)
         UNION
         (SELECT SWD.DIVISION_NAME REGION,
-                SUBSTR ( SWD.REGION_NAME, 1, 3 ) DIST,
+                SWD.REGION_NAME DIST,
                 SWD.ACCOUNT_NUMBER_NK BRANCH_NO,
                 SWD.ALIAS_NAME BRANCH_NAME,
-                CCORP.CUSTOMER_NK CUST_NO,
+                TO_NUMBER (CCORP.CUSTOMER_NK) CUST_NO,
                 CASE
-                   WHEN CUST2.MAIN_CUSTOMER_NK =
-                           CCORP.CUSTOMER_NK
+                   WHEN TO_NUMBER (CUST2.MAIN_CUSTOMER_NK) =
+                           TO_NUMBER (CCORP.CUSTOMER_NK)
                    THEN
                       NULL
                    ELSE
-                      CUST2.MAIN_CUSTOMER_NK
+                      TO_NUMBER (CUST2.MAIN_CUSTOMER_NK)
                 END
                    MAIN_NO,
                 CUST2.CUSTOMER_NAME,
@@ -146,34 +146,34 @@ SELECT *
                 AND CCORP.DELETE_DATE IS NULL
                 AND CUST2.CUSTOMER_GK = CCORP.CUSTOMER_GK
                 AND (SUBSTR (SWD.REGION_NAME, 1, 3) IN
-                           (
-                          --  'D10'
-                          --  'D11'
-                          --  'D12'
-                          -- 'D14'
-                          --  'D30'
-                          --  'D31'
-                          --  'D32'
-                          --  'D50'
-                          --  'D51'
-                            'D53'
-													--	'D59'
-                            ))
+                           ('D10',
+                            'D11',
+                            'D12',
+                            'D13',
+                            'D14',
+                            'D30',
+                            'D31',
+                            'D32',
+                            'D50',
+                            'D51',
+                            'D53',
+														'D59'))
+                --AND CCORP.DISC_GROUP IN ('999','1003','1005','1007','1011')
                 --AND TO_CHAR (CCORP.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201508')
                 --                                              AND  TO_CHAR('201511')
          				--AND SWD.ACCOUNT_NUMBER_NK IN ( '480', '190', '61', '1869', '116', '454' )
          GROUP BY SWD.DIVISION_NAME,
-                  SUBSTR ( SWD.REGION_NAME, 1, 3 ),
+                  SWD.REGION_NAME,
                   SWD.ACCOUNT_NUMBER_NK,
                   SWD.ALIAS_NAME,
-                  CCORP.CUSTOMER_NK,
+                  TO_NUMBER (CCORP.CUSTOMER_NK),
                   CASE
-                     WHEN CUST2.MAIN_CUSTOMER_NK =
-                             CCORP.CUSTOMER_NK
+                     WHEN TO_NUMBER (CUST2.MAIN_CUSTOMER_NK) =
+                             TO_NUMBER (CCORP.CUSTOMER_NK)
                      THEN
                         NULL
                      ELSE
-                        CUST2.MAIN_CUSTOMER_NK
+                        TO_NUMBER (CUST2.MAIN_CUSTOMER_NK)
                   END,
                   CUST2.CUSTOMER_NAME,
                   CASE
@@ -195,58 +195,54 @@ SELECT *
                   CCORP.UPDATE_TIMESTAMP,
                   CCORP.LAST_UPDATE,
                   CCORP.EFFECTIVE_PROD)) XX
---WHERE   XX.DG IN ( '0504', '0505', '0508', '0511', '0513', '0517', '0525', '0528', '0529', '0533', '0534'	)
--- WHERE   XX.DG = '0504'
-	/*WHERE TO_CHAR (XX.EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201510')
-                                                 AND  TO_CHAR('201601')*/
+/* nov - feb  dec current */
 
-ORDER BY XX.REGION, XX.DIST, XX.BRANCH_NO, XX.MAIN_NO, XX.CUST_NO
-;
+				WHERE TRUNC (xx.EXPIRE_DATE) BETWEEN TRUNC (
+                                                            SYSDATE
+                                                          		- 45)
+                                                   			AND TRUNC (
+                                                          	SYSDATE
+																															+ 45 )
+	;
+     -- AND  XX.DG IN ( '0504', '0505'	)
+		 -- AND XX.BRANCH_NO = '1480'
+		 
+	/*WHERE TO_CHAR (EXPIRE_DATE, 'YYYYMM') BETWEEN TO_CHAR('201510')
+                                                 AND  TO_CHAR('201601')
 
+ORDER BY XX.REGION, XX.DIST, XX.BRANCH_NO, XX.MAIN_NO, XX.CUST_NO;
 
-GRANT SELECT ON AAM1365.A_CCOR_CENT_201906 TO PUBLIC;
+GRANT SELECT ON AAA6863.A_CCOR_CENT_201512 TO PUBLIC;
 
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
+  FROM AAA6863.A_CCOR_CENT_201512 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D10';
 
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
+  FROM AAA6863.A_CCOR_CENT_201512 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D11';
  
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
+  FROM AAA6863.A_CCOR_CENT_201512 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D12';
  
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
+  FROM AAA6863.A_CCOR_CENT_201512 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D14';
 
 SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
+  FROM AAA6863.A_CCOR_CENT_20152 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D30';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
+  FROM AAA6863.A_CCOR_CENT_201512 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D31';
  
  SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
+  FROM AAA6863.A_CCOR_CENT_201512 CCOR
  WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D32';
+
+SELECT *
+  FROM AAA6863.A_CCOR_CENT_201512 CCOR
+ WHERE SUBSTR (CCOR.DIST, 1, 3) IN ('D50', 'D51', 'D53');*/
  
- SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) IN ('D50', 'D51', 'D53');
- 
-/*
- SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D50';
- 
- SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D51';
- 
- SELECT *
-  FROM AAM1365.A_CCOR_CENT_201906 CCOR
- WHERE SUBSTR (CCOR.DIST, 1, 3) = 'D53';*/

@@ -39,14 +39,14 @@ CREATE TABLE AAM1365.A_MATRIX_CENT_201906 NOLOGGING
 											190, 191, 192, 193))
 	AND ( PRICE.DELETE_DATE IS NULL )
 	AND ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
-							'D10'
+							--'D10'
               --'D11'
               --'D12'
               --'D14'
 							--'D30'
               --'D31'
               --'D32'
-							--'D50', 'D51', 'D53'
+							'D50', 'D51', 'D53'
 							)) 
 	  )
 UNION (
@@ -85,14 +85,14 @@ UNION (
 											190, 191, 192, 193))
       AND ( PRICE.DELETE_DATE IS NULL )
 			AND ( SUBSTR ( SWD.REGION_NAME, 1 ,3 ) IN ( 
-							'D10'
+							--'D10'
               --'D11'
               --'D12'
               --'D14'
 							--'D30'
               --'D31'
               --'D32'
-							--'D50', 'D51', 'D53'
+							'D50', 'D51', 'D53'
 							)) 
 			  ) 
 		 
